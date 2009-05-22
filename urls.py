@@ -1,17 +1,35 @@
 from django.conf.urls.defaults import *
+from django.contrib.auth.views import login, logout
+from etcetera.settings import SITE_ROOT, PROD
 
 # Uncomment the next two lines to enable the admin:
-# from django.contrib import admin
-# admin.autodiscover()
+from django.contrib import admin
+admin.autodiscover()
 
+# For master/general
 urlpatterns = patterns('',
-    # Example:
-    # (r'^etcetera/', include('etcetera.foo.urls')),
-
-    # Uncomment the admin/doc line below and add 'django.contrib.admindocs' 
-    # to INSTALLED_APPS to enable admin documentation:
-    # (r'^admin/doc/', include('django.contrib.admindocs.urls')),
-
-    # Uncomment the next line to enable the admin:
-    # (r'^admin/', include(admin.site.urls)),
+    (r'^admin/', include(admin.site.urls)),
+	(r'^login/$', login),
+	(r'^logout/$', logout),
 )
+
+# For serving media content
+if PROD == False:
+	urlpatterns += patterns('',
+		(r'^_media/(?P<path>.*)$', 'django.views.static.serve', {'document_root': (SITE_ROOT + '/_media')}),
+	)
+
+# For equipment management
+# etcetera.equipment.views
+
+# For checkout/reservation management
+# etcetera.checkout.views
+
+# For repair/service management
+# etcetera.repair.views
+
+# For report generation
+# etcetera.reports.views
+
+# For university structure management
+# etcetera.structure.views

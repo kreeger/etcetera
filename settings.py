@@ -1,20 +1,32 @@
-# Django settings for etcetera project.
+import os
+import django
+DJANGO_ROOT = os.path.dirname(os.path.realpath(django.__file__))
+SITE_ROOT = os.path.dirname(os.path.realpath(__file__))
 
 DEBUG = True
+PROD = False
 TEMPLATE_DEBUG = DEBUG
 
 ADMINS = (
-    # ('Your Name', 'your_email@domain.com'),
+	('Benjamin Kreeger', 'kreeger545@live.missouristate.edu'),
 )
 
 MANAGERS = ADMINS
 
-DATABASE_ENGINE = ''           # 'postgresql_psycopg2', 'postgresql', 'mysql', 'sqlite3' or 'oracle'.
-DATABASE_NAME = ''             # Or path to database file if using sqlite3.
-DATABASE_USER = ''             # Not used with sqlite3.
-DATABASE_PASSWORD = ''         # Not used with sqlite3.
-DATABASE_HOST = ''             # Set to empty string for localhost. Not used with sqlite3.
-DATABASE_PORT = ''             # Set to empty string for default. Not used with sqlite3.
+if PROD == False:
+	DATABASE_ENGINE = 'sqlite3'
+	DATABASE_NAME = SITE_ROOT + '/sqlite.db'
+	DATABASE_USER = ''
+	DATABASE_PASSWORD = ''
+	DATABASE_HOST = ''
+	DATABASE_PORT = ''
+else:
+	DATABASE_ENGINE = 'mysql'
+	DATABASE_NAME = 'etcetera'
+	DATABASE_USER = 'etcetera'
+	DATABASE_PASSWORD = ''
+	DATABASE_HOST = ''
+	DATABASE_PORT = ''
 
 # Local time zone for this installation. Choices can be found here:
 # http://en.wikipedia.org/wiki/List_of_tz_zones_by_name
@@ -57,6 +69,11 @@ TEMPLATE_LOADERS = (
 #     'django.template.loaders.eggs.load_template_source',
 )
 
+TEMPLATE_CONTEXT_PROCESSORS = (
+	'django.core.context_processors.auth',
+	'birdie.contexts.user_info',
+)
+
 MIDDLEWARE_CLASSES = (
     'django.middleware.common.CommonMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -65,15 +82,22 @@ MIDDLEWARE_CLASSES = (
 
 ROOT_URLCONF = 'etcetera.urls'
 
+FIXTURE_DIRS =  (
+	(os.path.join(SITE_ROOT, 'extras/fixtures')),
+)
+
 TEMPLATE_DIRS = (
-    # Put strings here, like "/home/html/django_templates" or "C:/www/django/templates".
-    # Always use forward slashes, even on Windows.
-    # Don't forget to use absolute paths, not relative paths.
+	(os.path.join(SITE_ROOT, 'templates')),
 )
 
 INSTALLED_APPS = (
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
-    'django.contrib.sites',
+	'etcetera.checkout',
+	'etcetera.equipment',
+	'etcetera.repair',
+	'etcetera.reports',
+	'etcetera.structure',
+	'etcetera.extras',
 )
