@@ -2,6 +2,7 @@ import os
 import django
 DJANGO_ROOT = os.path.dirname(os.path.realpath(django.__file__))
 SITE_ROOT = os.path.dirname(os.path.realpath(__file__))
+DMIGRATIONS_DIR = os.path.join(SITE_ROOT, 'migrations')
 
 DEBUG = True
 PROD = False
@@ -14,17 +15,17 @@ ADMINS = (
 MANAGERS = ADMINS
 
 if PROD == False:
-	DATABASE_ENGINE = 'sqlite3'
-	DATABASE_NAME = SITE_ROOT + '/sqlite.db'
-	DATABASE_USER = ''
-	DATABASE_PASSWORD = ''
-	DATABASE_HOST = ''
+	DATABASE_ENGINE = 'mysql'
+	DATABASE_NAME = 'etcetera'
+	DATABASE_USER = 'etcetera'
+	DATABASE_PASSWORD = 'etcetera'
+	DATABASE_HOST = 'localhost'
 	DATABASE_PORT = ''
 else:
 	DATABASE_ENGINE = 'mysql'
 	DATABASE_NAME = 'etcetera'
 	DATABASE_USER = 'etcetera'
-	DATABASE_PASSWORD = ''
+	DATABASE_PASSWORD = 'etcetera'
 	DATABASE_HOST = ''
 	DATABASE_PORT = ''
 
@@ -71,7 +72,6 @@ TEMPLATE_LOADERS = (
 
 TEMPLATE_CONTEXT_PROCESSORS = (
 	'django.core.context_processors.auth',
-	'birdie.contexts.user_info',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -94,10 +94,12 @@ INSTALLED_APPS = (
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
+	'django.contrib.admin',
 	'etcetera.checkout',
 	'etcetera.equipment',
 	'etcetera.repair',
 	'etcetera.reports',
 	'etcetera.structure',
 	'etcetera.extras',
+	'dmigrations',
 )
