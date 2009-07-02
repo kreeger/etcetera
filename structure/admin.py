@@ -1,4 +1,4 @@
-from etcetera.structure.models import College, Department, SubDepartment, Campus, Building, Location
+from etcetera.structure.models import College, Department, SubDepartment, Campus, Building
 from django.contrib import admin
 
 # This file determines what's shown in the admin interface
@@ -34,4 +34,3 @@ admin.site.register(Department, DepartmentAdmin)
 admin.site.register(SubDepartment, SubDepartmentAdmin)
 admin.site.register(Campus)
 admin.site.register(Building, BuildingAdmin)
-admin.site.register(Location)

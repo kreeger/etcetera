@@ -1,0 +1,90 @@
+/* @override 
+	http://localhost/_media/css/screen.css
+	http://localhost:8000/_media/css/screen.css
+*/
+
+body {
+	background-color: #FFF;
+	font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+	margin: 0;
+	padding: 0;
+}
+a {
+	color: #4A0010;
+	text-decoration: none;
+}
+a:hover {
+	text-decoration: underline;
+}
+a:active {
+	color: #CCC;
+}
+.wrapper {
+	width: 950px;
+	margin: 0px auto;
+}
+div#header {
+	background-image: url(../images/header.png);
+	height: 120px;
+	border-bottom: 1px solid #333;
+}
+div#header p, div#header h1 {
+	margin: 0;
+}
+div#header h1 {
+	height: 120px;
+	background: url(../images/etceteralogo.png) no-repeat;
+}
+div#header p {
+	float: right;
+	font-size: 0.8em;
+	padding-top: 100px;
+}
+div#nav {
+	background-color: #D1D1D1;
+	text-align: center;
+}
+div#nav ul {
+	margin: 0;
+	list-style-type: none;
+	padding: 0;
+}
+div#nav ul li {
+	padding: 0;
+	margin: 0;
+	display: inline;
+}
+div#nav ul li a {
+	padding: 7px 15px;
+	margin: 0;
+	display: inline-block;
+	text-decoration: none;
+	color: #000;
+	text-transform: lowercase;
+}
+div#nav ul li a:hover {
+	background: url(../images/nav_r.png) repeat-x;
+}
+div#nav ul li a#admin {
+	color: #4A0010;
+	font-style: italic;
+}
+div#content div.wrapper {
+	margin-top: 10px;
+	padding: 10px;
+	background-color: #F4F4F4;
+	-moz-border-radius: 10px;
+	-webkit-border-radius: 10px;
+	border: 1px solid #AAA;
+}
+div#content p {
+	margin: 0px;
+	padding: 5px 0;
+}
+div#footer {
+	margin-top: 5px;
+	padding-top: 5px;
+}
+div#footer h4 {
+	margin: 0;
+}

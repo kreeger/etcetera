@@ -1,0 +1,32 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+	<title>{% block title %}{% endblock %} | Etcetera</title>
+	{% block stylesheet_extra %}{% endblock %}
+	<link rel="stylesheet" href="/_media/css/screen.css" type="text/css" media="screen" charset="utf-8">
+</head>
+<body>
+	<div id="header">
+		<div class="wrapper">
+			{% include 'includes/header.html' %}
+		</div>
+	</div>
+	<div id="nav">
+		<div class="wrapper">
+			{% include 'includes/nav.html' %}
+		</div>
+	</div>
+	<div id="content">
+		<div class="wrapper">
+			{% block content %}{% endblock %}
+		</div>
+	</div>
+	<div id="footer">
+		<div class="wrapper">
+			{% include 'includes/footer.html' %}
+		</div>
+	</div>
+</body>
+</html>

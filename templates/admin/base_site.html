@@ -1,7 +1,11 @@
-{% extends "admin/base.html" %}
+{% extends "root.html" %}
 {% load i18n %}
 
-{% block title %}{{ title }} | {% trans 'Django site admin' %}{% endblock %}
+{% block title %}{{ title }} | Backend{% endblock %}
+
+{% block stylesheet_extra %}
+	<link rel="stylesheet" href="/_media/css/admin.css" type="text/css" media="screen" charset="utf-8">
+{% endblock %}
 
 {% block branding %}
 <h1 id="site-name">{% trans 'Etcetera admin' %}</h1>

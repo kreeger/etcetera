@@ -1,0 +1,27 @@
+{% extends "root.html" %}
+
+{% block title %}Login{% endblock %}
+
+{% block content %}
+<div class="login">
+	{% if form.errors %}
+		<p class="error">Sorry, that's not a valid username/password combination.</p>
+	{% endif %}
+	<form action="" method="post">
+	<table>
+	<tr>
+		<td><label for="username">User name:</label></td>
+		<td><input type="text" name="username" value="" id="username" /></td>
+	</tr>
+	<tr>
+		<td><label for="password">Password:</label></td>
+		<td><input type="password" name="password" value="" id="password" /></td>
+	</tr>
+	<tr>
+		<td><input type="submit" value="Login" />
+		<input type="hidden" name="next" value="{{ next|escape }}" /></td>
+	</tr>
+	</table>
+	</form>
+</div>
+{% endblock %}

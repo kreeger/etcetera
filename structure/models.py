@@ -1,5 +1,5 @@
 from django.db import models
-from django.contrib.localflavor.us.models import USStateField, PhoneNumberField
+from django.contrib.localflavor.us import models as lfus
 
 # Defines university structure regarding people and places.
 
@@ -46,10 +46,10 @@ class Campus(models.Model):
 	name = models.CharField(max_length=50)
 	address = models.CharField(max_length=100)
 	city = models.CharField(max_length=100)
-	state = USStateField()
+	state = lfus.USStateField()
 	zip_code = models.CharField(max_length=9)
 	country = models.CharField(max_length=50, default='United States')
-	phone = PhoneNumberField()
+	phone = lfus.PhoneNumberField()
 	
 	def __unicode__(self):
 		return u"%s" % self.name
@@ -74,15 +74,3 @@ class Building(models.Model):
 	
 	def __unicode__(self):
 		return u"%s" % self.name
-
-class Location(models.Model):
-	"""A definitive level-three container for building structure.
-	This is what is referenced by other models"""
-	building = models.ForeignKey(Building)
-	room_number = models.CharField(max_length=10)
-	
-	class Meta:
-		ordering = ('building', 'room_number',)
-	
-	def __unicode__(self):
-		return u"%s %s" % (self.building.abbreviation, self.room_number)

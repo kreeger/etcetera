@@ -11,6 +11,8 @@ urlpatterns = patterns('',
     (r'^admin/', include(admin.site.urls)),
 	(r'^login/$', login),
 	(r'^logout/$', logout),
+	(r'^accounts/profile/$', 'etcetera.views.redirect_to_main'),
+	(r'^$', 'etcetera.views.main'),
 )
 
 # For serving media content

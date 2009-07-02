@@ -2,20 +2,19 @@ import os
 import django
 DJANGO_ROOT = os.path.dirname(os.path.realpath(django.__file__))
 SITE_ROOT = os.path.dirname(os.path.realpath(__file__))
-DMIGRATIONS_DIR = os.path.join(SITE_ROOT, 'migrations')
 
 DEBUG = True
 PROD = False
 TEMPLATE_DEBUG = DEBUG
 
 ADMINS = (
-	('Benjamin Kreeger', 'kreeger545@live.missouristate.edu'),
+	('Benjamin Kreeger', 'benjaminkreeger@missouristate.edu'),
 )
 
 MANAGERS = ADMINS
 
 if PROD == False:
-	DATABASE_ENGINE = 'mysql'
+	DATABASE_ENGINE = 'postgresql_psycopg2'
 	DATABASE_NAME = 'etcetera'
 	DATABASE_USER = 'etcetera'
 	DATABASE_PASSWORD = 'etcetera'
@@ -95,11 +94,10 @@ INSTALLED_APPS = (
     'django.contrib.contenttypes',
     'django.contrib.sessions',
 	'django.contrib.admin',
-	'etcetera.checkout',
+	#'etcetera.checkout',
 	'etcetera.equipment',
 	'etcetera.repair',
-	'etcetera.reports',
+	#'etcetera.reports',
 	'etcetera.structure',
 	'etcetera.extras',
-	'dmigrations',
 )
