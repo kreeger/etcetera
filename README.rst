@@ -17,9 +17,11 @@ Django (http://www.djangoproject.com/download/)
 Contact Information
 -------------------
 
+|
 | `Benjamin Kreeger <http://benkreeger.com/>`_
 | Multimedia Technology Specialist, Educational Technology Center
 | Missouri State University
-| benjaminkreeger [at] missouristate [dot] edu.
+| benjaminkreeger [at] missouristate [dot] edu
+|
 
 All inquiries can be directed to me at my university email address.
