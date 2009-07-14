@@ -14,7 +14,8 @@ ADMINS = (
 MANAGERS = ADMINS
 
 if PROD == False:
-	DATABASE_ENGINE = 'postgresql_psycopg2'
+	# for postgres: postgresql_psycopg2
+	DATABASE_ENGINE = 'mysql'
 	DATABASE_NAME = 'etcetera'
 	DATABASE_USER = 'etcetera'
 	DATABASE_PASSWORD = 'etcetera'

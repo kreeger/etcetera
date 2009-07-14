@@ -22,6 +22,5 @@ Contact Information
 | Multimedia Technology Specialist, Educational Technology Center
 | Missouri State University
 | benjaminkreeger [at] missouristate [dot] edu
-|
 
 All inquiries can be directed to me at my university email address.

@@ -13,6 +13,7 @@ PRIORITIES = (
 	('2','High'),
 	('3','Medium'),
 	('4','Low'),
+	('5','Lowest'),
 )
 WORK_TYPES = (
 	('install','Install'),
