@@ -14,19 +14,18 @@ ADMINS = (
 MANAGERS = ADMINS
 
 if PROD == False:
-	# for postgres: postgresql_psycopg2
-	DATABASE_ENGINE = 'mysql'
+	DATABASE_ENGINE = 'postgresql_psycopg2'
 	DATABASE_NAME = 'etcetera'
 	DATABASE_USER = 'etcetera'
 	DATABASE_PASSWORD = 'etcetera'
 	DATABASE_HOST = 'localhost'
 	DATABASE_PORT = ''
 else:
-	DATABASE_ENGINE = 'mysql'
+	DATABASE_ENGINE = 'postgresql_psycopg2'
 	DATABASE_NAME = 'etcetera'
 	DATABASE_USER = 'etcetera'
 	DATABASE_PASSWORD = 'etcetera'
-	DATABASE_HOST = ''
+	DATABASE_HOST = 'localhost'
 	DATABASE_PORT = ''
 
 # Local time zone for this installation. Choices can be found here:
