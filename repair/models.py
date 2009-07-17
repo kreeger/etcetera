@@ -18,7 +18,7 @@ class WorkOrder(models.Model):
 	equipment = models.ForeignKey(equipment.Equipment, null=True, blank=True)
 	building = models.ForeignKey(structure.Building, null=True, blank=True)
 	room = models.CharField(max_length=25, blank=True)
-	creation_date = models.DateTimeField(default=dt.datetime.now)
+	creation_date = models.DateTimeField(default=dt.datetime.now, null=True)
 	needed_date = models.DateTimeField(blank=True)
 	completion_date = models.DateTimeField(blank=True)
 	priority = models.CharField(blank=True, max_length=1, choices=constants.PRIORITIES)
