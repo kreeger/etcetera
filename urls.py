@@ -8,17 +8,17 @@ admin.autodiscover()
 
 # For master/general
 urlpatterns = patterns('',
-    (r'^etcetera/admin/', include(admin.site.urls)),
-	(r'^etcetera/login/$', login),
-	(r'^etcetera/logout/$', logout),
-	(r'^accounts/profile/$', 'etcetera.views.redirect_to_main'),
-	(r'^etcetera/$', 'etcetera.views.main'),
+    (r'^admin/', include(admin.site.urls)),
+	(r'^login/$', login),
+	(r'^logout/$', logout),
+	(r'^profile/$', 'etcetera.views.redirect_to_main'),
+	(r'^$', 'etcetera.views.main'),
 )
 
 # For serving media content
 if PROD == False:
 	urlpatterns += patterns('',
-		(r'^etcetera/_media/(?P<path>.*)$', 'django.views.static.serve', {'document_root': (SITE_ROOT + '/_media')}),
+		(r'^_media/(?P<path>.*)$', 'django.views.static.serve', {'document_root': (SITE_ROOT + '/_media')}),
 		(r'^$', 'etcetera.views.redirect_to_main'),
 	)
 
