@@ -25,4 +25,9 @@ FUNDING_SOURCES = (
 	('dept','Department'),
 	('etc','ETC'),
 	('cpu','CPU'),
+	('bc','Building Construction'),
+	('other','Other'),
+	('mgr','Mountain Grove'),
+	('mc','Media Collections'),
+	('scuf','SCUF'),
 )

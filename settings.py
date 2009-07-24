@@ -4,7 +4,7 @@ DJANGO_ROOT = os.path.dirname(os.path.realpath(django.__file__))
 SITE_ROOT = os.path.dirname(os.path.realpath(__file__))
 
 DEBUG = True
-PROD = True
+PROD = False
 TEMPLATE_DEBUG = DEBUG
 
 ADMINS = (
@@ -13,6 +13,7 @@ ADMINS = (
 
 MANAGERS = ADMINS
 
+# When dumping data, --exclude=auth --exclude=contenttypes
 if PROD == False:
 	DATABASE_ENGINE = 'postgresql_psycopg2'
 	DATABASE_NAME = 'etcetera'
