@@ -5,7 +5,7 @@ from django.contrib import admin
 class EquipmentAdmin(admin.ModelAdmin):
 	fieldsets = (
 		   ('Basic information', {
-			  'fields': ('equipment_type', 'make', 'model', 'barcode', 'status', 'building', 'serial', 'room', 'last_inventoried', 'value',),
+			  'fields': ('equipment_type', 'make', 'model', 'barcode', 'status', 'building', 'room', 'serial', 'last_inventoried', 'value',),
 		   }),
 		    ('Extra information', {
 			  'classes': ('collapse',),
