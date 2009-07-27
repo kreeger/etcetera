@@ -31,6 +31,11 @@ if PROD == False:
 # For repair/service management
 # etcetera.repair.views
 
+# For mLab resource management
+urlpatterns += patterns('etcetera.mlab.views',
+	(r'^mlab/$', 'index'),
+)
+
 # For report generation
 # etcetera.reports.views
 

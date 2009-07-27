@@ -98,6 +98,7 @@ INSTALLED_APPS = (
 	#'etcetera.checkout',
 	'etcetera.equipment',
 	'etcetera.repair',
+	'etcetera.mlab',
 	#'etcetera.reports',
 	'etcetera.structure',
 	'etcetera.extras',
