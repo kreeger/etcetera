@@ -15,7 +15,7 @@ MANAGERS = ADMINS
 
 # When dumping data, --exclude=auth --exclude=contenttypes
 if PROD == False:
-	DATABASE_ENGINE = 'mysql'
+	DATABASE_ENGINE = 'postgresql_psycopg2'
 	DATABASE_NAME = 'etcetera'
 	DATABASE_USER = 'etcetera'
 	DATABASE_PASSWORD = 'etcetera'
