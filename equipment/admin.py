@@ -21,7 +21,7 @@ class EquipmentAdmin(admin.ModelAdmin):
 	    )
 	list_display = ('equipment_type','barcode','make','model','status','building','room',)
 	list_filter = ('status',)
-	search_fields = ('equipment_type__name', 'make__name', 'model', 'barcode', 'serial', 'smsu_id', 'video_unit', 'lamp_type', 'received_from', 'dof', 'purchase_order', 'budget',)
+	search_fields = ('equipment_type__name', 'building__name', 'make__name', 'model', 'barcode', 'serial', 'smsu_id', 'video_unit', 'lamp_type', 'received_from', 'dof', 'purchase_order', 'budget',)
 
 
 # Register the appropriate models 
