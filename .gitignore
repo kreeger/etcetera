@@ -3,3 +3,5 @@
 *.DS_Store
 *.svn
 /extras/fixtures
+/media
+*._*

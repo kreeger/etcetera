@@ -29,7 +29,7 @@ class Equipment(models.Model):
 	barcode = models.CharField(blank=True, max_length=6)
 	smsu_id = models.CharField(blank=True, max_length=8)
 	equipment_type = models.ForeignKey(EquipmentType) #req
-	building = models.ForeignKey(Building, null=True)
+	building = models.ForeignKey(Building, null=True, blank=True)
 	room = models.CharField(blank=True, max_length=15)
 	status = models.CharField(blank=True, max_length=15, choices=constants.EQUIPMENT_STATUSES)
 	serial = models.CharField(blank=True, max_length=100)
