@@ -4,7 +4,7 @@ from django.contrib import admin
 # This file determines what's shown in the admin interface
 class WorkOrderAdmin(admin.ModelAdmin):
 	raw_id_fields = ('equipment',)
-	list_display = ('last_name','first_name','creation_date','priority','work_type','archived',)
+	list_display = ('last_name','first_name','creation_date','equipment_text','priority','work_type','archived',)
 	list_filter = ('work_type','priority','creation_date',)
 	list_display = ('last_name','first_name','creation_date','priority','work_type',)
 	list_filter = ('building','work_type','priority',)
