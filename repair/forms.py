@@ -12,10 +12,7 @@ class ServiceForm(forms.Form):
 	department = forms.CharField(max_length=100)
 	phone = lfus.USPhoneNumberField()
 	email = forms.EmailField()
-<<<<<<< HEAD
-=======
 	# Have you worked with a classroom coordinator?
->>>>>>> e9f1e7a7f8a26d2ec46ccdbcc05b4efe9a7c227f
 	#building = forms.CharField(max_length=25)
 	building = forms.ModelChoiceField(queryset=structure.Building.objects.all(), required=True)
 	room = forms.CharField(max_length=15)
