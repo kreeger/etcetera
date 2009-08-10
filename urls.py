@@ -30,7 +30,7 @@ if PROD == False:
 
 # For repair/service management
 urlpatterns += patterns('etcetera.repair.views',
-	(r'^public_form/$', 'incoming'),
+	(r'^service_form/$', 'service_form'),
 )
 
 # For mLab resource management
