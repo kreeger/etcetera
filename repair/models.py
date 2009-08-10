@@ -31,6 +31,7 @@ class WorkOrder(models.Model):
 	work_type = models.CharField(max_length=11, choices=constants.WORK_TYPES)
 	material_costs = models.DecimalField(max_digits=9, decimal_places=2, blank=True, null=True)
 	budget = models.CharField(blank=True, max_length=25)
+	archived = models.BooleanField()
 	
 	def __unicode__(self):
 		return u"%s, %s (%s)" % (self.last_name, self.equipment, self.creation_date)

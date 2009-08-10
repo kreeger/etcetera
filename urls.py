@@ -29,7 +29,9 @@ if PROD == False:
 # etcetera.checkout.views
 
 # For repair/service management
-# etcetera.repair.views
+urlpatterns += patterns('etcetera.repair.views',
+	(r'^public_form/$', 'incoming'),
+)
 
 # For mLab resource management
 urlpatterns += patterns('etcetera.mlab.views',
