@@ -50,7 +50,8 @@ class Equipment(models.Model):
 	budget = models.CharField("Funding sources", blank=True, max_length=10, choices=constants.FUNDING_SOURCES)
 	comments = models.TextField(blank=True)
 	ticket = models.IntegerField(blank=True, null=True)
-	
+	checkout_to = models.CharField(blank=True, max_length=150)
+
 	class Meta:
 		verbose_name_plural = 'equipment'
 		ordering = ('building','room','equipment_type','barcode','smsu_id','make','model',)

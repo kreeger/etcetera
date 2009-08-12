@@ -18,14 +18,14 @@ if PROD == False:
 	DATABASE_ENGINE = 'postgresql_psycopg2'
 	DATABASE_NAME = 'etcetera'
 	DATABASE_USER = 'etcetera'
-	DATABASE_PASSWORD = 'etcetera'
+	DATABASE_PASSWORD = 'Ch33kyBugg3r!!'
 	DATABASE_HOST = 'localhost'
 	DATABASE_PORT = ''
 else:
 	DATABASE_ENGINE = 'postgresql_psycopg2'
 	DATABASE_NAME = 'etcetera'
 	DATABASE_USER = 'etcetera'
-	DATABASE_PASSWORD = 'etcetera'
+	DATABASE_PASSWORD = 'Ch33kyBugg3r!!'
 	DATABASE_HOST = 'localhost'
 	DATABASE_PORT = ''
 
