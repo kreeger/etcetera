@@ -1,4 +1,4 @@
-from etcetera.repair.models import WorkOrder
+from etcetera.service.models import WorkOrder
 from django.contrib import admin
 
 # This file determines what's shown in the admin interface

@@ -28,9 +28,9 @@ if PROD == False:
 # For checkout/reservation management
 # etcetera.checkout.views
 
-# For repair/service management
-urlpatterns += patterns('etcetera.repair.views',
-	(r'^service_form/$', 'service_form'),
+# For service management
+urlpatterns += patterns('',
+	(r'^service/', include('etcetera.service.urls')),
 )
 
 # For mLab resource management

@@ -33,5 +33,16 @@ class WorkOrder(models.Model):
 	budget = models.CharField(blank=True, max_length=25)
 	archived = models.BooleanField()
 	
+	class Meta:
+		ordering = ('-creation_date','last_name',)
+	
 	def __unicode__(self):
 		return u"%s, %s (%s)" % (self.last_name, self.equipment, self.creation_date)
+	
+	def barcode_lookup(self, barcode):
+		try:
+			result = equipment.Equipment.objects.get(barcode=barcode)
+		except equipment.Equipment.DoesNotExist:
+			result = None
+		return result
+	
