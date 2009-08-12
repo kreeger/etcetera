@@ -6,7 +6,7 @@ from django.template import RequestContext
 from etcetera.repair import models as repair
 from etcetera.repair import forms as repairforms
 
-def incoming(request):
+def service_form(request):
 	if request.method == 'POST':
 		form = repairforms.ServiceForm(request.POST)
 		if form.is_valid():
@@ -26,4 +26,7 @@ def incoming(request):
 			wo.description = cd['description']
 			wo.save()
 			return HttpResponseRedirect('/thanks.html')
-	return render_to_response("/service_request.html", {}, context_instance=RequestContext(request))
+	else:
+		form = repairforms.ServiceForm()
+	context = {'form':form,}
+	return render_to_response("repair/service_form.html", context, context_instance=RequestContext(request))
