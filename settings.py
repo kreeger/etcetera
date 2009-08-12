@@ -54,6 +54,10 @@ EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 EMAIL_SUBJECT_PREFIX = '[ETCETERA] '
 
+# Login/auth settings
+LOGIN_URL = '/etcetera/login/'
+LOGIN_REDIRECT_URL = '/etcetera/'
+
 # Other Django settings
 TEMPLATE_LOADERS = (
     'django.template.loaders.filesystem.load_template_source',
