@@ -1,0 +1,11 @@
+{% extends "root.html" %}
+
+{% block title %}Uh-oh! 500{% endblock %}
+
+{% block breadcrumb %}<a href="/etcetera">Home</a> &rsaquo; Uh-oh! 500{% endblock %}
+
+{% block content %}
+	<p>You're seeing this page because there's something wrong with our server.</p>
+	<p><strong>Help us out</strong>: to make our website better (and to keep these from happening in the future), <a href="/etcetera/extras/error_email">click here to have an email sent automatically to our developers</a>. We'll get right on it.</p>
+	<p>Other than that, you'll have to try your request again later. Would you like to <a href="/etcetera">go to our home page</a>?</p>
+{% endblock %}

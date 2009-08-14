@@ -27,7 +27,7 @@ class WorkOrder(models.Model):
 	labor = models.FloatField(null=True, blank=True)
 	technician = models.ForeignKey(auth.User, blank=True, null=True)
 	tech_legacy = models.CharField(blank=True, max_length=10)
-	funding_source = models.CharField(blank=True, max_length=4, choices=constants.FUNDING_SOURCES)
+	funding_source = models.CharField(blank=True, max_length=5, choices=constants.FUNDING_SOURCES)
 	work_type = models.CharField(max_length=11, choices=constants.WORK_TYPES)
 	material_costs = models.DecimalField(max_digits=9, decimal_places=2, blank=True, null=True)
 	budget = models.CharField(blank=True, max_length=25)

@@ -77,8 +77,8 @@ def index(request, archived=False):
 	}
 	return render_to_response("service/index.html", context, context_instance=RequestContext(request))
 
-def detail(request, ticket):
-	ticket = get_object_or_404(service.WorkOrder, id=ticket)
+def detail(request, object_id):
+	ticket = get_object_or_404(service.WorkOrder, id=object_id)
 	
 	context = {
 		'object': ticket,

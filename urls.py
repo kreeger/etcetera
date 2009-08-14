@@ -34,8 +34,8 @@ urlpatterns += patterns('',
 )
 
 # For mLab resource management
-urlpatterns += patterns('etcetera.mlab.views',
-	(r'^mlab/$', 'index'),
+urlpatterns += patterns('',
+	(r'^mlab/', include('etcetera.mlab.urls')),
 )
 
 # For report generation
@@ -43,3 +43,8 @@ urlpatterns += patterns('etcetera.mlab.views',
 
 # For university structure management
 # etcetera.structure.views
+
+# For extra things
+urlpatterns += patterns('',
+	(r'^extras/', include('etcetera.extras.urls')),
+)

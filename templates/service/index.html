@@ -3,14 +3,15 @@
 
 {% block title %}Work Orders{% endblock %}
 
+{% block breadcrumb %}<a href="/etcetera">Home</a> &rsaquo; Service{% endblock %}
+
 {% block content %}
 <div id="list">   
-   <h1>{% if archived %}Archived{% else %}Active{% endif %} Work Order List <span class="small"><a href="{% if archived %}../{% else %}archive{% endif %}">view {% if archived %}active{% else %}archived{% endif %}</a></span></h1>
-   <h2 class="right"><a href="add">manually add a new work order</a></h2>
+   <h1><span class="right"><a href="add">manually add a new work order</a></span>{% if archived %}Archived{% else %}Active{% endif %} Work Order List <span class="small"><a href="{% if archived %}../{% else %}archive{% endif %}">view {% if archived %}active{% else %}archived{% endif %}</a></span></h1>
    <div id="searchform"><form action=""><input type="text" name="q" value="" id="q" /><input type="submit" name="submit" value="Search" id="submit" /></form>{% if q %} <span class="small">(<a href=".">searching for "{{ q }}" — click here to reset</a>)</span>{% endif %}</div>
    <ul>
       {% for order in paged_objects.object_list %}
-      <li><a href="{% if archived %}../{% endif %}{{ order.id }}">{{ order.last_name }}, {{ order.first_name }} — {% if order.equipment %}{{ order.equipment.make.name }} {{ order.equipment.model }} {{ order.equipment.equipment_type.name }} ({% endif %}{{ order.equipment_text }}{% if order.equipment %}){% endif %} <span class="right">{{ order.creation_date|date:'n/j/Y, g:iA' }}</span></a></li>
+      <li><a href="{% if archived %}../{% endif %}{{ order.id }}"><span class="right">{{ order.creation_date|date:'n/j/Y, g:iA' }}</span>{{ order.last_name }}, {{ order.first_name }} — {% if order.equipment %}{{ order.equipment.make.name }} {{ order.equipment.model }} {{ order.equipment.equipment_type.name }} ({% endif %}{{ order.equipment_text }}{% if order.equipment %}){% endif %}</a></li>
       {% endfor %}
    </ul>
    {% paginate %}
