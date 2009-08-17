@@ -1,10 +1,12 @@
+import datetime as dt
+
 from django.db import models
 from django.contrib.localflavor.us import models as lfus
 from django.contrib.auth import models as auth
+
 from etcetera.structure import models as structure
 from etcetera.equipment import models as equipment
 from etcetera.extras import constants
-import datetime as dt
 
 # Create your models here.
 class WorkOrder(models.Model):
@@ -21,15 +23,27 @@ class WorkOrder(models.Model):
 	creation_date = models.DateTimeField(default=dt.datetime.now, null=True)
 	needed_date = models.DateTimeField(blank=True, null=True)
 	completion_date = models.DateTimeField(blank=True, null=True)
-	priority = models.CharField(blank=True, max_length=1, choices=constants.PRIORITIES)
+	priority = models.CharField(
+		blank=True,
+		max_length=1,
+		choices=constants.PRIORITIES
+	)
 	description = models.TextField()
-	actions = models.TextField(blank=True)
-	labor = models.FloatField(null=True, blank=True)
+	actions = models.TextField('Actions taken', blank=True)
+	labor = models.FloatField('Labor costs', null=True, blank=True)
 	technician = models.ForeignKey(auth.User, blank=True, null=True)
 	tech_legacy = models.CharField(blank=True, max_length=10)
-	funding_source = models.CharField(blank=True, max_length=5, choices=constants.FUNDING_SOURCES)
+	funding_source = models.CharField(
+		blank=True,
+		max_length=5,
+		choices=constants.FUNDING_SOURCES
+	)
 	work_type = models.CharField(max_length=11, choices=constants.WORK_TYPES)
-	material_costs = models.DecimalField(max_digits=9, decimal_places=2, blank=True, null=True)
+	material_costs = models.DecimalField(max_digits=9,
+		decimal_places=2,
+		blank=True,
+		null=True
+	)
 	budget = models.CharField(blank=True, max_length=25)
 	archived = models.BooleanField()
 	
@@ -37,7 +51,8 @@ class WorkOrder(models.Model):
 		ordering = ('-creation_date','last_name',)
 	
 	def __unicode__(self):
-		return u"%s, %s (%s)" % (self.last_name, self.equipment, self.creation_date)
+		return u"%s, %s (%s)" % (self.last_name, self.equipment,
+			self.creation_date)
 	
 	def barcode_lookup(self, barcode):
 		try:

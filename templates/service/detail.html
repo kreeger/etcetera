@@ -11,33 +11,34 @@
    <h2>{% if object.completion_date %}<span class="right"><span class="head">Completed</span> {{ object.completion_date|date:'n/j/Y g:iA' }}</span>{% endif %}<span class="priority{{ object.priority }}">{{ object.priority|priority }} priority {{ object.work_type }}</span> &rsaquo; <span class="head">Created</span> {{ object.creation_date|date:'n/j/Y g:iA' }}</h2>
    <div class="right">
       <h3>Contact information</h3>
-      <ul>
-         <li><span class="head">Phone</span> {{ object.phone }}</li>
-         <li><span class="head">Email</span> <a href="mailto:{{ object.email }}">{{ object.email }}</a></li>
-      </ul>
+      <table>
+         <tr><td class="head">Phone</td><td>{{ object.phone }}</td></tr>
+         <tr><td class="head">Email</td><td><a href="mailto:{{ object.email }}">{{ object.email }}</a></td></tr>
+      </table>
    </div>
    <h3>Brief information</h3>
-   <ul>
-      <li><span class="head">Submitted by</span> {{ object.first_name }} {{ object.last_name }}</li>
-      <li><span class="head">Department</span> {{ object.department }}</li>
-      <li><span class="head">Location</span> {{ object.building.name }} {{ object.room }}</li>
-   </ul>
+   <table>
+      <tr><td class="head">Submitted by</td><td>{{ object.first_name }} {{ object.last_name }}</td></tr>
+      <tr><td class="head">Department</td><td>{{ object.department }}</td></tr>
+      <tr><td class="head">Location</td><td>{{ object.building.name }} {{ object.room }}</td></tr>
+   </table>
    <h3>Description</h3>
    <p>{{ object.description }}</p>
    <div class="right">
       <h3>Technician information</h3>
-      <ul>
-         <li><span class="head">Name</span> {% if object.technician %}{{ object.technician.first_name }} {{ object.technician.last_name }}{% else %}{{ object.tech_legacy }}{% endif %}</li>
-         {% if object.technician %}<li><span class="head">Email</span> <a href="mailto:{{ object.technician.email }}">{{ object.technician.email }}</a></li>{% endif %}
-      </ul>
+      <table>
+         <tr><td class="head">Name</td><td>{% if object.technician %}{{ object.technician.first_name }} {{ object.technician.last_name }}{% else %}{{ object.tech_legacy }}{% endif %}</td></tr>
+         {% if object.technician %}<tr><td class="head">Email</td><td><a href="mailto:{{ object.technician.email }}">{{ object.technician.email }}</a></td></tr>{% endif %}
+      </table>
    </div>
-   <h3>Labor information</h3>
+   <h3>Actions taken</h3>
    <p>{% if object.actions %}{{ object.actions }}{% else %}No actions have been performed on this ticket yet.{% endif %}</p>
    <h3>Financial information</h3>
-   <ul>
-      {% if object.labor %}<li><span class="head">Labor costs</span> {{ object.labor|money }}</li>{% endif %}
-      {% if object.material_costs %}<li><span class="head">Material costs</span> {{ object.material_costs }}</li>{% endif %}
-      {% if object.funding_source %}<li><span class="head">Funding source</span> {{ object.funding_source|funding_source }}</li>{% endif %}
-      {% if object.budget %}<li><span class="head">Budget</span> {{ object.budget }}</li>{% endif %}
+   <table>
+      {% if object.labor %}<tr><td class="head">Labor costs</td><td>{{ object.labor|money }}</td></tr>{% endif %}
+      {% if object.material_costs %}<tr><td class="head">Material costs</td><td>{{ object.material_costs|money }}</td></tr>{% endif %}
+      {% if object.funding_source %}<tr><td class="head">Funding source</td><td>{{ object.funding_source|funding_source }}</td></tr>{% endif %}
+      {% if object.budget %}<tr><td class="head">Budget</td><td>{{ object.budget }}</td></tr>{% endif %}
+   </table>
 </div>
 {% endblock %}

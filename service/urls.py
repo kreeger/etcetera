@@ -7,4 +7,5 @@ urlpatterns = patterns('',
 	(r'^$', index),
 	(r'^archive/$', index, {'archived': True}),
 	(r'^(?P<object_id>\d+)/$', detail),
+	(r'^(?P<object_id>\d+)/edit/$', edit),
 )

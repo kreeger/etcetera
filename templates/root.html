@@ -18,20 +18,22 @@
 			{% include 'includes/nav.html' %}
 		</div>
 	</div>
-	<div id="breadcrumb">
-		<div class="wrapper">
-			{% block breadcrumb %}Home{% endblock %}
-		</div>
-	</div>
-	<div id="content">
-		<div class="wrapper">
-			{% block content %}{% endblock %}
-		</div>
-	</div>
-	<div id="footer">
-		<div class="wrapper">
-			{% include 'includes/footer.html' %}
-		</div>
-	</div>
+	<div id="body">
+   	<div id="breadcrumb">
+   		<div class="wrapper">
+   			{% block breadcrumb %}Home{% endblock %}
+   		</div>
+   	</div>
+   	<div id="content">
+   		<div class="wrapper">
+   			{% block content %}{% endblock %}
+   		</div>
+   	</div>
+   	<div id="footer">
+   		<div class="wrapper">
+   			{% include 'includes/footer.html' %}
+   		</div>
+   	</div>
+   </div>
 </body>
 </html>
