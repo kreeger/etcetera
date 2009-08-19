@@ -40,7 +40,7 @@ class Equipment(models.Model):
 	custname = models.CharField(blank=True, max_length=100) #for legacy support
 	department = models.CharField(blank=True, max_length=100)
 	on_weekly_checklist = models.BooleanField(default=False) #req
-	make = models.ForeignKey(Make, null=True)
+	make = models.ForeignKey(Make, null=True, blank=True)
 	model = models.CharField(blank=True, max_length=100)
 	received_from = models.CharField(blank=True, max_length=100)
 	received_date = models.DateField(default=dt.datetime.today, blank=True, null=True)
