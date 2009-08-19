@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.localflavor.us import models as lfus
+from django.contrib.auth.models import User
 
 # Defines university structure regarding people and places.
 

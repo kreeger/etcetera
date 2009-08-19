@@ -44,6 +44,10 @@ div#content h1 span.small { font-size: .55em; padding-left: .3em; }
 div#content h1 span.right { font-size: .55em; margin: 0; padding-top: 9px; }
 div#content h2 { font-size: 1.2em; }
 
+div.banner { display: block; padding: 8px 8px 8px 55px; margin-bottom: 10px; -moz-border-radius-bottomleft: 10px; -moz-border-radius-topright: 10px; -webkit-border-bottom-left-radius: 10px; -webkit-border-top-right-radius: 10px; }
+div#alert { background: #ffcb57 url(../images/icons/alert48.png) no-repeat 3px -8px; }
+div#notify { background: #cccdff url(../images/icons/notify48.png) no-repeat 3px -8px; }
+
 div#searchform { height: 10px; margin-bottom: 20px; padding: 0px; width: 100%; }
 div#searchform form { display: inline-block; }
 div#searchform input#q { width: 300px; margin: 0; }

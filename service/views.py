@@ -30,11 +30,12 @@ def service_form(request):
 			wo.building = cd['building']
 			wo.room = cd['room']
 			wo.equipment_text = cd['equipment_text']
-			wo.equipment = wo.barcode_lookup(cd['barcode'])
+			if cd['barcode']:
+				wo.equipment = wo.barcode_lookup(cd['barcode'])
 			wo.description = cd['description']
 			wo.work_type = cd['work_type']
 			wo.save()
-			wo_mail(wo)
+			wo_mail(wo, cd['coordinator_check'])
 			return HttpResponseRedirect('/thanks.html')
 	# If data is not being sent in POST, our form is an empty one.
 	else:
@@ -126,6 +127,7 @@ def detail(request, object_id):
 		context_instance=RequestContext(request)
 	)
 
+@login_required
 def edit(request, object_id):	
 	wo = get_object_or_404(service.WorkOrder, id=object_id)
 	if request.method == 'POST':
@@ -165,3 +167,14 @@ def edit(request, object_id):
 		context,
 		context_instance=RequestContext(request)
 	)
+
+@login_required
+def pickup(request, object_id):
+	# Get the ticket from the URL, bundle it in a context, and send it out.
+	wo = get_object_or_404(service.WorkOrder, id=object_id)
+	wo.technician = request.user
+	wo.save()
+	return HttpResponseRedirect(reverse(
+		'etcetera.service.views.detail',
+		args=(wo.id,),
+	))

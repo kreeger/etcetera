@@ -2,8 +2,9 @@ from django.core.mail import send_mail
 from django.contrib.auth.models import Group, User
 from etcetera.settings import EMAIL_ADDRESS
 
-def wo_mail(work_order):
-	email_body = "A new work order (#%i) created by %s %s has been entered into Etcetera. Click here to view this ticket: http://etc.missouristate.edu/etcetera/service/%i.\n\nThanks!\n- Etcetera" % (
+def wo_mail(work_order, coordinator_check):
+	email_body = "A new %s work order (#%i) created by %s %s has been entered into Etcetera. Click here to view this ticket: http://etc.missouristate.edu/etcetera/service/%i.\n\nThanks!\n- Etcetera" % (
+		work_order.work_type,
 		work_order.id,
 		work_order.first_name,
 		work_order.last_name,
@@ -20,9 +21,31 @@ def wo_mail(work_order):
 		emails,
 		fail_silently=False
 	)
-	
-	email_subject = "We've received your work order (#%i) for the %s" % (
-		work_order.id, work_order.equipment_text,
+	if not coordinator_check:
+		email_body = "A new %s work order (#%i) created by %s %s has been entered into Etcetera, which requires the attention of you, the classroom coordinator. Click here to view this ticket: http://etc.missouristate.edu/etcetera/service/%i.\n\nName:\t%s %s\nDepartment:\t%s\nPhone:\t%s\nEmail:\t%s\nLocation:\t%s %s\nDescription:\t%s\n\nThanks!\n- Etcetera" % (
+			work_order.work_type,
+			work_order.id,
+			work_order.first_name,
+			work_order.last_name,
+			work_order.id,
+			work_order.first_name,
+			work_order.last_name,
+			work_order.department,
+			work_order.phone,
+			work_order.email,
+			work_order.building,
+			work_order.room,
+			work_order.description,
+		)
+		send_mail(
+			email_subject,
+			email_body,
+			EMAIL_ADDRESS,
+			['benjaminkreeger@missouristate.edu'],
+			fail_silently=False
+		)
+	email_subject = "We've received your work order (#%i)" % (
+		work_order.id,
 	)
 	email_body = "%s,\nYour work order has been submitted successfully and our technicians have been notified.\n\nYou will be periodically notified via email if there's a change in status on your ticket. If at any other time you'd like to view your ticket, click here: http://etc.missouristate.edu/etcetera/service/%i.\n\nRegards,\nEducational Technology Center\nMissouri State University" % (
 		work_order.first_name,
