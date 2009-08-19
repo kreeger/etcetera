@@ -1,94 +1,85 @@
 /* @override 
 	http://localhost/_media/css/screen.css
-	http://localhost:8000/_media/css/screen.css
 */
+body { background-color: #FFF; margin: 0; padding: 0; font: .9em "Helvetica Neue", Helvetica, Arial, sans-serif; z-index: -300; }
+a { color: #4A0010; text-decoration: none; }
+a:hover { text-decoration: underline; }
+a:active { color: #CCC; }
+input { font-family: "Helvetica Neue", Helvetica, Arial, sans-serif; }
 
-body {
-	background-color: #FFF;
-	font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-	margin: 0;
-	padding: 0;
-}
-a {
-	color: #4A0010;
-	text-decoration: none;
-}
-a:hover {
-	text-decoration: underline;
-}
-a:active {
-	color: #CCC;
-}
-.wrapper {
-	width: 950px;
-	margin: 0px auto;
-}
-div#header {
-	background-image: url(../images/header.png);
-	height: 120px;
-	border-bottom: 1px solid #333;
-}
-div#header p, div#header h1 {
-	margin: 0;
-	color: #EEE;
-}
-div#header a {
-	color: #BBB;
-}
-div#header h1 {
-	height: 120px;
-	background: url(../images/etceteralogo.png) no-repeat;
-}
-div#header p {
-	float: right;
-	font-size: 0.8em;
-	padding-top: 100px;
-}
-div#nav {
-	background-color: #D1D1D1;
-	text-align: center;
-}
-div#nav ul {
-	margin: 0;
-	list-style-type: none;
-	padding: 0;
-}
-div#nav ul li {
-	padding: 0;
-	margin: 0;
-	display: inline;
-}
-div#nav ul li a {
-	padding: 7px 15px;
-	margin: 0;
-	display: inline-block;
-	text-decoration: none;
-	color: #000;
-	text-transform: lowercase;
-}
-div#nav ul li a:hover {
-	background: url(../images/nav_r.png) repeat-x;
-}
-div#nav ul li a#admin {
-	color: #4A0010;
-	font-style: italic;
-}
-div#content div.wrapper {
-	margin-top: 10px;
-	padding: 10px;
-	background-color: #F4F4F4;
-	-moz-border-radius: 10px;
-	-webkit-border-radius: 10px;
-	border: 1px solid #AAA;
-}
-div#content p {
-	margin: 0px;
-	padding: 5px 0;
-}
-div#footer {
-	margin-top: 5px;
-	padding-top: 5px;
-}
-div#footer h4 {
-	margin: 0;
-}
+.wrapper { width: 950px; margin: 0px auto; }
+.errorlist { color: #f00; font-size: .9em; }
+.right { float: right; }
+.small { font-size: .8em; }
+.head { color: #808080; text-transform: lowercase; text-align: right; }
+.priority1 { color: #f00; }
+.priority2 { color: #ff7900; }
+.priority3 { color: #7e8100; }
+.priority4 { color: #008400; }
+.priority5 { color: #1f00ff; }
+
+div#header { background-image: url(../images/header.png); height: 120px; border-bottom: 1px solid #333; }
+div#header p, div#header h1 { margin: 0; color: #EEE; }
+div#header a { color: #BBB; }
+div#header h1 { height: 120px; background: url(../images/etceteralogo.png) no-repeat; }
+div#header p { float: right; font-size: 0.8em; padding-top: 100px; }
+
+div#nav { text-align: center; background-color: #E7E7E7; }
+div#nav div.wrapper { background-color: #D1D1D1; padding: 0px 10px; border-left: 1px solid #AAA; border-right: 1px solid #AAA; }
+div#nav ul { margin: 0; list-style-type: none; padding: 0; }
+div#nav ul li { padding: 0; margin: 0; display: inline; }
+div#nav ul li a { padding: 7px 15px; margin: 0; display: inline-block; text-decoration: none; color: #000; text-transform: lowercase; }
+div#nav ul li a:hover { background: url(../images/nav_r.png) repeat-x; }
+div#nav ul li a#admin { color: #4A0010; font-style: italic; }
+
+div#breadcrumb { font-size: .8em; }
+div#breadcrumb div.wrapper { padding: 4px 10px; border-left: 1px solid #AAA; border-right: 1px solid #AAA; background: url(../images/breadback.png) repeat-x; }
+
+div#body { background: url(../images/backtop.png) repeat-x; }
+
+div#content div.wrapper { padding: 10px; background-color: #F4F4F4; -moz-border-radius-bottomleft: 10px; -moz-border-radius-bottomright: 10px; -webkit-border-bottom-left-radius: 10px; -webkit-border-bottom-right-radius: 10px; border-left: 1px solid #AAA; border-right: 1px solid #AAA; border-bottom: 1px solid #AAA; }
+div#content p { margin: 0 0 10px 0; padding: 5px 0; }
+div#content h1 { border-bottom: 1px solid #333; font-size: 1.5em; margin-top: 5px; }
+div#content h1 span.small { font-size: .55em; padding-left: .3em; }
+div#content h1 span.right { font-size: .55em; margin: 0; padding-top: 9px; }
+div#content h2 { font-size: 1.2em; }
+
+div#searchform { height: 10px; margin-bottom: 20px; padding: 0px; width: 100%; }
+div#searchform form { display: inline-block; }
+div#searchform input#q { width: 300px; margin: 0; }
+div#searchform input#submit { margin-left: 5px; }
+
+div#list ul { display: block; list-style-type: none; padding: 0; border: 1px solid #AAA; margin-top: 3px; }
+div#list ul a { display: block; padding: 7px 10px; }
+div#list ul a:hover { background-color: #4A0010; color: #CCC; text-decoration: none; }
+
+div#detail h1 { margin-bottom: 0; }
+div#detail h1 span.head { color: #AAA; }
+div#detail h2 { margin: 0 0 10px 0; padding: 3px; background-color: #DEDEDE; font-size: .8em; }
+div#detail h3 { margin: 10px 0; border-bottom: 1px solid #888; color: #444; font-weight: normal; font-style: normal; }
+div#detail div.right { width: 450px; margin-left: 20px; }
+div#detail div.right h3 { margin-top: 0px; }
+div#detail table { font-weight: bold; font-size: 1.1em; }
+div#detail table#toprow { width: 100%; }
+div#detail table#toprow input { width: auto; }
+div#detail td#barcode { text-align: right; }
+div#detail table td.head { width: 115px; }
+div#detail div.right table td.head { width: 80px; }
+div#detail form table input { width: 100%; }
+div#detail form div.right table { width: 100%; }
+div#detail form textarea { width: 100%; padding: 5px;}
+
+div#detail form input#id_equipment_text { width: 450px; }
+div#detail form input#save { border: 0px; background-color: transparent; font-size: 1em; padding: 0; font-weight: bold; margin: 0; color: #4A0010; }
+div#detail form input#save:hover { text-decoration: underline; cursor: pointer; }
+div#detail form select#id_building { width: 200px; }
+div#detail form select#id_technician { width: 100%; }
+div#detail form textarea#id_actions { width: 49%; }
+
+table.pagination { color: #CCC; width: 100%; }
+table.pagination td#previous { width: 15%; }
+table.pagination td#current { text-align: center; color: #000; }
+table.pagination td#next { text-align: right; width: 15%; }
+
+div#footer { margin-top: 5px; padding-top: 5px; }
+div#footer h4 { margin: 0; text-align: center; color: #b3b3b3; font-size: .7em; font-weight: normal; font-style: normal; }
