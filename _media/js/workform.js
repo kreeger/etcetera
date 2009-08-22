@@ -1,8 +1,10 @@
 $(document).ready(function() {
   $.viewMap = {
-    'install' : $([]),
+    'install' : $('#coordinator_row'),
     'repair' : $('#barcode_row, #equipment_row')
   };
+
+	$('#coordinator_row').hide();
 
   $('#id_work_type').change(function() {
     // hide all

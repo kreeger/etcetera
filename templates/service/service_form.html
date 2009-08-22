@@ -35,7 +35,7 @@
    	   <tr{% if form.room.errors %} class="errorlist"{% endif %}><th>{{ form.room.label }}</th><td>{{ form.room }}</td>
       		{% if form.room.errors %}<td>{{ form.room.errors }}{% else %}<td class="note">{{ form.room.help_text }}{% endif %}</td></tr>
 				
-			<tr{% if form.coordinator_check.errors %} class="errorlist"{% endif %}><th colspan="2">{{ form.coordinator_check.label }} {{ form.coordinator_check }}</th>
+			<tr id="coordinator_row"{% if form.coordinator_check.errors %} class="errorlist"{% endif %}><th colspan="2">{{ form.coordinator_check.label }} {{ form.coordinator_check }}</th>
       		{% if form.coordinator_check.errors %}<td>{{ form.coordinator_check.errors }}{% else %}<td class="note">{{ form.coordinator_check.help_text }}{% endif %}</td></tr>
 				
 			<tr id="equipment_row"{% if form.equipment_text.errors %} class="errorlist"{% endif %}><th>{{ form.equipment_text.label }}</th><td>{{ form.equipment_text }}</td>
