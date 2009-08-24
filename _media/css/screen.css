@@ -8,7 +8,7 @@ a:active { color: #CCC; }
 input { font-family: "Helvetica Neue", Helvetica, Arial, sans-serif; }
 
 .wrapper { width: 950px; margin: 0px auto; }
-.errorlist { color: #f00; font-size: .9em; }
+.errorlist { color: #f00; font-size: .9em; background-color: #FFBBBB; }
 .right { float: right; }
 .small { font-size: .8em; }
 .head { color: #808080; text-transform: lowercase; text-align: right; }

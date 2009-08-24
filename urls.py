@@ -1,25 +1,24 @@
 from django.conf.urls.defaults import *
 from django.contrib.auth.views import login, logout
+from django.contrib import admin
 
 from etcetera.settings import SITE_ROOT, DEBUG
 
-from django.contrib import admin
 admin.autodiscover()
 
 # For master/general use.
 urlpatterns = patterns('',
-    (r'^admin/', include(admin.site.urls)),
-	(r'^login/$', login),
-	(r'^logout/$', logout),
-	(r'^profile/$', 'etcetera.views.redirect_to_main'),
-	(r'^$', 'etcetera.views.main'),
+    url(r'^admin/', include(admin.site.urls)),
+	url(r'^login/$', login, name="etcetera-login"),
+	url(r'^logout/$', logout, name="etcetera-logout"),
+	url(r'^profile/$', 'etcetera.views.redirect_to_main', name="etcetera-profile"),
+	url(r'^$', 'etcetera.views.main', name="etcetera-home"),
 )
 
-# For serving media content, only when in development.
+# For only when in development.
 if DEBUG:
 	urlpatterns += patterns('',
-		(r'^_media/(?P<path>.*)$', 'django.views.static.serve', {'document_root': (SITE_ROOT + '/_media')}),
-		(r'^$', 'etcetera.views.redirect_to_main'),
+		url(r'^_media/(?P<path>.*)$', 'django.views.static.serve', {'document_root': (SITE_ROOT + '/_media')}),
 	)
 
 # For equipment management.
@@ -30,12 +29,12 @@ if DEBUG:
 
 # For service management.
 urlpatterns += patterns('',
-	(r'^service/', include('etcetera.service.urls')),
+	url(r'^service/', include('etcetera.service.urls')),
 )
 
 # For mLab resource management.
 urlpatterns += patterns('',
-	(r'^mlab/', include('etcetera.mlab.urls')),
+	url(r'^mlab/', include('etcetera.mlab.urls')),
 )
 
 # For report generation.
@@ -46,5 +45,5 @@ urlpatterns += patterns('',
 
 # For extra things.
 urlpatterns += patterns('',
-	(r'^extras/', include('etcetera.extras.urls')),
+	url(r'^extras/', include('etcetera.extras.urls')),
 )

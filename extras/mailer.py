@@ -44,10 +44,13 @@ def wo_mail(work_order, coordinator_check):
 			['benjaminkreeger@missouristate.edu'],
 			fail_silently=False
 		)
-	email_subject = "We've received your work order (#%i)" % (
+	wo_mail_create(work_order)
+
+def wo_mail_create(work_order):
+	email_subject = "A new work order (#%i) has been created for you" % (
 		work_order.id,
 	)
-	email_body = "%s,\nYour work order has been submitted successfully and our technicians have been notified.\n\nYou will be periodically notified via email if there's a change in status on your ticket. If at any other time you'd like to view your ticket, click here: http://etc.missouristate.edu/etcetera/service/%i.\n\nRegards,\nEducational Technology Center\nMissouri State University" % (
+	email_body = "%s,\nYour new work order has been submitted successfully and our technicians have been notified.\n\nYou will be periodically notified via email if there's a change in status on your ticket. If at any other time you'd like to view your ticket, click here: http://etc.missouristate.edu/etcetera/service/%i.\n\nRegards,\nEducational Technology Center\nMissouri State University" % (
 		work_order.first_name,
 		work_order.id
 	)

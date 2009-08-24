@@ -10,7 +10,7 @@ from django.template import RequestContext
 from etcetera.service import models as service
 from etcetera.service import forms as woforms
 from etcetera.equipment import models as equipment
-from etcetera.extras.mailer import wo_mail, wo_mail_update
+from etcetera.extras.mailer import wo_mail, wo_mail_update, wo_mail_create
 from etcetera.extras.search import get_query
 
 def service_form(request):
@@ -178,3 +178,30 @@ def pickup(request, object_id):
 		'etcetera.service.views.detail',
 		args=(wo.id,),
 	))
+
+@login_required
+def new(request):
+	if request.method == 'POST':
+		form = woforms.WorkOrderModelForm(request.POST)
+		if form.is_valid():
+			cd = form.cleaned_data
+			if cd['barcode']:
+				cd['equipment'] = wo.barcode_lookup(cd['barcode'])
+			else:
+				cd['equipment'] = None
+			wo = form.save()
+			wo_mail_create(wo)
+			return HttpResponseRedirect(reverse(
+				'etcetera.service.views.detail',
+				args=(wo.id,),
+			))
+	else:
+		form = woforms.WorkOrderModelForm()
+	context = {
+		'form': form,
+	}
+	return render_to_response(
+		"service/new.html",
+		context,
+		context_instance=RequestContext(request)
+	)
