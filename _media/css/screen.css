@@ -56,11 +56,15 @@ div#searchform input#submit { margin-left: 5px; }
 
 div#list ul { display: block; list-style-type: none; padding: 0; border: 1px solid #AAA; margin-top: 3px; }
 div#list table#list { margin: 0px; padding: 0px; border-spacing: 0px; border: 1px solid #AAA; font-size: .85em; width: 100%; }
-div#list table#list tr a { display: block; padding-top: 5px; padding-bottom: 5px; }
+div#list tr#datarow a, div#list tr#headerrow td { padding-top: 5px; padding-bottom: 5px; }
+div#list tr#headerrow { background-color: #DDD; }
+div#list tr#headerrow td { border-bottom: 1px solid #AAA; text-align: left; font-weight: bold; }
+div#list tr#datarow a { display: block; }
 div#list table#list td:first-child { padding-left: 8px; font-weight: bold; }
-div#list table#list td:last-child { padding-right: 8px; font-size: .6em; }
-div#list table#list tr:hover { background-color: #4A0010; }
-div#list table#list tr:hover a { color: #CCC; text-decoration: none; }
+div#list table#list td:last-child { padding-right: 8px; text-align: right; }
+div#list table#list tr#datarow td:last-child { font-size: .8em; }
+div#list tr#datarow:hover { background-color: #4A0010; }
+div#list tr#datarow:hover a { color: #CCC; text-decoration: none; }
 
 div#detail h1 { margin-bottom: 0; }
 div#detail h1 span.head { color: #AAA; }
