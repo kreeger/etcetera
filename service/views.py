@@ -84,6 +84,7 @@ def index(request, archived=False):
 				'equipment_text',
 				'building__name',
 				'room',
+				'location_text',
 				'description',
 			]
 		)

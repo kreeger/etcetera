@@ -16,22 +16,23 @@
    <div class="right">
       <h3>Contact information</h3>
       <table>
-         <tr><td class="head">Phone</td><td>{{ object.phone }}</td></tr>
-         <tr><td class="head">Email</td><td><a href="mailto:{{ object.email }}">{{ object.email }}</a></td></tr>
+         {% if object.phone %}<tr><td class="head">Phone</td><td>{{ object.phone }}</td></tr>{% endif %}
+         {% if object.email %}<tr><td class="head">Email</td><td><a href="mailto:{{ object.email }}">{{ object.email }}</a></td></tr>{% endif %}
       </table>
    </div>
    <h3>Brief information</h3>
    <table>
       <tr><td class="head">Submitted by</td><td>{{ object.first_name }} {{ object.last_name }}</td></tr>
-      <tr><td class="head">Department</td><td>{{ object.department }}</td></tr>
-      <tr><td class="head">Location</td><td>{{ object.building.name }} {{ object.room }}</td></tr>
+      {% if object.department %}<tr><td class="head">Department</td><td>{{ object.department }}</td></tr>{% endif %}
+      {% if object.building %}<tr><td class="head">Location</td><td>{{ object.building.name }} {{ object.room }}</td></tr>{% endif %}
+      {% if object.location_text %}<tr><td class="head">Other location</td><td>{{ object.location_text }}</td></tr>{% endif %}
    </table>
    <h3>Description</h3>
    <p>{{ object.description }}</p>
    <div class="right">
       <h3>Technician information</h3>
       <table>
-         <tr><td class="head">Name</td><td>{% if object.technician %}{{ object.technician.first_name }} {{ object.technician.last_name }}{% else %}{{ object.tech_legacy }}{% endif %}</td></tr>
+         {% if object.technician or object.tech_legacy %}<tr><td class="head">Name</td><td>{% if object.technician %}{{ object.technician.first_name }} {{ object.technician.last_name }}{% else %}{{ object.tech_legacy }}{% endif %}</td></tr>{% endif %}
          {% if object.technician %}<tr><td class="head">Email</td><td><a href="mailto:{{ object.technician.email }}">{{ object.technician.email }}</a></td></tr>{% endif %}
       </table>
    </div>

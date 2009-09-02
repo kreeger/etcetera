@@ -27,6 +27,7 @@
       <tr{% if form.last_name.errors %} class="errorlist"{% endif %}><td class="head">{{ form.last_name.label }}</td><td colspan="2">{{ form.last_name }}{{ form.last_name.errors }}</td></tr>
       <tr{% if form.department.errors %} class="errorlist"{% endif %}><td class="head">{{ form.department.label }}</td><td colspan="2">{{ form.department }}{{ form.department.errors }}</td></tr>
       <tr><td class="head"{% if form.building.errors %} class="errorlist"{% endif %}>Location</td><td>{{ form.building }}{{ form.building.errors }}</td><td{% if form.room.errors %} class="errorlist"{% endif %}>{{ form.room }}{{ form.room.errors }}</td></tr>
+      <tr><td class="head"{% if form.location_text.errors %} class="errorlist"{% endif %}>Other location</td><td>{{ form.location_text }}{{ form.location_text.errors }}</td></tr>
    </table>
    <h3>{{ form.description.label }}</h3>
    <p{% if form.description.errors %} class="errorlist"{% endif %}>{{ form.description }}{{ form.description.errors }}</p>
