@@ -87,8 +87,8 @@ div#detail form select#id_building { width: 200px; }
 div#detail form select#id_technician { width: 100%; }
 div#detail form textarea#id_actions { width: 49%; }
 
-div.post h2 { border-bottom: 1px solid #555; margin: 0; }
-div#content div.post p { border-bottom: 1px dotted #AAA; }
+div#blog h2 { border-bottom: 1px solid #555; margin: 0; }
+div#blog div.post { border-bottom: 1px dotted #AAA; padding: 5px 0; }
 
 table.pagination { color: #CCC; width: 100%; }
 table.pagination td#previous { width: 15%; }
