@@ -1,6 +1,4 @@
-/* @override 
-	http://localhost/_media/css/screen.css
-*/
+/* @override http://localhost/_media/css/screen.css */
 body { background-color: #FFF; margin: 0; padding: 0; font: .9em "Helvetica Neue", Helvetica, Arial, sans-serif; z-index: -300; }
 a { color: #4A0010; text-decoration: none; }
 a:hover { text-decoration: underline; }
@@ -11,7 +9,7 @@ input { font-family: "Helvetica Neue", Helvetica, Arial, sans-serif; }
 .errorlist { color: #f00; font-size: .9em; background-color: #FFBBBB; }
 .right { float: right; }
 .small { font-size: .8em; }
-.head { color: #808080; text-transform: lowercase; text-align: right; }
+.head { color: #808080; text-transform: lowercase; text-align: right; font-weight: normal; font-style: normal; }
 .priority1 { color: #f00; }
 .priority2 { color: #ff7900; }
 .priority3 { color: #7e8100; }
@@ -88,6 +86,9 @@ div#detail form input#save:hover { text-decoration: underline; cursor: pointer; 
 div#detail form select#id_building { width: 200px; }
 div#detail form select#id_technician { width: 100%; }
 div#detail form textarea#id_actions { width: 49%; }
+
+div.post h2 { border-bottom: 1px solid #555; margin: 0; }
+div#content div.post p { border-bottom: 1px dotted #AAA; }
 
 table.pagination { color: #CCC; width: 100%; }
 table.pagination td#previous { width: 15%; }

@@ -12,7 +12,6 @@ urlpatterns = patterns('',
 	url(r'^login/$', login, name="etcetera-login"),
 	url(r'^logout/$', logout, name="etcetera-logout"),
 	url(r'^profile/$', 'etcetera.views.redirect_to_main', name="etcetera-profile"),
-	url(r'^$', 'etcetera.views.main', name="etcetera-home"),
 )
 
 # For only when in development.
@@ -46,4 +45,5 @@ urlpatterns += patterns('',
 # For extra things.
 urlpatterns += patterns('',
 	url(r'^extras/', include('etcetera.extras.urls')),
+	url(r'^$', 'etcetera.extras.views.index', name="etcetera-home"),
 )
