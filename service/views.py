@@ -89,9 +89,14 @@ def index(request, archived=False):
 			]
 		)
 		# I'm keeping this longer than 80col because it's a Django filter.
-		paged_objects = service.WorkOrder.objects.filter(service_query).filter(archived=archived).order_by('-creation_date')
+		paged_objects = service.WorkOrder.objects.filter(service_query).filter(archived=archived)
 	else:
 		paged_objects = service.WorkOrder.objects.filter(archived=archived)
+	
+	if archived:
+		paged_objects = paged_objects.order_by('-completion_date')
+	else:
+		paged_objects = paged_objects.order_by('-creation_date')
 	
 	# Repackage everything into paged_objects using Paginator.
 	paginator = Paginator(paged_objects, 20)
@@ -135,13 +140,12 @@ def edit(request, object_id):
 		form = woforms.WorkOrderModelForm(request.POST, instance=wo)
 		if form.is_valid():
 			cd = form.cleaned_data
-			if cd['complete']:
-				if wo.completion_date:
-					cd['completion_date'] = None;
-				else:
-					cd['completion_date'] = dt.datetime.now()
+			if cd['archived']:
+				cd['completion_date'] = dt.datetime.now()
 			else:
 				cd['completion_date'] = wo.completion_date
+			if cd['uncomplete']:
+				cd['completion_date'] = None;
 			if cd['barcode']:
 				cd['equipment'] = wo.barcode_lookup(cd['barcode'])
 			else:

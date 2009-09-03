@@ -3,7 +3,7 @@
 
 {% block title %}editing WO #{{ object.id }}{% endblock %}
 
-{% block breadcrumb %}<a href="{% url etcetera-home %}">Home</a> &rsaquo; <a href="{% if object.archived %}{% url service-archive %}{% else %}{% url service-index %}{% endif %}">Service</a> &rsaquo; <a href="{% url service-detail object.id %}">Work Order {{ object.id }}</a> &rsaquo; Edit{% endblock %}
+{% block breadcrumb %}<a href="{% url etcetera-home %}">Home</a> &rsaquo; <a href="{% if object.archived %}{% url service-archive %}{% else %}{% url service-index %}{% endif %}">Service{% if object.archived %} Archive{% endif %}</a> &rsaquo; <a href="{% url service-detail object.id %}">Work Order {{ object.id }}</a> &rsaquo; Edit{% endblock %}
 
 {% block content %}
 <div id="detail">
@@ -13,7 +13,7 @@
       <tr><td{% if form.equipment_text.errors %} class="errorlist"{% endif %}><span class="head">Equipment description</span> {{ form.equipment_text }}{{ form.equipment_text.errors }}</td><td id="barcode"{% if form.barcode.errors %} class="errorlist"{% endif %}><span class="head">{{ form.barcode.label }}</span> {{ form.barcode }}{{ form.barcode.errors }}</td></tr>
    </table>
    
-   <h2><span class="right"><span class="head">completed{% if not object.completion_date %}?</span> {{ form.complete }}{% else %}</span> {{ object.completion_date|date:'n/j/Y g:iA' }} (un-complete{{ form.complete }}){% endif %}</span>{% if form.priority.errors %}<span class="errorlist">{% endif %}{{ form.priority }} priority{{ form.priority.errors }}{% if form.priority.errors %}</span>{% endif %} {% if form.work_type.errors %}<span class="errorlist">{% endif %}{{ form.work_type }}{{ form.work_type.errors }}{% if form.work_type.errors %}</span>{% endif %} &rsaquo; <span class="head">Created</span> {{ object.creation_date|date:'n/j/Y g:iA' }}</h2>
+   <h2><span class="right"><span class="head">completed{% if not object.completion_date %}?</span> {{ form.archived }}{% else %}</span> {{ object.completion_date|date:'n/j/Y g:iA' }} (un-complete{{ form.uncomplete }}){% endif %}</span>{% if form.priority.errors %}<span class="errorlist">{% endif %}{{ form.priority }} priority{{ form.priority.errors }}{% if form.priority.errors %}</span>{% endif %} {% if form.work_type.errors %}<span class="errorlist">{% endif %}{{ form.work_type }}{{ form.work_type.errors }}{% if form.work_type.errors %}</span>{% endif %} &rsaquo; <span class="head">Created</span> {{ object.creation_date|date:'n/j/Y g:iA' }}</h2>
    <div class="right">
       <h3>Contact information</h3>
       <table>
@@ -27,7 +27,7 @@
       <tr{% if form.last_name.errors %} class="errorlist"{% endif %}><td class="head">{{ form.last_name.label }}</td><td colspan="2">{{ form.last_name }}{{ form.last_name.errors }}</td></tr>
       <tr{% if form.department.errors %} class="errorlist"{% endif %}><td class="head">{{ form.department.label }}</td><td colspan="2">{{ form.department }}{{ form.department.errors }}</td></tr>
       <tr><td class="head"{% if form.building.errors %} class="errorlist"{% endif %}>Location</td><td>{{ form.building }}{{ form.building.errors }}</td><td{% if form.room.errors %} class="errorlist"{% endif %}>{{ form.room }}{{ form.room.errors }}</td></tr>
-      <tr><td class="head"{% if form.location_text.errors %} class="errorlist"{% endif %}>Other location</td><td>{{ form.location_text }}{{ form.location_text.errors }}</td></tr>
+      <tr><td class="head"{% if form.location_text.errors %} class="errorlist"{% endif %}>Other location</td><td colspan="2">{{ form.location_text }}{{ form.location_text.errors }}</td></tr>
    </table>
    <h3>{{ form.description.label }}</h3>
    <p{% if form.description.errors %} class="errorlist"{% endif %}>{{ form.description }}{{ form.description.errors }}</p>

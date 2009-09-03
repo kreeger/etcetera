@@ -3,7 +3,7 @@
 
 {% block title %}WO #{{ object.id }}{% endblock %}
 
-{% block breadcrumb %}<a href="{% url etcetera-home %}">Home</a> &rsaquo; <a href="{% if object.archived %}{% url service-archive %}{% else %}{% url service-index %}{% endif %}">Service</a> &rsaquo; Work Order {{ object.id }}{% endblock %}
+{% block breadcrumb %}<a href="{% url etcetera-home %}">Home</a> &rsaquo; <a href="{% if object.archived %}{% url service-archive %}{% else %}{% url service-index %}{% endif %}">Service{% if object.archived %} Archive{% endif %}</a> &rsaquo; Work Order {{ object.id }}{% endblock %}
 
 {% block content %}
 <div id="detail">

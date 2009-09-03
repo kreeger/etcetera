@@ -61,9 +61,7 @@ class ServiceForm(forms.Form):
 	)
 
 class WorkOrderModelForm(forms.ModelForm):
-	complete = forms.BooleanField(required=False)
-	# I need to find a way to get the equipment object from the 'instance'
-	# passed to this and make its barcode the default value for this field.
+	uncomplete = forms.BooleanField(required=False)
 	barcode = forms.CharField(
 		label="ETC Barcode",
 		max_length=6,

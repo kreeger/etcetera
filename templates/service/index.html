@@ -10,7 +10,7 @@
    </script>
 {% endblock %}
 
-{% block breadcrumb %}<a href="{% url etcetera-home %}">Home</a> &rsaquo; Service{% endblock %}
+{% block breadcrumb %}<a href="{% url etcetera-home %}">Home</a> &rsaquo; Service{% if archived %} Archive{% endif %}{% endblock %}
 
 {% block content %}
 
@@ -31,7 +31,7 @@
          <td>Location</td>
          <td>Priority</td>
          <td>Work type</td>
-         <td>Creation date</th>
+         <td>{% if archived %}Completion{% else %}Creation{% endif %} date</th>
       </tr>
       {% for object in paged_objects.object_list %}
       <tr id="datarow">
@@ -41,7 +41,7 @@
          <td><a href="{% url service-detail object.id %}">{% if object.building %}{{ object.building.abbreviation }} {{ object.room }}{% else %}{{ object.location_text }}{% endif %}</a></td>
          <td <a href="{% url service-detail object.id %}" class="priority{{ object.priority }}">{{ object.priority|priority }}</td>
          <td><a href="{% url service-detail object.id %}">{{ object.work_type }}</a></td>
-         <td><a href="{% url service-detail object.id %}">{{ object.creation_date|date:'n/j/Y g:iA' }}</a></td>
+         <td><a href="{% url service-detail object.id %}">{% if archived %}{{ object.completion_date|date:'n/j/Y g:iA' }}{% else %}{{ object.creation_date|date:'n/j/Y g:iA' }}{% endif %}</a></td>
       </tr>
       {% endfor %}
    </table>
