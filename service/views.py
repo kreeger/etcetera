@@ -151,7 +151,7 @@ def edit(request, object_id):
 			else:
 				cd['equipment'] = None
 			form.save()
-			wo_mail_update(wo)
+			#wo_mail_update(wo)
 			return HttpResponseRedirect(reverse(
 				'etcetera.service.views.detail',
 				args=(wo.id,),
