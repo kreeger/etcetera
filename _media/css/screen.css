@@ -87,6 +87,11 @@ div#detail form select#id_building { width: 200px; }
 div#detail form select#id_technician { width: 100%; }
 div#detail form textarea#id_actions { width: 49%; }
 
+div#detail table.profile { width: 100%; margin-top: 5px;}
+div#detail table.profile img { width: 200px; -webkit-border-radius: 10px; -moz-border-radius: 10px; border: 1px solid #CCC; }
+div#detail table.profile td:first-child { width: 200px; }
+div#detail table.profile td:last-child { width: 100%; vertical-align: top; text-align: left; }
+
 div#blog h2 { border-bottom: 1px solid #555; margin: 0; }
 div#blog div.post { border-bottom: 1px dotted #AAA; padding: 5px 0; }
 

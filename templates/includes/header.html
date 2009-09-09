@@ -1,5 +1,5 @@
 <p>{% if user.is_authenticated %}
-		Welcome, <a href="/etcetera/profile">{% firstof user.first_name user %}</a>. <a href="{% url etcetera-logout %}">Logout?</a>
+		Welcome, <a href="{% url etcetera-user user.username %}">{% firstof user.first_name user %}</a>. <a href="{% url etcetera-logout %}">Logout?</a>
 {% else %}
 	Welcome. <a href="{% url etcetera-login %}">Login</a>?
 {% endif %}</p>

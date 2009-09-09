@@ -152,8 +152,12 @@ def edit(request, object_id):
 				cd['equipment'] = None
 			form.save()
 			#wo_mail_update(wo)
+			if cd['archived']:
+				return HttpResponseRedirect(reverse(
+					'service-index',
+				))
 			return HttpResponseRedirect(reverse(
-				'etcetera.service.views.detail',
+				'service-detail',
 				args=(wo.id,),
 			))
 	else:
@@ -180,7 +184,7 @@ def pickup(request, object_id):
 	wo.technician = request.user
 	wo.save()
 	return HttpResponseRedirect(reverse(
-		'etcetera.service.views.detail',
+		'service-detail',
 		args=(wo.id,),
 	))
 
@@ -197,7 +201,7 @@ def new(request):
 			wo = form.save()
 			#wo_mail_create(wo)
 			return HttpResponseRedirect(reverse(
-				'etcetera.service.views.detail',
+				'service-detail',
 				args=(wo.id,),
 			))
 	else:

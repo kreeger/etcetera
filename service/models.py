@@ -31,7 +31,7 @@ class WorkOrder(models.Model):
 	)
 	description = models.TextField()
 	actions = models.TextField('Actions taken', blank=True)
-	labor = models.FloatField('Labor costs', null=True, blank=True)
+	labor = models.FloatField('Labor hours', null=True, blank=True)
 	technician = models.ForeignKey(auth.User, blank=True, null=True)
 	tech_legacy = models.CharField(blank=True, max_length=10)
 	funding_source = models.CharField(

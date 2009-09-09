@@ -1,0 +1,22 @@
+{% extends "root.html" %}
+
+{% block title %}{{ the_user.first_name }}'s Profile{% endblock %}
+
+{% block content %}
+   <div id="detail">
+      <h1><span class="right"><a href="{% url change-password %}">change password</a></span>{{ the_user.first_name }} {{ the_user.last_name }}</h1>
+       <table class="profile">
+          <tr><td><img src="{% if the_user.profile.image %}/_media/uploads/{{ the_user.profile.image }}{% else %}/_media/images/profile-placeholder.jpg{% endif %}" alt="{{ user }}" /></td>
+            <td>
+               <table>
+                  <tr><td class="head">title</td><td>{{ the_user.profile.title }}</td></tr>
+                  <tr><td class="head">email</td><td><a href="mailto:{{ user.email }}">{{ the_user.email }}</td></tr>
+                  <tr><td class="head">phone</td><td>{{ the_user.profile.phone }}</td></tr>
+               </table>
+            </td>
+         </tr>
+      </table>
+         
+      </div>
+	</div>
+{% endblock %}
