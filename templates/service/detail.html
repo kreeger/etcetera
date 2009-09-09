@@ -32,7 +32,7 @@
    <div class="right">
       <h3>Technician information</h3>
       <table>
-         {% if object.technician or object.tech_legacy %}<tr><td class="head">Name</td><td>{% if object.technician %}{{ object.technician.first_name }} {{ object.technician.last_name }}{% else %}{{ object.tech_legacy }}{% endif %}</td></tr>{% endif %}
+         {% if object.technician or object.tech_legacy %}<tr><td class="head">Name</td><td>{% if object.technician %}<a href="{% url etcetera-user object.technician.username %}">{{ object.technician.first_name }} {{ object.technician.last_name }}</a>{% else %}{{ object.tech_legacy }}{% endif %}</td></tr>{% endif %}
          {% if object.technician %}<tr><td class="head">Email</td><td><a href="mailto:{{ object.technician.email }}">{{ object.technician.email }}</a></td></tr>{% endif %}
       </table>
    </div>

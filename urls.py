@@ -44,7 +44,6 @@ urlpatterns += patterns('',
 # For extra things.
 urlpatterns += patterns('',
 	url(r'^extras/', include('etcetera.extras.urls')),
-	#url(r'^profile/', 'etcetera.extras.views.profile', {'user': request.user}, name="etcetera-profile"),
 	url(r'^user/(?P<the_user>.*)/$', 'etcetera.extras.views.profile', name="etcetera-user"),
 	url(r'^$', 'etcetera.extras.views.index', name="etcetera-home"),
 )
