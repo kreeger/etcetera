@@ -89,8 +89,10 @@ div#detail form textarea#id_actions { width: 49%; }
 
 div#detail table.profile { width: 100%; margin-top: 5px;}
 div#detail table.profile img { width: 200px; -webkit-border-radius: 10px; -moz-border-radius: 10px; border: 1px solid #CCC; }
-div#detail table.profile td:first-child { width: 200px; }
-div#detail table.profile td:last-child { width: 100%; vertical-align: top; text-align: left; }
+div#detail table.profile > tbody > tr > td:first-child { width: 168px; height: 235px; text-align: center; vertical-align: bottom; }
+div#detail form table.profile > tbody > tr > td:first-child { -webkit-border-radius: 10px; -moz-border-radius: 10px; border: 1px solid #CCC; background: url(/_media/images/profile-placeholder-back.png) no-repeat; padding: 0 15px 10px; }
+div#detail table.profile td:last-child { width: 740px; vertical-align: top; text-align: left; }
+div#detail table.profile > tbody > tr > td > table td.head { width: 100px; }
 
 div#blog h2 { border-bottom: 1px solid #555; margin: 0; }
 div#blog div.post { border-bottom: 1px dotted #AAA; padding: 5px 0; }

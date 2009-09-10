@@ -13,7 +13,7 @@ from docutils.core import publish_parts
 
 def error_mail(request):
 	error_mail(request)
-	return HttpResponseRedirect('/etcetera/')
+	return HttpResponseRedirect('etcetera-index')
 
 def index(request):
 	posts = extras.Post.objects.all()
@@ -33,7 +33,10 @@ def profile(request, the_user):
 	try:
 		the_user.profile = the_user.get_profile()
 	except extras.UserProfile.DoesNotExist:
-		the_user.profile = None
+		if the_user == request.user:
+			return HttpResponseRedirect(reverse('edit-profile'))
+		else:
+			the_user.profile = None
 	context = {
 		'the_user': the_user,
 	}
@@ -42,6 +45,40 @@ def profile(request, the_user):
 		context, 
 		context_instance=RequestContext(request)
 	)
+
+@login_required
+def edit_profile(request):
+	if request.method == 'POST':
+		try:
+			form = exforms.UserProfileForm(
+				request.POST,
+				instance=request.user.get_profile()
+			)
+		except extras.UserProfile.DoesNotExist:
+			form = exforms.UserProfileForm(request.POST)
+		if form.is_valid():
+			if not form.cleaned_data['user']:
+				form.cleaned_data['user'] = request.user
+			form.save()
+			return HttpResponseRedirect(reverse(
+				'etcetera-user',
+				kwargs={'the_user': request.user},
+			))
+	else:
+		try:
+			form = exforms.UserProfileForm(instance=request.user.get_profile())
+		except extras.UserProfile.DoesNotExist:
+			form = exforms.UserProfileForm()
+	context = {
+		'the_user': request.user,
+		'form': form,
+	}
+	return render_to_response(
+		"extras/edit-profile.html",
+		context,
+		context_instance=RequestContext(request)
+	)
+	
 
 @login_required
 def change_password(request):

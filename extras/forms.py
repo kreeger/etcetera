@@ -1,4 +1,5 @@
 from django import forms
+from etcetera.extras import models as extras
 
 class PasswordForm(forms.Form):
 	password = forms.CharField(
@@ -16,3 +17,7 @@ class PasswordForm(forms.Form):
 			raise forms.ValidationError("The passwords do not match.")
 		
 		return cd
+
+class UserProfileForm(forms.ModelForm):
+	class Meta:
+		model = extras.UserProfile

@@ -21,10 +21,10 @@ class Post(models.Model):
 
 class UserProfile(models.Model):
 	"""A user profile."""
-	user = models.ForeignKey(auth.User, unique=True)
+	user = models.ForeignKey(auth.User, unique=True, blank=True)
 	title = models.CharField('Title', blank=True, max_length=100)
 	phone = lfus.PhoneNumberField('Phone', blank=True)
-	image = models.ImageField(upload_to="photos/", blank=True, null=True)
+	image = models.ImageField('Profile image',upload_to="photos/", blank=True, null=True)
 	office_building = models.ForeignKey(
 		structure.Building,
 		null=True,

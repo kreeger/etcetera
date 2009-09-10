@@ -4,9 +4,9 @@
 
 {% block content %}
    <div id="detail">
-      <h1><span class="right"><a href="{% url change-password %}">change password</a></span>{{ the_user.first_name }} {{ the_user.last_name }}</h1>
+      <h1>{% ifequal the_user user %}<span class="right"><a href="{% url edit-profile %}">edit profile</a> &bull; <a href="{% url change-password %}">change password</a></span>{% endifequal %}{{ the_user.first_name }} {{ the_user.last_name }}</h1>
        <table class="profile">
-          <tr><td><img src="{% if the_user.profile.image %}/_media/uploads/{{ the_user.profile.image }}{% else %}/_media/images/profile-placeholder.jpg{% endif %}" alt="{{ user }}" /></td>
+          <tr><td><img src="{% if the_user.profile.image %}/_media/uploads/{{ the_user.profile.image }}{% else %}/_media/images/profile-placeholder.png{% endif %}" alt="{{ user }}" /></td>
             <td>
                <table>
                   <tr><td class="head">title</td><td>{{ the_user.profile.title }}</td></tr>
