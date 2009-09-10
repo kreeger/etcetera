@@ -38,23 +38,32 @@ def profile(request, the_user):
 			return HttpResponseRedirect(reverse('edit-profile'))
 		else:
 			the_user.profile = None
+	# There's got to be a better way to do this. I'll figure it out sometime.
 	the_user.repairs = service.WorkOrder.objects.filter(
 		technician=the_user
+	).filter(
+		archived=False
 	).filter(
 		work_type="repair"
 	)
 	the_user.installs = service.WorkOrder.objects.filter(
 		technician=the_user
 	).filter(
+		archived=False
+	).filter(
 		work_type="install"
 	)
 	the_user.maintenances = service.WorkOrder.objects.filter(
 		technician=the_user
 	).filter(
+		archived=False
+	).filter(
 		work_type="maintenance"
 	)
 	the_user.replacements = service.WorkOrder.objects.filter(
 		technician=the_user
+	).filter(
+		archived=False
 	).filter(
 		work_type="replacement"
 	)

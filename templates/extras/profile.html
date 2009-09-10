@@ -35,7 +35,7 @@
                         </table>
                      </td>
                   </tr>
-                  <tr><td class="tablehead">maints</td>
+                  <tr><td class="tablehead">maintenances</td>
                      <td>{% if not the_user.maintenances %}<span class="padded">none</span>{% endif %}
                         <table>
                            {% for ticket in the_user.maintenances %}
@@ -44,7 +44,7 @@
                         </table>
                      </td>
                   </tr>
-                  <tr><td class="tablehead">replaces</td>
+                  <tr><td class="tablehead">replacements</td>
                      <td>{% if not the_user.replacements %}<span class="padded">none</span>{% endif %}
                         <table>
                            {% for ticket in the_user.replacements %}
