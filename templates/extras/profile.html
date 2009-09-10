@@ -4,14 +4,55 @@
 
 {% block content %}
    <div id="detail">
-      <h1>{% ifequal the_user user %}<span class="right"><a href="{% url edit-profile %}">edit profile</a> &bull; <a href="{% url change-password %}">change password</a></span>{% endifequal %}{{ the_user.first_name }} {{ the_user.last_name }}</h1>
+      <h1>{% ifequal the_user user %}<span class="right"><a href="{% url edit-profile %}">edit profile</a> &bull; <a href="{% url change-password %}">change password</a></span>{% endifequal %}{{ the_user.first_name }} {{ the_user.last_name }}{% ifequal the_user user %} <span class="head">this is you</span>{% endifequal %}</h1>
        <table class="profile">
-          <tr><td><img src="{% if the_user.profile.image %}/_media/uploads/{{ the_user.profile.image }}{% else %}/_media/images/profile-placeholder.png{% endif %}" alt="{{ user }}" /></td>
+          <tr><td><img src="{% if the_user.profile.image %}{{ the_user.profile.image.url }}{% else %}/_media/images/profile-placeholder.png{% endif %}" alt="{{ user }}" /></td>
             <td>
-               <table>
-                  <tr><td class="head">title</td><td>{{ the_user.profile.title }}</td></tr>
-                  <tr><td class="head">email</td><td><a href="mailto:{{ user.email }}">{{ the_user.email }}</td></tr>
-                  <tr><td class="head">phone</td><td>{{ the_user.profile.phone }}</td></tr>
+               <table id="info">
+                  {% if the_user.profile.title %}<tr><td class="tablehead">title</td><td>{{ the_user.profile.title }}</td></tr>{% endif %}
+                  <tr><td class="tablehead">email</td><td><a href="mailto:{{ user.email }}">{{ the_user.email }}</td></tr>
+                  {% if the_user.profile.phone %}<tr><td class="tablehead">phone</td><td>{{ the_user.profile.phone }}</td></tr>{% endif %}
+                  {% if the_user.profile.office_building %}<tr><td class="tablehead">location</td><td>{{ the_user.profile.office_building.abbreviation }} {{ the_user.profile.office_room }}</td></tr>{% endif %}
+               </table>
+            </td>
+            <td>
+               <table id="tickets">
+                  <tr><td class="tablehead">repairs</td>
+                     <td>{% if not the_user.repairs %}<span class="padded">none</span>{% endif %}
+                        <table>
+                           {% for ticket in the_user.repairs %}
+                              <tr><td><a href="{% url service-detail ticket.id %}">{{ ticket.equipment_text }} &rsaquo; {{ ticket.creation_date|date:'n/j/Y' }}</a></td></tr>
+                           {% endfor %}
+                        </table>
+                     </td>
+                  </tr>
+                  <tr><td class="tablehead">installs</td>
+                     <td>{% if not the_user.installs %}<span class="padded">none</span>{% endif %}
+                        <table>
+                           {% for ticket in the_user.installs %}
+                              <tr><td><a href="{% url service-detail ticket.id %}">{{ ticket.equipment_text }} &rsaquo; {{ ticket.creation_date|date:'n/j/Y' }}</a></td></tr>
+                           {% endfor %}
+                        </table>
+                     </td>
+                  </tr>
+                  <tr><td class="tablehead">maints</td>
+                     <td>{% if not the_user.maintenances %}<span class="padded">none</span>{% endif %}
+                        <table>
+                           {% for ticket in the_user.maintenances %}
+                              <tr><td><a href="{% url service-detail ticket.id %}">{{ ticket.equipment_text }} &rsaquo; {{ ticket.creation_date|date:'n/j/Y' }}</a></td></tr>
+                           {% endfor %}
+                        </table>
+                     </td>
+                  </tr>
+                  <tr><td class="tablehead">replaces</td>
+                     <td>{% if not the_user.replacements %}<span class="padded">none</span>{% endif %}
+                        <table>
+                           {% for ticket in the_user.replacements %}
+                              <tr><td><a href="{% url service-detail ticket.id %}">{{ ticket.equipment_text }} &rsaquo; {{ ticket.creation_date|date:'n/j/Y' }}</a></td></tr>
+                           {% endfor %}
+                        </table>
+                     </td>
+                  </tr>
                </table>
             </td>
          </tr>

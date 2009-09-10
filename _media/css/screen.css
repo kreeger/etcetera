@@ -15,6 +15,8 @@ input { font-family: "Helvetica Neue", Helvetica, Arial, sans-serif; }
 .priority3 { color: #7e8100; }
 .priority4 { color: #008400; }
 .priority5 { color: #1f00ff; }
+.padded { padding: 5px; }
+.tablehead { -webkit-border-top-left-radius: 10px; -moz-border-radius-topleft: 10px; -webkit-border-bottom-left-radius: 10px; -moz-border-radius-bottomleft: 10px; background-color: #EAEAEA; vertical-align: middle; color: #666; text-align: right; text-transform: lowercase; font-weight: normal; font-weight: normal; padding: 0 3px 0 10px;}
 
 div#header { background-image: url(../images/header.png); height: 120px; border-bottom: 1px solid #333; }
 div#header p, div#header h1 { margin: 0; color: #EEE; }
@@ -87,12 +89,18 @@ div#detail form select#id_building { width: 200px; }
 div#detail form select#id_technician { width: 100%; }
 div#detail form textarea#id_actions { width: 49%; }
 
-div#detail table.profile { width: 100%; margin-top: 5px;}
+div#detail table.profile { width: 100%; margin-top: 5px; }
+div#detail table.profile>tbody>tr>td { vertical-align: top; }
 div#detail table.profile img { width: 200px; -webkit-border-radius: 10px; -moz-border-radius: 10px; border: 1px solid #CCC; }
-div#detail table.profile > tbody > tr > td:first-child { width: 168px; height: 235px; text-align: center; vertical-align: bottom; }
-div#detail form table.profile > tbody > tr > td:first-child { -webkit-border-radius: 10px; -moz-border-radius: 10px; border: 1px solid #CCC; background: url(/_media/images/profile-placeholder-back.png) no-repeat; padding: 0 15px 10px; }
+div#detail table.profile>tbody>tr>td:first-child { width: 168px; height: auto; text-align: center; vertical-align: top;}
+div#detail form table.profile>tbody>tr>td:first-child { -webkit-border-radius: 10px; -moz-border-radius: 10px; border: 1px solid #CCC; background: url(/_media/images/profile-placeholder-back.png) no-repeat; padding: 0 15px 10px; vertical-align: bottom; height: 235px; }
 div#detail table.profile td:last-child { width: 740px; vertical-align: top; text-align: left; }
-div#detail table.profile > tbody > tr > td > table td.head { width: 100px; }
+div#detail table#info { width: 400px; }
+div#detail table#info td.head { width: 100px; }
+
+div#detail table#tickets td:last-child { font-size: 12px; vertical-align: middle; }
+div#detail table#tickets a { font-size: 12px; display: block; padding: 3px; font-weight: bold;}
+div#detail table#tickets a:hover { background-color: #4A0010; color: #CCC; text-decoration: none; }
 
 div#blog h2 { border-bottom: 1px solid #555; margin: 0; }
 div#blog div.post { border-bottom: 1px dotted #AAA; padding: 5px 0; }
