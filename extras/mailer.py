@@ -49,7 +49,7 @@ def wo_mail(work_order, coordinator_check):
 			email_subject,
 			email_body,
 			EMAIL_ADDRESS,
-			['benjaminkreeger@missouristate.edu'],
+			['davidcaravella@missouristate.edu'],
 			fail_silently=False
 		)
 	# wo_mail_create(work_order)
