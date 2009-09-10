@@ -3,7 +3,7 @@ from django.contrib.auth.models import Group, User
 from etcetera.settings import EMAIL_ADDRESS
 
 def wo_mail(work_order, coordinator_check):
-	email_body = "A new %s work order (#%i) created by %s %s has been entered into Etcetera. Click here to view this ticket: http://etc.missouristate.edu/etcetera/service/%i.\n\nName:\t%s %s\nDepartment:\t%s\nPhone:\t%s\nEmail:\t%s\nLocation:\t%s %s\nDescription:\t%s\n\nThanks!\n- Etcetera" % (
+	email_body = "A new %s work order (#%i) created by %s %s has been entered into Etcetera. Click here to view this ticket: http://etc.missouristate.edu/etcetera/service/%i.\n\nName:\t%s %s\nDepartment:\t%s\nPhone:\t%s\nEmail:\t%s\nLocation:\t%s %s\nDescription:\t%s\n\nPlease do not reply to this message, as nobody will receive it.\n\nThanks!\n- Etcetera" % (
 		work_order.work_type,
 		work_order.id,
 		work_order.first_name,
@@ -30,7 +30,7 @@ def wo_mail(work_order, coordinator_check):
 		fail_silently=False
 	)
 	if work_order.work_type == 'install' and not coordinator_check:
-		email_body = "A new %s work order (#%i) created by %s %s has been entered into Etcetera, which requires the attention of you, the classroom coordinator. Click here to view this ticket: http://etc.missouristate.edu/etcetera/service/%i.\n\nName:\t%s %s\nDepartment:\t%s\nPhone:\t%s\nEmail:\t%s\nLocation:\t%s %s\nDescription:\t%s\n\nThanks!\n- Etcetera" % (
+		email_body = "A new %s work order (#%i) created by %s %s has been entered into Etcetera, which requires the attention of you, the classroom coordinator. Click here to view this ticket: http://etc.missouristate.edu/etcetera/service/%i.\n\nName:\t%s %s\nDepartment:\t%s\nPhone:\t%s\nEmail:\t%s\nLocation:\t%s %s\nDescription:\t%s\n\nPlease do not reply to this message, as nobody will receive it.\n\nThanks!\n- Etcetera" % (
 			work_order.work_type,
 			work_order.id,
 			work_order.first_name,
@@ -58,7 +58,7 @@ def wo_mail_create(work_order):
 	email_subject = "A new work order (#%i) has been created for you" % (
 		work_order.id,
 	)
-	email_body = "%s,\nYour new work order has been submitted successfully and our technicians have been notified.\n\nYou will be periodically notified via email if there's a change in status on your ticket. If at any other time you'd like to view your ticket, click here: http://etc.missouristate.edu/etcetera/service/%i.\n\nRegards,\nEducational Technology Center\nMissouri State University" % (
+	email_body = "%s,\nYour new work order has been submitted successfully and our technicians have been notified.\n\nYou will be periodically notified via email if there's a change in status on your ticket. If at any other time you'd like to view your ticket, click here: http://etc.missouristate.edu/etcetera/service/%i.\n\nPlease do not reply to this message, as nobody will receive it.\n\nRegards,\nEducational Technology Center\nMissouri State University" % (
 		work_order.first_name,
 		work_order.id
 	)
@@ -74,7 +74,7 @@ def wo_mail_update(work_order):
 	email_subject = "Your ETC service request (#%i) has been updated" % (
 		work_order.id,
 	)
-	email_body = "%s,\nYour work order has been updated by a member of our service staff.\n\nVisit this link to view your updated ticket: http://etc.missouristate.edu/etcetera/service/%i.\n\nRegards,\nEducational Technology Center\nMissouri State University" % (
+	email_body = "%s,\nYour work order has been updated by a member of our service staff.\n\nVisit this link to view your updated ticket: http://etc.missouristate.edu/etcetera/service/%i.\n\nPlease do not reply to this message, as nobody will receive it.\n\nRegards,\nEducational Technology Center\nMissouri State University" % (
 		work_order.first_name,
 		work_order.id
 	)
