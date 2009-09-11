@@ -121,6 +121,7 @@ def change_password(request):
 			user.save()
 			return HttpResponseRedirect(reverse(
 				'etcetera-profile',
+				kwargs={'the_user': request.user},
 			))
 	else:
 		form = exforms.PasswordForm()
