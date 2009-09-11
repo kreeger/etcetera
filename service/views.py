@@ -210,7 +210,7 @@ def new(request):
 		'form': form,
 	}
 	return render_to_response(
-		"service/new.html",
+		"service/edit.html",
 		context,
 		context_instance=RequestContext(request)
 	)
