@@ -120,7 +120,7 @@ def change_password(request):
 			user.set_password(cd['password'])
 			user.save()
 			return HttpResponseRedirect(reverse(
-				'etcetera-profile',
+				'etcetera-user',
 				kwargs={'the_user': request.user},
 			))
 	else:
