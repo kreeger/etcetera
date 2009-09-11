@@ -1,4 +1,6 @@
 from django import template
+from django.template.defaultfilters import stringfilter
+
 from etcetera.extras import constants
 
 register = template.Library()
@@ -20,6 +22,21 @@ def priority(priority):
 		'5': "Lowest",
 	}
 	return branch.get(priority, 'No')
+
+@register.filter
+@stringfilter
+def status(status):
+	branch = {
+		'installed': 'Installed',
+		'checkout': 'Checkout',
+		'missing': 'Missing',
+		'missing_paid': 'Missing, paid for',
+		'sold': 'Sold by budget transfer',
+		'stolen': 'Stolen',
+		'surplus': 'Surplus',
+		'transferred': 'Transferred',
+	}
+	return branch.get(status, 'None')
 
 @register.filter
 def funding_source(funding_source):
