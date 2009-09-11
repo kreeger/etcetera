@@ -52,7 +52,7 @@ def wo_mail(work_order, coordinator_check):
 			['davidcaravella@missouristate.edu'],
 			fail_silently=False
 		)
-	# wo_mail_create(work_order)
+	wo_mail_create(work_order)
 
 def wo_mail_create(work_order):
 	email_subject = "A new work order (#%i) has been created for you" % (
