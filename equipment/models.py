@@ -1,5 +1,7 @@
-from django.db import models
 import datetime as dt
+
+from django.db import models
+
 from etcetera.structure.models import Building
 from etcetera.extras import constants
 
