@@ -39,7 +39,7 @@
          <td><a href="{% url service-detail object.id %}">{{ object.department }}</a></td>
          <td><a href="{% url service-detail object.id %}">{% if object.equipment %}{{ object.equipment.make.name }} {{ object.equipment.model }}{% else %}{{ object.equipment_text }}{% endif %}</a></td>
          <td><a href="{% url service-detail object.id %}">{% if object.building %}{{ object.building.abbreviation }} {{ object.room }}{% else %}{{ object.location_text }}{% endif %}</a></td>
-         <td <a href="{% url service-detail object.id %}" class="priority{{ object.priority }}">{{ object.priority|priority }}</td>
+         <td><a href="{% url service-detail object.id %}" class="priority{{ object.priority }}">{{ object.priority|priority }}</td>
          <td><a href="{% url service-detail object.id %}">{{ object.work_type }}</a></td>
          <td><a href="{% url service-detail object.id %}">{% if archived %}{{ object.completion_date|date:'n/j/Y g:iA' }}{% else %}{{ object.creation_date|date:'n/j/Y g:iA' }}{% endif %}</a></td>
       </tr>
