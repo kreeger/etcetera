@@ -20,7 +20,9 @@ if DEBUG:
 	)
 
 # For equipment management.
-# etcetera.equipment.views
+urlpatterns += patterns('',
+	url(r'^equipment/', include('etcetera.equipment.urls')),
+)
 
 # For checkout/reservation management.
 # etcetera.checkout.views
