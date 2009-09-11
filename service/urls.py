@@ -1,5 +1,4 @@
 from django.conf.urls.defaults import *
-from django.views.generic.list_detail import object_detail
 from etcetera.service.views import *
 
 urlpatterns = patterns('',
