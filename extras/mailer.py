@@ -58,7 +58,7 @@ def wo_mail_create(work_order):
 	email_subject = "A new work order (#%i) has been created for you" % (
 		work_order.id,
 	)
-	email_body = "%s,\nYour new work order has been submitted successfully and our technicians have been notified.\n\nYou will be periodically notified via email if there's a change in status on your ticket. If at any other time you'd like to view your ticket, click here: http://etc.missouristate.edu/etcetera/service/%i.\n\nPlease do not reply to this message, as nobody will receive it.\n\nRegards,\nEducational Technology Center\nMissouri State University" % (
+	email_body = "%s,\nYour new work order has been submitted successfully and our technicians have been notified.\n\nIf, at any time, you'd like to view your ticket, click here: http://etc.missouristate.edu/etcetera/service/%i.\n\nPlease do not reply to this message, as nobody will receive it.\n\nRegards,\nEducational Technology Center\nMissouri State University" % (
 		work_order.first_name,
 		work_order.id
 	)
