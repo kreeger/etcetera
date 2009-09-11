@@ -10,12 +10,17 @@
    </script>
 {% endblock %}
 
-{% block breadcrumb %}<a href="{% url etcetera-home %}">Home</a> &rsaquo; Equipment
+{% block breadcrumb %}
+   <a href="{% url etcetera-home %}">Home</a> &rsaquo; Equipment
+{% endblock %}
 
 {% block content %}
 
-<div id="list">   
-   <h1><span class="right"><a href="{% url equipment-new %}">add a new item</a></span>Equipment List</h1>
+<div id="list">
+   {% comment %}
+      {% url equipment-new %}
+   {% endcomment %}
+   <h1><span class="right"><a href="#">add a new item</a></span>Equipment List</h1>
    <div id="searchform">
       <form action="">
          <input type="text" name="q" value="" id="q" />
@@ -32,12 +37,15 @@
          <td>Location</td>
       </tr>
       {% for object in paged_objects.object_list %}
+      {% comment %}
+         {% url equipment-detail object.id %}
+      {% endcomment %}
       <tr id="datarow">
-         <td><a href="{% url equipment-detail object.id %}">{{ object.barcode }}</a></td>
-         <td><a href="{% url equipment-detail object.id %}">{{ object.equipment_type.name }}</a></td>
-         <td><a href="{% url equipment-detail object.id %}">{{ object.make.name }} {{ object.model }}</a></td>
-         <td><a href="{% url equipment-detail object.id %}">{{ object.status }}</td>
-         <td><a href="{% url equipment-detail object.id %}">{% if object.building %}{{ object.building.abbreviation }} {{ object.room }}</a></td>
+         <td><a href="#">{{ object.barcode }}</a></td>
+         <td><a href="#">{{ object.equipment_type.name }}</a></td>
+         <td><a href="#">{{ object.make.name }} {{ object.model }}</a></td>
+         <td><a href="#">{{ object.status|status }}</td>
+         <td><a href="#">{{ object.building.abbreviation }} {{ object.room }}</a></td>
       </tr>
       {% endfor %}
    </table>
