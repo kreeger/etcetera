@@ -41,7 +41,7 @@ def index(request):
 				'equipment_type__name',
 				'make__name',
 				'model',
-				'barcode'
+				'barcode',
 				'building__name',
 				'room',
 				'serial',
@@ -74,6 +74,17 @@ def index(request):
 	}
 	return render_to_response(
 		"equipment/index.html",
+		context,
+		context_instance=RequestContext(request)
+	)
+
+@login_required
+def detail(request, object_id):
+	# Get the ticket from the URL, bundle it in a context, and send it out.
+	wo = get_object_or_404(equipment.Equipment, id=object_id)
+	context = {'object': wo,}
+	return render_to_response(
+		"equipment/detail.html",
 		context,
 		context_instance=RequestContext(request)
 	)

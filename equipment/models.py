@@ -52,7 +52,7 @@ class Equipment(models.Model):
 	value = models.DecimalField(max_digits=7, decimal_places=2, null=True)
 	dof = models.CharField(blank=True, max_length=50)
 	purchase_order = models.CharField(blank=True, max_length=15)
-	budget = models.CharField("Funding sources", blank=True,
+	budget = models.CharField("funding source", blank=True,
 		max_length=10, choices=constants.FUNDING_SOURCES)
 	comments = models.TextField(blank=True)
 	ticket = models.IntegerField(blank=True, null=True)

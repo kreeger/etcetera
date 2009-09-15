@@ -17,6 +17,7 @@ class EquipmentAdmin(admin.ModelAdmin):
 				'last_inventoried',
 				'value',
 				'checkout_to',
+				'department',
 			),
 		}),
 		('Extra information', {
