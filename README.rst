@@ -12,8 +12,8 @@ The first phase of the project is to build the equipment database and the repair
 Dependencies
 ------------
 
-`Django 1.1 or higher <http://www.djangoproject.com/download/>`_
-`Python Imaging Library <http://www.pythonware.com/products/pil/>`_
+* `Django 1.1 or higher <http://www.djangoproject.com/download/>`_
+* `Python Imaging Library <http://www.pythonware.com/products/pil/>`_
 
 Contact Information
 -------------------
