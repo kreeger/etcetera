@@ -1,4 +1,5 @@
 /* @override http://localhost/_media/css/screen.css */
+
 body { background-color: #FFF; margin: 0; padding: 0; font: .9em "Helvetica Neue", Helvetica, Arial, sans-serif; z-index: -300; }
 a { color: #4A0010; text-decoration: none; }
 a:hover { text-decoration: underline; }
@@ -16,7 +17,8 @@ input { font-family: "Helvetica Neue", Helvetica, Arial, sans-serif; }
 .priority4 { color: #008400; }
 .priority5 { color: #1f00ff; }
 .padded { padding: 5px; }
-.tablehead { -webkit-border-top-left-radius: 10px; -moz-border-radius-topleft: 10px; -webkit-border-bottom-left-radius: 10px; -moz-border-radius-bottomleft: 10px; background-color: #EAEAEA; vertical-align: middle; color: #666; text-align: right; text-transform: lowercase; font-weight: normal; font-weight: normal; padding: 0 3px 0 10px;}
+.tablehead { -webkit-border-top-left-radius: 10px; -moz-border-radius-topleft: 10px; -webkit-border-bottom-left-radius: 10px; -moz-border-radius-bottomleft: 10px; background-color: #EAEAEA; vertical-align: middle; color: #666; text-align: right; text-transform: lowercase; font-weight: normal; font-weight: normal; padding: 0 3px 0 10px; }
+td.tablehead { width: 150px; }
 
 div#header { background-image: url(../images/header.png); height: 120px; border-bottom: 1px solid #333; }
 div#header p, div#header h1 { margin: 0; color: #EEE; }
@@ -65,6 +67,9 @@ div#list table#list td:last-child { padding-right: 8px; text-align: right; }
 div#list table#list tr#datarow td:last-child { font-size: .8em; }
 div#list tr#datarow:hover { background-color: #4A0010; }
 div#list tr#datarow:hover a { color: #CCC; text-decoration: none; }
+
+div#barcode { background: url(../images/barcode-250.png) no-repeat; width: 250px; height: 23px; padding-top: 60px; text-align: center; font-weight: bold; letter-spacing: 4px; font-size: 13px; }
+div#detail div#barcode { float: left; position: relative; right: 5px; }
 
 div#detail h1 { margin-bottom: 0; }
 div#detail h1 span.head { color: #AAA; }
