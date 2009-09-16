@@ -8,20 +8,17 @@
 {% block breadcrumb %}
    <a href="{% url etcetera-home %}">Home</a> &rsaquo;
    <a href="{% url equipment-index %}">Equipment</a> &rsaquo;
-   {{ object.make }} {{ object.model }} ({{ object.equipment_type }})</a>
+   {{ object.make }} {{ object.model }} ({{ object.equipment_type }})
 {% endblock %}
 
 {% block content %}
 <div id="detail">
-   {% comment %}
-      {% url equipment-edit object.id %}
-   {% endcomment %}
    {% if object.barcode %}
       <div id="barcode">
          {{ object.barcode }}
       </div>
    {% endif %}
-   <h1><span class="right"><a href="#">edit</a></span>{{ object.make }} {{ object.model }} <span class="head">{{ object.equipment_type }}</span></h1>
+   <h1><span class="right"><a href="{% url equipment-edit object.id %}">edit</a></span>{{ object.make }} {{ object.model }} <span class="head">{{ object.equipment_type }}</span></h1>
    
    <h2>
       {% ifequal object.status "checkout" %}Available for {% endifequal %}{{ object.status|status }} in {{ object.building.name }} {{ object.room }}<br />
@@ -54,19 +51,19 @@
       {% if object.serial %}<tr><td class="tablehead">Serial #</td>
          <td>{{ object.serial }}</td></tr>
       {% endif %}
-      {% if object.smsu_id %}<tr><td class="tablehead">SMSU ID</td>
+      {% if object.smsu_id %}<tr><td class="tablehead">SMSU ID #</td>
          <td>{{ object.smsu_id }}</td></tr>
       {% endif %}
-      {% if object.video_unit %}<tr><td class="tablehead">Video unit</td>
+      {% if object.video_unit %}<tr><td class="tablehead">Video unit #</td>
          <td>{{ object.video_unit }}</td></tr>
       {% endif %}
       {% if object.lamp_type %}<tr><td class="tablehead">Lamp type</td>
          <td>{{ object.lamp_type }}</td></tr>
       {% endif %}
-      {% if object.property_control %}<tr><td class="tablehead">Property control</td>
+      {% if object.property_control %}<tr><td class="tablehead">Property control #</td>
          <td>{{ object.property_control }}</td></tr>
       {% endif %}
-      {% if object.ticket %}<tr><td class="tablehead">Ticket</td>
+      {% if object.ticket %}<tr><td class="tablehead">Ticket #</td>
          <td>{{ object.ticket }}</td></tr>
       {% endif %}
    </table>

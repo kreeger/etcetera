@@ -4,8 +4,9 @@ body { background-color: #FFF; margin: 0; padding: 0; font: .9em "Helvetica Neue
 a { color: #4A0010; text-decoration: none; }
 a:hover { text-decoration: underline; }
 a:active { color: #CCC; }
-input { font-family: "Helvetica Neue", Helvetica, Arial, sans-serif; }
+input, select { font: 14px "Helvetica Neue", Helvetica, Arial, sans-serif; }
 
+h1 input, h1 select { font-weight: bold; }
 .wrapper { width: 950px; margin: 0px auto; }
 .errorlist { color: #f00; font-size: .9em; background-color: #FFBBBB; }
 .right { float: right; }
@@ -70,6 +71,7 @@ div#list tr#datarow:hover a { color: #CCC; text-decoration: none; }
 
 div#barcode { background: url(../images/barcode-250.png) no-repeat; width: 250px; height: 23px; padding-top: 60px; text-align: center; font-weight: bold; letter-spacing: 4px; font-size: 13px; }
 div#detail div#barcode { float: left; position: relative; right: 5px; }
+div#detail form div#barcode input { text-align: center; font-weight: bold; letter-spacing: 2px; }
 
 div#detail h1 { margin-bottom: 0; }
 div#detail h1 span.head { color: #AAA; }
@@ -114,6 +116,12 @@ table.pagination { color: #CCC; width: 100%; }
 table.pagination td#previous { width: 15%; }
 table.pagination td#current { text-align: center; color: #000; }
 table.pagination td#next { text-align: right; width: 15%; }
+
+table.h1-head tbody { font-size: 11px; }
+div#detail form table.h1-head { padding-left: 5px; }
+div#detail form table.h1-head td:first-child { width: 167px; }
+div#detail form table.h1-head td:nth-child(2) { width: 178px; }
+div#detail form table.h1-head td:last-child { width: 297px; }
 
 div#footer { margin-top: 5px; padding-top: 5px; }
 div#footer h4 { margin: 0; text-align: center; color: #b3b3b3; font-size: .7em; font-weight: normal; font-style: normal; }

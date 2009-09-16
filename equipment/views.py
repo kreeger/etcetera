@@ -8,6 +8,7 @@ from django.core.paginator import Paginator, InvalidPage, EmptyPage
 from django.template import RequestContext
 
 from etcetera.equipment import models as equipment
+from etcetera.equipment import forms as eqforms
 from etcetera.extras.search import get_query
 
 @login_required
@@ -85,6 +86,33 @@ def detail(request, object_id):
 	context = {'object': wo,}
 	return render_to_response(
 		"equipment/detail.html",
+		context,
+		context_instance=RequestContext(request)
+	)
+
+@login_required
+def edit(request, object_id):	
+	eq = get_object_or_404(equipment.Equipment, id=object_id)
+	if request.method == 'POST':
+		form = eqforms.EquipmentModelForm(request.POST, instance=eq)
+		if form.is_valid():
+			form.save()
+			if cd['archived']:
+				return HttpResponseRedirect(reverse(
+					'equipment-index',
+				))
+			return HttpResponseRedirect(reverse(
+				'equipment-detail',
+				args=(eq.id,),
+			))
+	else:
+		form = eqforms.EquipmentModelForm(instance=eq)
+	context = {
+		'object': eq,
+		'form': form,
+	}
+	return render_to_response(
+		"equipment/edit.html",
 		context,
 		context_instance=RequestContext(request)
 	)
