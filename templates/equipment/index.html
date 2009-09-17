@@ -41,9 +41,6 @@
          <td>Location</td>
       </tr>
       {% for object in paged_objects.object_list %}
-      {% comment %}
-         {% url equipment-detail object.id %}
-      {% endcomment %}
       <tr id="datarow">
          <td><a href="{% url equipment-detail object.id %}">{{ object.barcode }}</a></td>
          <td><a href="{% url equipment-detail object.id %}">{{ object.equipment_type.name }}</a></td>

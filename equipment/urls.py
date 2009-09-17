@@ -6,7 +6,4 @@ urlpatterns = patterns('',
 	url(r'^(?P<object_id>\d+)/$', detail, name="equipment-detail"),
 	url(r'^(?P<object_id>\d+)/edit/$', edit, name="equipment-edit"),
 	url(r'^new/$', new, name="equipment-new"),
-	#url(r'^form/$', service_form, name="service-form"),
-	#url(r'^archive/$', index, {'archived': True}, name="service-archive"),
-	#url(r'^(?P<object_id>\d+)/pickup/$', pickup, name="service-pickup"),
 )
