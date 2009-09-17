@@ -9,7 +9,6 @@
    <a href="{% url etcetera-home %}">Home</a> &rsaquo;
    <a href="{% url equipment-index %}">Equipment</a> &rsaquo;
    {{ object.make }} {{ object.model }} ({{ object.equipment_type }})
-   {{ object.make }} {{ object.model }} ({{ object.equipment_type }})</a>
 {% endblock %}
 
 {% block content %}
@@ -29,6 +28,8 @@
          {{ object.building.name }} {{ object.room }}{% endif %}
       {% else %}(this item has no status){% endif %}
       <br />
+      {% if object.last_inventoried %}Last inventoried on {{ object.last_inventoried|date:'n/j/Y' }}{% else %}&nbsp;{% endif %}<br />
+      {% if object.on_weekly_checklist %}This item is on the weekly checklist.{% else %}&nbsp;{% endif %}
    </h2>
    <div class="right">
       <h3>Currently in the hands of...</h3>
