@@ -28,7 +28,7 @@ class Make(models.Model):
 class Equipment(models.Model):
 	"""One item of equipment"""
 	
-	barcode = models.CharField(blank=True, max_length=6)
+	barcode = models.CharField(blank=True, max_length=6, unique=True)
 	smsu_id = models.CharField(blank=True, max_length=8)
 	equipment_type = models.ForeignKey(EquipmentType) #req
 	building = models.ForeignKey(Building, null=True, blank=True)

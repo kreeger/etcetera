@@ -21,7 +21,13 @@
    <h1><span class="right"><a href="{% url equipment-edit object.id %}">edit</a></span>{{ object.make }} {{ object.model }} <span class="head">{{ object.equipment_type }}</span></h1>
    
    <h2>
-      {% ifequal object.status "checkout" %}Available for {% endifequal %}{{ object.status|status }} in {{ object.building.name }} {{ object.room }}<br />
+      {% if object.status %}
+         {% ifequal object.status "checkout" %}Available for {% endifequal %}
+         {{ object.status|status }}
+         {% if object.building %}{% ifequal object.status "missing" %}from{% else %}in{% endifequal %}
+         {{ object.building.name }} {{ object.room }}{% endif %}
+      {% else %}(this item has no status){% endif %}
+      <br />
       {% if object.last_inventoried %}Last inventoried on {{ object.last_inventoried|date:'n/j/Y' }}{% else %}&nbsp;{% endif %}<br />
       {% if object.on_weekly_checklist %}This item is on the weekly checklist.{% else %}&nbsp;{% endif %}
    </h2>

@@ -28,10 +28,20 @@
       <td{% if form.model.errors %} class="errorlist"{% endif %}>{{ form.model.label }} {{ form.model.errors }}</td>
       <td{% if form.equipment_type.errors %} class="errorlist"{% endif %}>{{ form.equipment_type.label }} {{ form.equipment_type.errors }}</td>
    </tr></table><span class="right"><input type="submit" name="save" value="save" id="save" /></span>{{ form.make }} {{ form.model }} <span class="head">{{ form.equipment_type }}</span></h1>
-   <h2>
-      <span{% if form.last_inventoried.errors %} class="errorlist"{% endif %}>{{ form.last_inventoried.label }} {{ form.last_inventoried }} {{ form.last_inventoried.errors }}</span><br />
-      <span{% if form.on_weekly_checklist.errors %} class="errorlist"{% endif %}>{{ form.on_weekly_checklist.label }}? {{ form.on_weekly_checklist }} {{ form.on_weekly_checklist.errors }}</span><br />
-   </h2>
+   <table class="h2-head" cellpadding="0" cellspacing="0">
+      <tr>
+         <td{% if form.status.errors %} class="errorlist"{% endif %}>{{ form.status.label }}</td>
+         <td{% if form.status.errors %} class="errorlist"{% endif %}>{{ form.status }} {{ form.status.errors }}</td>
+         <td{% if form.last_inventoried.errors %} class="errorlist"{% endif %}>{{ form.last_inventoried.label }}</td>
+         <td{% if form.last_inventoried.errors %} class="errorlist"{% endif %}>{{ form.last_inventoried }} {{ form.last_inventoried.errors }}</td>
+      </tr>
+      <tr>
+         <td{% if form.building.errors or form.room.errors %} class="errorlist"{% endif %}>Location</td>
+         <td{% if form.building.errors or form.room.errors %} class="errorlist"{% endif %}>{{ form.building }}{{ form.building.errors }} {{ form.room }}{{ form.room.errors }}</td>
+         <td{% if form.on_weekly_checklist.errors %} class="errorlist"{% endif %}>{{ form.on_weekly_checklist.label }}?</td>
+         <td{% if form.on_weekly_checklist.errors %} class="errorlist"{% endif %}>{{ form.on_weekly_checklist }} {{ form.on_weekly_checklist.errors }}</td>
+      </tr>
+   </table>
    <div class="right">
       <h3>Currently in the hands of...</h3>
       <table>

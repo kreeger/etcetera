@@ -1,7 +1,7 @@
 <table class="pagination">
    <tr>
-      <td id="previous">{% if paged_objects.has_previous %}<a href="?page={{ paged_objects.previous_page_number }}">{% endif %}&larr; previous{% if paged_objects.has_previous %}</a>{% endif %}</td>
+      <td id="previous">{% if paged_objects.has_previous %}<a href="?{% if url_args %}{{ url_args }}&amp;{% endif %}page={{ paged_objects.previous_page_number }}">{% endif %}&larr; previous{% if paged_objects.has_previous %}</a>{% endif %}</td>
       <td id="current">Page {{ paged_objects.number }} of {{ paged_objects.paginator.num_pages }}</td>
-      <td id="next">{% if paged_objects.has_next %}<a href="?page={{ paged_objects.next_page_number }}">{% endif %}next &rarr;{% if paged_objects.has_next %}</a>{% endif %}</td>
+      <td id="next">{% if paged_objects.has_next %}<a href="?{% if url_args %}{{ url_args }}&amp;{% endif %}page={{ paged_objects.next_page_number }}">{% endif %}next &rarr;{% if paged_objects.has_next %}</a>{% endif %}</td>
    </tr>
 </table>

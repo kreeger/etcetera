@@ -17,16 +17,20 @@
 {% block content %}
 
 <div id="list">
-   {% comment %}
-      {% url equipment-new %}
-   {% endcomment %}
-   <h1><span class="right"><a href="#">add a new item</a></span>Equipment List</h1>
+   <h1><span class="right"><a href="{% url equipment-new %}">add a new item</a></span>Equipment List{% if q %} <span class="head">searching for: "{{ q }}"</span> <span class="small">(<a href=".">click here to reset</a>)</span>{% endif %}</h1>
    <div id="searchform">
       <form action="">
-         <input type="text" name="q" value="" id="q" />
+         {{ form.q }}
+         Search in:
+         {{ form.equipment_type }} {{ form.equipment_type.label }}
+         {{ form.barcode }} {{ form.barcode.label }}
+         {{ form.location }} {{ form.location.label }}
+         {{ form.serial }} {{ form.serial.label }}
+         {{ form.smsu_id }} {{ form.smsu_id.label }}
+         {{ form.comments }} {{ form.comments.label }}
          <input type="submit" name="submit" value="Search" id="submit" />
       </form>
-      {% if q %} <span class="small">(<a href=".">searching for "{{ q }}" — click here to reset</a>)</span>{% endif %}
+      {% if q %} {% endif %}
    </div>
    <table id="list">
       <tr id="headerrow">
@@ -49,6 +53,8 @@
       </tr>
       {% endfor %}
    </table>
-   {% paginate %}
+   {% if form.as_url_args %}{% paginate form.as_url_args %}
+      {% else %}{% paginate %}
+   {% endif %}
 </div>
 {% endblock %}

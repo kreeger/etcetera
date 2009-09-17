@@ -6,9 +6,10 @@ from etcetera.extras import constants
 register = template.Library()
 
 @register.inclusion_tag('tags/paginate.html', takes_context=True)
-def paginate(context):
+def paginate(context, url_args=''):
 	return {
 		"paged_objects": context["paged_objects"],
+		"url_args": url_args,
     }
 
 @register.filter
