@@ -18,7 +18,7 @@
    <h1><span class="right"><a href="{% url service-new %}">manually add a new work order</a></span>{% if archived %}Archived{% else %}Active{% endif %} Work Order List <span class="small"><a href="{% if archived %}{% url service-index %}{% else %}{% url service-archive %}{% endif %}">view {% if archived %}active{% else %}archived{% endif %}</a></span></h1>
    <div id="searchform">
       <form action="">
-         <input type="text" name="q" value="" id="q" />
+         {{ form.q }}
          <input type="submit" name="submit" value="Search" id="submit" />
       </form>
       {% if q %} <span class="small">(<a href=".">searching for "{{ q }}" — click here to reset</a>)</span>{% endif %}
@@ -45,6 +45,8 @@
       </tr>
       {% endfor %}
    </table>
-   {% paginate %}
+   {% if form.as_url_args %}{% paginate form.as_url_args %}
+      {% else %}{% paginate %}
+   {% endif %}
 </div>
 {% endblock %}

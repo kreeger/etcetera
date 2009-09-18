@@ -1,3 +1,5 @@
+import urllib
+
 from django import forms
 from django.contrib.localflavor.us import forms as lfus
 
@@ -71,3 +73,9 @@ class WorkOrderModelForm(forms.ModelForm):
 	class Meta:
 		model = service.WorkOrder
 		exclude = ('creation_date',)
+
+class SearchForm(forms.Form):
+	q = forms.CharField(max_length=50)
+	
+	def as_url_args(self):
+		return urllib.urlencode(self.cleaned_data)
