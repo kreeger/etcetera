@@ -109,3 +109,17 @@ def new(request):
 		context,
 		context_instance=RequestContext(request)
 	)
+
+@login_required
+def dupe(request, object_id):
+	eq = get_object_or_404(equipment.Equipment, id=object_id)
+	form = eqforms.DupeForm()
+	context = {
+		'form': form,
+		'object': eq,
+	}
+	return render_to_response(
+		"equipment/dupe.html",
+		context,
+		context_instance=RequestContext(request)
+	)

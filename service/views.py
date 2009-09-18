@@ -131,6 +131,7 @@ def edit(request, object_id):
 		form = woforms.WorkOrderModelForm(request.POST, instance=wo)
 		if form.is_valid():
 			cd = form.cleaned_data
+			# I should eventually move this into forms.WorkOrderModelForm
 			if cd['archived']:
 				cd['completion_date'] = dt.datetime.now()
 			else:

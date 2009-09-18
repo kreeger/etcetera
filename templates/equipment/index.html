@@ -3,19 +3,11 @@
 
 {% block title %}Equipment{% endblock %}
 
-{% block fullscript %}
-   <script src="http://www.google.com/jsapi"></script>
-   <script>
-    google.load("jquery","1.3.2");
-   </script>
-{% endblock %}
-
 {% block breadcrumb %}
    <a href="{% url etcetera-home %}">Home</a> &rsaquo; Equipment
 {% endblock %}
 
 {% block content %}
-
 <div id="list">
    <h1><span class="right"><a href="{% url equipment-new %}">add a new item</a></span>Equipment List{% if q %} <span class="head">searching for: "{{ q }}"</span> <span class="small">(<a href=".">click here to reset</a>)</span>{% endif %}</h1>
    <div id="searchform">

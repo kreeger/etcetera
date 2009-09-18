@@ -18,7 +18,7 @@
          {{ object.barcode }}
       </div>
    {% endif %}
-   <h1><span class="right"><a href="{% url equipment-edit object.id %}">edit</a></span>{{ object.make }} {{ object.model }} <span class="head">{{ object.equipment_type }}</span></h1>
+   <h1><span class="right"><a href="{% url equipment-dupe object.id %}">duplicate</a> &bull; <a href="{% url equipment-edit object.id %}">edit</a></span>{{ object.make }} {{ object.model }} <span class="head">{{ object.equipment_type }}</span></h1>
    
    <h2>
       {% if object.status %}
