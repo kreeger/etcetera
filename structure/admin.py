@@ -16,13 +16,13 @@ class CollegeAdmin(admin.ModelAdmin):
 
 class DepartmentAdmin(admin.ModelAdmin):
 	list_display = ('name','college',)
-	search_fields = ('name','college',)
+	search_fields = ('name','college__name',)
 	inlines = [SubDepartmentInline,]
 	list_filter = ('college',)
 
 class SubDepartmentAdmin(admin.ModelAdmin):
 	list_display = ('name','department',)
-	search_fields = ('name','department',)
+	search_fields = ('name','department__name',)
 
 class BuildingAdmin(admin.ModelAdmin):
 	list_display = ('name','abbreviation',)
