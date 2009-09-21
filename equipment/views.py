@@ -113,10 +113,34 @@ def new(request):
 @login_required
 def dupe(request, object_id):
 	eq = get_object_or_404(equipment.Equipment, id=object_id)
-	form = eqforms.DupeForm()
+	times = []
+	i = 1
+	if request.method == 'GET':
+		form = eqforms.DupeForm(request.GET)
+		if form.is_valid():
+			while form.cleaned_data['times'] > len(times):
+				times.append(i)
+				i = i + 1
+	if request.method == 'POST':
+		the_set = equipment.Equipment.objects.all()
+		while i <= int(request.GET.get('times')):
+			new_eq = eq
+			new_eq.pk = None
+			if not the_set.filter(barcode=request.POST[unicode(i)]):
+				new_eq.barcode = request.POST[unicode(i)]
+			else:
+				new_eq.barcode = '######'
+			new_eq.save()
+			i = i + 1
+		return HttpResponseRedirect(reverse(
+			'equipment-index',
+		))
+	else:
+		form = eqforms.DupeForm()
 	context = {
 		'form': form,
 		'object': eq,
+		'times': times,
 	}
 	return render_to_response(
 		"equipment/dupe.html",

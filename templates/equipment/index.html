@@ -37,7 +37,7 @@
          <td><a href="{% url equipment-detail object.id %}">{{ object.barcode }}</a></td>
          <td><a href="{% url equipment-detail object.id %}">{{ object.equipment_type.name }}</a></td>
          <td><a href="{% url equipment-detail object.id %}">{{ object.make.name }} {{ object.model }}</a></td>
-         <td><a href="{% url equipment-detail object.id %}">{{ object.status|status }}</td>
+         <td><a href="{% url equipment-detail object.id %}">{{ object.get_status_display }}</td>
          <td><a href="{% url equipment-detail object.id %}">{{ object.building.abbreviation }} {{ object.room }}</a></td>
       </tr>
       {% endfor %}

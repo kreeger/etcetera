@@ -12,7 +12,7 @@
       {% ifequal object.technician user %}<div id="notify" class="banner">This ticket has  been assigned to you.</div>{% endifequal %}
    {% endif %}
    <h1>{% if user.is_authenticated %}<span class="right"><a href="{% url service-edit object.id %}">edit</a></span>{% endif %}WO #{{ object.id }}: {% if object.equipment %}{{ object.equipment.make.name }} {{ object.equipment.model }} {{ object.equipment.equipment_type.name }} ({% endif %}{{ object.equipment_text }}{% if object.equipment %}){% endif %} <span class="head">{% if object.archived %}archived{% else %}active{% endif %}</span></h1>
-   <h2>{% if object.completion_date %}<span class="right"><span class="head">Completed</span> {{ object.completion_date|date:'n/j/Y g:iA' }}</span>{% endif %}<span class="priority{{ object.priority }}">{{ object.priority|priority }} priority {{ object.work_type }}</span> &rsaquo; <span class="head">Created</span> {{ object.creation_date|date:'n/j/Y g:iA' }}</h2>
+   <h2>{% if object.completion_date %}<span class="right"><span class="head">Completed</span> {{ object.completion_date|date:'n/j/Y g:iA' }}</span>{% endif %}<span class="priority{{ object.priority }}">{{ object.get_priority_display }} priority {{ object.work_type }}</span> &rsaquo; <span class="head">Created</span> {{ object.creation_date|date:'n/j/Y g:iA' }}</h2>
    <div class="right">
       <h3>Contact information</h3>
       <table>
@@ -42,7 +42,7 @@
    <table>
       {% if object.labor %}<tr><td class="tablehead">Labor costs</td><td>{{ object.labor|money }}</td></tr>{% endif %}
       {% if object.material_costs %}<tr><td class="tablehead">Material costs</td><td>{{ object.material_costs|money }}</td></tr>{% endif %}
-      {% if object.funding_source %}<tr><td class="tablehead">Funding source</td><td>{{ object.funding_source|funding_source }}</td></tr>{% endif %}
+      {% if object.funding_source %}<tr><td class="tablehead">Funding source</td><td>{{ object.get_funding_source_display }}</td></tr>{% endif %}
       {% if object.budget %}<tr><td class="tablehead">Budget</td><td>{{ object.budget }}</td></tr>{% endif %}
    </table>
 </div>
