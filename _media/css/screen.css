@@ -119,6 +119,10 @@ div#detail table#tickets td:last-child { font-size: 12px; vertical-align: middle
 div#detail table#tickets a { font-size: 12px; display: block; padding: 3px; font-weight: bold;}
 div#detail table#tickets a:hover { background-color: #4A0010; color: #CCC; text-decoration: none; }
 
+div#times table { width: 75%; margin-top: 5px; margin-bottom: 5px; }
+div#times table caption { font-style: italic; font-weight: normal; font-size: .8em; text-align: left; }
+div#times table td input { width: 80px; }
+
 div#blog h2 { border-bottom: 1px solid #555; margin: 0; }
 div#blog div.post { border-bottom: 1px dotted #AAA; padding: 5px 0; }
 

@@ -1,6 +1,7 @@
 import urllib
 
 from django import forms
+from django.forms.models import modelformset_factory
 
 from etcetera.equipment import models as equipment
 
@@ -47,4 +48,7 @@ class SearchForm(forms.Form):
 		return out_list
 
 class DupeForm(forms.Form):
-	times = forms.IntegerField(max_value=100)
+	times = forms.IntegerField(
+		label="How many copies would you like to make?",
+		max_value=100
+	)

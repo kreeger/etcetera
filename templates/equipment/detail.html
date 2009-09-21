@@ -23,7 +23,7 @@
    <h2>
       {% if object.status %}
          {% ifequal object.status "checkout" %}Available for {% endifequal %}
-         {{ object.status|status }}
+         {{ object.get_status_display }}
          {% if object.building %}{% ifequal object.status "missing" %}from{% else %}in{% endifequal %}
          {{ object.building.name }} {{ object.room }}{% endif %}
       {% else %}(this item has no status){% endif %}
@@ -92,7 +92,7 @@
             <td>{{ object.purchase_order }}</td></tr>
          {% endif %}
          {% if object.budget %}<tr><td class="tablehead">Funding source</td>
-            <td>{{ object.budget|funding_source }}</td></tr>
+            <td>{{ object.get_budget_display }}</td></tr>
          {% endif %}
       </table>
    {% else %}<p>Purchase information hasn't been entered yet for this item.</p>
