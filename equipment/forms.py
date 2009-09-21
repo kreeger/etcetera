@@ -45,3 +45,6 @@ class SearchForm(forms.Form):
 		if data['comments']:
 			out_list.append('comments')
 		return out_list
+
+class DupeForm(forms.Form):
+	times = forms.IntegerField(max_value=100)
