@@ -31,16 +31,19 @@ div#header h1 { height: 120px; background: url(../images/etceteralogo.png) no-re
 div#header h1 img { display: none; }
 div#header p { float: right; font-size: 0.8em; padding-top: 100px; }
 
-div#nav { text-align: center; background-color: #E7E7E7; }
+div#nav { text-align: center; background-color: #E7E7E7; text-transform: lowercase; }
 div#nav div.wrapper { background-color: #D1D1D1; padding: 0px 10px; border-left: 1px solid #AAA; border-right: 1px solid #AAA; }
-div#nav ul { margin: 0; list-style-type: none; padding: 0; }
-div#nav ul li { padding: 0; margin: 0; display: inline; }
-div#nav ul li a { padding: 7px 15px; margin: 0; display: inline-block; text-decoration: none; color: #000; text-transform: lowercase; }
-div#nav ul li a:hover { background: url(../images/nav_r.png) repeat-x; }
-div#nav ul li a#admin { color: #4A0010; font-style: italic; }
+ul#navul, ul#navul ul { margin: 0px auto; padding: 0; list-style-type: none; }
+ul#navul a { background-color: #D1D1D1; display: block; padding: 8px 0; width: 115px; white-space: nowrap; }
+ul#navul a:hover { background: url(../images/nav_r.png) repeat-x; text-decoration: none; }
+ul#navul li { display: inline-block; position: relative; }
+ul#navul ul { position: absolute; display: none; }
+ul#navul ul a { float: left; background-color: #E7E7E7; }
+#navul li:hover ul, #navul li li:hover ul, #navul li li li:hover ul, #navul li li li li:hover ul {
+	display: inline-block; font-size: .8em; }
 
 div#breadcrumb { font-size: .8em; }
-div#breadcrumb div.wrapper { padding: 4px 10px; border-left: 1px solid #AAA; border-right: 1px solid #AAA; background: url(../images/breadback.png) repeat-x; }
+div#breadcrumb div.wrapper { padding: 4px 10px; border-left: 1px solid #AAA; border-right: 1px solid #AAA; background: url(../images/breadback.png) repeat-x; left: 40px; }
 
 div#body { background: url(../images/backtop.png) repeat-x; }
 
