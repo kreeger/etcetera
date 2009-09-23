@@ -10,7 +10,7 @@ from django.template import RequestContext
 from etcetera.service import models as service
 from etcetera.service import forms as woforms
 from etcetera.equipment import models as equipment
-from etcetera.extras.mailer import wo_mail, wo_mail_update
+from etcetera.extras.mailer import wo_mail, wo_mail_complete, wo_mail_pickup
 from etcetera.extras.search import get_query
 
 def service_form(request):
@@ -134,6 +134,7 @@ def edit(request, object_id):
 			# I should eventually move this into forms.WorkOrderModelForm
 			if cd['archived']:
 				cd['completion_date'] = dt.datetime.now()
+				wo_mail_complete(wo)
 			else:
 				cd['completion_date'] = wo.completion_date
 			if cd['uncomplete']:
@@ -143,7 +144,6 @@ def edit(request, object_id):
 			else:
 				cd['equipment'] = None
 			form.save()
-			#wo_mail_update(wo)
 			if cd['archived']:
 				return HttpResponseRedirect(reverse(
 					'service-index',
@@ -175,6 +175,7 @@ def pickup(request, object_id):
 	wo = get_object_or_404(service.WorkOrder, id=object_id)
 	wo.technician = request.user
 	wo.save()
+	wo_mail_pickup(wo)
 	return HttpResponseRedirect(reverse(
 		'service-detail',
 		args=(wo.id,),

@@ -86,6 +86,59 @@ def wo_mail_update(work_order):
 		fail_silently=False
 	)
 
+def wo_mail_complete(work_order):
+	email_subject = "Your work order (#%i) has been completed" % (
+		work_order.id,
+	)
+	email_body = "%s,\nYour work order (#%i) has been completed by %s %s, one of our technicians.\n\nIf, at any time, you'd like to view your completed ticket, it is available here: http://etc.missouristate.edu/etcetera/service/%i.\n\nPlease do not reply to this message, as nobody will receive it.\n\nRegards,\nEducational Technology Center\nMissouri State University" % (
+		work_order.first_name,
+		work_order.id,
+		work_order.technician.first_name,
+		work_order.technician.last_name,
+		work_order.id
+	)
+	send_mail(
+		email_subject,
+		email_body,
+		EMAIL_ADDRESS,
+		[work_order.email],
+		fail_silently=False
+	)
+
+def wo_mail_update(work_order):
+	email_subject = "Your ETC service request (#%i) has been updated" % (
+		work_order.id,
+	)
+	email_body = "%s,\nYour work order has been updated by a member of our service staff.\n\nVisit this link to view your updated ticket: http://etc.missouristate.edu/etcetera/service/%i.\n\nPlease do not reply to this message, as nobody will receive it.\n\nRegards,\nEducational Technology Center\nMissouri State University" % (
+		work_order.first_name,
+		work_order.id
+	)
+	send_mail(
+		email_subject,
+		email_body,
+		EMAIL_ADDRESS,
+		[work_order.email],
+		fail_silently=False
+	)
+
+def wo_mail_pickup(work_order):
+	email_subject = "Your work order (#%i) has been picked up" % (
+		work_order.id,
+	)
+	email_body = "%s,\nYour work order has been picked up by %s %s, a member of our service staff.\n\nVisit this link to view your updated ticket: http://etc.missouristate.edu/etcetera/service/%i.\n\nPlease do not reply to this message, as nobody will receive it.\n\nRegards,\nEducational Technology Center\nMissouri State University" % (
+		work_order.first_name,
+		work_order.technician.first_name,
+		work_order.technician.last_name,
+		work_order.id
+	)
+	send_mail(
+		email_subject,
+		email_body,
+		EMAIL_ADDRESS,
+		[work_order.email],
+		fail_silently=False
+	)
+
 def error_mail(request):
 	email_body = "There's been an error.\n\nPath:\t%s\nMethod:\t%s\nUser:\t%s\nHost:\t%s\n\nRequest dictionary:\n" % (
 		request.build_absolute_uri(),
