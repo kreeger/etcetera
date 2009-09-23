@@ -1,6 +1,8 @@
 EQUIPMENT_STATUSES = (
 	('installed','Installed'),
 	('checkout','Checkout'),
+	('stock','Stock'),
+	('repair','In repair'),
 	('missing','Missing'),
 	('missing_paid','Missing, paid for'),
 	('sold','Sold by budget transfer'),

@@ -40,7 +40,7 @@
    <p>{% if object.actions %}{{ object.actions }}{% else %}No actions have been performed on this ticket yet.{% endif %}</p>
    <h3>Financial information</h3>
    <table>
-      {% if object.labor %}<tr><td class="tablehead">Labor costs</td><td>{{ object.labor|money }}</td></tr>{% endif %}
+      {% if object.labor %}<tr><td class="tablehead">Labor hours</td><td>{{ object.labor }}</td></tr>{% endif %}
       {% if object.material_costs %}<tr><td class="tablehead">Material costs</td><td>{{ object.material_costs|money }}</td></tr>{% endif %}
       {% if object.funding_source %}<tr><td class="tablehead">Funding source</td><td>{{ object.get_funding_source_display }}</td></tr>{% endif %}
       {% if object.budget %}<tr><td class="tablehead">Budget</td><td>{{ object.budget }}</td></tr>{% endif %}

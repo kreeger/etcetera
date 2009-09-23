@@ -186,6 +186,7 @@ def new(request):
 		form = woforms.WorkOrderModelForm(request.POST)
 		if form.is_valid():
 			cd = form.cleaned_data
+			wo = service.WorkOrder()
 			if cd['barcode']:
 				cd['equipment'] = wo.barcode_lookup(cd['barcode'])
 			else:
