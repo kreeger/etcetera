@@ -34,7 +34,7 @@ div#header p { float: right; font-size: 0.8em; padding-top: 100px; }
 div#nav { text-align: center; background-color: #E7E7E7; text-transform: lowercase; }
 div#nav div.wrapper { background-color: #D1D1D1; padding: 0px 10px; border-left: 1px solid #AAA; border-right: 1px solid #AAA; }
 ul#navul, ul#navul ul { margin: 0px auto; padding: 0; list-style-type: none; }
-ul#navul a { background-color: #D1D1D1; display: block; padding: 8px 0; width: 115px; white-space: nowrap; }
+ul#navul a { background-color: #D1D1D1; display: block; padding: 8px 0; width: 105px; white-space: nowrap; }
 ul#navul a:hover { background: url(../images/nav_r.png) repeat-x; text-decoration: none; }
 ul#navul li { display: inline-block; position: relative; }
 ul#navul ul { position: absolute; display: none; }

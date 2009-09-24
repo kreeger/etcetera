@@ -1,6 +1,7 @@
 import datetime as dt
 
 from django.db import models
+from django.contrib.auth import models as auth
 
 from etcetera.structure.models import Building
 from etcetera.extras import constants
@@ -73,3 +74,18 @@ class Equipment(models.Model):
 	def __unicode__(self):
 		return u"%s %s (%s %s)" % \
 			(self.make, self.model, self.equipment_type, self.barcode)
+	#
+	#def save(self, force_insert=False, force_update=False):
+	#	
+
+#class EquipmentLog(models.Model):
+#	"""Logs for when equipment is updated."""
+#	
+#	equipment = models.ForeignKey(Equipment)
+#	change = models.CharField(max_length=100)
+#	user = models.ForeignKey(auth.User)
+#	datetime = models.DateTimeField(default=dt.datetime.now)
+#
+#	def __unicode__(self):
+#		return u"EquipmentLog"
+#

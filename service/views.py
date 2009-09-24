@@ -10,7 +10,7 @@ from django.template import RequestContext
 from etcetera.service import models as service
 from etcetera.service import forms as woforms
 from etcetera.equipment import models as equipment
-from etcetera.extras.mailer import wo_mail, wo_mail_complete, wo_mail_pickup
+from etcetera.extras.mailer import wo_mail, wo_mail_complete, wo_mail_pickup, wo_mail_create
 from etcetera.extras.search import get_query
 
 def service_form(request):
