@@ -74,18 +74,30 @@ class Equipment(models.Model):
 	def __unicode__(self):
 		return u"%s %s (%s %s)" % \
 			(self.make, self.model, self.equipment_type, self.barcode)
-	#
-	#def save(self, force_insert=False, force_update=False):
-	#	
+	
+	def save(self, force_insert=False, force_update=False):
+		if self.pk is not None:
+			orig = Equipment.objects.filter(pk=self.pk)
+			for key in orig.values()[0]:
+				if not getattr(self, key) == orig.values()[0][key]:	
+					log = EquipmentLog(
+						self,
+						key,
+						orig.values()[0][key],
+						getattr(self, key)
+					)
+					log.save()
+		super(Equipment, self).save(force_insert, force_update)
 
-#class EquipmentLog(models.Model):
-#	"""Logs for when equipment is updated."""
-#	
-#	equipment = models.ForeignKey(Equipment)
-#	change = models.CharField(max_length=100)
-#	user = models.ForeignKey(auth.User)
-#	datetime = models.DateTimeField(default=dt.datetime.now)
-#
-#	def __unicode__(self):
-#		return u"EquipmentLog"
-#
+class EquipmentLog(models.Model):
+	"""Logs for when equipment is updated."""
+	
+	equipment = models.ForeignKey(Equipment)
+	field = models.CharField(max_length=100)
+	old = models.CharField(max_length=200)
+	new = models.CharField(max_length=200)
+	user = models.ForeignKey(auth.User)
+	datetime = models.DateTimeField(default=dt.datetime.now)
+
+	def __unicode__(self):
+		return u"EquipmentLog"
