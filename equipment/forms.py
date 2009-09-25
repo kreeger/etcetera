@@ -1,7 +1,7 @@
 import urllib
 
 from django import forms
-from django.forms.models import modelformset_factory
+from django.contrib.auth import models as auth
 
 from etcetera.equipment import models as equipment
 

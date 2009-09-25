@@ -99,5 +99,19 @@
    {% endif %}
    <h3>Comments</h3>
    <p>{% if object.comments %}{{ object.comments }}{% else %}Comments haven't been entered yet for this item.{% endif %}</p>
+   <h3>History</h3>
+   {% if object.logs %}
+      <ul id="history">
+         {% for log in object.logs %}
+         <li>
+            <strong>{{ log.datetime|date:'Y.n.j, g:i:s A' }}</strong>
+            {% if log.user %}&rsaquo; {{ log.user.get_full_name }}{% endif %}
+            Changed <strong>{{ log.field }}</strong>
+            from <em>{{ log.old }}</em> to <em>{{ log.new }}</em>
+         </li>
+         {% endfor %}
+      </ul>
+   {% else %}<p>This item has no history.</p>
+   {% endif %}
 </div>
 {% endblock %}

@@ -108,6 +108,7 @@ div#detail form input#save:hover { text-decoration: underline; cursor: pointer; 
 div#detail form select#id_building { width: 200px; }
 div#detail form select#id_technician { width: 100%; }
 div#detail form textarea#id_actions { width: 49%; }
+div#detail form select#id_equipment_type { width: 30%; }
 
 div#detail table.profile { width: 100%; margin-top: 5px; }
 div#detail table.profile>tbody>tr>td { vertical-align: top; }

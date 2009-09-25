@@ -77,15 +77,19 @@ class Equipment(models.Model):
 	
 	def save(self, force_insert=False, force_update=False):
 		if self.pk is not None:
-			orig = Equipment.objects.filter(pk=self.pk)
-			for key in orig.values()[0]:
-				if not getattr(self, key) == orig.values()[0][key]:	
-					log = EquipmentLog(
-						self,
-						key,
-						orig.values()[0][key],
-						getattr(self, key)
-					)
+			orig = Equipment.objects.filter(pk=self.pk).values()[0]
+			for key in orig:
+				new = getattr(self, key)
+				old = orig[key]
+				if type(old) == unicode and old == None:
+					old = u''
+				if not new == old:
+					log = EquipmentLog()
+					log.equipment = self
+					log.field = unicode(key)
+					log.old = unicode(old)
+					log.new = unicode(new)
+					log.datetime = dt.datetime.now()
 					log.save()
 		super(Equipment, self).save(force_insert, force_update)
 
@@ -96,7 +100,7 @@ class EquipmentLog(models.Model):
 	field = models.CharField(max_length=100)
 	old = models.CharField(max_length=200)
 	new = models.CharField(max_length=200)
-	user = models.ForeignKey(auth.User)
+	user = models.ForeignKey(auth.User, null=True)
 	datetime = models.DateTimeField(default=dt.datetime.now)
 
 	def __unicode__(self):

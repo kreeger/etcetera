@@ -59,6 +59,7 @@ def index(request):
 def detail(request, object_id):
 	# Get the ticket from the URL, bundle it in a context, and send it out.
 	wo = get_object_or_404(equipment.Equipment, id=object_id)
+	wo.logs = equipment.EquipmentLog.objects.filter(equipment=wo.pk)
 	context = {'object': wo,}
 	return render_to_response(
 		"equipment/detail.html",

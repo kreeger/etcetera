@@ -84,7 +84,7 @@
    <h3>{{ form.comments.label }}</h3>
    <p{% if form.comments.errors %} class="errorlist"{% endif %}>{{ form.comments }}{{ form.comments.errors }}</p>
    <h1><span class="right"><input type="submit" name="save" value="save" id="save" /></span>
-      {% if form.inital %}{{ object.make }} {{ object.model }}<span class="head">edit mode</span>
+      {% if form.initial %}{{ object.make }} {{ object.model }} <span class="head">edit mode</span>
          {% else %}New equipment <span class="head">creation mode</span>
       {% endif %}
    </h1>
