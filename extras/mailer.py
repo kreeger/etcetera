@@ -90,11 +90,9 @@ def wo_mail_complete(work_order):
 	email_subject = "Your work order (#%i) has been completed" % (
 		work_order.id,
 	)
-	email_body = "%s,\nYour work order (#%i) has been completed by %s %s, one of our technicians.\n\nIf, at any time, you'd like to view your completed ticket, it is available here: http://etc.missouristate.edu/etcetera/service/%i.\n\nPlease do not reply to this message, as nobody will receive it.\n\nRegards,\nEducational Technology Center\nMissouri State University" % (
+	email_body = "%s,\nYour work order (#%i) has been completed.\n\nIf, at any time, you'd like to view your completed ticket, it is available here: http://etc.missouristate.edu/etcetera/service/%i.\n\nPlease do not reply to this message, as nobody will receive it.\n\nRegards,\nEducational Technology Center\nMissouri State University" % (
 		work_order.first_name,
 		work_order.id,
-		work_order.technician.first_name,
-		work_order.technician.last_name,
 		work_order.id
 	)
 	send_mail(
