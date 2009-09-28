@@ -47,7 +47,7 @@
 			<tr id="description_row"{% if form.description.errors %} class="errorlist"{% endif %}><th>{{ form.description.label }}</th><td>{{ form.description }}</td>
       		{% if form.description.errors %}<td>{{ form.description.errors }}{% else %}<td class="note">{{ form.description.help_text }}{% endif %}</td></tr>
 				
-			<tr><th></th><td><input type="submit" value="Submit &rarr;" id="submit" /></td><td></td></tr>
+			<tr><th></th><td><p><small>Please click the Submit button only once. A few seconds will pass as we process your information.</small></p><input type="submit" value="Submit &rarr;" id="submit" /></td><td></td></tr>
 		</table>
 	</form>
 </div>
