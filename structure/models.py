@@ -4,43 +4,24 @@ from django.contrib.auth.models import User
 
 # Defines university structure regarding people and places.
 
-class College(models.Model):
-	"""The highest-level container for personnel structure"""
+class OrganizationalUnit(models.Model):
+	"""A nestable unit for figuring out who departments and colleges are."""
 	name = models.CharField(max_length=100)
-	abbreviation = models.CharField(max_length=10)
-	
-	def __unicode__(self):
-		return u"%s" % self.name
-	
-	# add uppercase conversion to save method
-	def save(self, *args, **kwargs):
-		self.abbreviation = self.abbreviation.upper()
-		super(College, self).save(*args, **kwargs)
+	parent = models.ForeignKey(
+		'self',
+		blank=True, null=True,
+		related_name='children',
+	)
+	abbreviation = models.CharField(max_length=8, blank=True)
 	
 	class Meta:
 		ordering = ('name',)
 
-class Department(models.Model):
-	"""A level-two container for personnel structure"""
-	name = models.CharField(max_length=100)
-	college = models.ForeignKey(College)
-	
 	def __unicode__(self):
-		return u"%s" % self.name
-	
-	class Meta:
-		ordering = ('name', 'college',)
-
-class SubDepartment(models.Model):
-	"""A level-three container for personnel structure"""
-	name = models.CharField(max_length=100)
-	department = models.ForeignKey(Department)
-	
-	def __unicode__(self):
-		return u"%s" % self.name
-	
-	class Meta:
-		ordering = ('department', 'name',)
+		if self.parent:
+			return u"%s < %s" % (self.name, self.parent)
+		else:
+			return u"%s" % (self.name,)
 
 class Campus(models.Model):
 	"""A top-level container for building structure"""
