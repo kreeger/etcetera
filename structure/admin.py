@@ -8,7 +8,7 @@ class OrganizationalUnitInline(admin.TabularInline):
 
 class OrganizationalUnitAdmin(admin.ModelAdmin):
 	list_display = ('name','abbreviation','parent',)
-	search_fields = ('name','abbreviation','parent',)
+	search_fields = ('name','abbreviation','parent__name',)
 	raw_id_fields = ('parent',)
 	inlines = [OrganizationalUnitInline,]
 
