@@ -16,7 +16,6 @@ class OrganizationalUnit(models.Model):
 	
 	class Meta:
 		ordering = ('name',)
-		raw_id_fields = ('parent',)
 
 	def __unicode__(self):
 		if self.parent:

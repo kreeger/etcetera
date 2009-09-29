@@ -3,13 +3,14 @@ from django.contrib import admin
 
 # This file determines what's shown in the admin interface
 
-class OrganizationalUnitInline(admin.StackedInline):
+class OrganizationalUnitInline(admin.TabularInline):
 	model = OrganizationalUnit
 
 class OrganizationalUnitAdmin(admin.ModelAdmin):
 	list_display = ('name','abbreviation','parent',)
 	search_fields = ('name','abbreviation','parent',)
-	inline = [OrganizationalUnitInline,]
+	raw_id_fields = ('parent',)
+	inlines = [OrganizationalUnitInline,]
 
 class BuildingAdmin(admin.ModelAdmin):
 	list_display = ('name','abbreviation',)
