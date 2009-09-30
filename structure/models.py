@@ -18,10 +18,7 @@ class OrganizationalUnit(models.Model):
 		ordering = ('name',)
 
 	def __unicode__(self):
-		if self.parent:
-			return u"%s < %s" % (self.name, self.parent)
-		else:
-			return u"%s" % (self.name,)
+		return u"%s" % (self.name,)
 
 class Campus(models.Model):
 	"""A top-level container for building structure"""
