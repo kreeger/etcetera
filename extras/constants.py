@@ -33,3 +33,11 @@ FUNDING_SOURCES = (
 	('mc','Media Collections'),
 	('scuf','SCUF'),
 )
+CHECKOUT_TYPES = (
+	('pickup','Pickup'),
+	('delivery','Delivery'),
+)
+RETURNERS = (
+	('requestor','Requestor'),
+	('etc','ETC'),
+)
