@@ -6,28 +6,42 @@ from django.contrib.auth import models as auth
 
 from etcetera.structure import models as structure
 from etcetera.equipment import models as equipment
+from etcetera.extras import constants
 
 class Checkout(models.Model):
 	"""An order for checking out equipment."""
 	first_name = models.CharField(max_length=100)
 	last_name = models.CharField(max_length=100)
-	department = models.ForeignKey(structure.OrganizationalUnit)
+	department_text = models.CharField(max_length=100)
+	department = models.ForeignKey(structure.OrganizationalUnit, null=True)
 	course = models.CharField(max_length=20, blank=True)
 	phone = lfus.PhoneNumberField()
 	email = models.EmailField(max_length=75)
 	equipment_needed = models.TextField()
-	building = models.ForeignKey(structure.Building, related_name='checkouts')
-	room = models.CharField(max_length=25)
+	building = models.ForeignKey(
+		structure.Building,
+		blank=True, null=True,
+		related_name='checkouts'
+	)
+	room = models.CharField(max_length=25, blank=True)
 	checkout_type = models.CharField(
 		max_length=8,
 		choices=constants.CHECKOUT_TYPES
 	)
-	returner = models.CharField(max_length=9, choices=constants.RETURNERS)
+	return_type = models.CharField(max_length=9, choices=constants.RETURN_TYPES)
 	creation_date = models.DateTimeField(default=dt.datetime.now)
 	out_date = models.DateTimeField()
 	return_date = models.DateTimeField()
-	receiving_user = models.ForeignKey(auth.User, blank=True, null=True)
-	delivering_user = models.ForeignKey(auth.User, blank=True, null=True)
+	creating_user = models.ForeignKey(
+		auth.User,
+		blank=True, null=True,
+		related_name="created_checkouts",
+	)
+	delivering_user = models.ForeignKey(
+		auth.User,
+		blank=True, null=True,
+		related_name="deliveries",
+	)
 	returning_person = models.CharField(max_length=100, blank=True, null=True)
 	equipment_list = models.ManyToManyField(
 		equipment.Equipment,
@@ -37,7 +51,9 @@ class Checkout(models.Model):
 		related_name='checkouts',
 		blank=True, null=True,
 	)
+	other_equipment = models.TextField(blank=True)
 	software = models.TextField(blank=True)
+	completed = models.BooleanField()
 	
 	def __unicode__(self):
 		return u"%s %s, %s" % (
