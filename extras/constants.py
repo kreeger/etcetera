@@ -38,7 +38,7 @@ CHECKOUT_TYPES = (
 	('pickup','Pickup'),
 	('delivery','Delivery'),
 )
-RETURNERS = (
+RETURN_TYPES = (
 	('requestor','Requestor'),
 	('etc','ETC'),
 )
