@@ -25,7 +25,9 @@ urlpatterns += patterns('',
 )
 
 # For checkout/reservation management.
-# etcetera.checkout.views
+urlpatterns += patterns('',
+	url(r'^checkout/', include('etcetera.checkout.urls')),
+)
 
 # For service management.
 urlpatterns += patterns('',
