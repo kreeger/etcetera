@@ -45,6 +45,13 @@ ul#navul ul a { float: left; background-color: #E7E7E7; }
 div#breadcrumb { font-size: .8em; }
 div#breadcrumb div.wrapper { padding: 4px 10px; border-left: 1px solid #AAA; border-right: 1px solid #AAA; background: url(../images/breadback.png) repeat-x; left: 40px; }
 
+div#subnav div.wrapper { padding: 0 10px; border-left: 1px solid #AAA; border-right: 1px solid #AAA; background-color: #EAEAEA; border-bottom: 1px solid #CCC; }
+div#subnav { font-size: 11px; text-align: center; display: block; }
+div#subnav ul { margin: 0; padding: 0; list-style-type: none; }
+div#subnav ul li { display: inline; }
+div#subnav a { padding: 4px 10px; display: inline-block; }
+div#subnav a:hover { background-color: #CCC; text-decoration: none; }
+
 div#body { background: url(../images/backtop.png) repeat-x; }
 
 div#content div.wrapper { padding: 10px; background-color: #F4F4F4; -moz-border-radius-bottomleft: 10px; -moz-border-radius-bottomright: 10px; -webkit-border-bottom-left-radius: 10px; -webkit-border-bottom-right-radius: 10px; border-left: 1px solid #AAA; border-right: 1px solid #AAA; border-bottom: 1px solid #AAA; }
@@ -65,15 +72,15 @@ div#searchform input#submit { margin-left: 5px; }
 
 div#list ul { display: block; list-style-type: none; padding: 0; border: 1px solid #AAA; margin-top: 3px; }
 div#list table#list { margin: 0px; padding: 0px; border-spacing: 0px; border: 1px solid #AAA; font-size: .85em; width: 100%; }
-div#list tr#datarow a, div#list tr#headerrow td { padding-top: 5px; padding-bottom: 5px; }
+div#list tr.datarow a, div#list tr#headerrow td { padding-top: 5px; padding-bottom: 5px; }
 div#list tr#headerrow { background-color: #DDD; }
 div#list tr#headerrow td { border-bottom: 1px solid #AAA; text-align: left; font-weight: bold; }
-div#list tr#datarow a { display: block; }
+div#list tr.datarow a { display: block; }
 div#list table#list td:first-child { padding-left: 8px; font-weight: bold; }
 div#list table#list td:last-child { padding-right: 8px; text-align: right; }
-div#list table#list tr#datarow td:last-child { font-size: .8em; }
-div#list tr#datarow:hover { background-color: #4A0010; }
-div#list tr#datarow:hover a { color: #CCC; text-decoration: none; }
+div#list table#list tr.datarow td:last-child { font-size: .8em; }
+div#list tr.datarow:hover { background-color: #4A0010; }
+div#list tr.datarow:hover a { color: #CCC; text-decoration: none; }
 
 div#barcode { background: url(../images/barcode-250.png) no-repeat; width: 250px; height: 23px; padding-top: 60px; text-align: center; font-weight: bold; letter-spacing: 4px; font-size: 13px; }
 div#detail div#barcode { float: left; position: relative; right: 5px; }

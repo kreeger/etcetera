@@ -47,13 +47,31 @@ def index(request):
 	# Bundle everything into the context and send it out.
 	context = {
 		'paged_objects': paged_objects,
+		'object_list': paged_objects.object_list,
 		'form': form,
+		'type': 'index',
 	}
 	return render_to_response(
 		"equipment/index.html",
 		context,
 		context_instance=RequestContext(request)
 	)
+
+@login_required
+def weekly_list(request):
+	object_list = equipment.Equipment.objects.filter(
+		on_weekly_checklist=True
+	)
+	context = {
+		'object_list': object_list,
+		'type': 'weekly',
+	}
+	return render_to_response(
+		"equipment/index.html",
+		context,
+		context_instance=RequestContext(request)
+	)
+	
 
 @login_required
 def detail(request, object_id):
