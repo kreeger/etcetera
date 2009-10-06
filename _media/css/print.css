@@ -43,11 +43,12 @@ div#content h1 span.small { font-size: .55em; padding-left: .3em; }
 div#content h1 span.right { font-size: .55em; margin: 0; padding-top: 9px; }
 div#content h2 { font-size: 1.2em; }
 
-div#list table { border: 1px solid #AAA; width: 100%; border-collapse: collapse; }
+div#list table { border: 1px solid #AAA; width: 100%; border-collapse: collapse; font-size: 10px; }
 div#list table tbody tr:first-child { border-bottom: 1px solid #AAA; font-weight: bold; }
 div#list table tr { border-bottom: 1px solid #DDD; }
-div#list table tr td:first-child { padding-left: 30px; }
-div#list table tr td:last-child { padding-right: 10px; }
+div#list table tr td { border-right: 1px solid #EEE; padding: 2px 5px; }
+div#list table tr td:first-child { width: 10px; }
+div#list table tr td:last-child { padding-right: 10px; font-size: 10px; width: 250px; border-right: none;}
 div#list table tbody tr:last-child { border-bottom: none; }
 
 div.banner { display: none; padding: 8px 8px 8px 55px; margin-bottom: 10px; -moz-border-radius-bottomleft: 10px; -moz-border-radius-topright: 10px; -webkit-border-bottom-left-radius: 10px; -webkit-border-top-right-radius: 10px; }

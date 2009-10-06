@@ -35,19 +35,41 @@
    {% endif %}
    <table id="list">
       <tr id="headerrow">
+         {% ifequal type 'weekly' %}
+            <td>&radic;</td>
+         {% endifequal %}
          <td>Barcode</td>
+         {% ifequal type 'weekly' %}
+            <td>SMS #</td>
+         {% endifequal %}
          <td>Type</td>
          <td>Make &amp; Model</td>
          <td>Status</td>
          <td>Location</td>
+         {% ifequal type 'weekly' %}
+            <td>Serial #</td>
+            <td>Vid Unit</td>
+            <td>Comments</td>
+         {% endifequal %}
       </tr>
       {% for object in object_list %}
       <tr class="datarow">
+         {% ifequal type 'weekly' %}
+            <td><a href="{% url equipment-detail object.id %}">&nbsp;</a></td>
+         {% endifequal %}
          <td><a href="{% url equipment-detail object.id %}">{{ object.barcode }}</a></td>
+         {% ifequal type 'weekly' %}
+            <td><a href="{% url equipment-detail object.id %}">{{ object.smsu_id }}</a></td>
+         {% endifequal %}
          <td><a href="{% url equipment-detail object.id %}">{{ object.equipment_type.name }}</a></td>
          <td><a href="{% url equipment-detail object.id %}">{{ object.make.name }} {{ object.model }}</a></td>
          <td><a href="{% url equipment-detail object.id %}">{{ object.get_status_display }}</td>
          <td><a href="{% url equipment-detail object.id %}">{{ object.building.abbreviation }} {{ object.room }}</a></td>
+         {% ifequal type 'weekly' %}
+            <td><a href="{% url equipment-detail object.id %}">{{ object.serial }}</a></td>
+            <td><a href="{% url equipment-detail object.id %}">{{ object.video_unit }}</a></td>
+            <td><a href="{% url equipment-detail object.id %}">{{ object.comments }}</a></td>
+         {% endifequal %}
       </tr>
       {% endfor %}
    </table>
