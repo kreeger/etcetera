@@ -71,16 +71,17 @@ div#searchform input#q { width: 300px; margin: 0; }
 div#searchform input#submit { margin-left: 5px; }
 
 div#list ul { display: block; list-style-type: none; padding: 0; border: 1px solid #AAA; margin-top: 3px; }
-div#list table#list { margin: 0px; padding: 0px; border-spacing: 0px; border: 1px solid #AAA; font-size: .85em; width: 100%; }
-div#list tr.datarow a, div#list tr#headerrow td { padding-top: 5px; padding-bottom: 5px; }
-div#list tr#headerrow { background-color: #DDD; }
-div#list tr#headerrow td { border-bottom: 1px solid #AAA; text-align: left; font-weight: bold; }
-div#list tr.datarow a { display: block; }
-div#list table#list td:first-child { padding-left: 8px; font-weight: bold; }
-div#list table#list td:last-child { padding-right: 8px; text-align: right; }
-div#list table#list tr.datarow td:last-child { font-size: .8em; }
-div#list tr.datarow:hover { background-color: #4A0010; }
-div#list tr.datarow:hover a { color: #CCC; text-decoration: none; }
+
+table#list { margin: 0px; padding: 0px; border-spacing: 0px; border: 1px solid #AAA; font-size: .85em; width: 100%; }
+table#list tr.datarow a, table#list tr#headerrow td { padding-top: 5px; padding-bottom: 5px; }
+table#list tr#headerrow { background-color: #DDD; }
+table#list tr#headerrow td { border-bottom: 1px solid #AAA; text-align: left; font-weight: bold; }
+table#list tr.datarow a { display: block; }
+table#list td:first-child { padding-left: 8px; font-weight: bold; }
+table#list td:last-child { padding-right: 8px; text-align: right; }
+table#list tr.datarow td:last-child { font-size: .8em; }
+table#list tr.datarow:hover { background-color: #4A0010; }
+table#list tr.datarow:hover a { color: #CCC; text-decoration: none; }
 
 div#barcode { background: url(../images/barcode-250.png) no-repeat; width: 250px; height: 23px; padding-top: 60px; text-align: center; font-weight: bold; letter-spacing: 4px; font-size: 13px; }
 div#detail div#barcode { float: left; position: relative; right: 5px; }
@@ -93,6 +94,8 @@ div#detail h3 { margin: 10px 0; border-bottom: 1px solid #888; color: #444; font
 div#detail div.right { width: 450px; margin-left: 20px; }
 div#detail div.right h3 { margin-top: 0px; }
 div#detail table { font-weight: bold; font-size: 1.1em; }
+div#detail table#list { font-weight: inherit; font-size: .85em; }
+div#detail table#list td:last-child { text-align: inherit; }
 div#detail table#toprow { width: 100%; }
 div#detail table#toprow input { width: auto; }
 div#detail td#barcode { text-align: right; }
