@@ -13,7 +13,11 @@ class Checkout(models.Model):
 	first_name = models.CharField(max_length=100)
 	last_name = models.CharField(max_length=100)
 	department_text = models.CharField(max_length=100)
-	department = models.ForeignKey(structure.OrganizationalUnit, null=True)
+	department = models.ForeignKey(
+		structure.OrganizationalUnit,
+		null=True,
+		blank=True
+	)
 	course = models.CharField(max_length=20, blank=True)
 	phone = lfus.PhoneNumberField()
 	email = models.EmailField(max_length=75)
@@ -28,7 +32,10 @@ class Checkout(models.Model):
 		max_length=8,
 		choices=constants.CHECKOUT_TYPES
 	)
-	return_type = models.CharField(max_length=9, choices=constants.RETURN_TYPES)
+	return_type = models.CharField(
+		max_length=9,
+		choices=constants.RETURN_TYPES
+	)
 	creation_date = models.DateTimeField(default=dt.datetime.now)
 	out_date = models.DateTimeField()
 	return_date = models.DateTimeField()

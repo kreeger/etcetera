@@ -1,49 +1,225 @@
 {% extends "root.html" %}
 {% load etcetera_tags %}
 
-{% block title %}{{ object.first_name }} {{ object.last_name }} (Checkout #{{ object.id }}){% endblock %}
+{% block title %}
+   {{ object.first_name }} {{ object.last_name }} (Checkout #{{ object.id }})
+{% endblock %}
 
-{% block breadcrumb %}<a href="{% url etcetera-home %}">Home</a> &rsaquo; <a href="{% if object.completed %}#{% else %}{% url checkout-index %}{% endif %}">Checkout List{% if object.completed %} Archive{% endif %}</a> &rsaquo; Checkout #{{ object.id }}{% endblock %}
+{% block breadcrumb %}
+   <a href="{% url etcetera-home %}">Home</a> &rsaquo;
+   <a href="{% if object.completed %}#{% else %}{% url checkout-index %}{% endif %}">
+      Checkout List
+      {% if object.completed %} Archive{% endif %}
+   </a> &rsaquo;
+   Checkout #{{ object.id }}
+{% endblock %}
 
 {% block content %}
 <div id="detail">
    {% if user.is_authenticated and not object.completed %}
-      {% if not object.equipment_list %}<div id="alert" class="banner">This checkout doesn't have any equipment associated with it. To edit it, click <a href="#">click here</a>.</div>{% endif %}
-      {% ifequal object.delivering_user user %}<div id="notify" class="banner">You've been assigned to deliver this ticket.</div>{% endifequal %}
+      {% if not object.equipment_list %}
+         <div id="alert" class="banner">
+            This checkout doesn't have any equipment associated with it.
+               To edit it, click <a href="#">click here</a>.
+         </div>
+      {% endif %}
+      {% ifequal object.delivering_user user %}
+         <div id="notify" class="banner">
+            You've been assigned to deliver this ticket.
+         </div>
+      {% endifequal %}
    {% endif %}
-   <h1>{% if user.is_authenticated %}<span class="right"><a href="#">edit</a></span>{% endif %}{{ object.first_name }} {{ object.last_name }} (Checkout #{{ object.id }}){% if object.completed %} <span class="head">completed</span>{% endif %}</h1>
-   <h2>{% if object.creation_date %}<span class="right"><span class="head">Created</span> {{ object.creation_date|date:'n/j/Y g:iA' }}</span>{% endif %}Deliver at {{ object.out_date|date:'n/j/Y g:iA' }} &rsaquo; Return at {{ object.return_date|date:'n/j/Y g:iA' }}</h2>
+   
+   <h1>
+      {% if user.is_authenticated %}
+         <span class="right"><a href="#">edit</a></span>
+      {% endif %}
+      {{ object.first_name }} {{ object.last_name }}
+         (Checkout #{{ object.id }})
+         <span class="head">{{ object.get_checkout_type_display }}</span>
+      {% if object.completed %}
+         <span class="head">/ completed</span>
+      {% endif %}
+   </h1>
+   
+   <h2>
+      {% if object.creation_date %}
+         <span class="right">
+            <span class="head">Created</span> 
+               {{ object.creation_date|date:'n/j/Y g:iA' }}
+         </span>
+      {% endif %}
+      {% ifequal object.checkout_type 'delivery' %}
+         ETC will deliver
+      {% else %}
+         Patron will pick up
+      {% endifequal %}
+      at {{ object.out_date|date:'n/j/Y g:iA' }}<br />
+      {% ifequal object.return_type 'etc' %}
+         ETC
+      {% else %}
+         Patron
+      {% endifequal %}
+      will return at {{ object.return_date|date:'n/j/Y g:iA' }}
+   </h2>
+   
    <div class="right">
       <h3>Contact information</h3>
       <table>
-         {% if object.phone %}<tr><td class="tablehead">Phone</td><td>{{ object.phone }}</td></tr>{% endif %}
-         {% if object.email %}<tr><td class="tablehead">Email</td><td><a href="mailto:{{ object.email }}">{{ object.email }}</a></td></tr>{% endif %}
+         {% if object.phone %}
+            <tr>
+               <td class="tablehead">Phone</td>
+               <td>{{ object.phone }}</td>
+            </tr>
+         {% endif %}
+         {% if object.email %}
+            <tr>
+               <td class="tablehead">Email</td>
+               <td>
+                  <a href="mailto:{{ object.email }}">{{ object.email }}</a>
+               </td>
+            </tr>
+         {% endif %}
       </table>
    </div>
+   
    <h3>Brief information</h3>
    <table>
-      <tr><td class="tablehead">Submitted by</td><td>{{ object.first_name }} {{ object.last_name }}</td></tr>
-      {% if object.department or object.department_text %}<tr><td class="tablehead">Department</td><td>{% if object.department %}{{ object.department }}{% else %}{{ object.department_text }} (user-submitted){% endif %}</td></tr>{% endif %}
-      {% if object.building %}<tr><td class="tablehead">{% ifequal object.checkout_type "delivery" %}Delivery {% endifequal %}Location</td><td>{{ object.building.name }} {{ object.room }}</td></tr>{% endif %}
-      {% if object.location_text %}<tr><td class="tablehead">Other location</td><td>{{ object.location_text }}</td></tr>{% endif %}
+      <tr>
+         <td class="tablehead">Submitted by</td>
+         <td>{{ object.first_name }} {{ object.last_name }}</td>
+      </tr>
+      {% if object.department or object.department_text %}
+         <tr>
+            <td class="tablehead">Department</td>
+            <td>
+               {% if object.department %}
+                  {{ object.department }}
+               {% else %}
+                  {{ object.department_text }} (user-submitted)
+               {% endif %}
+            </td>
+         </tr>
+      {% endif %}
+      {% if object.course %}
+         <tr>
+            <td class="tablehead">Course</td>
+            <td>{{ object.course }}</td>
+         </tr>
+      {% endif %}
+      {% if object.building %}
+         <tr>
+            <td class="tablehead">
+               {% ifequal object.checkout_type "delivery" %}
+                  Delivery
+               {% endifequal %}
+               Location
+            </td>
+            <td>{{ object.building.name }} {{ object.room }}</td>
+         </tr>
+      {% endif %}
+      {% if object.location_text %}
+         <tr>
+            <td class="tablehead">Other location</td>
+            <td>{{ object.location_text }}</td>
+         </tr>
+      {% endif %}
+      {% if object.returning_person %}
+         <tr>
+            <td class="tablehead">Returning person</td>
+            <td>{{ object.returning_person }}</td>
+         </tr>
+      {% endif %}
    </table>
-   <h3>Description</h3>
-   <p>{{ object.description }}</p>
+   
+   <h3>Equipment needed</h3>
+   <p>{{ object.equipment_needed }}</p>
+   
    <div class="right">
-      <h3>Technician information</h3>
+      <h3>Personnel information</h3>
       <table>
-         {% if object.technician or object.tech_legacy %}<tr><td class="tablehead">Name</td><td>{% if object.technician %}<a href="{% url etcetera-user object.technician.username %}">{{ object.technician.get_full_name }}</a>{% else %}{{ object.tech_legacy }}{% endif %}</td></tr>{% endif %}
-         {% if object.technician %}<tr><td class="tablehead">Email</td><td><a href="mailto:{{ object.technician.email }}">{{ object.technician.email }}</a></td></tr>{% endif %}
+         {% if object.creating_user %}
+            <tr>
+               <td class="tablehead">Created by</td>
+               <td>
+                  <a href="{% url etcetera-user object.creating_user.username %}">
+                     {{ object.creating_user.get_full_name }}
+                  </a>
+               </td>
+            </tr>
+         {% endif %}
+         {% if object.delivering_user %}
+            <tr>
+               <td class="tablehead">Delivered by</td>
+               <td>
+                  <a href="{% url etcetera-user object.delivering_user.username %}">
+                     {{ object.delivering_user.get_full_name }}
+                  </a>
+               </td>
+            </tr>
+         {% endif %}
       </table>
    </div>
+   
    <h3>Actions taken</h3>
-   <p>{% if object.actions %}{{ object.actions }}{% else %}No actions have been performed on this ticket yet.{% endif %}</p>
-   <h3>Financial information</h3>
-   <table>
-      {% if object.labor %}<tr><td class="tablehead">Labor hours</td><td>{{ object.labor }}</td></tr>{% endif %}
-      {% if object.material_costs %}<tr><td class="tablehead">Material costs</td><td>{{ object.material_costs|money }}</td></tr>{% endif %}
-      {% if object.funding_source %}<tr><td class="tablehead">Funding source</td><td>{{ object.get_funding_source_display }}</td></tr>{% endif %}
-      {% if object.budget %}<tr><td class="tablehead">Budget</td><td>{{ object.budget }}</td></tr>{% endif %}
-   </table>
+   <p>
+      {% if object.actions %}
+         {{ object.actions }}
+      {% else %}
+         No actions have been performed on this ticket yet.
+      {% endif %}
+   </p>
+   
+   <h3>Equipment list</h3>
+   {% if object.equipment_list.all %}
+      <table id="list">
+         <tr id="headerrow">
+            <td>Barcode</td>
+            <td>Type</td>
+            <td>Make/Model</td>
+            <td>Serial</td>
+         </tr>
+         {% for item in object.equipment_list.all %}
+            <tr class="datarow">
+               <td>
+                  <a href="{% url equipment-detail item.id %}">
+                     {{ item.barcode }}
+                  </a>
+               </td>
+               <td>
+                  <a href="{% url equipment-detail item.id %}">
+                     {{ item.equipment_type.name }}
+                  </a>
+               </td>
+               <td>
+                  <a href="{% url equipment-detail item.id %}">
+                     {{ item.make.name }} {{ item.model }}
+                  </a>
+               </td>
+               <td>
+                  <a href="{% url equipment-detail item.id %}">
+                     {{ item.serial }}
+                  </a>
+               </td>
+            </tr>
+         {% endfor %}
+      </table>
+   {% else %}
+      <p>No specific equipment has been attached to this checkout yet.</p>
+   {% endif %}
+   
+   <h3>Other equipment</h3>
+   {% if object.other_equipment %}
+      <p>{{ object.other_equipment }}</p>
+   {% else %}
+      <p>No extra equipment (cables, adapters, etc.) have been
+            attached to this checkout.</p>
+   {% endif %}
+   
+   {% if object.software %}
+      <h3>Software</h3>
+      <p>{{ object.software }}</p>
+   {% endif %}
+   
 </div>
 {% endblock %}
