@@ -49,7 +49,12 @@ class Checkout(models.Model):
 		blank=True, null=True,
 		related_name="deliveries",
 	)
-	returning_person = models.CharField(max_length=100, blank=True, null=True)
+	returning_person = models.CharField(
+		max_length=100,
+		blank=True,
+		null=True,
+		verbose_name="returner"
+	)
 	equipment_list = models.ManyToManyField(
 		equipment.Equipment,
 		limit_choices_to={
