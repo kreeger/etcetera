@@ -65,3 +65,26 @@ def detail(request, object_id):
 		context,
 		context_instance=RequestContext(request)
 	)
+
+@login_required
+def edit(request, object_id):	
+	co = get_object_or_404(checkout.Checkout, id=object_id)
+	if request.method == 'POST':
+		form = coforms.CheckoutModelForm(request.POST, instance=co)
+		if form.is_valid():
+			form.save()
+			return HttpResponseRedirect(reverse(
+				'checkout-detail',
+				args=(co.id,),
+			))
+	else:
+		form = coforms.CheckoutModelForm(instance=co)
+	context = {
+		'object': co,
+		'form': form,
+	}
+	return render_to_response(
+		"checkout/edit.html",
+		context,
+		context_instance=RequestContext(request)
+	)

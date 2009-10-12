@@ -17,10 +17,10 @@
 {% block content %}
 <div id="detail">
    {% if user.is_authenticated and not object.completed %}
-      {% if not object.equipment_list %}
+      {% if not object.equipment_list.all %}
          <div id="alert" class="banner">
             This checkout doesn't have any equipment associated with it.
-               To edit it, click <a href="#">click here</a>.
+               To edit it, click <a href="{% url checkout-edit object.id %}">click here</a>.
          </div>
       {% endif %}
       {% ifequal object.delivering_user user %}
@@ -32,7 +32,7 @@
    
    <h1>
       {% if user.is_authenticated %}
-         <span class="right"><a href="#">edit</a></span>
+         <span class="right"><a href="{% url checkout-edit object.id %}">edit</a></span>
       {% endif %}
       {{ object.first_name }} {{ object.last_name }}
          (Checkout #{{ object.id }})
@@ -131,44 +131,33 @@
          </tr>
       {% endif %}
    </table>
-   
+    
    <h3>Equipment needed</h3>
-   <p>{{ object.equipment_needed }}</p>
+   {{ object.equipment_needed|linebreaks }}
    
-   <div class="right">
-      <h3>Personnel information</h3>
-      <table>
-         {% if object.creating_user %}
-            <tr>
-               <td class="tablehead">Created by</td>
-               <td>
-                  <a href="{% url etcetera-user object.creating_user.username %}">
-                     {{ object.creating_user.get_full_name }}
-                  </a>
-               </td>
-            </tr>
-         {% endif %}
-         {% if object.delivering_user %}
-            <tr>
-               <td class="tablehead">Delivered by</td>
-               <td>
-                  <a href="{% url etcetera-user object.delivering_user.username %}">
-                     {{ object.delivering_user.get_full_name }}
-                  </a>
-               </td>
-            </tr>
-         {% endif %}
-      </table>
-   </div>
-   
-   <h3>Actions taken</h3>
-   <p>
-      {% if object.actions %}
-         {{ object.actions }}
-      {% else %}
-         No actions have been performed on this ticket yet.
+   <h3>Personnel information</h3>
+   <table>
+      {% if object.creating_user %}
+         <tr>
+            <td class="tablehead">Created by</td>
+            <td>
+               <a href="{% url etcetera-user object.creating_user.username %}">
+                  {{ object.creating_user.get_full_name }}
+               </a>
+            </td>
+         </tr>
       {% endif %}
-   </p>
+      {% if object.delivering_user %}
+         <tr>
+            <td class="tablehead">Delivered by</td>
+            <td>
+               <a href="{% url etcetera-user object.delivering_user.username %}">
+                  {{ object.delivering_user.get_full_name }}
+               </a>
+            </td>
+         </tr>
+      {% endif %}
+   </table>
    
    <h3>Equipment list</h3>
    {% if object.equipment_list.all %}
@@ -210,7 +199,7 @@
    
    <h3>Other equipment</h3>
    {% if object.other_equipment %}
-      <p>{{ object.other_equipment }}</p>
+      {{ object.other_equipment|linebreaks }}
    {% else %}
       <p>No extra equipment (cables, adapters, etc.) have been
             attached to this checkout.</p>
@@ -218,7 +207,7 @@
    
    {% if object.software %}
       <h3>Software</h3>
-      <p>{{ object.software }}</p>
+      {{ object.software|linebreaks }}
    {% endif %}
    
 </div>
