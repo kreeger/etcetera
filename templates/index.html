@@ -1,14 +1,23 @@
 {% extends "root.html" %}
 
-{% block title %}Welcome!{% endblock %}
+{% block title %}
+   Welcome!
+{% endblock %}
 
 {% block content %}
    <div id="blog">
       <h1>Updates from the Developer</h1>
       {% for post in object_list %}
          <div id="post-{{ post.id }}">
-      	<h2>{{ post.title }} <span class="head">{{ post.pub_date|date:'n/j/Y g:iA' }}</span></h2>
-      	<div class="post">{{ post.content|safe }}</div>
+         	<h2>
+         	   {{ post.title }}
+         	   <span class="head">
+         	      {{ post.pub_date|date:'n/j/Y g:iA' }}
+         	   </span>
+         	</h2>
+         	<div class="post">
+         	   {{ post.content|safe }}
+         	</div>
       	</div>
       {% endfor %}
 	</div>
