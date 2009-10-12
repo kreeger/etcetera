@@ -2,83 +2,180 @@
 {% load etcetera_tags %}
 
 {% block title %}
-   {% if form.initial %}editing WO #{{ object.id }}
-      {% else %}New work order
-   {% endif %}
+   Editing Checkout #{{ object.id }}
 {% endblock %}
 
 {% block breadcrumb %}
-   <a href="{% url etcetera-home %}">Home</a> &rsaquo; 
-   <a href="{% if object.archived %}{% url service-archive %}{% else %}{% url service-index %}{% endif %}">Service{% if object.archived %} Archive{% endif %}</a> &rsaquo;
-   {% if form.initial %}<a href="{% url service-detail object.id %}">Work Order {{ object.id }}</a> &rsaquo; Edit
-      {% else %}New
-   {% endif %}
+   <a href="{% url etcetera-home %}">Home</a> &rsaquo;
+   <a href="{% if object.completed %}#{% else %}{% url checkout-index %}{% endif %}">
+      Checkout List
+      {% if object.completed %} Archive{% endif %}
+   </a> &rsaquo;
+   <a href="{% url checkout-detail object.id %}">Checkout #{{ object.id }}</a> &rsaquo;
+   Edit
 {% endblock %}
 
 {% block content %}
 <div id="detail">
    <form action="" method="POST">
-   <h1><span class="right"><input type="submit" name="save" value="save" id="save" /></span>
-      {% if form.initial %}WO #{{ object.id }}: <span class="head">edit mode</span>
-         {% else %}New work order <span class="head">creation mode</span>
+   <h1>
+      {% if user.is_authenticated %}
+         <span class="right">
+            <input type="submit" name="save" value="save" id="save" />
+         </span>
+      {% endif %}
+      {% if not object %}Adding a new {% endif %}
+      Checkout{% if object %} #{{ object.id }}
+         <span class="head">edit mode</span>
       {% endif %}
    </h1>
-   <table id="toprow">
-      <tr><td{% if form.equipment_text.errors %} class="errorlist"{% endif %}><span class="head">Equipment description</span> {{ form.equipment_text }}{{ form.equipment_text.errors }}</td><td id="barcode"{% if form.barcode.errors %} class="errorlist"{% endif %}><span class="head">{{ form.barcode.label }}</span> {{ form.barcode }}{{ form.barcode.errors }}</td></tr>
-   </table>
    
-   <h2>
-      {% if form.initial %}<span class="right"><span class="head">completed
-         {% if not object.completion_date %}?</span> {{ form.archived }}
-            {% else %}</span> {{ object.completion_date|date:'n/j/Y g:iA' }} (un-complete{{ form.uncomplete }})
-         {% endif %}</span>
+   <h2{% if form.completed.errors or form.checkout_type.errors or form.return_type.errors %} class="errorlist"{% endif %}>
+      {% if object %}
+         <span class="right">
+            <span class="head">completed?</span> 
+               {{ form.completed }} {{ form.completed.errors }}
+         </span>
       {% endif %}
-      {% if form.priority.errors %}<span class="errorlist">{% endif %}
-         {% if not form.initial %}Priority: {% endif %}{{ form.priority }}       
-            {% if form.initial %}priority{% endif %}{{ form.priority.errors }}
-      {% if form.priority.errors %}</span>{% endif %}{% if not form.initial %}<br />Work type: {% endif %}
-      {% if form.work_type.errors %}<span class="errorlist">{% endif %}
-         {{ form.work_type }}{{ form.work_type.errors }}
-      {% if form.work_type.errors %}</span>{% endif %}
-      {% if form.initial %}&rsaquo; <span class="head">Created</span> {{ object.creation_date|date:'n/j/Y g:iA' }}{% endif %}
+      Checkout type {{ form.checkout_type }} {{ form.checkout_type.errors }}<br />
+      Return type {{ form.return_type }} {{ form.return_type.errors }}
    </h2>
+   
    <div class="right">
       <h3>Contact information</h3>
       <table>
-         <tr{% if form.phone.errors %} class="errorlist"{% endif %}><td class="tablehead">{{ form.phone.label }}</td><td>{{ form.phone }}{{ form.phone.errors }}</td></tr>
-         <tr{% if form.email.errors %} class="errorlist"{% endif %}><td class="tablehead">{{ form.email.label }}</td><td>{{ form.email }}{{ form.email.errors }}</td></tr>
+         <tr{% if form.phone.errors %} class="errorlist"{% endif %}>
+            <td class="tablehead">{{ form.phone.label }}</td>
+            <td>{{ form.phone }} {{ form.phone.errors }}</td>
+         </tr>
+         <tr{% if form.email.errors %} class="errorlist"{% endif %}>
+            <td class="tablehead">{{ form.email.label }}</td>
+            <td>{{ form.email }} {{ form.email.errors }}</td>
+         </tr>
       </table>
    </div>
+   
    <h3>Brief information</h3>
    <table>
-      <tr{% if form.first_name.errors %} class="errorlist"{% endif %}><td class="tablehead">{{ form.first_name.label }}</td><td colspan="2">{{ form.first_name }}{{ form.first_name.errors }}</td></tr>
-      <tr{% if form.last_name.errors %} class="errorlist"{% endif %}><td class="tablehead">{{ form.last_name.label }}</td><td colspan="2">{{ form.last_name }}{{ form.last_name.errors }}</td></tr>
-      <tr{% if form.department.errors %} class="errorlist"{% endif %}><td class="tablehead">{{ form.department.label }}</td><td colspan="2">{{ form.department }}{{ form.department.errors }}</td></tr>
-      <tr{% if form.building.errors %} class="errorlist"{% endif %}><td class="tablehead">Location</td><td>{{ form.building }}{{ form.building.errors }}</td><td{% if form.room.errors %} class="errorlist"{% endif %}>{{ form.room }}{{ form.room.errors }}</td></tr>
-      <tr{% if form.location_text.errors %} class="errorlist"{% endif %}><td class="tablehead">Other location</td><td colspan="2">{{ form.location_text }}{{ form.location_text.errors }}</td></tr>
-   </table>
-   <h3>{{ form.description.label }}</h3>
-   <p{% if form.description.errors %} class="errorlist"{% endif %}>{{ form.description }}{{ form.description.errors }}</p>
-   <div class="right">
-      <h3>Technician information</h3>
-      <table>
-         <tr{% if form.technician.errors %} class="errorlist"{% endif %}><td class="tablehead">{{ form.technician.label }}</td><td>{{ form.technician }}{{ form.technician.errors }}</td></tr>
-      </table>
-   </div>
-   <h3>{{ form.actions.label }}</h3>
-   <p{% if form.actions.errors %} class="errorlist"{% endif %}>{{ form.actions }}{{ form.actions.errors }}</p>
-   <h3>Financial information</h3>
-   <table>
-      <tr{% if form.labor.errors %} class="errorlist"{% endif %}><td class="tablehead">{{ form.labor.label }}</td><td>{{ form.labor }}{{ form.labor.errors }}</td></tr>
-      <tr{% if form.material_costs.errors %} class="errorlist"{% endif %}><td class="tablehead">{{ form.material_costs.label }}</td><td>{{ form.material_costs }}{{ form.material_costs.errors }}</td></tr>
-      <tr{% if form.funding_source.errors %} class="errorlist"{% endif %}><td class="tablehead">{{ form.funding_source.label }}</td><td>{{ form.funding_source }}{{ form.funding_source.errors }}</td></tr>
-      <tr{% if form.budget.errors %} class="errorlist"{% endif %}><td class="tablehead">{{ form.budget.label }}</td><td>{{ form.budget }}{{ form.budget.errors }}</td></tr>
-   </table>
-   <h1><span class="right"><input type="submit" name="save" value="save" id="save" /></span>
-      {% if form.inital %}WO #{{ object.id }}: <span class="head">edit mode</span>
-         {% else %}New work order <span class="head">creation mode</span>
+      <tr{% if form.first_name.errors %} class="errorlist"{% endif %}>
+         <td class="tablehead">{{ form.first_name.label }}</td>
+         <td>{{ form.first_name }} {{ form.first_name.errors }}</td>
+      </tr>
+      <tr{% if form.last_name.errors %} class="errorlist"{% endif %}>
+         <td class="tablehead">{{ form.last_name.label }}</td>
+         <td>{{ form.last_name }} {{ form.last_name.errors }}</td>
+      </tr>
+      <tr{% if form.department.errors %} class="errorlist"{% endif %}>
+         <td class="tablehead">{{ form.department.label }}</td>
+         <td>{{ form.department }} {{ form.department.errors }}</td>
+      </tr>
+      {% if object %}
+         <tr>
+            <td class="tablehead">Department (user)</td>
+            <td>{{ object.department_text }}</td>
+         </tr>
       {% endif %}
-   </h1>
+      <tr{% if form.course.errors %} class="errorlist"{% endif %}>
+         <td class="tablehead">{{ form.course.label }}</td>
+         <td>{{ form.course }} {{ form.course.errors }}</td>
+      </tr>
+      <tr{% if form.building.errors %} class="errorlist"{% endif %}>
+         <td class="tablehead">{{ form.building.label }}</td>
+         <td>{{ form.building }} {{ form.building.errors }}</td>
+      </tr>
+      <tr{% if form.room.errors %} class="errorlist"{% endif %}>
+         <td class="tablehead">{{ form.room.label }}</td>
+         <td>{{ form.room }} {{ form.room.errors }}</td>
+      </tr>
+      <tr{% if form.returning_person.errors %} class="errorlist"{% endif %}>
+         <td class="tablehead">{{ form.returning_person.label }}</td>
+         <td>
+            {{ form.returning_person }}
+            {{ form.returning_person.errors }}
+         </td>
+      </tr>
+      <tr{% if form.out_date.errors %} class="errorlist"{% endif %}>
+         <td class="tablehead">{{ form.out_date.label }}</td>
+         <td>{{ form.out_date }} {{ form.out_date.errors }}</td>
+      </tr>
+      <tr{% if form.return_date.errors %} class="errorlist"{% endif %}>
+         <td class="tablehead">{{ form.return_date.label }}</td>
+         <td>{{ form.return_date }} {{ form.return_date.errors }}</td>
+      </tr>
+   </table>
+   
+   <h3>{{ form.equipment_needed.label }}</h3>
+   <p{% if form.equipment_needed.errors %} class="errorlist"{% endif %}>
+      {{ form.equipment_needed }} {{ form.equipment_needed.errors }}
+   </p>
+   
+   <h3>Personnel information</h3>
+   <table>
+      {% if object %}
+         <tr>
+            <td class="tablehead">Created by</td>
+            <td>
+               <a href="{% url etcetera-user object.creating_user.username %}">
+                  {{ object.creating_user.get_full_name }}
+               </a>
+            </td>
+         </tr>
+      {% endif %}
+      <tr{% if form.delivering_user.errors %} class="errorlist"{% endif %}>
+         <td class="tablehead">{{ form.delivering_user.label }}</td>
+         <td>{{ form.delivering_user }} {{ form.delivering_user.errors }}</td>
+      </tr>
+   </table>
+   
+   <h3>{{ form.equipment_list.label }}</h3>
+   {% if object.equipment_list.all %}
+      <table id="list">
+         <tr id="headerrow">
+            <td>Barcode</td>
+            <td>Type</td>
+            <td>Make/Model</td>
+            <td>Serial</td>
+         </tr>
+         {% for item in object.equipment_list.all %}
+            <tr class="datarow">
+               <td>
+                  <a href="{% url equipment-detail item.id %}">
+                     {{ item.barcode }}
+                  </a>
+               </td>
+               <td>
+                  <a href="{% url equipment-detail item.id %}">
+                     {{ item.equipment_type.name }}
+                  </a>
+               </td>
+               <td>
+                  <a href="{% url equipment-detail item.id %}">
+                     {{ item.make.name }} {{ item.model }}
+                  </a>
+               </td>
+               <td>
+                  <a href="{% url equipment-detail item.id %}">
+                     {{ item.serial }}
+                  </a>
+               </td>
+            </tr>
+         {% endfor %}
+      </table>
+   {% else %}
+      <p>No specific equipment has been attached to this checkout yet.</p>
+   {% endif %}
+   
+   <h3>{{ form.other_equipment.label }}</h3>
+   <p{% if form.other_equipment.errors %} class="errorlist"{% endif %}>
+      {{ form.other_equipment }}
+      {{ form.other_equipment.errors }}
+   </p>
+   
+   <h3>{{ form.software.label }}</h3>
+   <p{% if form.software.errors %} class="errorlist"{% endif %}>
+      {{ form.software }}
+      {{ form.software.errors }}
+   </p>
    </form>
 </div>
 {% endblock %}
