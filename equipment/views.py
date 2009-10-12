@@ -14,6 +14,7 @@ from etcetera.extras.search import get_query
 @login_required
 def index(request):
 	paged_objects = None
+	q = None
 	form = eqforms.SearchForm()
 	if request.GET and request.GET.get('q'):
 		form = eqforms.SearchForm(request.GET)
@@ -27,6 +28,7 @@ def index(request):
 				paged_objects = equipment.Equipment.objects.filter(
 					equipment_query
 				)
+				q = data['q']
 			else:
 				paged_objects = equipment.Equipment.objects.all()
 	else:
@@ -50,6 +52,7 @@ def index(request):
 		'object_list': paged_objects.object_list,
 		'form': form,
 		'type': 'index',
+		'q': q,
 	}
 	return render_to_response(
 		"equipment/index.html",
