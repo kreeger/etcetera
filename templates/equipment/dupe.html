@@ -2,20 +2,25 @@
 {% load etcetera_tags %}
 
 {% block title %}
-   Duplicating {{ object.make }} {{ object.model }}{% if object.barcode %} (#{{ object.barcode }}){% endif %}
+   Duplicating {{ object.make }} {{ object.model }}
+   {% if object.barcode %}(#{{ object.barcode }}){% endif %}
 {% endblock %}
 
 {% block breadcrumb %}
    <a href="{% url etcetera-home %}">Home</a> &rsaquo;
    <a href="{% url equipment-index %}">Equipment</a> &rsaquo;
-   <a href="{% url equipment-detail object.id %}">{{ object.make }} {{ object.model }} ({{ object.equipment_type }})</a> &rsaquo;
+   <a href="{% url equipment-detail object.id %}">
+      {{ object.make }} {{ object.model }} ({{ object.equipment_type }})
+   </a> &rsaquo;
    Duplicate
 {% endblock %}
 
 {% block content %}
 <div id="detail">
    <form action="" method="GET">
-   <h1>Duplicating {{ object.make }} {{ object.model }}{% if object.barcode %} (#{{ object.barcode }}){% endif %}</h1>
+   <h1>Duplicating {{ object.make }} {{ object.model }}
+      {% if object.barcode %}(#{{ object.barcode }}){% endif %}
+   </h1>
    <div id="duplicate">
       {{ form.times.label }}
       {{ form.times }}
@@ -23,16 +28,24 @@
       <input type="submit" name="go" value="Go!" id="go" />
    </div>
    </form>
-   {% if times %}<div id="times"><form action="" method="POST">
-      <table>
-         <caption>Enter barcodes for each duplicate of this item. If a barcode is already in the system, or a barcode is left blank, it will be added to the database with a barcode of '######'.</caption>
-         {% for time in times %}
-            <tr><td class="tablehead"><label for="{{ time }}">barcode #{{ time }}</label></td>
-            <td><input type="text" maxlength="6" name="{{ time }}" value="" id="{{ time }}" /></td></tr>
-         {% endfor %}
-      </table>
-      <input type="submit" name="submit" value="Create these {{ times|length }} items" id="submit" />
-      </form>
-   </div>{% endif %}
+   {% if times %}
+      <div id="times"><form action="" method="POST">
+         <table>
+            <caption>Enter barcodes for each duplicate of this item. If a barcode is already in the system, or a barcode is left blank, it will be added to the database with a barcode of '######'.</caption>
+            {% for time in times %}
+               <tr>
+                  <td class="tablehead">
+                     <label for="{{ time }}">barcode #{{ time }}</label>
+                  </td>
+                  <td>
+                     <input type="text" maxlength="6" name="{{ time }}" value="" id="{{ time }}" />
+                     </td>
+                  </tr>
+            {% endfor %}
+         </table>
+         <input type="submit" name="submit" value="Create these {{ times|length }} items" id="submit" />
+         </form>
+      </div>
+   {% endif %}
 </div>
 {% endblock %}

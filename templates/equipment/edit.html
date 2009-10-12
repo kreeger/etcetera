@@ -2,92 +2,187 @@
 {% load etcetera_tags %}
 
 {% block title %}
-   {% if form.initial %}Editing {{ object.make }} {{ object.model }}
-      {% if object.barcode %}({{ object.barcode }}){% endif %}
-      {% else %}New equipment
+   {% if form.initial %}
+      Editing {{ object.make }} {{ object.model }}
+      {% if object.barcode %}
+         ({{ object.barcode }})
+      {% endif %}
+   {% else %}
+      New equipment
    {% endif %}
 {% endblock %}
 
 {% block breadcrumb %}
    <a href="{% url etcetera-home %}">Home</a> &rsaquo;
    <a href="{% url equipment-index %}">Equipment</a> &rsaquo;
-   {% if form.initial %}<a href="{% url equipment-detail object.id %}">{{ object.make }} {{ object.model }} ({{ object.equipment_type }})</a> &rsaquo;
-      Edit
-      {% else %}New
+   {% if form.initial %}
+      <a href="{% url equipment-detail object.id %}">
+         {{ object.make }} {{ object.model }} ({{ object.equipment_type }})
+      </a>
+      &rsaquo; Edit
+   {% else %}
+      New
    {% endif %}
 {% endblock %}
 
 {% block content %}
 <div id="detail">
    <form action="" method="POST">
+      
    <div id="barcode{% if form.barcode.errors %}-error{% endif %}">
-      {{ form.barcode }}{% if form.barcode.errors %}<br />{{ form.barcode.errors }}{% endif %}
+      {{ form.barcode }}
+      {% if form.barcode.errors %}
+         <br />{{ form.barcode.errors }}
+      {% endif %}
    </div>
-   <h1><table class="h1-head" cellpadding="0" cellspacing="0"><tr>
-      <td{% if form.make.errors %} class="errorlist"{% endif %}>{{ form.make.label }} {{ form.make.errors }}</td>
-      <td{% if form.model.errors %} class="errorlist"{% endif %}>{{ form.model.label }} {{ form.model.errors }}</td>
-      <td{% if form.equipment_type.errors %} class="errorlist"{% endif %}>{{ form.equipment_type.label }} {{ form.equipment_type.errors }}</td>
-   </tr></table><span class="right"><input type="submit" name="save" value="save" id="save" /></span>{{ form.make }} {{ form.model }} <span class="head">{{ form.equipment_type }}</span></h1>
+   
+   <h1>
+      <table class="h1-head" cellpadding="0" cellspacing="0">
+         <tr>
+            <td{% if form.make.errors %} class="errorlist"{% endif %}>
+               {{ form.make.label }} {{ form.make.errors }}
+            </td>
+            <td{% if form.model.errors %} class="errorlist"{% endif %}>
+               {{ form.model.label }} {{ form.model.errors }}
+            </td>
+            <td{% if form.equipment_type.errors %} class="errorlist"{% endif %}>
+               {{ form.equipment_type.label }}
+               {{ form.equipment_type.errors }}
+            </td>
+         </tr>
+      </table>
+      
+      <span class="right">
+         <input type="submit" name="save" value="save" id="save" />
+      </span>
+      
+      {{ form.make }} {{ form.model }}
+      <span class="head">
+         {{ form.equipment_type }}
+      </span>
+   </h1>
+   
    <table class="h2-head" cellpadding="0" cellspacing="0">
       <tr>
-         <td{% if form.status.errors %} class="errorlist"{% endif %}>{{ form.status.label }}</td>
-         <td{% if form.status.errors %} class="errorlist"{% endif %}>{{ form.status }} {{ form.status.errors }}</td>
-         <td{% if form.last_inventoried.errors %} class="errorlist"{% endif %}>{{ form.last_inventoried.label }}</td>
-         <td{% if form.last_inventoried.errors %} class="errorlist"{% endif %}>{{ form.last_inventoried }} {{ form.last_inventoried.errors }}</td>
+         <td{% if form.status.errors %} class="errorlist"{% endif %}>
+            {{ form.status.label }}
+         </td>
+         <td{% if form.status.errors %} class="errorlist"{% endif %}>
+            {{ form.status }} {{ form.status.errors }}
+         </td>
+         <td{% if form.last_inventoried.errors %} class="errorlist"{% endif %}>
+            {{ form.last_inventoried.label }}
+         </td>
+         <td{% if form.last_inventoried.errors %} class="errorlist"{% endif %}>
+            {{ form.last_inventoried }} {{ form.last_inventoried.errors }}
+         </td>
       </tr>
       <tr>
-         <td{% if form.building.errors or form.room.errors %} class="errorlist"{% endif %}>Location</td>
-         <td{% if form.building.errors or form.room.errors %} class="errorlist"{% endif %}>{{ form.building }}{{ form.building.errors }} {{ form.room }}{{ form.room.errors }}</td>
-         <td{% if form.on_weekly_checklist.errors %} class="errorlist"{% endif %}>{{ form.on_weekly_checklist.label }}?</td>
-         <td{% if form.on_weekly_checklist.errors %} class="errorlist"{% endif %}>{{ form.on_weekly_checklist }} {{ form.on_weekly_checklist.errors }}</td>
+         <td{% if form.building.errors or form.room.errors %} class="errorlist"{% endif %}>
+            Location
+         </td>
+         <td{% if form.building.errors or form.room.errors %} class="errorlist"{% endif %}>
+            {{ form.building }}{{ form.building.errors }}
+            {{ form.room }}{{ form.room.errors }}
+         </td>
+         <td{% if form.on_weekly_checklist.errors %} class="errorlist"{% endif %}>
+            {{ form.on_weekly_checklist.label }}?
+         </td>
+         <td{% if form.on_weekly_checklist.errors %} class="errorlist"{% endif %}>
+            {{ form.on_weekly_checklist }}
+            {{ form.on_weekly_checklist.errors }}
+         </td>
       </tr>
    </table>
+   
    <div class="right">
       <h3>Currently in the hands of...</h3>
       <table>
-         <tr{% if form.checkout_to.errors %} class="errorlist"{% endif %}><td class="tablehead">Patron</td>
-            <td>{{ form.checkout_to }}{{ form.checkout_to.errors }}</td></tr>
-         <tr{% if form.department.errors %} class="errorlist"{% endif %}><td class="tablehead">{{ form.department.label }}</td>
-            <td>{{ form.department }}{{ form.department.errors }}</td></tr>
+         <tr{% if form.checkout_to.errors %} class="errorlist"{% endif %}>
+            <td class="tablehead">Patron</td>
+            <td>{{ form.checkout_to }}{{ form.checkout_to.errors }}</td>
+         </tr>
+         <tr{% if form.department.errors %} class="errorlist"{% endif %}>
+            <td class="tablehead">{{ form.department.label }}</td>
+            <td>{{ form.department }}{{ form.department.errors }}</td>
+         </tr>
       </table>
    </div>
+   
    <h3>Brief information</h3>
    <table>
-      <tr{% if form.serial.errors %} class="errorlist"{% endif %}><td class="tablehead">{{ form.serial.label }} #</td>
-         <td>{{ form.serial }}{{ form.serial.errors }}</td></tr>
-      <tr{% if form.smsu_id.errors %} class="errorlist"{% endif %}><td class="tablehead">{{ form.smsu_id.label }} #</td>
-         <td>{{ form.smsu_id }}{{ form.smsu_id.errors }}</td></tr>
-      <tr{% if form.video_unit.errors %} class="errorlist"{% endif %}><td class="tablehead">{{ form.video_unit.label }} #</td>
-         <td>{{ form.video_unit }}{{ form.video_unit.errors }}</td></tr>
-      <tr{% if form.lamp_type.errors %} class="errorlist"{% endif %}><td class="tablehead">{{ form.lamp_type.label }}</td>
-         <td>{{ form.lamp_type }}{{ form.lamp_type.errors }}</td></tr>
-      <tr{% if form.property_control.errors %} class="errorlist"{% endif %}><td class="tablehead">{{ form.property_control.label }} #</td>
-         <td>{{ form.property_control }}{{ form.property_control.errors }}</td></tr>
-      <tr{% if form.ticket.errors %} class="errorlist"{% endif %}><td class="tablehead">{{ form.ticket.label }} #</td>
-         <td>{{ form.ticket }}{{ form.ticket.errors }}</td></tr>
+      <tr{% if form.serial.errors %} class="errorlist"{% endif %}>
+         <td class="tablehead">{{ form.serial.label }} #</td>
+         <td>{{ form.serial }}{{ form.serial.errors }}</td>
+      </tr>
+      <tr{% if form.smsu_id.errors %} class="errorlist"{% endif %}>
+         <td class="tablehead">{{ form.smsu_id.label }} #</td>
+         <td>{{ form.smsu_id }}{{ form.smsu_id.errors }}</td>
+      </tr>
+      <tr{% if form.video_unit.errors %} class="errorlist"{% endif %}>
+         <td class="tablehead">{{ form.video_unit.label }} #</td>
+         <td>{{ form.video_unit }}{{ form.video_unit.errors }}</td>
+      </tr>
+      <tr{% if form.lamp_type.errors %} class="errorlist"{% endif %}>
+         <td class="tablehead">{{ form.lamp_type.label }}</td>
+         <td>{{ form.lamp_type }}{{ form.lamp_type.errors }}</td>
+      </tr>
+      <tr{% if form.property_control.errors %} class="errorlist"{% endif %}>
+         <td class="tablehead">{{ form.property_control.label }} #</td>
+         <td>{{ form.property_control }}{{ form.property_control.errors }}</td>
+      </tr>
+      <tr{% if form.ticket.errors %} class="errorlist"{% endif %}>
+         <td class="tablehead">{{ form.ticket.label }} #</td>
+         <td>{{ form.ticket }}{{ form.ticket.errors }}</td>
+      </tr>
    </table>
+   
    <h3>Origin and purchase information</h3>
       <table>
-         <tr{% if form.received_from.errors %} class="errorlist"{% endif %}><td class="tablehead">{{ form.received_from.label }}</td>
-            <td>{{ form.received_from }}{{ form.received_from.errors }}</td></tr>
-         <tr{% if form.received_date.errors %} class="errorlist"{% endif %}><td class="tablehead">{{ form.received_date.label }}</td>
-            <td>{{ form.received_date }}{{ form.received_date.errors }}</td></tr>
-         <tr{% if form.value.errors %} class="errorlist"{% endif %}><td class="tablehead">{{ form.value.label }}</td>
-            <td>{{ form.value }}{{ form.value.errors }}</td></tr>
-         <tr{% if form.dof.errors %} class="errorlist"{% endif %}><td class="tablehead">{{ form.dof.label }}</td>
-            <td>{{ form.dof }}{{ form.dof.errors }}</td></tr>
-         <tr{% if form.purchase_order.errors %} class="errorlist"{% endif %}><td class="tablehead">{{ form.purchase_order.label }}</td>
-            <td>{{ form.purchase_order }}{{ form.purchase_order.errors }}</td></tr>
-         <tr{% if form.budget.errors %} class="errorlist"{% endif %}><td class="tablehead">{{ form.budget.label }}</td>
-            <td>{{ form.budget }}{{ form.budget.errors }}</td></tr>
+         <tr{% if form.received_from.errors %} class="errorlist"{% endif %}>
+         <td class="tablehead">{{ form.received_from.label }}</td>
+            <td>{{ form.received_from }}{{ form.received_from.errors }}</td>
+            </tr>
+         <tr{% if form.received_date.errors %} class="errorlist"{% endif %}>
+         <td class="tablehead">{{ form.received_date.label }}</td>
+            <td>{{ form.received_date }}{{ form.received_date.errors }}</td>
+         </tr>
+         <tr{% if form.value.errors %} class="errorlist"{% endif %}>
+            <td class="tablehead">{{ form.value.label }}</td>
+            <td>{{ form.value }}{{ form.value.errors }}</td>
+         </tr>
+         <tr{% if form.dof.errors %} class="errorlist"{% endif %}>
+            <td class="tablehead">{{ form.dof.label }}</td>
+            <td>{{ form.dof }}{{ form.dof.errors }}</td>
+         </tr>
+         <tr{% if form.purchase_order.errors %} class="errorlist"{% endif %}>
+            <td class="tablehead">{{ form.purchase_order.label }}</td>
+            <td>{{ form.purchase_order }}{{ form.purchase_order.errors }}</td>
+         </tr>
+         <tr{% if form.budget.errors %} class="errorlist"{% endif %}>
+            <td class="tablehead">{{ form.budget.label }}</td>
+            <td>{{ form.budget }}{{ form.budget.errors }}</td>
+         </tr>
       </table>
+      
    <h3>{{ form.comments.label }}</h3>
-   <p{% if form.comments.errors %} class="errorlist"{% endif %}>{{ form.comments }}{{ form.comments.errors }}</p>
-   <h1><span class="right"><input type="submit" name="save" value="save" id="save" /></span>
-      {% if form.initial %}{{ object.make }} {{ object.model }} <span class="head">edit mode</span>
-         {% else %}New equipment <span class="head">creation mode</span>
+   <p{% if form.comments.errors %} class="errorlist"{% endif %}>
+      {{ form.comments }}{{ form.comments.errors }}
+   </p>
+   
+   <h1>
+      <span class="right">
+         <input type="submit" name="save" value="save" id="save" />
+      </span>
+      
+      {% if form.initial %}
+         {{ object.make }} {{ object.model }}
+         <span class="head">edit mode</span>
+      {% else %}
+         New equipment <span class="head">creation mode</span>
       {% endif %}
    </h1>
+   
    </form>
 </div>
 {% endblock %}
