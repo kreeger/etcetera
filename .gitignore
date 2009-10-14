@@ -6,5 +6,5 @@
 /media
 *._*
 settings.py
-/_media/js/jquery.js
+/_media/js/jquery*
 /_media/uploads
