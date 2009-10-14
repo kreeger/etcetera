@@ -31,3 +31,7 @@ class SearchForm(forms.Form):
 class CheckoutModelForm(forms.ModelForm):
 	class Meta:
 		model = checkout.Checkout
+		exclude = ('equipment_list',)
+
+class AddEquipmentForm(forms.Form):
+	barcode = forms.CharField(max_length=6, required=False)
