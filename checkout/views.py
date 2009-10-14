@@ -2,13 +2,15 @@ import datetime as dt
 
 from django.shortcuts import render_to_response, get_object_or_404
 from django.contrib.auth.decorators import login_required
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, HttpResponse
 from django.core.urlresolvers import reverse
 from django.core.paginator import Paginator, InvalidPage, EmptyPage
+from django.core import serializers
 from django.template import RequestContext
 
 from etcetera.checkout import forms as coforms
 from etcetera.checkout import models as checkout
+from etcetera.equipment import models as equipment
 
 @login_required
 def index(request):
@@ -78,13 +80,38 @@ def edit(request, object_id):
 				args=(co.id,),
 			))
 	else:
+		eqform = coforms.AddEquipmentForm()
 		form = coforms.CheckoutModelForm(instance=co)
 	context = {
 		'object': co,
 		'form': form,
+		'eqform': eqform,
 	}
 	return render_to_response(
 		"checkout/edit.html",
 		context,
 		context_instance=RequestContext(request)
 	)
+
+@login_required
+def add_eq(request, object_id):
+	error_msg = u"No POST data sent."
+	co = get_object_or_404(checkout.Checkout, id=object_id)
+	if request.method == 'POST' and request.is_ajax():
+		form = coforms.AddEquipmentForm(request.POST)
+		if form.is_valid():
+			import pdb; pdb.set_trace()
+			cd = form.cleaned_data
+			try:
+				eq = equipment.Equipment.objects.get(barcode=cd['barcode'])
+				co.equipment_list.add(eq)
+				co.save()
+				JSONSerializer = serializers.get_serializer('json')
+				json_serializer = JSONSerializer()
+				json_serializer.serialize([eq])
+				data = json_serializer.getvalue()
+			except equipment.Equipment.DoesNotExist:
+				data = u"Equipment with that barcode doesn't exist."
+			return HttpResponse(data)
+	return HttpResponseServerError(error_msg)
+
