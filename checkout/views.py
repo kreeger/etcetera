@@ -114,4 +114,3 @@ def add_eq(request, object_id):
 				data = u"Equipment with that barcode doesn't exist."
 			return HttpResponse(data)
 	return HttpResponseServerError(error_msg)
-
