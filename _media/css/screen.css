@@ -22,7 +22,10 @@ h1 input, h1 select { font-weight: bold; }
 .priority5 { color: #1f00ff; }
 .padded { padding: 5px; }
 .tablehead { -webkit-border-top-left-radius: 10px; -moz-border-radius-topleft: 10px; -webkit-border-bottom-left-radius: 10px; -moz-border-radius-bottomleft: 10px; background-color: #EAEAEA; vertical-align: middle; color: #666; text-align: right; text-transform: lowercase; font-weight: normal; font-weight: normal; padding: 0 3px 0 10px; }
+
 td.tablehead { width: 150px; }
+a#remove { width: 16px; height: 16px; background-image: url(../images/icons/buttonmin32.png); }
+a#add { width: 16px; height: 16px; background-image: url(../images/icons/buttonplu32.png); }
 
 div#header { background-image: url(../images/header.png); height: 120px; border-bottom: 1px solid #333; }
 div#header p, div#header h1 { margin: 0; color: #EEE; }
@@ -76,7 +79,8 @@ table#list { margin: 0px; padding: 0px; border-spacing: 0px; border: 1px solid #
 table#list tr.datarow a, table#list tr#headerrow td { padding-top: 5px; padding-bottom: 5px; }
 table#list tr#headerrow { background-color: #DDD; }
 table#list tr#headerrow td { border-bottom: 1px solid #AAA; text-align: left; font-weight: bold; }
-table#list tr.datarow a { display: block; }
+table#list tr.datarow td a { display: block; }
+table#list tr.datarow td.buttons a { display: inline-block; padding: 0px; }
 table#list td:first-child { padding-left: 8px; font-weight: bold; }
 table#list td:last-child { padding-right: 8px; text-align: right; }
 table#list tr.datarow td:last-child { font-size: .8em; }
