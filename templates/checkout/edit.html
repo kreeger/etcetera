@@ -213,7 +213,7 @@
                </a>
             </td>
             <td class="buttons">
-               <a href="#" class="remove" id="{% item.id %}">&nbsp;</a>
+               <a href="{% url checkout-remeq object.id item.id %}" class="remove" id="{{ item.id }}">&nbsp;</a>
             </td>
          </tr>
       {% endfor %}
