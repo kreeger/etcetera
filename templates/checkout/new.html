@@ -1,0 +1,107 @@
+{% extends "root.html" %}
+{% load etcetera_tags %}
+
+{% block title %}
+   Creating a Checkout
+{% endblock %}
+
+{% block breadcrumb %}
+   <a href="{% url etcetera-home %}">Home</a> &rsaquo;
+   <a href="{% url checkout-index %}">Checkout List</a> &rsaquo;
+   New
+{% endblock %}
+
+{% block content %}
+<div id="detail">
+   <form action="" method="POST">
+   <h1>
+      <span class="right">
+         <input type="submit" name="save" value="save" id="save" />
+      </span>
+      {% if not object %}Adding a new {% endif %}
+      Checkout{% if object %} #{{ object.id }}
+         <span class="head">edit mode</span>
+      {% endif %}
+   </h1>
+   
+   <h2{% if form.completed.errors or form.checkout_type.errors or form.return_type.errors %} class="errorlist"{% endif %}>
+      {% if object %}
+         <span class="right">
+            <span class="head">completed?</span> 
+               {{ form.completed }} {{ form.completed.errors }}
+         </span>
+      {% endif %}
+      Checkout type {{ form.checkout_type }} {{ form.checkout_type.errors }}<br />
+      Return type {{ form.return_type }} {{ form.return_type.errors }}
+   </h2>
+   
+   <div class="right">
+      <h3>Contact information</h3>
+      <table>
+         <tr{% if form.phone.errors %} class="errorlist"{% endif %}>
+            <td class="tablehead">{{ form.phone.label }}</td>
+            <td>{{ form.phone }} {{ form.phone.errors }}</td>
+         </tr>
+         <tr{% if form.email.errors %} class="errorlist"{% endif %}>
+            <td class="tablehead">{{ form.email.label }}</td>
+            <td>{{ form.email }} {{ form.email.errors }}</td>
+         </tr>
+      </table>
+   </div>
+   
+   <h3>Brief information</h3>
+   <table>
+      <tr{% if form.first_name.errors %} class="errorlist"{% endif %}>
+         <td class="tablehead">{{ form.first_name.label }}</td>
+         <td>{{ form.first_name }} {{ form.first_name.errors }}</td>
+      </tr>
+      <tr{% if form.last_name.errors %} class="errorlist"{% endif %}>
+         <td class="tablehead">{{ form.last_name.label }}</td>
+         <td>{{ form.last_name }} {{ form.last_name.errors }}</td>
+      </tr>
+      <tr{% if form.department.errors %} class="errorlist"{% endif %}>
+         <td class="tablehead">{{ form.department.label }}</td>
+         <td>{{ form.department }} {{ form.department.errors }}</td>
+      </tr>
+      {% if object %}
+         <tr>
+            <td class="tablehead">Department (user)</td>
+            <td>{{ object.department_text }}</td>
+         </tr>
+      {% endif %}
+      <tr{% if form.course.errors %} class="errorlist"{% endif %}>
+         <td class="tablehead">{{ form.course.label }}</td>
+         <td>{{ form.course }} {{ form.course.errors }}</td>
+      </tr>
+      <tr{% if form.building.errors %} class="errorlist"{% endif %}>
+         <td class="tablehead">{{ form.building.label }}</td>
+         <td>{{ form.building }} {{ form.building.errors }}</td>
+      </tr>
+      <tr{% if form.room.errors %} class="errorlist"{% endif %}>
+         <td class="tablehead">{{ form.room.label }}</td>
+         <td>{{ form.room }} {{ form.room.errors }}</td>
+      </tr>
+      <tr{% if form.returning_person.errors %} class="errorlist"{% endif %}>
+         <td class="tablehead">{{ form.returning_person.label }}</td>
+         <td>
+            {{ form.returning_person }}
+            {{ form.returning_person.errors }}
+         </td>
+      </tr>
+      <tr{% if form.out_date.errors %} class="errorlist"{% endif %}>
+         <td class="tablehead">{{ form.out_date.label }}</td>
+         <td>{{ form.out_date }} {{ form.out_date.errors }}</td>
+      </tr>
+      <tr{% if form.return_date.errors %} class="errorlist"{% endif %}>
+         <td class="tablehead">{{ form.return_date.label }}</td>
+         <td>{{ form.return_date }} {{ form.return_date.errors }}</td>
+      </tr>
+   </table>
+   
+   <h3>{{ form.equipment_needed.label }}</h3>
+   <p{% if form.equipment_needed.errors %} class="errorlist"{% endif %}>
+      {{ form.equipment_needed }} {{ form.equipment_needed.errors }}
+   </p>
+   </form>
+</div>
+{% endblock %}

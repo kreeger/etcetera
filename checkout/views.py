@@ -94,6 +94,29 @@ def edit(request, object_id):
 	)
 
 @login_required
+def new(request):
+	if request.method == 'POST':
+		form = coforms.CheckoutModelForm(request.POST)
+		if form.is_valid():
+			co = form.save()
+			co.creating_user = request.user
+			co.save()
+			return HttpResponseRedirect(reverse(
+				'checkout-detail',
+				args=(co.id,),
+			))
+	else:
+		form = coforms.CheckoutModelForm()
+	context = {
+		'form': form,
+	}
+	return render_to_response(
+		"checkout/new.html",
+		context,
+		context_instance=RequestContext(request)
+	)
+
+@login_required
 def add_eq(request, object_id):
 	error_msg = u"No POST data sent."
 	co = get_object_or_404(checkout.Checkout, id=object_id)
