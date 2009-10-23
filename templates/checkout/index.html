@@ -8,7 +8,7 @@
 {% block content %}
 
 <div id="list">   
-   <h1><span class="right"><a href="#">manually add a new checkout</a></span>Equipment Checkout List</h1>
+   <h1><span class="right"><a href="{% url checkout-new %}">manually add a new checkout</a></span>Equipment Checkout List</h1>
    <div id="searchform">
       <form action="">
          {{ form.q }}
