@@ -123,7 +123,6 @@ def add_eq(request, object_id):
 	if request.method == 'POST' and request.is_ajax():
 		form = coforms.AddEquipmentForm(request.POST)
 		if form.is_valid():
-			import pdb; pdb.set_trace()
 			cd = form.cleaned_data
 			try:
 				eq = equipment.Equipment.objects.get(barcode=cd['barcode'])
