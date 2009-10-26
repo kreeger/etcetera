@@ -38,8 +38,9 @@
       	var done = function(res, status) {
       		if (status == "success") {
       			var json = eval(res.responseText);
-      			var newTr = $('<tr class="datarow"><td><a href="../../../equipment/'+json[0].fields.id+'">'+json[0].fields.barcode+'</a></td><td><a href="../../../equipment/'+json[0].fields.id+'">'+json[0].fields.equipment_type+'</a></td><td><a href="../../../equipment/'+json[0].fields.id+'">'+json[0].fields.make+' '+json[0].fields.model+'</a></td><td><a href="../../../equipment/'+json[0].fields.id+'">'+json[0].fields.status+'</a></td><td><a href="../../../equipment/'+json[0].fields.id+'">'+json[0].fields.building+' '+json[0].fields.room+'</a></td><td>+ -</td></tr>');
-      			$("#list").append(newTr);
+      			var newTr = $('<tr class="datarow"><td><a href="../../../equipment/'+json[0].fields.id+'">'+json[0].fields.barcode+'</a></td><td><a href="../../../equipment/'+json[0].fields.id+'">'+json[0].fields.equipment_type+'</a></td><td><a href="../../../equipment/'+json[0].fields.id+'">'+json[0].fields.make+' '+json[0].fields.model+'</a></td><td><a href="../../../equipment/'+json[0].fields.id+'">'+json[0].fields.status+'</a></td><td><a href="../../../equipment/'+json[0].fields.id+'">'+json[0].fields.building+' '+json[0].fields.room+'</a></td><td class="buttons"><a href="rem_eq/'+json[0].fields.pk+'" class="remove" id="'+json[0].fields.pk+'">&nbsp;</a></td></tr>');
+      			newTr.appendTo($("#list")).slideDown();
+      			//$("#list").append(newTr).slideDown("slow");
       			$("#id_barcode").val("");
       	 	}
       		else {
