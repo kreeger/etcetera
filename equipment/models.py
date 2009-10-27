@@ -29,7 +29,8 @@ class Make(models.Model):
 class Equipment(models.Model):
 	"""One item of equipment"""
 	
-	barcode = models.CharField(blank=True, max_length=6, unique=True)
+	# Keep trying to have unique=True but Adam keeps wanting to change it
+	barcode = models.CharField(blank=True, null=True max_length=6, unique=True)
 	smsu_id = models.CharField(blank=True, max_length=8)
 	equipment_type = models.ForeignKey(EquipmentType) #req
 	building = models.ForeignKey(Building, null=True, blank=True)
@@ -91,6 +92,8 @@ class Equipment(models.Model):
 					log.new = unicode(new)
 					log.datetime = dt.datetime.now()
 					log.save()
+		if self.barcode == "":
+			self.barcode = None
 		super(Equipment, self).save(force_insert, force_update)
 
 class EquipmentLog(models.Model):
