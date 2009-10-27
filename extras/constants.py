@@ -9,6 +9,7 @@ EQUIPMENT_STATUSES = (
 	('stolen','Stolen'),
 	('surplus','Surplus'),
 	('transferred','Transferred'),
+	('parts','Using for parts'),
 )
 PRIORITIES = (
 	('1','Urgent'),
