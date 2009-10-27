@@ -117,6 +117,7 @@ div#detail table.h2-head td:last-child { width: 200px; }
 	div#detail table.h2-head td:last-child input { width: 170px; }
 
 div#detail form input#id_equipment_text { width: 450px; }
+div#detail form input#id_barcodes { width: 600px; }
 div#detail form input#save { border: 0px; background-color: transparent; font-size: 1em; padding: 0; font-weight: bold; margin: 0; color: #4A0010; }
 div#detail form input#save:hover { text-decoration: underline; cursor: pointer; }
 div#detail form select#id_building { width: 200px; }

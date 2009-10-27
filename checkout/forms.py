@@ -33,5 +33,8 @@ class CheckoutModelForm(forms.ModelForm):
 		model = checkout.Checkout
 		exclude = ('equipment_list','department_text','creation_date','creating_user',)
 
-class AddEquipmentForm(forms.Form):
-	barcode = forms.CharField(max_length=6, required=False)
+class CheckoutEquipmentForm(forms.Form):
+	barcodes = forms.CharField(
+		max_length=255,
+		help_text="Type in barcodes, separated by commas.",
+	)

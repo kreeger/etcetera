@@ -20,7 +20,8 @@
       {% if not object.equipment_list.all %}
          <div id="alert" class="banner">
             This checkout doesn't have any equipment associated with it.
-               To edit it, click <a href="{% url checkout-edit object.id %}">click here</a>.
+               To associate equipment with it, 
+               <a href="{% url checkout-equip object.id %}">click here</a>.
          </div>
       {% endif %}
       {% ifequal object.delivering_user user %}
@@ -32,7 +33,10 @@
    
    <h1>
       {% if user.is_authenticated %}
-         <span class="right"><a href="{% url checkout-edit object.id %}">edit</a></span>
+         <span class="right">
+            <a href="{% url checkout-equip object.id %}">add equipment</a>
+            &bull; <a href="{% url checkout-edit object.id %}">edit</a>
+         </span>
       {% endif %}
       {{ object.first_name }} {{ object.last_name }}
          (Checkout #{{ object.id }})

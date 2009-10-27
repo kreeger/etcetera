@@ -5,54 +5,6 @@
    Editing Checkout #{{ object.id }}
 {% endblock %}
 
-{% block fullscript %}
-   <script type="text/javascript" charset="utf-8">
-      $(document).ready(function() {
-         var display_error = function(msg, elem) {
-           var msg_div = $('<div class="error_msg"><p>'+msg+'</p></div>');
-           msg_div.insertAfter(elem).fadeIn('slow').animate({opacity: 1.0}, 20000).fadeOut('slow',function() { msg_div.remove(); });
-         };
-         
-      	var add_eq = function() {
-      		var barcode = $("#id_barcode").val()
-
-      		if (barcode != "") {
-      	    // post parameters in a js hash/dictionary
-      	    var data = {barcode:barcode};
-      	    // bundling the ajax arguments ahead of type
-      	    var args = {
-      			type:"POST",
-      			url:"{% url checkout-addeq object.id %}",
-      			data:data,
-      			complete:done,
-      		};
-      		$.ajax(args)
-      		}
-      		else {
-      			display_error("Requires value for barcode.", $(".new"));
-      		}
-      		// return false to override HTML button behavior
-      		return false;
-      	}
-
-      	var done = function(res, status) {
-      		if (status == "success") {
-      			var json = eval(res.responseText);
-      			var newTr = $('<tr class="datarow"><td><a href="../../../equipment/'+json[0].fields.id+'">'+json[0].fields.barcode+'</a></td><td><a href="../../../equipment/'+json[0].fields.id+'">'+json[0].fields.equipment_type+'</a></td><td><a href="../../../equipment/'+json[0].fields.id+'">'+json[0].fields.make+' '+json[0].fields.model+'</a></td><td><a href="../../../equipment/'+json[0].fields.id+'">'+json[0].fields.status+'</a></td><td><a href="../../../equipment/'+json[0].fields.id+'">'+json[0].fields.building+' '+json[0].fields.room+'</a></td><td class="buttons"><a href="rem_eq/'+json[0].fields.pk+'" class="remove" id="'+json[0].fields.pk+'">&nbsp;</a></td></tr>');
-      			newTr.appendTo($("#list")).slideDown();
-      			//$("#list").append(newTr).slideDown("slow");
-      			$("#id_barcode").val("");
-      	 	}
-      		else {
-      			display_error(res.responseText, $("id_barcode"));
-      		}
-      	}
-
-      	$("#id_barcode").blur(add_eq);
-      });
-   </script>
-{% endblock %}
-
 {% block breadcrumb %}
    <a href="{% url etcetera-home %}">Home</a> &rsaquo;
    <a href="{% if object.completed %}#{% else %}{% url checkout-index %}{% endif %}">
@@ -117,7 +69,7 @@
          <td class="tablehead">{{ form.department.label }}</td>
          <td>{{ form.department }} {{ form.department.errors }}</td>
       </tr>
-      {% if object %}
+      {% if object.department_text %}
          <tr>
             <td class="tablehead">Department (user)</td>
             <td>{{ object.department_text }}</td>
@@ -175,50 +127,8 @@
       </tr>
    </table>
    
-   <h3>Add equipment by barcode</h3>
-   {{ eqform.barcode }}
-   <table id="list">
-      <tr id="headerrow">
-         <td>Barcode</td>
-         <td>Type</td>
-         <td>Make &amp; Model</td>
-         <td>Status</td>
-         <td>Location</td>
-         <td>Operation</td>
-      </tr>
-      {% for item in object.equipment_list.all %}
-         <tr class="datarow">
-            <td>
-               <a href="{% url equipment-detail item.id %}">
-                  {{ item.barcode }}
-               </a>
-            </td>
-            <td>
-               <a href="{% url equipment-detail item.id %}">
-                  {{ item.equipment_type.name }}
-               </a>
-            </td>
-            <td>
-               <a href="{% url equipment-detail item.id %}">
-                  {{ item.make.name }} {{ item.model }}
-               </a>
-            </td>
-            <td>
-               <a href="{% url equipment-detail item.id %}">
-                  {{ item.get_status_display }}
-               </a>
-            </td>
-            <td>
-               <a href="{% url equipment-detail item.id %}">
-                  {{ item.building.abbreviation }} {{ item.room }}
-               </a>
-            </td>
-            <td class="buttons">
-               <a href="{% url checkout-remeq object.id item.id %}" class="remove" id="{{ item.id }}">&nbsp;</a>
-            </td>
-         </tr>
-      {% endfor %}
-   </table>
+   <h3>Add equipment</h3>
+   <p><a href="{% url checkout-equip object.id %}">Click here to edit the equipment assigned to this checkout</a>. Be sure to save other changes to it first.</p>
    
    <h3>{{ form.other_equipment.label }}</h3>
    <p{% if form.other_equipment.errors %} class="errorlist"{% endif %}>
