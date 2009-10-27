@@ -1,0 +1,70 @@
+{% extends "root.html" %}
+{% load etcetera_tags %}
+
+{% block title %}
+   Adding equipment to Checkout #{{ object.id }}
+{% endblock %}
+
+{% block breadcrumb %}
+   <a href="{% url etcetera-home %}">Home</a> &rsaquo;
+   <a href="{% if object.completed %}#{% else %}{% url checkout-index %}{% endif %}">
+      Checkout List
+   </a> &rsaquo;
+   <a href="{% url checkout-detail object.id %}">
+      Checkout #{{ object.id }}
+   </a> &rsaquo;
+   Adding equipment
+{% endblock %}
+
+{% block content %}
+<div id="detail">
+   <h1>Adding equipment to Checkout #{{ object.id }}</h1>
+   <p>{{ form.barcodes.help_text }}</p>
+   <form action="" method="POST" accept-charset="utf-8">
+      <table>
+         <tr>
+            <td class="tablehead">{{ form.barcodes.label }}</td>
+            <td>{{ form.barcodes }}</td>
+            <td><input type="submit" value="Continue &rarr;"></td>
+         </tr>
+      </table>
+   </form>
+   <h3>Equipment list</h3>
+   {% if object.equipment_list.all %}
+      <table id="list">
+         <tr id="headerrow">
+            <td>Barcode</td>
+            <td>Type</td>
+            <td>Make/Model</td>
+            <td>Serial</td>
+         </tr>
+         {% for item in object.equipment_list.all %}
+            <tr class="datarow">
+               <td>
+                  <a href="{% url equipment-detail item.id %}">
+                     {{ item.barcode }}
+                  </a>
+               </td>
+               <td>
+                  <a href="{% url equipment-detail item.id %}">
+                     {{ item.equipment_type.name }}
+                  </a>
+               </td>
+               <td>
+                  <a href="{% url equipment-detail item.id %}">
+                     {{ item.make.name }} {{ item.model }}
+                  </a>
+               </td>
+               <td>
+                  <a href="{% url equipment-detail item.id %}">
+                     {{ item.serial }}
+                  </a>
+               </td>
+            </tr>
+         {% endfor %}
+      </table>
+   {% else %}
+      <p>No specific equipment has been attached to this checkout yet.</p>
+   {% endif %}
+</div>
+{% endblock %}

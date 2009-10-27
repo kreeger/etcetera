@@ -6,6 +6,5 @@ urlpatterns = patterns('',
 	url(r'^new/$', new, name="checkout-new"),
 	url(r'^(?P<object_id>\d+)/$', detail, name="checkout-detail"),
 	url(r'^(?P<object_id>\d+)/edit/$', edit, name="checkout-edit"),
-	url(r'^(?P<object_id>\d+)/add_eq/$', add_eq, name="checkout-addeq"),
-	url(r'^(?P<object_id>\d+)/rem_eq/(?P<eq_id>\d+)/$', rem_eq, name="checkout-remeq"),
+	url(r'^(?P<object_id>\d+)/equip/$', equip, name="checkout-equip"),
 )
