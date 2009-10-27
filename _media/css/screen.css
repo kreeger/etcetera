@@ -27,7 +27,7 @@ td.tablehead { width: 150px; }
 div#header { background-image: url(../images/header.png); height: 120px; border-bottom: 1px solid #333; }
 div#header p, div#header h1 { margin: 0; color: #EEE; }
 div#header a { color: #BBB; }
-div#header h1 { height: 120px; background: url(../images/etceteralogo.png) no-repeat; }
+div#header h1 { height: 120px; background: url(../images/etceteralogo-hall.png) no-repeat; }
 div#header h1 img { display: none; }
 div#header p { float: right; font-size: 0.8em; padding-top: 100px; }
 
