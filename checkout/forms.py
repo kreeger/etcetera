@@ -2,9 +2,11 @@ import urllib
 
 from django import forms
 from django.contrib.localflavor.us import forms as lfus
+from django.contrib.auth import models as auth
 
 from etcetera.structure import models as structure
 from etcetera.checkout import models as checkout
+from etcetera.extras import forms as ef
 
 class SearchForm(forms.Form):
 	q = forms.CharField(max_length=50)
@@ -29,9 +31,17 @@ class SearchForm(forms.Form):
 			out_list.extend(['building__name','room',])
 
 class CheckoutModelForm(forms.ModelForm):
+	delivering_user = ef.UserModelChoiceField(
+		auth.User.objects.all().order_by('last_name')
+	)
 	class Meta:
 		model = checkout.Checkout
-		exclude = ('equipment_list','department_text','creation_date','creating_user',)
+		exclude = (
+			'equipment_list',
+			'department_text',
+			'creation_date',
+			'creating_user',
+		)
 
 class CheckoutEquipmentForm(forms.Form):
 	barcodes = forms.CharField(
