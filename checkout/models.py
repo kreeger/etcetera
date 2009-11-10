@@ -14,21 +14,28 @@ class Checkout(models.Model):
 	last_name = models.CharField(max_length=100)
 	department_text = models.CharField(
 		max_length=100,
-		verbose_name="department",
+		verbose_name='department',
+		help_text='The university department the request should be under.',
 	)
 	department = models.ForeignKey(
 		structure.OrganizationalUnit,
 		null=True,
-		blank=True
+		blank=True,
 	)
 	course = models.CharField(
 		max_length=20,
 		blank=True,
-		help_text="If the request is for a specific course, state the course.",
+		help_text='If the request is for a specific course, state the course.',
 	)
-	phone = lfus.PhoneNumberField()
-	email = models.EmailField(max_length=75)
-	equipment_needed = models.TextField()
+	phone = lfus.PhoneNumberField(help_text='Format: ###-###-####',)
+	email = models.EmailField(
+		max_length=75,
+		help_text='Your university email address.',
+	)
+	equipment_needed = models.TextField(
+		help_text='Give a clear description of the equipment you would like \
+		to reserve, as well as any specific models if desired.',
+	)
 	building = models.ForeignKey(
 		structure.Building,
 		blank=True, null=True,
@@ -36,33 +43,49 @@ class Checkout(models.Model):
 		help_text='The building the equipment will be at for the \
 			duration of the checkout.',
 	)
-	room = models.CharField(max_length=25, blank=True)
+	room = models.CharField(
+		max_length=25,
+		blank=True,
+		help_text='The room in the building specified above.',
+	)
 	checkout_type = models.CharField(
 		max_length=8,
-		choices=constants.CHECKOUT_TYPES
+		choices=constants.CHECKOUT_TYPES,
+		verbose_name='Pickup/delivery?',
+		help_text='Will this ticket be picked up or delivered by ETC?',
 	)
 	return_type = models.CharField(
 		max_length=9,
-		choices=constants.RETURN_TYPES
+		choices=constants.RETURN_TYPES,
+		verbose_name='Who will return?',
+		help_text='Will you be returning the equipment, or will ETC be \
+			picking it up?',
 	)
 	creation_date = models.DateTimeField(default=dt.datetime.now)
-	out_date = models.DateTimeField()
-	return_date = models.DateTimeField()
+	out_date = models.DateTimeField(
+		verbose_name='Pickup/delivery date',
+		help_text='The date/time you will pick up the equipment, or \
+			when ETC should deliver it.',
+	)
+	return_date = models.DateTimeField(
+		help_text='The date/time you will bring back the equipment, or when \
+			ETC should pick it up.',
+		)
 	creating_user = models.ForeignKey(
 		auth.User,
 		blank=True, null=True,
-		related_name="created_checkouts",
+		related_name='created_checkouts',
 	)
 	delivering_user = models.ForeignKey(
 		auth.User,
 		blank=True, null=True,
-		related_name="deliveries",
+		related_name='deliveries',
 	)
 	returning_person = models.CharField(
 		max_length=100,
 		blank=True,
 		null=True,
-		verbose_name="returner"
+		verbose_name='returner'
 	)
 	equipment_list = models.ManyToManyField(
 		equipment.Equipment,
@@ -73,11 +96,14 @@ class Checkout(models.Model):
 		blank=True, null=True,
 	)
 	other_equipment = models.TextField(blank=True)
-	software = models.TextField(blank=True)
+	software = models.TextField(
+		blank=True,
+		help_text='If any software is required on a computer with the checkout, please specify which software.',
+	)
 	completed = models.BooleanField()
 	
 	def __unicode__(self):
-		return u"%s %s, %s" % (
+		return u'%s %s, %s' % (
 			self.first_name,
 			self.last_name,
 			self.creation_date

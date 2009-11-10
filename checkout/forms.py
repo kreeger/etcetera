@@ -53,6 +53,8 @@ class CheckoutPublicForm(forms.ModelForm):
 			'creating_date',
 			'delivering_user',
 			'completed',
+			'returning_user',
+			'other_equipment',
 		)
 
 class CheckoutEquipmentForm(forms.Form):

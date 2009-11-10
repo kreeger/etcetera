@@ -14,6 +14,23 @@
 			<p class="error">Please correct the error{{ form.errors|pluralize }} below.</p>
 		{% endif %}
 		<table>
+      	<tr{% if form.checkout_type.errors %} class="errorlist"{% endif %}>
+   	      <th>{{ form.checkout_type.label }}</th>
+   	      <td>{{ form.checkout_type }}</td>
+      		<td{% if form.checkout_type.errors %}>
+      		{{ form.checkout_type.errors }}
+      		   {% else %} class="note">{{ form.checkout_type.help_text }}
+      		   {% endif %}
+      		</td>
+      	</tr>
+      	<tr{% if form.return_type.errors %} class="errorlist"{% endif %}>
+   	      <th>{{ form.return_type.label }}</th>
+   	      <td>{{ form.return_type }}</td>
+      		<td{% if form.return_type.errors %}>{{ form.return_type.errors }}
+      		   {% else %} class="note">{{ form.return_type.help_text }}
+      		   {% endif %}
+      		</td>
+      	</tr>
 		   <tr{% if form.first_name.errors %} class="errorlist"{% endif %}>
 		      <th>{{ form.first_name.label }}</th>
 		      <td>{{ form.first_name }}</td>
@@ -68,6 +85,47 @@
    	      <td>{{ form.building }}</td>
       		<td{% if form.building.errors %}>{{ form.building.errors }}
       		   {% else %} class="note">{{ form.building.help_text }}
+      		   {% endif %}
+      		</td>
+      	</tr>
+      	<tr{% if form.room.errors %} class="errorlist"{% endif %}>
+   	      <th>{{ form.room.label }}</th>
+   	      <td>{{ form.room }}</td>
+      		<td{% if form.room.errors %}>{{ form.room.errors }}
+      		   {% else %} class="note">{{ form.room.help_text }}
+      		   {% endif %}
+      		</td>
+      	</tr>
+      	<tr{% if form.equipment_needed.errors %} class="errorlist"{% endif %}>
+   	      <th>{{ form.equipment_needed.label }}</th>
+   	      <td>{{ form.equipment_needed }}</td>
+      		<td{% if form.equipment_needed.errors %}>
+      		   {{ form.equipment_needed.errors }}
+      		   {% else %} class="note">{{ form.equipment_needed.help_text }}
+      		   {% endif %}
+      		</td>
+      	</tr>
+       	<tr{% if form.software.errors %} class="errorlist"{% endif %}>
+   	      <th>{{ form.software.label }}</th>
+   	      <td>{{ form.software }}</td>
+      		<td{% if form.software.errors %}>{{ form.software.errors }}
+      		   {% else %} class="note">{{ form.software.help_text }}
+      		   {% endif %}
+      		</td>
+      	</tr>
+      	<tr{% if form.out_date.errors %} class="errorlist"{% endif %}>
+   	      <th>{{ form.out_date.label }}</th>
+   	      <td>{{ form.out_date }}</td>
+      		<td{% if form.out_date.errors %}>{{ form.out_date.errors }}
+      		   {% else %} class="note">{{ form.out_date.help_text }}
+      		   {% endif %}
+      		</td>
+      	</tr>
+      	<tr{% if form.return_date.errors %} class="errorlist"{% endif %}>
+   	      <th>{{ form.return_date.label }}</th>
+   	      <td>{{ form.return_date }}</td>
+      		<td{% if form.return_date.errors %}>{{ form.return_date.errors }}
+      		   {% else %} class="note">{{ form.return_date.help_text }}
       		   {% endif %}
       		</td>
       	</tr>
