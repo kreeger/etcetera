@@ -30,7 +30,6 @@ def checkout_form(request):
 		context, context_instance=RequestContext(request)
 	)
 
-
 @login_required
 def index(request):
 	paged_objects = None
