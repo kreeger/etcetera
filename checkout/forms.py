@@ -43,6 +43,18 @@ class CheckoutModelForm(forms.ModelForm):
 			'creating_user',
 		)
 
+class CheckoutPublicForm(forms.ModelForm):
+	class Meta:
+		model = checkout.Checkout
+		exclude = (
+			'equipment_list',
+			'department',
+			'creating_user',
+			'creating_date',
+			'delivering_user',
+			'completed',
+		)
+
 class CheckoutEquipmentForm(forms.Form):
 	barcodes = forms.CharField(
 		max_length=255,

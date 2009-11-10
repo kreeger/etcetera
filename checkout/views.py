@@ -11,6 +11,26 @@ from etcetera.checkout import forms as coforms
 from etcetera.checkout import models as checkout
 from etcetera.equipment import models as equipment
 
+def checkout_form(request):
+	# If data is being sent in POST, then get that data, clean it, and assign
+	# it to a new WorkOrder instance.
+	if request.method == 'POST':
+		form = coforms.CheckoutPublicForm(request.POST)
+		if form.is_valid():
+			form.save()
+			co_mail(form)
+			return HttpResponseRedirect('/thanks.html')
+	# If data is not being sent in POST, our form is an empty one.
+	else:
+		form = coforms.CheckoutPublicForm()
+	# Bundle our form in the context and send it out.
+	context = {'form':form,}
+	return render_to_response(
+		"checkout/checkout_form.html",
+		context, context_instance=RequestContext(request)
+	)
+
+
 @login_required
 def index(request):
 	paged_objects = None
