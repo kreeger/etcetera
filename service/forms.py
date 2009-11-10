@@ -2,9 +2,11 @@ import urllib
 
 from django import forms
 from django.contrib.localflavor.us import forms as lfus
+from django.contrib.auth import models as auth
 
 from etcetera.structure import models as structure
 from etcetera.service import models as service
+from etcetera.extras import forms as ef
 
 SERVICE_CHOICES = (
 	('repair','Problem'),
@@ -69,6 +71,7 @@ class WorkOrderModelForm(forms.ModelForm):
 		max_length=6,
 		required=False,
 	)
+	technician = ef.UserModelChoiceField(auth.User.objects.all().order_by('last_name'))
 	
 	class Meta:
 		model = service.WorkOrder
