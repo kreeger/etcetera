@@ -32,7 +32,9 @@ class SearchForm(forms.Form):
 
 class CheckoutModelForm(forms.ModelForm):
 	delivering_user = ef.UserModelChoiceField(
-		auth.User.objects.all().order_by('last_name')
+		auth.User.objects.all().order_by('last_name'),
+		blank=True,
+		null=True,
 	)
 	class Meta:
 		model = checkout.Checkout

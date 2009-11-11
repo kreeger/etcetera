@@ -80,8 +80,7 @@ class Checkout(models.Model):
 	)
 	delivering_user = models.ForeignKey(
 		auth.User,
-		blank=True,
-		null=True,
+		blank=True, null=True,
 		related_name='deliveries',
 	)
 	returning_person = models.CharField(
