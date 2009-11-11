@@ -31,11 +31,10 @@ class SearchForm(forms.Form):
 			out_list.extend(['building__name','room',])
 
 class CheckoutModelForm(forms.ModelForm):
-	delivering_user = ef.UserModelChoiceField(
-		auth.User.objects.all().order_by('last_name'),
-		blank=True,
-		null=True,
-	)
+	#delivering_user = ef.UserModelChoiceField(
+	#	auth.User.objects.all().order_by('last_name'),
+	#	blank=True,
+	#)
 	class Meta:
 		model = checkout.Checkout
 		exclude = (
