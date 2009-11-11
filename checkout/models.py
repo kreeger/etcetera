@@ -96,10 +96,6 @@ class Checkout(models.Model):
 		blank=True, null=True,
 	)
 	other_equipment = models.TextField(blank=True)
-	software = models.TextField(
-		blank=True,
-		help_text='If any software is required on a computer with the checkout, please specify which software.',
-	)
 	completed = models.BooleanField()
 	
 	def __unicode__(self):

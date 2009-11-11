@@ -105,14 +105,6 @@
       		   {% endif %}
       		</td>
       	</tr>
-       	<tr{% if form.software.errors %} class="errorlist"{% endif %}>
-   	      <th>{{ form.software.label }}</th>
-   	      <td>{{ form.software }}</td>
-      		<td{% if form.software.errors %}>{{ form.software.errors }}
-      		   {% else %} class="note">{{ form.software.help_text }}
-      		   {% endif %}
-      		</td>
-      	</tr>
       	<tr{% if form.out_date.errors %} class="errorlist"{% endif %}>
    	      <th>{{ form.out_date.label }}</th>
    	      <td>{{ form.out_date }}</td>

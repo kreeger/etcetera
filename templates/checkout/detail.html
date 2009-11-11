@@ -34,7 +34,7 @@
    <h1>
       {% if user.is_authenticated %}
          <span class="right">
-            <a href="{% url checkout-equip object.id %}">add equipment</a>
+            <a href="{% url checkout-equip object.id %}">add/remove equipment</a>
             &bull; <a href="{% url checkout-edit object.id %}">edit</a>
          </span>
       {% endif %}
@@ -208,9 +208,5 @@
       <p>No extra equipment (cables, adapters, etc.) have been
             attached to this checkout.</p>
    {% endif %}
-   
-   {% if object.software %}
-      <h3>Software</h3>
-      {{ object.software|linebreaks }}
 </div>
 {% endblock %}

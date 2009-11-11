@@ -8,4 +8,8 @@ urlpatterns = patterns('',
 	url(r'^(?P<object_id>\d+)/$', detail, name="checkout-detail"),
 	url(r'^(?P<object_id>\d+)/edit/$', edit, name="checkout-edit"),
 	url(r'^(?P<object_id>\d+)/equip/$', equip, name="checkout-equip"),
+	url(r'^(?P<object_id>\d+)/equip/rem/(?P<eq_id>\d+)/$',
+		equip_remove,
+		name="checkout-eqrem"
+	),
 )

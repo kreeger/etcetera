@@ -75,7 +75,6 @@ def index(request):
 		context_instance=RequestContext(request)
 	)
 
-@login_required
 def detail(request, object_id):
 	# Get the ticket from the URL, bundle it in a context, and send it out.
 	co = get_object_or_404(checkout.Checkout, id=object_id)
@@ -135,19 +134,30 @@ def new(request):
 @login_required
 def equip(request, object_id):
 	co = get_object_or_404(checkout.Checkout, id=object_id)
-	if request.method == "POST":
+	if request.method == 'POST':
 		form = coforms.CheckoutEquipmentForm(request.POST)
 		if form.is_valid():
 			barcodes = form.cleaned_data['barcodes'].split(" ")
+			nf = []
 			for item in barcodes:
-				co.equipment_list.add(
-					equipment.Equipment.objects.get(barcode=item)
-				)
-			return HttpResponseRedirect(reverse(
-				'checkout-equip',
-				args=(co.id,),
-			))
-	form = coforms.CheckoutEquipmentForm()
+				try:
+					co.equipment_list.add(
+						equipment.Equipment.objects.get(barcode=item)
+					)
+				except equipment.Equipment.DoesNotExist:
+					nf.append(item)
+			context = {
+				'object': co,
+				'form': coforms.CheckoutEquipmentForm(),
+				'nf': nf,
+			}
+			return render_to_response(
+				"checkout/equip.html",
+				context,
+				context_instance=RequestContext(request)
+			)
+	else:
+		form = coforms.CheckoutEquipmentForm()
 	context = {
 		'object': co,
 		'form': form,
@@ -157,3 +167,16 @@ def equip(request, object_id):
 		context,
 		context_instance=RequestContext(request)
 	)
+
+@login_required
+def equip_remove(request, object_id, eq_id):
+	co = get_object_or_404(checkout.Checkout, id=object_id)
+	eq = get_object_or_404(equipment.Equipment, id=eq_id)
+	if request.method == 'GET':
+		if eq in co.equipment_list.all():
+			co.equipment_list.remove(eq)
+			co.save()
+	return HttpResponseRedirect(reverse(
+		'checkout-equip',
+		args=(co.id,),
+	))

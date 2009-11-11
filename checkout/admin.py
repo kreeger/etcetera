@@ -33,7 +33,6 @@ class CheckoutAdmin(admin.ModelAdmin):
 				'returning_person',
 				'equipment_list',
 				'other_equipment',
-				'software',
 				'completed',
 			),
 		}),

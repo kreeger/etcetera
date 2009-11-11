@@ -127,9 +127,6 @@
       </tr>
    </table>
    
-   <h3>Add equipment</h3>
-   <p><a href="{% url checkout-equip object.id %}">Click here to edit the equipment assigned to this checkout</a>. Be sure to save other changes to it first.</p>
-   
    <h3>{{ form.other_equipment.label }}</h3>
    <p{% if form.other_equipment.errors %} class="errorlist"{% endif %}>
       {{ form.other_equipment }}

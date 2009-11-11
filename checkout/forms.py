@@ -60,5 +60,8 @@ class CheckoutPublicForm(forms.ModelForm):
 class CheckoutEquipmentForm(forms.Form):
 	barcodes = forms.CharField(
 		max_length=255,
-		help_text="Type in barcodes, separated by commas.",
+		help_text="Type in barcodes, separated by a space (i.e., \
+			026629 027498 028380). If you're using a barcode scanner, be \
+			sure to insert a space after each scan that prints a number \
+			into the barcode field.",
 	)

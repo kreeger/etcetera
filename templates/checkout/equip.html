@@ -29,14 +29,25 @@
          </tr>
       </table>
    </form>
+   {% if nf %}
+      <div id="error" class="banner">
+         The following barcodes were not found:
+         {% for barcode in nf %}
+            {{ barcode }}
+         {% endfor %}
+      </div>
+   {% endif %}
    <h3>Equipment list</h3>
    {% if object.equipment_list.all %}
+   <p>To remove an item, click the minus (&mdash;)
+         in the <em>remove</em> column.</p>
       <table id="list">
          <tr id="headerrow">
             <td>Barcode</td>
             <td>Type</td>
             <td>Make/Model</td>
             <td>Serial</td>
+            <td>Remove?</td>
          </tr>
          {% for item in object.equipment_list.all %}
             <tr class="datarow">
@@ -60,11 +71,16 @@
                      {{ item.serial }}
                   </a>
                </td>
+               <td>
+                  <a href="{% url checkout-eqrem object.id item.id %}">
+                     &mdash;
+                  </a>
+               </td>
             </tr>
          {% endfor %}
       </table>
    {% else %}
-      <p>No specific equipment has been attached to this checkout yet.</p>
+      <p>No specific equipment is attached to this checkout.</p>
    {% endif %}
    <p><a href="../">Click here to return to the previous page.</a></p>
 </div>
