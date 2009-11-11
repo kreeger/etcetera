@@ -23,6 +23,9 @@
          <span class="head">edit mode</span>
       {% endif %}
    </h1>
+   {% if form.errors %}
+   <p>{% for error in form.errors %}error{% endfor %}</p>
+   {% endif %}
    
    <h2{% if form.completed.errors or form.checkout_type.errors or form.return_type.errors %} class="errorlist"{% endif %}>
       {% if object %}
