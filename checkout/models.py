@@ -28,7 +28,9 @@ class Checkout(models.Model):
 		help_text='If the request is for a specific course, state the course.',
 	)
 	phone = lfus.PhoneNumberField(help_text='Format: ###-###-####',)
+	# should be required soon
 	email = models.EmailField(
+		blank=True,
 		max_length=75,
 		help_text='Your university email address.',
 	)
