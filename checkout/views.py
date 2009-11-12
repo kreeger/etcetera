@@ -133,35 +133,47 @@ def new(request):
 
 @login_required
 def equip(request, object_id):
+	# Get checkout object from DB
 	co = get_object_or_404(checkout.Checkout, id=object_id)
 	if request.method == 'POST':
+		# Get form data from POST, fill form object with it
 		form = coforms.CheckoutEquipmentForm(request.POST)
 		if form.is_valid():
+			# Split the barcodes from the input string
 			barcodes = form.cleaned_data['barcodes'].split(" ")
+			# Prepare the list of something can't be found (Not Found)
 			nf = []
 			for item in barcodes:
 				try:
-					co.equipment_list.add(
-						equipment.Equipment.objects.get(barcode=item)
-					)
+					# Get equipment object from DB with that barcode
+					eq = equipment.Equipment.objects.get(barcode=item)
+					# Check if the equipment is part of a video unit (cart)
+					if eq.video_unit:
+						# For each equipment in a list of equipment with the
+						# same video unit number, add each equipment to the
+						# checkout's equipment list
+						for vu_item in equipment.Equipment.objects.filter(
+							video_unit=eq.video_unit):
+							co.equipment_list.add(vu_item)
+					else:
+						# Otherwise, add the equipment itself
+						co.equipment_list.add(eq)
 				except equipment.Equipment.DoesNotExist:
+					# If the equipment doesn't exist, add the barcode to a list
+					# of barcodes to be returned to the user (Not Found)
 					nf.append(item)
+			# The context to be bundled with the response
 			context = {
 				'object': co,
 				'form': coforms.CheckoutEquipmentForm(),
 				'nf': nf,
 			}
-			return render_to_response(
-				"checkout/equip.html",
-				context,
-				context_instance=RequestContext(request)
-			)
 	else:
 		form = coforms.CheckoutEquipmentForm()
-	context = {
-		'object': co,
-		'form': form,
-	}
+		context = {
+			'object': co,
+			'form': form,
+		}
 	return render_to_response(
 		"checkout/equip.html",
 		context,
