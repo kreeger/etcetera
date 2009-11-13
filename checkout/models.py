@@ -100,6 +100,14 @@ class Checkout(models.Model):
 	other_equipment = models.TextField(blank=True)
 	completed = models.BooleanField()
 	
+	class Meta:
+		ordering = (
+			'first_name',
+			'last_name',
+			'out_date',
+			'return_date',
+		)
+	
 	def __unicode__(self):
 		return u'%s %s, %s' % (
 			self.first_name,
