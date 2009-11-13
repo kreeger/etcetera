@@ -4,9 +4,9 @@ from django.forms import ModelChoiceField
 from etcetera.extras import models as extras
 
 class UserModelChoiceField(ModelChoiceField):
-    def label_from_instance(self, obj):
-        # Return a string of the format: "firstname lastname (username)"
-        return "%s (%s)"%(obj.get_full_name(), obj.username)
+	def label_from_instance(self, obj, *args, **kwargs):
+		# Return a string of the format: "firstname lastname (username)"
+		return "%s (%s)"%(obj.get_full_name(), obj.username)
 
 class PasswordForm(forms.Form):
 	password = forms.CharField(

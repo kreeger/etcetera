@@ -5,6 +5,13 @@
    Editing Checkout #{{ object.id }}
 {% endblock %}
 
+{% block fullscript %}
+   <script type="text/javascript" src="/admin/jsi18n/"></script>
+   <script type="text/javascript" src="/media/js/core.js"></script> 
+   <script type="text/javascript" src="/media/js/admin/RelatedObjectLookups.js"></script>
+   {{ form.media }}
+{% endblock %}
+
 {% block breadcrumb %}
    <a href="{% url etcetera-home %}">Home</a> &rsaquo;
    <a href="{% if object.completed %}#{% else %}{% url checkout-index %}{% endif %}">

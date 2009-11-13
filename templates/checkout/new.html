@@ -5,6 +5,13 @@
    Creating a Checkout
 {% endblock %}
 
+{% block fullscript %}
+   <script type="text/javascript" src="/admin/jsi18n/"></script>
+   <script type="text/javascript" src="/media/js/core.js"></script> 
+   <script type="text/javascript" src="/media/js/admin/RelatedObjectLookups.js"></script>
+   {{ form.media }}
+{% endblock %}
+
 {% block breadcrumb %}
    <a href="{% url etcetera-home %}">Home</a> &rsaquo;
    <a href="{% url checkout-index %}">Checkout List</a> &rsaquo;

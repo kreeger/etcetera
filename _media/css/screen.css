@@ -4,158 +4,324 @@
 */
 
 body { background-color: #FFF; margin: 0; padding: 0; font: .9em "Helvetica Neue", Helvetica, Arial, sans-serif; z-index: -300; }
+
 a { color: #4A0010; text-decoration: none; }
+
 a:hover { text-decoration: underline; }
+
 a:active { color: #CCC; }
+
 input, select { font: 14px "Helvetica Neue", Helvetica, Arial, sans-serif; }
 
 h1 input, h1 select { font-weight: bold; }
+
 .wrapper { width: 950px; margin: 0px auto; }
+
 .errorlist { color: #f00; font-size: .9em; background-color: #FFBBBB; }
+
 .right { float: right; }
+
 .small { font-size: .8em; }
+
 .head { color: #808080; text-transform: lowercase; text-align: right; font-weight: normal; font-style: normal; }
+
 .priority1 { color: #f00; }
+
 .priority2 { color: #ff7900; }
+
 .priority3 { color: #7e8100; }
+
 .priority4 { color: #008400; }
+
 .priority5 { color: #1f00ff; }
+
 .padded { padding: 5px; }
+
 .tablehead { -webkit-border-top-left-radius: 10px; -moz-border-radius-topleft: 10px; -webkit-border-bottom-left-radius: 10px; -moz-border-radius-bottomleft: 10px; background-color: #EAEAEA; vertical-align: middle; color: #666; text-align: right; text-transform: lowercase; font-weight: normal; font-weight: normal; padding: 0 3px 0 10px; }
 
 td.tablehead { width: 150px; }
+
 a.remove { width: 16px; height: 16px; background-image: url(../images/icons/buttonmin32.png); }
+
 a.add { width: 16px; height: 16px; background-image: url(../images/icons/buttonplu32.png); }
 
 div#header { background-image: url(../images/header.png); height: 120px; border-bottom: 1px solid #333; }
+
 div#header p, div#header h1 { margin: 0; color: #EEE; }
+
 div#header a { color: #BBB; }
+
 div#header h1 { height: 120px; background: url(../images/etceteralogo.png) no-repeat; }
+
 div#header h1 img { display: none; }
+
 div#header p { float: right; font-size: 0.8em; padding-top: 100px; }
 
 div#nav { text-align: center; background-color: #E7E7E7; text-transform: lowercase; }
+
 div#nav div.wrapper { background-color: #D1D1D1; padding: 0px 10px; border-left: 1px solid #AAA; border-right: 1px solid #AAA; }
+
 ul#navul, ul#navul ul { margin: 0px auto; padding: 0; list-style-type: none; }
+
 ul#navul a { background-color: #D1D1D1; display: block; padding: 8px 0; width: 105px; white-space: nowrap; }
+
 ul#navul a:hover { background: url(../images/nav_r.png) repeat-x; text-decoration: none; }
+
 ul#navul li { display: inline-block; position: relative; }
+
 ul#navul ul { position: absolute; display: none; }
+
 ul#navul ul a { float: left; background-color: #E7E7E7; }
-#navul li:hover ul, #navul li li:hover ul, #navul li li li:hover ul, #navul li li li li:hover ul {
-	display: inline-block; font-size: .8em; }
+
+#navul li:hover ul, #navul li li:hover ul, #navul li li li:hover ul, #navul li li li li:hover ul { display: inline-block; font-size: .8em; }
 
 div#breadcrumb { font-size: .8em; }
+
 div#breadcrumb div.wrapper { padding: 4px 10px; border-left: 1px solid #AAA; border-right: 1px solid #AAA; background: url(../images/breadback.png) repeat-x; left: 40px; }
 
 div#subnav div.wrapper { padding: 0 10px; border-left: 1px solid #AAA; border-right: 1px solid #AAA; background-color: #EAEAEA; border-bottom: 1px solid #CCC; }
+
 div#subnav { font-size: 11px; text-align: center; display: block; }
+
 div#subnav ul { margin: 0; padding: 0; list-style-type: none; }
+
 div#subnav ul li { display: inline; }
+
 div#subnav a { padding: 4px 10px; display: inline-block; }
+
 div#subnav a:hover { background-color: #CCC; text-decoration: none; }
 
 div#body { background: url(../images/backtop.png) repeat-x; }
 
 div#content div.wrapper { padding: 10px; background-color: #F4F4F4; -moz-border-radius-bottomleft: 10px; -moz-border-radius-bottomright: 10px; -webkit-border-bottom-left-radius: 10px; -webkit-border-bottom-right-radius: 10px; border-left: 1px solid #AAA; border-right: 1px solid #AAA; border-bottom: 1px solid #AAA; }
+
 div#content p { margin: 0 0 10px 0; padding: 5px 0; }
+
 div#content h1 { border-bottom: 1px solid #333; font-size: 1.5em; margin-top: 5px; }
+
 div#content h1 span.small { font-size: .55em; padding-left: .3em; }
+
 div#content h1 span.right { font-size: .55em; margin: 0; padding-top: 9px; }
+
 div#content h2 { font-size: 1.2em; }
 
 div.banner { display: block; padding: 8px 8px 8px 55px; margin-bottom: 10px; -moz-border-radius-bottomleft: 10px; -moz-border-radius-topright: 10px; -webkit-border-bottom-left-radius: 10px; -webkit-border-top-right-radius: 10px; }
+
 div#alert { background: #ffcb57 url(../images/icons/alert48.png) no-repeat 3px -8px; }
+
 div#notify { background: #cccdff url(../images/icons/notify48.png) no-repeat 3px -8px; }
+
 div#error { background: #ffaaaa url(../images/icons/error48.png) no-repeat 3px -8px; }
 
 div#searchform { height: 10px; margin-bottom: 20px; padding: 0px; width: 100%; }
+
 div#searchform form { display: inline-block; }
+
 div#searchform input#q { width: 300px; margin: 0; }
+
 div#searchform input#submit { margin-left: 5px; }
 
 div#list ul { display: block; list-style-type: none; padding: 0; border: 1px solid #AAA; margin-top: 3px; }
 
 table#list { margin: 0px; padding: 0px; border-spacing: 0px; border: 1px solid #AAA; font-size: .85em; width: 100%; }
+
 table#list tr.datarow a, table#list tr#headerrow td { padding-top: 5px; padding-bottom: 5px; }
+
 table#list tr#headerrow { background-color: #DDD; }
+
 table#list tr#headerrow td { border-bottom: 1px solid #AAA; text-align: left; font-weight: bold; }
+
 table#list tr.datarow td a { display: block; }
+
 table#list tr.datarow td.buttons a { display: inline-block; padding: 0px; }
+
 table#list td:first-child { padding-left: 8px; font-weight: bold; }
+
 table#list td:last-child { padding-right: 8px; text-align: right; }
+
 table#list tr.datarow td:last-child { font-size: .8em; }
+
 table#list tr.datarow:hover { background-color: #4A0010; }
+
 table#list tr.datarow:hover a { color: #CCC; text-decoration: none; }
 
 div#barcode { background: url(../images/barcode-250.png) no-repeat; width: 250px; height: 23px; padding-top: 60px; text-align: center; font-weight: bold; letter-spacing: 4px; font-size: 13px; }
+
 div#detail div#barcode { float: left; position: relative; right: 5px; }
+
 div#detail form div#barcode input { text-align: center; font-weight: bold; letter-spacing: 2px; }
 
 div#detail h1 { margin-bottom: 0; }
+
 div#detail h1 span.head { color: #AAA; }
+
 div#detail h2, div#detail table.h2-head { margin: 0 0 10px 0; padding: 3px; background-color: #DEDEDE; font-size: .8em; }
+
 div#detail h3 { margin: 10px 0; border-bottom: 1px solid #888; color: #444; font-weight: normal; font-style: normal; }
+
 div#detail div.right { width: 450px; margin-left: 20px; }
+
 div#detail div.right h3 { margin-top: 0px; }
+
 div#detail table { font-weight: bold; font-size: 1.1em; }
+
 div#detail table#list { font-weight: inherit; font-size: .85em; }
+
 div#detail table#list td:last-child { text-align: inherit; }
+
 div#detail table#toprow { width: 100%; }
+
 div#detail table#toprow input { width: auto; }
+
 div#detail td#barcode { text-align: right; }
+
 div#detail table td.head { width: 115px; }
+
 div#detail div.right table td.head { width: 80px; }
+
 div#detail form table input { width: 100%; }
+
 div#detail form div.right table { width: 100%; }
-div#detail form textarea { width: 100%; padding: 5px;}
+
+div#detail form textarea { width: 100%; padding: 5px; }
+
+div#detail form p.datetime input { width: 200px; margin-right: 10px; }
+
+div#detail form p.datetime { font-size: 12px; margin: 0px; font-weight: normal; }
+
+div#detail form p.datetime img { padding-left: 1px; }
 
 div#detail table.h2-head td:first-child { width: 75px; }
+
 div#detail table.h2-head td:nth-child(2) { width: 300px; }
-	div#detail table.h2-head tr:last-child td:nth-child(2) input { width: 80px; margin-left: 5px; }
+
+div#detail table.h2-head tr:last-child td:nth-child(2) input { width: 80px; margin-left: 5px; }
+
 div#detail table.h2-head td:nth-child(3) { width: 120px; }
+
 div#detail table.h2-head td:last-child { width: 200px; }
-	div#detail table.h2-head td:last-child input { width: 170px; }
+
+div#detail table.h2-head td:last-child input { width: 170px; }
 
 div#detail form input#id_equipment_text { width: 450px; }
+
 div#detail form input#id_barcodes { width: 600px; }
+
 div#detail form input#save { border: 0px; background-color: transparent; font-size: 1em; padding: 0; font-weight: bold; margin: 0; color: #4A0010; }
+
 div#detail form input#save:hover { text-decoration: underline; cursor: pointer; }
+
 div#detail form select#id_building { width: 200px; }
+
 div#detail form select#id_technician { width: 100%; }
+
 div#detail form textarea#id_actions { width: 49%; }
+
 div#detail form select#id_equipment_type { width: 30%; }
 
 div#detail table.profile { width: 100%; margin-top: 5px; }
+
 div#detail table.profile>tbody>tr>td { vertical-align: top; }
+
 div#detail table.profile img { width: 200px; -webkit-border-radius: 10px; -moz-border-radius: 10px; border: 1px solid #CCC; }
-div#detail table.profile>tbody>tr>td:first-child { width: 168px; height: auto; text-align: center; vertical-align: top;}
+
+div#detail table.profile>tbody>tr>td:first-child { width: 168px; height: auto; text-align: center; vertical-align: top; }
+
 div#detail form table.profile>tbody>tr>td:first-child { -webkit-border-radius: 10px; -moz-border-radius: 10px; border: 1px solid #CCC; background: url(/_media/images/profile-placeholder-back.png) no-repeat; padding: 0 15px 10px; vertical-align: bottom; height: 235px; }
+
 div#detail table.profile td:last-child { width: 740px; vertical-align: top; text-align: left; }
+
 div#detail table#info { width: 400px; }
+
 div#detail table#info td.head { width: 100px; }
 
 div#detail table#tickets td:last-child { font-size: 12px; vertical-align: middle; }
-div#detail table#tickets a { font-size: 12px; display: block; padding: 3px; font-weight: bold;}
+
+div#detail table#tickets a { font-size: 12px; display: block; padding: 3px; font-weight: bold; }
+
 div#detail table#tickets a:hover { background-color: #4A0010; color: #CCC; text-decoration: none; }
 
 div#times table { width: 75%; margin-top: 5px; margin-bottom: 5px; }
+
 div#times table caption { font-style: italic; font-weight: normal; font-size: .8em; text-align: left; }
+
 div#times table td input { width: 80px; }
 
 div#blog h2 { border-bottom: 1px solid #555; margin: 0; }
+
 div#blog div.post { border-bottom: 1px dotted #AAA; padding: 5px 0; }
 
 table.pagination { color: #CCC; width: 100%; }
+
 table.pagination td#previous { width: 15%; }
+
 table.pagination td#current { text-align: center; color: #000; }
+
 table.pagination td#next { text-align: right; width: 15%; }
 
 table.h1-head tbody { font-size: 11px; }
+
 div#detail form table.h1-head { padding-left: 5px; }
+
 div#detail form table.h1-head td:first-child { width: 167px; }
+
 div#detail form table.h1-head td:nth-child(2) { width: 178px; }
+
 div#detail form table.h1-head td:last-child { width: 297px; }
 
 div#footer { margin-top: 5px; padding-top: 5px; }
+
 div#footer h4 { margin: 0; text-align: center; color: #b3b3b3; font-size: .7em; font-weight: normal; font-style: normal; }
+
+/* CALENDARS & CLOCKS IMPORTED FROM ADMIN */
+
+.calendarbox, .clockbox { margin: 5px auto; font-size: 11px; width: 16em; text-align: center; background: white; position: relative; border: 1px solid #444; }
+
+.clockbox { width: auto; }
+
+.clockbox h2 { margin: 0; font-size: 13px; border-bottom: 1px solid #222; padding: 3px; background-color: #EEE; }
+
+.calendar { margin: 0; padding: 0; }
+
+.calendar table { margin: 0; padding: 0; border-collapse: collapse; background: white; width: 100%; }
+
+.calendar caption, .calendarbox h2 { margin: 0; font-size: 12px; text-align: center; border-top: none; background-color: #EEE; }
+.calendar caption { height: 18px; font-weight: bold; }
+
+.calendar th { font-size: 10px; color: #666; padding: 2px 3px; text-align: center; background: #e1e1e1 url(../img/admin/nav-bg.gif) 0 50% repeat-x; border-bottom: 1px solid #ddd; }
+
+.calendar td { font-size: 11px; text-align: center; padding: 0; border-top: 1px solid #eee; border-bottom: none; }
+
+.calendar td.selected a { background: #C9DBED; }
+
+.calendar td.nonday { background: #efefef; }
+
+.calendar td.today a { background: #ffc; }
+
+.calendar td a, .timelist a { display: block; font-weight: bold; padding: 4px; text-decoration: none; color: #444; }
+
+.calendar td a:hover, .timelist a:hover { background: #4A0010; color: white; }
+
+.calendar td a:active, .timelist a:active { background: #CCC; color: white; }
+
+.calendarnav { font-size: 10px; text-align: center; color: #ccc; margin: 0; padding: 1px 3px; }
+
+.calendarnav a:link, #calendarnav a:visited, #calendarnav a:hover { color: #999; }
+
+.calendar-shortcuts { background: white; font-size: 10px; line-height: 11px; border-top: 1px solid #eee; padding: 3px 0 4px; color: #ccc; }
+
+.calendarbox .calendarnav-previous, .calendarbox .calendarnav-next { display: block; position: absolute; font-weight: bold; font-size: 12px; background: #AAA url(../img/admin/default-bg.gif) bottom left repeat-x; padding: 1px 4px 2px 4px; color: white; }
+
+.calendarnav-previous:hover, .calendarnav-next:hover { background: #4A0010; }
+
+.calendarnav-previous { top: 0; left: 0; }
+
+.calendarnav-next { top: 0; right: 0; }
+
+.calendar-cancel { margin: 0 !important; padding: 0; font-size: 10px; background: #e1e1e1 url(../img/admin/nav-bg.gif) 0 50% repeat-x; border-top: 1px solid #ddd; }
+
+.calendar-cancel a { padding: 2px; color: #999; }
+
+ul.timelist, .timelist li { list-style-type: none; margin: 0; padding: 0; }
+
+.timelist a { padding: 2px; }

@@ -8,6 +8,8 @@ admin.autodiscover()
 
 # For master/general use.
 urlpatterns = patterns('',
+	url(r'^admin/doc/', include('django.contrib.admindocs.urls')),
+	url(r'^admin/jsi18n/$', 'django.views.i18n.javascript_catalog'),
     url(r'^admin/', include(admin.site.urls)),
 	url(r'^login/$', login, name="etcetera-login"),
 	url(r'^logout/$', logout, name="etcetera-logout"),

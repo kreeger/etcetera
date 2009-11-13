@@ -3,6 +3,7 @@ import urllib
 from django import forms
 from django.contrib.localflavor.us import forms as lfus
 from django.contrib.auth import models as auth
+from django.contrib.admin import widgets as adminwidgets
 
 from etcetera.structure import models as structure
 from etcetera.checkout import models as checkout
@@ -31,10 +32,6 @@ class SearchForm(forms.Form):
 			out_list.extend(['building__name','room',])
 
 class CheckoutModelForm(forms.ModelForm):
-	#delivering_user = ef.UserModelChoiceField(
-	#	auth.User.objects.all().order_by('last_name'),
-	#	blank=True,
-	#)
 	class Meta:
 		model = checkout.Checkout
 		exclude = (
@@ -43,6 +40,13 @@ class CheckoutModelForm(forms.ModelForm):
 			'creation_date',
 			'creating_user',
 		)
+	
+	out_date = forms.DateTimeField(widget=adminwidgets.AdminSplitDateTime)
+	return_date = forms.DateTimeField(widget=adminwidgets.AdminSplitDateTime)
+	delivering_user = ef.UserModelChoiceField(
+		auth.User.objects.all().order_by('last_name'),
+		required=False,
+	)
 
 class CheckoutPublicForm(forms.ModelForm):
 	class Meta:
