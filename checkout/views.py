@@ -10,6 +10,7 @@ from django.template import RequestContext
 from etcetera.checkout import forms as coforms
 from etcetera.checkout import models as checkout
 from etcetera.equipment import models as equipment
+from etcetera.extras.search import get_query
 
 def checkout_form(request):
 	# If data is being sent in POST, then get that data, clean it, and assign
@@ -33,6 +34,7 @@ def checkout_form(request):
 @login_required
 def index(request):
 	paged_objects = None
+	q = None
 	form = coforms.SearchForm()
 	if request.GET and request.GET.get('q'):
 		form = coforms.SearchForm(request.GET)
@@ -46,6 +48,7 @@ def index(request):
 				paged_objects = checkout.Checkout.objects.filter(
 					checkout_query
 				)
+				q = data['q']
 			else:
 				paged_objects = checkout.Checkout.objects.all()
 	else:
@@ -66,8 +69,9 @@ def index(request):
 	# Bundle everything into the context and send it out.
 	context = {
 		'paged_objects': paged_objects,
+		'object_list': paged_objects.object_list,
 		'form': form,
-		#'q': data['q'],
+		'q': q,
 	}
 	return render_to_response(
 		"checkout/index.html",

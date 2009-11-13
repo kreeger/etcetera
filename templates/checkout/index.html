@@ -12,6 +12,11 @@
    <div id="searchform">
       <form action="">
          {{ form.q }}
+         Search in:
+         {{ form.name }} {{ form.name.label }}
+         {{ form.department }} {{ form.department.label }}
+         {{ form.equipment }} {{ form.equipment.label }}
+         {{ form.location }} {{ form.location.label }}
          <input type="submit" name="submit" value="Search" id="submit" />
       </form>
       {% if q %} <span class="small">(<a href=".">searching for "{{ q }}" — click here to reset</a>)</span>{% endif %}

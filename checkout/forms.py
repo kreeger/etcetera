@@ -30,6 +30,7 @@ class SearchForm(forms.Form):
 			out_list.append('equipment_needed',)
 		if data['location']:
 			out_list.extend(['building__name','room',])
+		return out_list
 
 class CheckoutModelForm(forms.ModelForm):
 	class Meta:
