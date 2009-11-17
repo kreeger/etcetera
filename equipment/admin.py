@@ -27,6 +27,7 @@ class EquipmentAdmin(admin.ModelAdmin):
 			'fields': (
 				'smsu_id',
 				'video_unit',
+				'cc_unit',
 				'property_control',
 				'lamp_type',
 				'on_weekly_checklist',
@@ -72,6 +73,7 @@ class EquipmentAdmin(admin.ModelAdmin):
 		'serial',
 		'smsu_id',
 		'video_unit',
+		'cc_unit',
 		'lamp_type',
 		'received_from',
 		'dof',

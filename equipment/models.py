@@ -43,7 +43,12 @@ class Equipment(models.Model):
 		choices=constants.EQUIPMENT_STATUSES)
 	serial = models.CharField(blank=True, max_length=100)
 	video_unit = models.IntegerField(blank=True, null=True, max_length=5)
-	cc_unit = models.IntegerField(blank=True, null=True, max_length=5)
+	cc_unit = models.IntegerField(
+		"computer cart unit",
+		blank=True,
+		null=True,
+		max_length=5
+	)
 	property_control = models.IntegerField(blank=True, null=True, max_length=5)
 	lamp_type = models.CharField(blank=True, max_length=5)
 	last_inventoried = models.DateField(default=dt.datetime.today,

@@ -64,7 +64,14 @@ def index(request):
 def weekly_list(request):
 	object_list = equipment.Equipment.objects.filter(
 		on_weekly_checklist=True
-	).order_by('equipment_type__name','video_unit','make__name','model','serial',)
+	).order_by(
+		'equipment_type__name',
+		'video_unit',
+		'cc_unit',
+		'make__name',
+		'model',
+		'serial',
+	)
 	context = {
 		'object_list': object_list,
 		'type': 'weekly',
