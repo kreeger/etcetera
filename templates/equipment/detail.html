@@ -101,6 +101,12 @@
             <td>{{ object.video_unit }}</td>
          </tr>
       {% endif %}
+      {% if object.cc_unit %}
+         <tr>
+            <td class="tablehead">Computer unit #</td>
+            <td>{{ object.cc_unit }}</td>
+         </tr>
+      {% endif %}
       {% if object.lamp_type %}
          <tr>
             <td class="tablehead">Lamp type</td>

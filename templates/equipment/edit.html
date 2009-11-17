@@ -123,6 +123,10 @@
          <td class="tablehead">{{ form.video_unit.label }} #</td>
          <td>{{ form.video_unit }}{{ form.video_unit.errors }}</td>
       </tr>
+      <tr{% if form.cc_unit.errors %} class="errorlist"{% endif %}>
+         <td class="tablehead">{{ form.cc_unit.label }} #</td>
+         <td>{{ form.cc_unit }}{{ form.cc_unit.errors }}</td>
+      </tr>
       <tr{% if form.lamp_type.errors %} class="errorlist"{% endif %}>
          <td class="tablehead">{{ form.lamp_type.label }}</td>
          <td>{{ form.lamp_type }}{{ form.lamp_type.errors }}</td>

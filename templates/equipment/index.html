@@ -73,6 +73,7 @@
          {% ifequal type 'weekly' %}
             <td>Serial #</td>
             <td>Vid Unit</td>
+            <td>Comp Unit</td>
             <td>Comments</td>
          {% endifequal %}
       </tr>
@@ -126,6 +127,11 @@
                <td>
                   <a href="{% url equipment-detail object.id %}">
                      {{ object.video_unit }}
+                  </a>
+               </td>
+               <td>
+                  <a href="{% url equipment-detail object.id %}">
+                     {{ object.cc_unit }}
                   </a>
                </td>
                <td>
