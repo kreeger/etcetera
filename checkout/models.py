@@ -72,7 +72,7 @@ class Checkout(models.Model):
 	return_date = models.DateTimeField(
 		help_text='The date/time you will bring back the equipment, or when \
 			ETC should pick it up.',
-		)
+	)
 	creating_user = models.ForeignKey(
 		auth.User,
 		blank=True, null=True,

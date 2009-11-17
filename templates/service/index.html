@@ -84,7 +84,7 @@
                   {{ object.equipment.make.name }}
                   {{ object.equipment.model }}
                {% else %}
-                  {{ object.equipment_text }}
+                  {{ object.equipment_text|truncatewords:5 }}
                {% endif %}
             </a>
          </td>

@@ -139,6 +139,7 @@ def new(request):
 def equip(request, object_id):
 	# Get checkout object from DB
 	co = get_object_or_404(checkout.Checkout, id=object_id)
+	context = {}
 	if request.method == 'POST':
 		# Get form data from POST, fill form object with it
 		form = coforms.CheckoutEquipmentForm(request.POST)
