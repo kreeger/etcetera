@@ -126,12 +126,12 @@
                </td>
                <td>
                   <a href="{% url equipment-detail object.id %}">
-                     {{ object.video_unit }}
+                     {{ object.video_unit|default:"" }}
                   </a>
                </td>
                <td>
                   <a href="{% url equipment-detail object.id %}">
-                     {{ object.cc_unit }}
+                     {{ object.cc_unit|default:"" }}
                   </a>
                </td>
                <td>
