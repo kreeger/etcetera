@@ -66,8 +66,19 @@ class CheckoutPublicForm(forms.ModelForm):
 class CheckoutEquipmentForm(forms.Form):
 	barcodes = forms.CharField(
 		max_length=255,
+		required=False,
 		help_text="Type in barcodes, separated by a space (i.e., \
 			026629 027498 028380). If you're using a barcode scanner, be \
 			sure to insert a space after each scan that prints a number \
 			into the barcode field.",
+	)
+	video_unit = forms.IntegerField(
+		required=False,
+		help_text="If you'd like to add a video/TV cart, type in the \
+			video cart's Unit #.",
+	)
+	cc_unit = forms.IntegerField(
+		required=False,
+		help_text="If you'd like to add a data projector/computer cart, type \
+			in the computer cart's AV or Cart #.",
 	)
