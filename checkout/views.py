@@ -144,34 +144,60 @@ def equip(request, object_id):
 		# Get form data from POST, fill form object with it
 		form = coforms.CheckoutEquipmentForm(request.POST)
 		if form.is_valid():
-			# Split the barcodes from the input string
-			barcodes = form.cleaned_data['barcodes'].split(" ")
 			# Prepare the list of something can't be found (Not Found)
-			nf = []
-			for item in barcodes:
-				try:
-					# Get equipment object from DB with that barcode
-					eq = equipment.Equipment.objects.get(barcode=item)
-					# Check if the equipment is part of a video unit (cart)
-					if eq.video_unit:
-						# For each equipment in a list of equipment with the
-						# same video unit number, add each equipment to the
-						# checkout's equipment list
-						for vu_item in equipment.Equipment.objects.filter(
-							video_unit=eq.video_unit):
-							co.equipment_list.add(vu_item)
-					else:
-						# Otherwise, add the equipment itself
-						co.equipment_list.add(eq)
-				except equipment.Equipment.DoesNotExist:
-					# If the equipment doesn't exist, add the barcode to a list
-					# of barcodes to be returned to the user (Not Found)
-					nf.append(item)
+			notfound = {
+				'barcodes': [],
+				'video_unit': None,
+				'cc_unit': None,
+			}
+			# If there are barcodes, do the following
+			if form.cleaned_data['barcodes']:
+				# Split the barcodes from the input string
+				barcodes = form.cleaned_data['barcodes'].split(" ")
+				for item in barcodes:
+					try:
+						# Get equipment object from DB with that barcode
+						eq = equipment.Equipment.objects.get(barcode=item)
+						# Check if the equipment is part of a video unit (cart)
+						if eq.video_unit:
+							# For each equipment in a list of equipment with the
+							# same video unit number, add each equipment to the
+							# checkout's equipment list
+							for vu_item in equipment.Equipment.objects.filter(
+								video_unit=eq.video_unit):
+								co.equipment_list.add(vu_item)
+						else:
+							# Otherwise, add the equipment itself
+							co.equipment_list.add(eq)
+					except equipment.Equipment.DoesNotExist:
+						# If the equipment doesn't exist, add the barcode to a list
+						# of barcodes to be returned to the user (Not Found)
+						notfound['barcodes'].append(item)
+			# If there is a video unit, do the following		
+			# I'm gonna say this totally violates DRY. May fix sometime soon
+			if form.cleaned_data['video_unit']:
+				# If the given number even returns any result
+				if equipment.Equipment.objects.filter(
+					video_unit=form.cleaned_data['video_unit']):
+					for item in equipment.Equipment.objects.filter(
+						video_unit=form.cleaned_data['video_unit']):
+						co.equipment_list.add(item)
+				else:
+					notfound['video_unit'] = form.cleaned_data['video_unit']
+			# If there is a computer unit, do the following
+			if form.cleaned_data['cc_unit']:
+				if equipment.Equipment.objects.filter(
+					cc_unit=form.cleaned_data['cc_unit']):
+					for item in equipment.Equipment.objects.filter(
+						cc_unit=form.cleaned_data['cc_unit']):
+						co.equipment_list.add(item)
+				else:
+					notfound['cc_unit'] = form.cleaned_data['cc_unit']
 			# The context to be bundled with the response
 			context = {
 				'object': co,
 				'form': coforms.CheckoutEquipmentForm(),
-				'nf': nf,
+				'notfound': notfound,
 			}
 	else:
 		form = coforms.CheckoutEquipmentForm()

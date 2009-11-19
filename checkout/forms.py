@@ -68,9 +68,7 @@ class CheckoutEquipmentForm(forms.Form):
 		max_length=255,
 		required=False,
 		help_text="Type in barcodes, separated by a space (i.e., \
-			026629 027498 028380). If you're using a barcode scanner, be \
-			sure to insert a space after each scan that prints a number \
-			into the barcode field.",
+			026629 027498 028380).",
 	)
 	video_unit = forms.IntegerField(
 		required=False,

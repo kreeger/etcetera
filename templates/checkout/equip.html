@@ -23,32 +23,43 @@
    <p>Note that if you're checking out a TV/DVD cart with a Video Unit
       number, just add the barcode on the cart, and the rest of the equipment
       will be added automatically.</p> 
-   {% if nf %}
+   {% if notfound.barcodes or notfound.video_unit or notfound.cc_unit %}
       <div id="error" class="banner">
-         The following barcodes were not found:
-         {% for barcode in nf %}
-            {{ barcode }}
-         {% endfor %}
+         {% if notfound.barcodes %}
+            The following barcodes were not found:
+               {% for barcode in notfound.barcodes %}
+                  {{ barcode }}
+               {% endfor %}
+         {% endif %}
+         {% if notfound.video_unit %}
+            Video unit {{ notfound.video_unit }} was not found.
+         {% endif %}
+         {% if notfound.cc_unit %}
+            Computer cart unit {{ notfound.cc_unit }} was not found.
+         {% endif %}
       </div>
    {% endif %}
    <form action="" method="POST" accept-charset="utf-8">
-      <table>
+      <table id="equip-add">
          <tr>
             <td class="tablehead">{{ form.barcodes.label }}</td>
-            <td>{{ form.barcodes }}<br />
-               <span class="note">{{ form.barcodes.help_text }}</span></td>
+            <td>{{ form.barcodes }}</td>
+            <td class="note">{{ form.barcodes.help_text }}</td>
          </tr>
          <tr>
             <td class="tablehead">{{ form.video_unit.label }}</td>
-            <td>{{ form.video_unit }}<br />
-               <span class="note">{{ form.video_unit.help_text }}</span></td>
+            <td>{{ form.video_unit }}</td>
+            <td class="note">{{ form.video_unit.help_text }}</td>
          </tr>
          <tr>
             <td class="tablehead">{{ form.cc_unit.label }}</td>
-            <td>{{ form.cc_unit }}<br />
-               <span class="note">{{ form.cc_unit.help_text }}</span></td>
+            <td>{{ form.cc_unit }}</td>
+            <td class="note">{{ form.cc_unit.help_text }}</td>
          </tr>
       </table>
+      <div id="equip-submit">
+         <input type="submit" name="submit" value="Add equipment" id="submit" />
+      </div>
    </form>
    <h3>Equipment list</h3>
    {% if object.equipment_list.all %}

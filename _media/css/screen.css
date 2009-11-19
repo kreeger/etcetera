@@ -106,6 +106,10 @@ div#detail td#barcode { text-align: right; }
 div#detail table td.head { width: 115px; }
 div#detail div.right table td.head { width: 80px; }
 div#detail form table input { width: 100%; }
+div#detail form table#equip-add { width: 750px; display: inline-block; }
+div#detail form table#equip-add input { width: 300px; }
+div#detail form table#equip-add td.note { width: 300px; }
+div#detail div#equip-submit { width: 195px; display: inline-block; text-align: right; }
 div#detail form div.right table { width: 100%; }
 div#detail form textarea { width: 100%; padding: 5px; }
 div#detail form p.datetime input { width: 200px; margin-right: 10px; }
