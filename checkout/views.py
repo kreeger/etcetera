@@ -14,11 +14,13 @@ from etcetera.extras.search import get_query
 
 def checkout_form(request):
 	# If data is being sent in POST, then get that data, clean it, and assign
-	# it to a new WorkOrder instance.
+	# it to a new checkout instance.
 	if request.method == 'POST':
 		form = coforms.CheckoutPublicForm(request.POST)
 		if form.is_valid():
+			# Form object saves the model in the db itself
 			form.save()
+			# Send an email to the appropriate people using form data
 			co_mail(form)
 			return HttpResponseRedirect('/thanks.html')
 	# If data is not being sent in POST, our form is an empty one.
@@ -33,12 +35,18 @@ def checkout_form(request):
 
 @login_required
 def index(request):
+	# Setup our paging and query objects ahead of time
 	paged_objects = None
 	q = None
+	# Set up an empty form
 	form = coforms.SearchForm()
+	# If there's a GET request, specifically one with a search query
 	if request.GET and request.GET.get('q'):
+		# Get the data from the search form and put it in a SearchForm object
 		form = coforms.SearchForm(request.GET)
 		if form.is_valid():
+			# If everything's valid, get clean form data and get a list of
+			# which boxes were selected
 			data = form.cleaned_data
 			if data['q'] and data['q'].strip() and form.get_list():
 				# This sends a query to search middleware, if such
@@ -49,6 +57,7 @@ def index(request):
 					checkout_query
 				)
 				q = data['q']
+			# If it's not valid or nothing was checked, get all objects from db
 			else:
 				paged_objects = checkout.Checkout.objects.all()
 	else:
@@ -91,15 +100,20 @@ def detail(request, object_id):
 
 @login_required
 def edit(request, object_id):	
+	# Get the checkout from the URL
 	co = get_object_or_404(checkout.Checkout, id=object_id)
 	if request.method == 'POST':
+		# If POST data is sent, bring in that data to a CheckoutModelForm,
+		# validate it, and save it
 		form = coforms.CheckoutModelForm(request.POST, instance=co)
 		if form.is_valid():
 			form.save()
+			# Then redirect to the detail page for this checkout
 			return HttpResponseRedirect(reverse(
 				'checkout-detail',
 				args=(co.id,),
 			))
+	# If not post, send a form with prepopulated database info in it
 	else:
 		form = coforms.CheckoutModelForm(instance=co)
 	context = {
@@ -115,15 +129,20 @@ def edit(request, object_id):
 @login_required
 def new(request):
 	if request.method == 'POST':
+		# If there's POST data, fill a CheckoutModelForm object with it
 		form = coforms.CheckoutModelForm(request.POST)
 		if form.is_valid():
+			# If valid, save it into database, which returns the id (to co)
 			co = form.save()
+			# Also save the user who made it to the ticket
 			co.creating_user = request.user
 			co.save()
+			# Redirect to the detail page for the new ticket
 			return HttpResponseRedirect(reverse(
 				'checkout-detail',
 				args=(co.id,),
 			))
+	# If not post, send an empty form to the new template
 	else:
 		form = coforms.CheckoutModelForm()
 	context = {
@@ -160,9 +179,9 @@ def equip(request, object_id):
 						eq = equipment.Equipment.objects.get(barcode=item)
 						# Check if the equipment is part of a video unit (cart)
 						if eq.video_unit:
-							# For each equipment in a list of equipment with the
-							# same video unit number, add each equipment to the
-							# checkout's equipment list
+							# For each equipment in a list of equipment with
+							# the same video unit number, add each equipment
+							# to the checkout's equipment list
 							for vu_item in equipment.Equipment.objects.filter(
 								video_unit=eq.video_unit):
 								co.equipment_list.add(vu_item)
@@ -170,8 +189,8 @@ def equip(request, object_id):
 							# Otherwise, add the equipment itself
 							co.equipment_list.add(eq)
 					except equipment.Equipment.DoesNotExist:
-						# If the equipment doesn't exist, add the barcode to a list
-						# of barcodes to be returned to the user (Not Found)
+						# If the equipment doesn't exist, add the barcode to a
+						# list of barcodes to be returned to the user
 						notfound['barcodes'].append(item)
 			# If there is a video unit, do the following		
 			# I'm gonna say this totally violates DRY. May fix sometime soon
@@ -179,19 +198,24 @@ def equip(request, object_id):
 				# If the given number even returns any result
 				if equipment.Equipment.objects.filter(
 					video_unit=form.cleaned_data['video_unit']):
+					# Go through each object and add it to co.equipment_list
 					for item in equipment.Equipment.objects.filter(
 						video_unit=form.cleaned_data['video_unit']):
 						co.equipment_list.add(item)
 				else:
+					# Put that in a dictionary to tell the user it wasn't found
 					notfound['video_unit'] = form.cleaned_data['video_unit']
 			# If there is a computer unit, do the following
 			if form.cleaned_data['cc_unit']:
+				# If the given number even returns any result
 				if equipment.Equipment.objects.filter(
 					cc_unit=form.cleaned_data['cc_unit']):
+					# Go through each object and add it to co.equipment_list
 					for item in equipment.Equipment.objects.filter(
 						cc_unit=form.cleaned_data['cc_unit']):
 						co.equipment_list.add(item)
 				else:
+					# Put it in a dictionary to tell the user it wasn't found
 					notfound['cc_unit'] = form.cleaned_data['cc_unit']
 			# The context to be bundled with the response
 			context = {
@@ -200,6 +224,7 @@ def equip(request, object_id):
 				'notfound': notfound,
 			}
 	else:
+		# If no POST data coming in, then do up an empty form
 		form = coforms.CheckoutEquipmentForm()
 		context = {
 			'object': co,
@@ -213,12 +238,17 @@ def equip(request, object_id):
 
 @login_required
 def equip_remove(request, object_id, eq_id):
+	# Get the checkout item and the equipment item being sent in the URL
 	co = get_object_or_404(checkout.Checkout, id=object_id)
 	eq = get_object_or_404(equipment.Equipment, id=eq_id)
+	# Request should be GET
 	if request.method == 'GET':
+		# If the equipment is even in the checkout's equipment list
 		if eq in co.equipment_list.all():
+			# Remove it, save the checkout
 			co.equipment_list.remove(eq)
 			co.save()
+	# Otherwise, a redirect happens back to the submitting page
 	return HttpResponseRedirect(reverse(
 		'checkout-equip',
 		args=(co.id,),
