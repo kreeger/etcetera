@@ -21,6 +21,7 @@ h1 input, h1 select { font-weight: bold; }
 .priority4 { color: #008400; }
 .priority5 { color: #1f00ff; }
 .padded { padding: 5px; }
+.note { font-weight: normal; font-size: 11px; color: #797979; }
 .tablehead { -webkit-border-top-left-radius: 10px; -moz-border-radius-topleft: 10px; -webkit-border-bottom-left-radius: 10px; -moz-border-radius-bottomleft: 10px; background-color: #EAEAEA; vertical-align: middle; color: #666; text-align: right; text-transform: lowercase; font-weight: normal; font-weight: normal; padding: 0 3px 0 10px; }
 
 td.tablehead { width: 150px; }
@@ -110,6 +111,10 @@ div#detail form textarea { width: 100%; padding: 5px; }
 div#detail form p.datetime input { width: 200px; margin-right: 10px; }
 div#detail form p.datetime { font-size: 12px; margin: 0px; font-weight: normal; }
 div#detail form p.datetime img { padding-left: 1px; }
+div#detail form table.h1-head { padding-left: 5px; }
+div#detail form table.h1-head td:first-child { width: 167px; }
+div#detail form table.h1-head td:nth-child(2) { width: 178px; }
+div#detail form table.h1-head td:last-child { width: 297px; }
 div#detail table.h2-head td:first-child { width: 75px; }
 div#detail table.h2-head td:nth-child(2) { width: 300px; }
 div#detail table.h2-head tr:last-child td:nth-child(2) input { width: 80px; margin-left: 5px; }
@@ -149,11 +154,6 @@ table.pagination td#current { text-align: center; color: #000; }
 table.pagination td#next { text-align: right; width: 15%; }
 
 table.h1-head tbody { font-size: 11px; }
-
-div#detail form table.h1-head { padding-left: 5px; }
-div#detail form table.h1-head td:first-child { width: 167px; }
-div#detail form table.h1-head td:nth-child(2) { width: 178px; }
-div#detail form table.h1-head td:last-child { width: 297px; }
 
 div#footer { margin-top: 5px; padding-top: 5px; }
 div#footer h4 { margin: 0; text-align: center; color: #b3b3b3; font-size: .7em; font-weight: normal; font-style: normal; }

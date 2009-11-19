@@ -71,7 +71,10 @@ class WorkOrderModelForm(forms.ModelForm):
 		max_length=6,
 		required=False,
 	)
-	technician = ef.UserModelChoiceField(auth.User.objects.all().order_by('last_name'))
+	technician = ef.UserModelChoiceField(
+		auth.User.objects.all().order_by('last_name'),
+		required=False,
+	)
 	
 	class Meta:
 		model = service.WorkOrder
