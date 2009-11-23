@@ -7,9 +7,7 @@
 
 {% block breadcrumb %}
    <a href="{% url etcetera-home %}">Home</a> &rsaquo;
-   <a href="{% if object.completed %}#{% else %}{% url checkout-index %}{% endif %}">
-      Checkout List
-   </a> &rsaquo;
+   <a href="{% url checkout-index %}">Checkout List</a> &rsaquo;
    <a href="{% url checkout-detail object.id %}">
       Checkout #{{ object.id }}
    </a> &rsaquo;

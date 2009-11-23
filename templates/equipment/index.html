@@ -6,7 +6,7 @@
 {% block breadcrumb %}
    <a href="{% url etcetera-home %}">Home</a> &rsaquo;
    {% ifequal type 'index' %}
-      Equipment
+      Equipment Inventory
    {% endifequal %}
    {% ifequal type 'weekly' %}
       <a href="{% url equipment-index %}">Equipment</a>
@@ -16,7 +16,7 @@
 
 {% block subnav %}
    <ul>
-      <li><a href="{% url equipment-index %}">Equipment List</a></li>
+      <li><a href="{% url equipment-index %}">Equipment Inventory</a></li>
       <li><a href="{% url equipment-weekly %}">Weekly Checklist</a></li>
    </ul>
 {% endblock %}
@@ -32,7 +32,7 @@
          Weekly Equipment Checklist
       {% endifequal %}
       {% ifequal type 'index' %}
-         Equipment List
+         Equipment Inventory
       {% endifequal %}
       
       {% if q %}
