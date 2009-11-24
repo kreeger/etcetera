@@ -14,7 +14,7 @@
 {% block content %}
 <div id="detail">
    {% if user.is_authenticated and not object.completed %}
-      {% if not object.equipment_list.all %}
+      {% if not object.equipment_list.all and not object.other_equipment %}
          <div id="alert" class="banner">
             This checkout doesn't have any equipment associated with it.
                To associate equipment with it, 
