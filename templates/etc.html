@@ -3,123 +3,122 @@
 
 <html lang="en">
 <head>
-  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-  <title>{% block fulltitle %}{% block title %}{{ content.title|safe }}{% endblock %} | Educational Technology Center | Missouri State University{% endblock %}</title>
-  <link rel="stylesheet" href="/static/stylesheets/boilerplate.css" type="text/css" media="screen" charset="utf-8">
-  <link rel="stylesheet" href="/static/stylesheets/screen.css" type="text/css" media="screen" charset="utf-8">
-  <link rel="stylesheet" href="/static/stylesheets/rst.css" type="text/css" media="screen" charset="utf-8">
-  <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.3.2/jquery.min.js"></script>
-  <script type="text/javascript" src="/static/javascript/site.js"></script>
-  <script src="{% block script %}{% endblock %}"></script>
+   <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   <title>{% block fulltitle %}{% block title %}{{ content.title|safe }}{% endblock %} | Educational Technology Center | Missouri State University{% endblock %}</title>
+   <link rel="stylesheet" href="/static/stylesheets/boilerplate.css" type="text/css" media="screen" charset="utf-8">
+   <link rel="stylesheet" href="/static/stylesheets/screen.css" type="text/css" media="screen" charset="utf-8">
+   <link rel="stylesheet" href="/static/stylesheets/rst.css" type="text/css" media="screen" charset="utf-8">
+   <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.3.2/jquery.min.js"></script>
+   <script src="{% block script %}{% endblock %}"></script>
 </head>
 <body class="{% block body_class %}{{ filename|slugify }}{% endblock %}">
 
-<div id="page">
-  <div id="header">
-    <div class="wrapper">
-      <h1><a href="http://www.missouristate.edu/">Missouri State University</a></h1>
-      <form action="http://search.missouristate.edu/search/" method="get">
-        <p><input type="text" name="q" value="" id="id_q">
-          <input type="submit" name="submit" value="Search" class="button"></p>
-      </form>
-    </div>
-  </div>
+   <div id="page">
+      <div id="header">
+         <div class="wrapper">
+            <h1><a href="http://www.missouristate.edu/">Missouri State University</a></h1>
+            <form action="http://search.missouristate.edu/search/" method="get">
+               <p><input type="text" name="q" value="" id="id_q">
+                  <input type="submit" name="submit" value="Search" class="button"></p>
+               </form>
+            </div>
+         </div>
 
-  <div id="body">
-    <div id="nav">
-      <h4 class="home"><a href="/">Home</a></h4>
-      <h4{% ifequal filename "about_us" %} class="on"{% endifequal %}><a href="/about_us.html">About Us</a></h4>
-      <ul>
-        <li{% ifequal filename "mission" %} class="on"{% endifequal %}><a href="/mission.html">Mission Statement</a></li>
-        <li{% ifequal filename "staff" %} class="on"{% endifequal %}><a href="/staff.html">Our Staff</a></li>
-        <li{% ifequal filename "faq" %} class="on"{% endifequal %}><a href="/faq.html">FAQ</a>
-          <ul>
-            <li{% ifequal filename "classroom_technology_faq" %} class="on"{% endifequal %}><a href="/classroom_technology_faq.html">Classroom Technology</a></li>
-            <li{% ifequal filename "equipment_lending_faq" %} class="on"{% endifequal %}><a href="/equipment_lending_faq.html">Equipment Lending</a></li>
-          </ul>
-        </li>
-      </ul>
+         <div id="body">
+            <div id="nav">
+               <h4 class="home"><a href="/">Home</a></h4>
+               <h4{% ifequal filename "about_us" %} class="on"{% endifequal %}><a href="/about_us.html">About Us</a></h4>
+               <ul>
+                  <li{% ifequal filename "mission" %} class="on"{% endifequal %}><a href="/mission.html">Mission Statement</a></li>
+                  <li{% ifequal filename "staff" %} class="on"{% endifequal %}><a href="/staff.html">Our Staff</a></li>
+                  <li{% ifequal filename "faq" %} class="on"{% endifequal %}><a href="/faq.html">FAQ</a>
+                  <ul>
+                     <li{% ifequal filename "classroom_technology_faq" %} class="on"{% endifequal %}><a href="/classroom_technology_faq.html">Classroom Technology</a></li>
+                     <li{% ifequal filename "equipment_lending_faq" %} class="on"{% endifequal %}><a href="/equipment_lending_faq.html">Equipment Lending</a></li>
+                  </ul>
+               </li>
+            </ul>
 
-      <h4{% ifequal filename "classroom_technology" %} class="on"{% endifequal %}><a href="/classroom_technology.html">Classroom Technology</a></h4>
-      <ul>
-        <li{% ifequal filename "classroom_upgrade_process" %} class="on"{% endifequal %}><a href="/classroom_upgrade_process.html">Classroom Upgrade Process</a>
-          <ul>
-            <li{% ifequal filename "cup_current" %} class="on"{% endifequal %}><a href="/cup/cup_current.html">Classroom Upgrade Process Current Year</a></li>
-            <li{% ifequal filename "cup_archive" %} class="on"{% endifequal %}><a href="/cup/cup_archive.html">Classroom Upgrade Process Archive</a></li>
-          </ul>
-        </li>
-        <li{% ifequal filename "tech_levels" %} class="on"{% endifequal %}><a href="/tech_levels.html">Technology Levels</a></li>
-        <li{% ifequal filename "recommended_equipment" %} class="on"{% endifequal %}><a href="/recommended_equipment.html">Recommended Equipment</a></li>
-        <li{% ifequal filename "classroom_support" %} class="on"{% endifequal %}><a href="/classroom_support.html">Classroom Support</a>
-          <ul>
-            <li{% ifequal filename "training" %} class="on"{% endifequal %}><a href="/training.html">Training</a></li>
-            <li{% ifequal filename "operating_instructions" %} class="on"{% endifequal %}><a href="/operating_instructions.html">Operating Instructions</a></li>
-            <li{% ifequal filename "srs" %} class="on"{% endifequal %}><a href="/srs.html">Student Response Systems (SRS)</a></li>
-            <li{% ifequal filename "itv" %} class="on"{% endifequal %}><a href="/itv.html">ITV</a></li>
-            <li{% ifequal filename "duss_computer_support" %} class="on"{% endifequal %}><a href="/duss_computer_support.html">DUSS Computer Support</a></li>
-          </ul>
-        </li>
+            <h4{% ifequal filename "classroom_technology" %} class="on"{% endifequal %}><a href="/classroom_technology.html">Classroom Technology</a></h4>
+            <ul>
+               <li{% ifequal filename "classroom_upgrade_process" %} class="on"{% endifequal %}><a href="/classroom_upgrade_process.html">Classroom Upgrade Process</a>
+               <ul>
+                  <li{% ifequal filename "cup_current" %} class="on"{% endifequal %}><a href="/cup/cup_current.html">Classroom Upgrade Process Current Year</a></li>
+                  <li{% ifequal filename "cup_archive" %} class="on"{% endifequal %}><a href="/cup/cup_archive.html">Classroom Upgrade Process Archive</a></li>
+               </ul>
+            </li>
+            <li{% ifequal filename "tech_levels" %} class="on"{% endifequal %}><a href="/tech_levels.html">Technology Levels</a></li>
+            <li{% ifequal filename "recommended_equipment" %} class="on"{% endifequal %}><a href="/recommended_equipment.html">Recommended Equipment</a></li>
+            <li{% ifequal filename "classroom_support" %} class="on"{% endifequal %}><a href="/classroom_support.html">Classroom Support</a>
+            <ul>
+               <li{% ifequal filename "training" %} class="on"{% endifequal %}><a href="/training.html">Training</a></li>
+               <li{% ifequal filename "operating_instructions" %} class="on"{% endifequal %}><a href="/operating_instructions.html">Operating Instructions</a></li>
+               <li{% ifequal filename "srs" %} class="on"{% endifequal %}><a href="/srs.html">Student Response Systems (SRS)</a></li>
+               <li{% ifequal filename "itv" %} class="on"{% endifequal %}><a href="/itv.html">ITV</a></li>
+               <li{% ifequal filename "duss_computer_support" %} class="on"{% endifequal %}><a href="/duss_computer_support.html">DUSS Computer Support</a></li>
+            </ul>
+         </li>
       </ul>
 
       <h4{% ifequal filename "etc_labs" %} class="on"{% endifequal %}><a href="/etc_labs.html">ETC Labs</a></h4>
       <ul>
-        <li{% ifequal filename "multimedia_lab" %} class="on"{% endifequal %}><a href="/multimedia_lab.html">Multimedia Lab</a></li>
-        <li{% ifequal filename "instructional_lab" %} class="on"{% endifequal %}><a href="/instructional_lab.html">Instructional Lab</a></li>
+         <li{% ifequal filename "multimedia_lab" %} class="on"{% endifequal %}><a href="/multimedia_lab.html">Multimedia Lab</a></li>
+         <li{% ifequal filename "instructional_lab" %} class="on"{% endifequal %}><a href="/instructional_lab.html">Instructional Lab</a></li>
       </ul>
 
       <h4{% ifequal filename "equipment_lending" %} class="on"{% endifequal %}><a href="/equipment_lending.html">Equipment Lending</a></h4>
       <ul>
-        <li{% ifequal filename "lending_policies" %} class="on"{% endifequal %}><a href="/lending_policies.html">Lending Policies</a>
-          <ul>
+         <li{% ifequal filename "lending_policies" %} class="on"{% endifequal %}><a href="/lending_policies.html">Lending Policies</a>
+         <ul>
             <li{% ifequal filename "training_request" %} class="on"{% endifequal %}><a href="/training_request.html">Training Request</a></li>
-          </ul>
-        </li>
-        <li{% ifequal filename "equipment_description" %} class="on"{% endifequal %}><a href="/equipment_description.html">Equipment Descriptions</a></li>
-        <li{% ifequal filename "equipment_request_forms" %} class="on"{% endifequal %}><a href="/equipment_request_forms.html">Equipment Request Forms</a>
-          <ul>
-            <li{% ifequal filename "student_request_form" %} class="on"{% endifequal %}><a href="/static/pdf/student_request_form.pdf">Student Form</a></li>
-            <li{% ifequal filename "faculty_request_form" %} class="on"{% endifequal %}><a href="/faculty_request_form.html">Faculty/Staff Form</a></li>
-          </ul>
-        </li>
-        <!-- <li{% ifequal filename "faculty_equipment" %} class="on"{% endifequal %}><a href="faculty_equipment.html">Faculty/Staff equipment</a></li> -->
-      </ul>
-
-      <h4{% ifequal filename "technical_services" %} class="on"{% endifequal %}><a href="/technical_services.html">Technical Services</a></h4>
+         </ul>
+      </li>
+      <li{% ifequal filename "equipment_description" %} class="on"{% endifequal %}><a href="/equipment_description.html">Equipment Descriptions</a></li>
+      <li{% ifequal filename "equipment_request_forms" %} class="on"{% endifequal %}><a href="/equipment_request_forms.html">Equipment Request Forms</a>
       <ul>
-        <li{% ifequal filename "tech_support" %} class="on"{% endifequal %}><a href="/tech_support.html">Technical Support</a></li>
-        <li{% ifequal filename "consulting" %} class="on"{% endifequal %}><a href="/consulting.html">Consulting and System Design</a></li>
-        <li{% ifequal filename "service_request" %} class="on"{% endifequal %}><a href="/service_request.html">Service Request Form</a></li>
+         <li{% ifequal filename "student_request_form" %} class="on"{% endifequal %}><a href="/static/pdf/student_request_form.pdf">Student Form</a></li>
+         <li{% ifequal filename "faculty_request_form" %} class="on"{% endifequal %}><a href="/faculty_request_form.html">Faculty/Staff Form</a></li>
       </ul>
+   </li>
+   <!-- <li{% ifequal filename "faculty_equipment" %} class="on"{% endifequal %}><a href="faculty_equipment.html">Faculty/Staff equipment</a></li> -->
+</ul>
 
-      <h4{% ifequal filename "academic_scheduling" %} class="on"{% endifequal %}><a href="/academic_scheduling.html">Academic Scheduling</a></h4>
-      <ul><li></li></ul>
+<h4{% ifequal filename "technical_services" %} class="on"{% endifequal %}><a href="/technical_services.html">Technical Services</a></h4>
+<ul>
+   <li{% ifequal filename "tech_support" %} class="on"{% endifequal %}><a href="/tech_support.html">Technical Support</a></li>
+   <li{% ifequal filename "consulting" %} class="on"{% endifequal %}><a href="/consulting.html">Consulting and System Design</a></li>
+   <li{% ifequal filename "service_request" %} class="on"{% endifequal %}><a href="/service_request.html">Service Request Form</a></li>
+</ul>
 
-    <h4{% ifequal filename "creative_services" %} class="on"{% endifequal %}><a href="/creative_services.html">Creative Services</a></h4>
-      <ul><li></li></ul>
+<h4{% ifequal filename "academic_scheduling" %} class="on"{% endifequal %}><a href="/academic_scheduling.html">Academic Scheduling</a></h4>
+<ul><li></li></ul>
 
-    </div>
+<h4{% ifequal filename "creative_services" %} class="on"{% endifequal %}><a href="/creative_services.html">Creative Services</a></h4>
+<ul><li></li></ul>
 
-    <div class="content">
-      <p class="breadcrumbs"><a href="http://www.missouristate.edu">Missouri State University</a> &rsaquo;
-        {% block fullbreadcrumb %}<a href="/">ETC</a> &rsaquo;
-        {% block breadcrumb %}{{ content.title }}{% endblock %}{% endblock %}</p>
+</div>
+
+<div class="content">
+   <p class="breadcrumbs"><a href="http://www.missouristate.edu">Missouri State University</a> &rsaquo;
+      {% block fullbreadcrumb %}<a href="/">ETC</a> &rsaquo;
+      {% block breadcrumb %}{{ content.title }}{% endblock %}{% endblock %}</p>
       <div class="sidebar">
-        {% block sidebar %}{% endblock %}
+         {% block sidebar %}{% endblock %}
       </div>
       {% block content %}
-        <div class="rst">{{ content.html_body|safe }}</div>
+      <div class="rst">{{ content.html_body|safe }}</div>
       {% endblock %}
-    </div>
-  </div>
+   </div>
+</div>
 
-  <div id="footer">
-    <p>
+<div id="footer">
+   <p>
       <a href="http://www.missouristate.edu/">Missouri State University</a> | Copyright 2005 Board of Governors,
       Missouri State University | <a href="http://www.missouristate.edu/disclaimer/default.htm">Disclaimer</a> |
       <a href="http://www.missouristate.edu/contact/accessibility.htm">Accessibility</a> Maintained by:
       <a href="mailto:webmaster@missouristate.edu">Unit/Organization</a> | Last Modified: July 8, 2008
-    </p>
-  </div>
+   </p>
+</div>
 </div>
 
 </body>
