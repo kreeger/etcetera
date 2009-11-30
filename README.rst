@@ -14,6 +14,8 @@ Dependencies
 
 * `Django 1.1 or higher <http://www.djangoproject.com/download/>`_
 * `Python Imaging Library <http://www.pythonware.com/products/pil/>`_
+* `PostgreSQL <http://postgresql.org/>`_
+* `psycopg2 <http://initd.org/>`_
 
 Contact Information
 -------------------
