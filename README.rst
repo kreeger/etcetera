@@ -17,6 +17,8 @@ Dependencies
 * `PostgreSQL <http://postgresql.org/>`_
 * `psycopg2 <http://initd.org/>`_
 
+*Actually, you can use whatever DB you want, but I like PostgreSQL.*
+
 Contact Information
 -------------------
 
