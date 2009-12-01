@@ -15,7 +15,7 @@ class WorkOrder(models.Model):
 	last_name = models.CharField(max_length=100)
 	department = models.CharField(max_length=100, blank=True)
 	phone = lfus.PhoneNumberField(blank=True)
-	email = models.EmailField(max_length=75)
+	email = models.EmailField(max_length=75, blank=True)
 	equipment_text = models.CharField(max_length=75, blank=True)
 	equipment = models.ForeignKey(equipment.Equipment, null=True, blank=True)
 	building = models.ForeignKey(structure.Building, null=True, blank=True)

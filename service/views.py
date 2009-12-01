@@ -134,7 +134,8 @@ def edit(request, object_id):
 			# I should eventually move this into forms.WorkOrderModelForm
 			if cd['archived']:
 				cd['completion_date'] = dt.datetime.now()
-				wo_mail_complete(wo)
+				if cd['email']:
+					wo_mail_complete(wo)
 			else:
 				cd['completion_date'] = wo.completion_date
 			if cd['uncomplete']:
