@@ -3,7 +3,7 @@ from django.contrib.auth.models import Group, User
 from etcetera.settings import EMAIL_ADDRESS
 
 def wo_mail(work_order, coordinator_check):
-	email_body = "A new %s work order (#%i) created by %s %s has been entered into Etcetera. Click here to view this ticket: http://etc.missouristate.edu/etcetera/service/%i.\n\nName:\t%s %s\nDepartment:\t%s\nPhone:\t%s\nEmail:\t%s\nLocation:\t%s %s\nDescription:\t%s\n\nPlease do not reply to this message, as nobody will receive it.\n\nThanks!\n- Etcetera" % (
+	email_body = "A new %s work order (#%i) created by %s %s has been entered into Etcetera. Click here to view this ticket: http://etc.missouristate.edu/etcetera/service/%i.\n\nName:\t%s %s\nDepartment:\t%s\nPhone:\t%s\nEmail:\t%s\nEquipment:\t%s\nLocation:\t%s %s\nDescription:\t%s\n\nPlease do not reply to this message, as nobody will receive it.\n\nThanks!\n- Etcetera" % (
 		work_order.work_type,
 		work_order.id,
 		work_order.first_name,
@@ -14,6 +14,7 @@ def wo_mail(work_order, coordinator_check):
 		work_order.department,
 		work_order.phone,
 		work_order.email,
+		work_order.equipment_text,
 		work_order.building,
 		work_order.room,
 		work_order.description,
