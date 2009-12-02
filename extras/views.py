@@ -17,7 +17,7 @@ def error_mail(request):
 	return HttpResponseRedirect('etcetera-index')
 
 def index(request):
-	posts = extras.Post.objects.all()
+	posts = extras.Post.objects.all()[:3]
 	context = {
 		'object_list': posts,
 	}
