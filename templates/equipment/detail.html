@@ -35,9 +35,11 @@
          {{ object.get_status_display }}
          {% if object.building %}
             {% ifequal object.status "missing" %}from
-               {% else %}in
+               {% else %}{% ifequal object.status "checkedout" %}from
+                  {% else %}in
+               {% endifequal %}
             {% endifequal %}
-            {{ object.building.name }} {{ object.room }}
+            {{ object.building.abbreviation }} {{ object.room }}
          {% endif %}
          {% else %}(this item has no status)
       {% endif %}
