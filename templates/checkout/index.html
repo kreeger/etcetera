@@ -8,7 +8,7 @@
 {% block content %}
 
 <div id="list">   
-   <h1><span class="right"><a href="{% url checkout-new %}">manually add a new checkout</a></span>Checkout List</h1>
+   <h1><span class="right"><a href="{% url checkout-new %}">manually add a new checkout</a></span>Checkout List{% if q %} <span class="small">(<a href=".">searching for "{{ q }}" — click here to reset</a>)</span>{% endif %}</h1>
    <div id="searchform">
       <form action="">
          {{ form.q }}
@@ -17,9 +17,9 @@
          {{ form.department }} {{ form.department.label }}
          {{ form.equipment }} {{ form.equipment.label }}
          {{ form.location }} {{ form.location.label }}
+         {{ form.comments }} {{ form.comments.label }}
          <input type="submit" name="submit" value="Search" id="submit" />
       </form>
-      {% if q %} <span class="small">(<a href=".">searching for "{{ q }}" — click here to reset</a>)</span>{% endif %}
    </div>
    <table id="list">
       <tr id="headerrow">

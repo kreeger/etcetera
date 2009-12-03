@@ -99,6 +99,8 @@ class Checkout(models.Model):
 	)
 	other_equipment = models.TextField(blank=True)
 	completed = models.BooleanField()
+	completion_date = models.DateTimeField(blank=True, null=True)
+	comments = models.TextField(blank=True)
 	
 	class Meta:
 		ordering = (

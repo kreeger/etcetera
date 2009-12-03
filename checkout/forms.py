@@ -10,18 +10,35 @@ from etcetera.checkout import models as checkout
 from etcetera.extras import forms as ef
 
 class SearchForm(forms.Form):
+	# The search query
 	q = forms.CharField(max_length=50)
-	name = forms.BooleanField(required=False, initial=True)
-	department = forms.BooleanField(required=False, initial=True)
-	equipment = forms.BooleanField(required=False, initial=True)
-	location = forms.BooleanField(required=False, initial=True)
+	# The special fields pertaining to model fields and such
+	name = forms.BooleanField(required=False, initial=False)
+	department = forms.BooleanField(required=False, initial=False)
+	equipment = forms.BooleanField(required=False, initial=False)
+	location = forms.BooleanField(required=False, initial=False)
+	comments = forms.BooleanField(required=False, initial=False)
 	
 	def as_url_args(self):
 		return urllib.urlencode(self.cleaned_data)
 	
 	def get_list(self):
-		out_list = []
+		# The search list is automatically everything
+		out_list = [
+			'first_name',
+			'last_name',
+			'department__name',
+			'department_text',
+			'equipment_needed',
+			'building__name',
+			'room',
+			'comments',
+		]
 		data = self.cleaned_data
+		# Unless one of the following is checked, then it's reset
+		if data['name'] or data['department'] or data['equipment'] or data['location'] or data['comments']:
+			out_list = []
+		# And only the specified fields are added to it.
 		if data['name']:
 			out_list.extend(['first_name','last_name',])
 		if data['department']:
@@ -30,6 +47,9 @@ class SearchForm(forms.Form):
 			out_list.append('equipment_needed',)
 		if data['location']:
 			out_list.extend(['building__name','room',])
+		if data['comments']:
+			out_list.append('comments',)
+		# Return whatever it ends up being.
 		return out_list
 
 class CheckoutModelForm(forms.ModelForm):
@@ -40,6 +60,7 @@ class CheckoutModelForm(forms.ModelForm):
 			'department_text',
 			'creation_date',
 			'creating_user',
+			'completion_date',
 		)
 	
 	out_date = forms.DateTimeField(widget=adminwidgets.AdminSplitDateTime)
@@ -61,6 +82,8 @@ class CheckoutPublicForm(forms.ModelForm):
 			'completed',
 			'returning_user',
 			'other_equipment',
+			'comments',
+			'completion_date',
 		)
 
 class CheckoutEquipmentForm(forms.Form):
