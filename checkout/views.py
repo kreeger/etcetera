@@ -107,13 +107,29 @@ def edit(request, object_id):
 		# validate it, and save it
 		form = coforms.CheckoutModelForm(request.POST, instance=co)
 		if form.is_valid():
+			# If the form isn't previously marked complete, but is now marked
 			if not co.completed:
 				if form.cleaned_data['completed']:
+					# For each associated equipment item
 					for eq in co.equipment_list.all():
+						# If it's marked as checkedout or overdue
 						if eq.status == 'checkedout' or eq.status == 'overdue':
-							# Need check to see if it's part of a current co
-							eq.status = 'checkout'
-							eq.save()
+							# Declare a flag that says if it's okay to change
+							# an equipment's status
+							okay_to_proceed = True
+							# For each checkout occuring currently or in the
+							# future that the equipment's associated with
+							for future_co in eq.checkouts.filter(
+								return_date__gte=dt.datetime.now()).filter(
+								completed=False):
+								# As long as it's not this current checkout
+								if future_co != co:
+									# Then it's not okay to change the status
+									okay_to_proceed = False
+							# If okay_to_proceed, then modify the status & save
+							if okay_to_proceed:
+								eq.status = 'checkout'
+								eq.save()
 			form.save()
 			# Then redirect to the detail page for this checkout
 			return HttpResponseRedirect(reverse(
