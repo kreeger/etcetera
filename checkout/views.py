@@ -107,6 +107,13 @@ def edit(request, object_id):
 		# validate it, and save it
 		form = coforms.CheckoutModelForm(request.POST, instance=co)
 		if form.is_valid():
+			if not co.completed:
+				if form.cleaned_data['completed']:
+					for eq in co.equipment_list.all():
+						if eq.status == 'checkedout' or eq.status == 'overdue':
+							# Need check to see if it's part of a current co
+							eq.status = 'checkout'
+							eq.save()
 			form.save()
 			# Then redirect to the detail page for this checkout
 			return HttpResponseRedirect(reverse(
@@ -159,6 +166,7 @@ def equip(request, object_id):
 	# Get checkout object from DB
 	co = get_object_or_404(checkout.Checkout, id=object_id)
 	context = {}
+	now = dt.datetime.now()
 	if request.method == 'POST':
 		# Get form data from POST, fill form object with it
 		form = coforms.CheckoutEquipmentForm(request.POST)
@@ -178,9 +186,12 @@ def equip(request, object_id):
 						# Get equipment object from DB with that barcode
 						eq = equipment.Equipment.objects.get(barcode=item)
 						# If the checkout is for the future
-						if co.out_date > dt.datetime.now():
+						if co.out_date > now:
 							# Set the item's status as reserved
 							eq.status = 'reserved'
+							eq.save()
+						if co.out_date < now and co.return_date > now:
+							eq.status = 'checkedout'
 							eq.save()
 						# Check if the equipment is part of a video unit (cart)
 						if eq.video_unit:
@@ -207,9 +218,12 @@ def equip(request, object_id):
 					for item in equipment.Equipment.objects.filter(
 						video_unit=form.cleaned_data['video_unit']):
 						# If the checkout is for the future
-						if co.out_date > dt.datetime.now():
+						if co.out_date > now:
 							# Set the item's status as reserved
 							item.status = 'reserved'
+							item.save()
+						if co.out_date < now and co.return_date > now:
+							item.status = 'checkedout'
 							item.save()
 						co.equipment_list.add(item)
 				else:
@@ -227,6 +241,9 @@ def equip(request, object_id):
 						if co.out_date > dt.datetime.now():
 							# Set the item's status as reserved
 							item.status = 'reserved'
+							item.save()
+						if co.out_date < now and co.return_date > now:
+							item.status = 'checkedout'
 							item.save()
 						co.equipment_list.add(item)
 				else:
