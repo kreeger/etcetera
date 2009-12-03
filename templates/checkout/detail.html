@@ -56,6 +56,11 @@
          <span class="right">
             <span class="head">Created</span> 
                {{ object.creation_date|date:'n/j/Y g:iA' }}
+               {% if object.completion_date %}
+                  <br />
+                  <span class="head">Completed</span>
+                  {{ object.completion_date|date:'n/j/Y g:iA' }}
+               {% endif %}
          </span>
       {% endif %}
       {% ifequal object.checkout_type 'delivery' %}
@@ -212,6 +217,11 @@
    {% else %}
       <p>No extra equipment (cables, adapters, etc.) have been
             attached to this checkout.</p>
+   {% endif %}
+   
+   {% if object.comments %}
+   <h3>Comments</h3>
+      {{ object.comments|linebreaks }}
    {% endif %}
 </div>
 {% endblock %}
