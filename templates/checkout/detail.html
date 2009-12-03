@@ -14,7 +14,7 @@
 {% block content %}
 <div id="detail">
    {% if user.is_authenticated and not object.completed %}
-      {% if not object.equipment_list.all and not object.other_equipment %}
+      {% if not object.equipment_list.all and not object.other_equipment and not object.completed %}
          <div id="alert" class="banner">
             This checkout doesn't have any equipment associated with it.
                To associate equipment with it, 
@@ -22,17 +22,25 @@
          </div>
       {% endif %}
       {% ifequal object.delivering_user user %}
-         <div id="notify" class="banner">
-            You've been assigned to deliver this ticket.
-         </div>
+         {% if not object.completed %}
+            <div id="notify" class="banner">
+               You've been assigned to deliver this ticket.
+            </div>
+         {% endif %}
       {% endifequal %}
    {% endif %}
    
    <h1>
       {% if user.is_authenticated %}
          <span class="right">
-            <a href="{% url checkout-equip object.id %}">add/remove equipment</a>
-            &bull; <a href="{% url checkout-edit object.id %}">edit</a>
+            {% if not object.completed %}
+               <a href="{% url checkout-equip object.id %}">
+                  add/remove equipment
+               </a>
+            {% else %}
+               <span class="disabled">can't change equipment</span>
+            {% endif %}
+         &bull; <a href="{% url checkout-edit object.id %}">edit</a>
          </span>
       {% endif %}
       {{ object.first_name }} {{ object.last_name }}
