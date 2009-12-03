@@ -23,6 +23,7 @@ h1 input, h1 select { font-weight: bold; }
 .padded { padding: 5px; }
 .note { font-weight: normal; font-size: 11px; color: #797979; }
 .tablehead { -webkit-border-top-left-radius: 10px; -moz-border-radius-topleft: 10px; -webkit-border-bottom-left-radius: 10px; -moz-border-radius-bottomleft: 10px; background-color: #EAEAEA; vertical-align: middle; color: #666; text-align: right; text-transform: lowercase; font-weight: normal; font-weight: normal; padding: 0 3px 0 10px; }
+.disabled { color: #BBB; font-weight: normal; }
 
 td.tablehead { width: 150px; }
 a.remove { width: 16px; height: 16px; background-image: url(../images/icons/buttonmin32.png); }
