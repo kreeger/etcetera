@@ -177,6 +177,11 @@ def equip(request, object_id):
 					try:
 						# Get equipment object from DB with that barcode
 						eq = equipment.Equipment.objects.get(barcode=item)
+						# If the checkout is for the future
+						if co.out_date > dt.datetime.now():
+							# Set the item's status as reserved
+							eq.status = 'reserved'
+							eq.save()
 						# Check if the equipment is part of a video unit (cart)
 						if eq.video_unit:
 							# For each equipment in a list of equipment with
@@ -201,6 +206,11 @@ def equip(request, object_id):
 					# Go through each object and add it to co.equipment_list
 					for item in equipment.Equipment.objects.filter(
 						video_unit=form.cleaned_data['video_unit']):
+						# If the checkout is for the future
+						if co.out_date > dt.datetime.now():
+							# Set the item's status as reserved
+							item.status = 'reserved'
+							item.save()
 						co.equipment_list.add(item)
 				else:
 					# Put that in a dictionary to tell the user it wasn't found
@@ -213,6 +223,11 @@ def equip(request, object_id):
 					# Go through each object and add it to co.equipment_list
 					for item in equipment.Equipment.objects.filter(
 						cc_unit=form.cleaned_data['cc_unit']):
+						# If the checkout is for the future
+						if co.out_date > dt.datetime.now():
+							# Set the item's status as reserved
+							item.status = 'reserved'
+							item.save()
 						co.equipment_list.add(item)
 				else:
 					# Put it in a dictionary to tell the user it wasn't found
