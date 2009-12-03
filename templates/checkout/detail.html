@@ -55,9 +55,8 @@
       {% if object.creation_date %}
          <span class="right">
             <span class="head">Created</span> 
-               {{ object.creation_date|date:'n/j/Y g:iA' }}
-               {% if object.completion_date %}
-                  <br />
+               {{ object.creation_date|date:'n/j/Y g:iA' }}<br />
+               {% if object.completion_date and object.completed %}
                   <span class="head">Completed</span>
                   {{ object.completion_date|date:'n/j/Y g:iA' }}
                {% endif %}

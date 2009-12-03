@@ -102,6 +102,18 @@ class Checkout(models.Model):
 	completion_date = models.DateTimeField(blank=True, null=True)
 	comments = models.TextField(blank=True)
 	
+	# What fun! We're overriding save. For logging changes.
+	def save(self, force_insert=False, force_update=False):
+		# This checks to see if this an update, and not brand new.
+		if self.pk is not None:
+			# Get original object
+			orig = Checkout.objects.get(pk=self.pk)
+			# For each entry in the original data
+			if self.completed and not orig.completed:
+				self.completion_date = dt.datetime.now()
+		# Call super.save
+		super(Checkout, self).save(force_insert, force_update)
+	
 	class Meta:
 		ordering = (
 			'first_name',

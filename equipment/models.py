@@ -86,14 +86,20 @@ class Equipment(models.Model):
 		return u"%s %s (%s %s)" % \
 			(self.make, self.model, self.equipment_type, self.barcode)
 	
+	# What fun! We're overriding save. For logging changes.
 	def save(self, force_insert=False, force_update=False):
+		# This checks to see if this an update, and not brand new.
 		if self.pk is not None:
+			# Get original values
 			orig = Equipment.objects.filter(pk=self.pk).values()[0]
+			# For each entry in the original data
 			for key in orig:
 				new = getattr(self, key)
 				old = orig[key]
+				# If nothing was there to begin with, then nothing will stay
 				if type(old) == unicode and old == None:
 					old = u''
+				# This is for logging things that have changed
 				if not new == old:
 					log = EquipmentLog()
 					log.equipment = self
@@ -102,8 +108,11 @@ class Equipment(models.Model):
 					log.new = unicode(new)
 					log.datetime = dt.datetime.now()
 					log.save()
+		# Also, if barcode is blank upon submission, set it to None
+		# This helps to not break duplicate barcodes
 		if self.barcode == "":
 			self.barcode = None
+		# Call super.save
 		super(Equipment, self).save(force_insert, force_update)
 
 class EquipmentLog(models.Model):
