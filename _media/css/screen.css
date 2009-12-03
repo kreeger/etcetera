@@ -28,6 +28,7 @@ h1 input, h1 select { font-weight: bold; }
 td.tablehead { width: 150px; }
 a.remove { width: 16px; height: 16px; background-image: url(../images/icons/buttonmin32.png); }
 a.add { width: 16px; height: 16px; background-image: url(../images/icons/buttonplu32.png); }
+h2 .right { text-align: right; }
 
 div#header { background-image: url(../images/header.png); height: 120px; border-bottom: 1px solid #333; }
 div#header p, div#header h1 { margin: 0; color: #EEE; }
