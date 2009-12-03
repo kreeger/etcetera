@@ -6,6 +6,7 @@ EQUIPMENT_STATUSES = (
 	('stock','Stock'),
 	('repair','In repair'),
 	('missing','Missing'),
+	('overdue','Overdue'),
 	('missing_paid','Missing, paid for'),
 	('sold','Sold by budget transfer'),
 	('stolen','Stolen'),
