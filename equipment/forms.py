@@ -20,19 +20,33 @@ class MakeModelForm(forms.ModelForm):
 
 class SearchForm(forms.Form):
 	q = forms.CharField(max_length=50)
-	equipment_type = forms.BooleanField(required=False, initial=True)
-	barcode = forms.BooleanField(required=False, initial=True)
-	location = forms.BooleanField(required=False, initial=True)
-	serial = forms.BooleanField(required=False, initial=True)
-	smsu_id = forms.BooleanField(required=False, initial=True)
-	comments = forms.BooleanField(required=False, initial=True)
+	equipment_type = forms.BooleanField(required=False, initial=False)
+	barcode = forms.BooleanField(required=False, initial=False)
+	location = forms.BooleanField(required=False, initial=False)
+	serial = forms.BooleanField(required=False, initial=False)
+	smsu_id = forms.BooleanField(required=False, initial=False)
+	comments = forms.BooleanField(required=False, initial=False)
 	
 	def as_url_args(self):
 		return urllib.urlencode(self.cleaned_data)
 	
 	def get_list(self):
-		out_list = []
+		# The search list is automatically everything
+		out_list = [
+			'equipment_type__name',
+			'make__name',
+			'model',
+			'barcode',
+			'building__name',
+			'room',
+			'serial',
+			'smsu_id',
+			'comments',
+		]
 		data = self.cleaned_data
+		# Unless one of the following is checked, then it's reset
+		if data['equipment_type'] or data['barcode'] or data['location'] or data['serial'] or data['smsu_id'] or data['comments']:
+			out_list = []
 		if data['equipment_type']:
 			out_list.extend(['equipment_type__name','make__name','model',])
 		if data['barcode']:
