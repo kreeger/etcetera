@@ -141,8 +141,7 @@ div#detail table.profile img { width: 200px; -webkit-border-radius: 10px; -moz-b
 div#detail table.profile>tbody>tr>td:first-child { width: 168px; height: auto; text-align: center; vertical-align: top; }
 div#detail form table.profile>tbody>tr>td:first-child { -webkit-border-radius: 10px; -moz-border-radius: 10px; border: 1px solid #CCC; background: url(/_media/images/profile-placeholder-back.png) no-repeat; padding: 0 15px 10px; vertical-align: bottom; height: 235px; }
 div#detail table.profile td:last-child { width: 740px; vertical-align: top; text-align: left; }
-div#detail table#info { width: 400px; }
-div#detail table#info td.head { width: 100px; }
+div#detail table#info td.tablehead { width: 250px; }
 div#detail table#tickets td:last-child { font-size: 12px; vertical-align: middle; }
 div#detail table#tickets a { font-size: 12px; display: block; padding: 3px; font-weight: bold; }
 div#detail table#tickets a:hover { background-color: #4A0010; color: #CCC; text-decoration: none; }

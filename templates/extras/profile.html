@@ -53,90 +53,30 @@
                         </td>
                      </tr>
                   {% endif %}
-               </table>
-            </td>
-            <td>
-               <table id="tickets">
-                  <tr>
-                     <td class="tablehead">repairs</td>
-                     <td>
-                        {% if not the_user.repairs %}
-                           <span class="padded">none</span>
-                        {% endif %}
-                        <table>
-                           {% for ticket in the_user.repairs %}
-                              <tr>
-                                 <td>
-                                    <a href="{% url service-detail ticket.id %}">
-                                       {{ ticket.equipment_text }} &rsaquo;
-                                       {{ ticket.creation_date|date:'n/j/Y' }}
-                                    </a>
-                                 </td>
-                              </tr>
-                           {% endfor %}
-                        </table>
-                     </td>
-                  </tr>
-                  <tr>
-                     <td class="tablehead">installs</td>
-                     <td>
-                        {% if not the_user.installs %}
-                           <span class="padded">none</span>
-                        {% endif %}
-                        <table>
-                           {% for ticket in the_user.installs %}
-                              <tr>
-                                 <td>
-                                    <a href="{% url service-detail ticket.id %}">
-                                       {{ ticket.equipment_text }} &rsaquo;
-                                       {{ ticket.creation_date|date:'n/j/Y' }}
-                                    </a>
-                                 </td>
-                              </tr>
-                           {% endfor %}
-                        </table>
-                     </td>
-                  </tr>
-                  <tr>
-                     <td class="tablehead">maintenances</td>
-                     <td>
-                        {% if not the_user.maintenances %}
-                           <span class="padded">none</span>
-                        {% endif %}
-                        <table>
-                           {% for ticket in the_user.maintenances %}
-                              <tr>
-                                 <td>
-                                    <a href="{% url service-detail ticket.id %}">
-                                       {{ ticket.equipment_text }} &rsaquo;
-                                       {{ ticket.creation_date|date:'n/j/Y' }}
-                                    </a>
-                                 </td>
-                              </tr>
-                           {% endfor %}
-                        </table>
-                     </td>
-                  </tr>
-                  <tr>
-                     <td class="tablehead">replacements</td>
-                     <td>
-                        {% if not the_user.replacements %}
-                           <span class="padded">none</span>
-                        {% endif %}
-                        <table>
-                           {% for ticket in the_user.replacements %}
-                              <tr>
-                                 <td>
-                                    <a href="{% url service-detail ticket.id %}">
-                                       {{ ticket.equipment_text }} &rsaquo;
-                                       {{ ticket.creation_date|date:'n/j/Y' }}
-                                    </a>
-                                 </td>
-                              </tr>
-                           {% endfor %}
-                        </table>
-                     </td>
-                  </tr>
+                  {% if the_user.checkouts_created %}
+                     <tr>
+                        <td class="tablehead">checkouts created</td>
+                        <td>{{ the_user.checkouts_created }}</td>
+                     </tr>
+                  {% endif %}
+                  {% if the_user.checkouts_delivered %}
+                     <tr>
+                        <td class="tablehead">delivered checkouts</td>
+                        <td>{{ the_user.checkouts_delivered }}</td>
+                     </tr>
+                  {% endif %}
+                  {% if the_user.workorders_closed %}
+                     <tr>
+                        <td class="tablehead">closed workorders</td>
+                        <td>{{ the_user.workorders_closed }}</td>
+                     </tr>
+                  {% endif %}
+                  {% if the_user.workorders_open %}
+                     <tr>
+                        <td class="tablehead">open workorders</td>
+                        <td>{{ the_user.workorders_open }}</td>
+                     </tr>
+                  {% endif %}
                </table>
             </td>
          </tr>

@@ -9,6 +9,7 @@ from etcetera.extras.mailer import error_mail
 from etcetera.extras import models as extras
 from etcetera.extras import forms as exforms
 from etcetera.service import models as service
+from etcetera.checkout import models as checkout
 
 from docutils.core import publish_parts
 
@@ -38,35 +39,16 @@ def profile(request, the_user):
 			return HttpResponseRedirect(reverse('edit-profile'))
 		else:
 			the_user.profile = None
-	# There's got to be a better way to do this. I'll figure it out sometime.
-	the_user.repairs = service.WorkOrder.objects.filter(
-		technician=the_user
-	).filter(
-		archived=False
-	).filter(
-		work_type="repair"
-	)
-	the_user.installs = service.WorkOrder.objects.filter(
-		technician=the_user
-	).filter(
-		archived=False
-	).filter(
-		work_type="install"
-	)
-	the_user.maintenances = service.WorkOrder.objects.filter(
-		technician=the_user
-	).filter(
-		archived=False
-	).filter(
-		work_type="maintenance"
-	)
-	the_user.replacements = service.WorkOrder.objects.filter(
-		technician=the_user
-	).filter(
-		archived=False
-	).filter(
-		work_type="replacement"
-	)
+	# Get work order counts for user.
+	workorders = service.WorkOrder.objects.filter(
+		technician=the_user)
+	the_user.workorders_closed = workorders.filter(archived=True).count()
+	the_user.workorders_open = workorders.filter(archived=False).count()
+	# Get ticket counts.
+	the_user.checkouts_created = checkout.Checkout.objects.filter(
+		creating_user=the_user).count()
+	the_user.checkouts_delivered = checkout.Checkout.objects.filter(
+		delivering_user=the_user).count()
 	context = {
 		'the_user': the_user,
 	}
