@@ -94,7 +94,7 @@
          </td>
       </tr>
    </table>
-   
+   {% if form.errors %}<p>{% for e in form.errors %}{{ e }}{% endfor %}</p>{% endif %}
    <div class="right">
       <h3>Currently in the hands of...</h3>
       <table>

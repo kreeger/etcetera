@@ -44,6 +44,7 @@
       Checkout type {{ form.checkout_type }} {{ form.checkout_type.errors }}<br />
       Return type {{ form.return_type }} {{ form.return_type.errors }}
    </h2>
+   {% if form.errors %}<p>{% for e in form.errors %}{{ e }}{% endfor %}</p>{% endif %}
    
    <div class="right">
       <h3>Contact information</h3>

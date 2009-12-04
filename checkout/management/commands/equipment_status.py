@@ -10,12 +10,6 @@ class Command(NoArgsCommand):
 		# Save the current date/time in a variable
 		now = datetime.datetime.now()
 		
-		# Set logging level
-		logging.basicConfig(
-			level=logging.DEBUG,
-			format='%(asctime)s %(levelname)s %(message)s',
-		)
-		
 		# For current checkouts, set related equipment status to checkedout
 		for checkout in Checkout.objects.filter(
 			out_date__lte=now).filter(
