@@ -9,6 +9,7 @@ from django.template import RequestContext
 
 from etcetera.checkout import forms as coforms
 from etcetera.checkout import models as checkout
+from etcetera.checkout.mailer import *
 from etcetera.equipment import models as equipment
 from etcetera.extras.search import get_query
 
@@ -19,9 +20,9 @@ def checkout_form(request):
 		form = coforms.CheckoutPublicForm(request.POST)
 		if form.is_valid():
 			# Form object saves the model in the db itself
-			form.save()
+			co = form.save()
 			# Send an email to the appropriate people using form data
-			co_mail(form)
+			created_mail(co)
 			return HttpResponseRedirect('/thanks.html')
 	# If data is not being sent in POST, our form is an empty one.
 	else:
@@ -130,6 +131,7 @@ def edit(request, object_id):
 							if okay_to_proceed:
 								eq.status = 'checkout'
 								eq.save()
+					completed_mail(checkout)
 			form.save()
 			# Then redirect to the detail page for this checkout
 			return HttpResponseRedirect(reverse(
@@ -160,6 +162,7 @@ def new(request):
 			# Also save the user who made it to the ticket
 			co.creating_user = request.user
 			co.save()
+			created_mail(co)
 			# Redirect to the detail page for the new ticket
 			return HttpResponseRedirect(reverse(
 				'checkout-detail',

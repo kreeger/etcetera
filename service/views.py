@@ -10,7 +10,7 @@ from django.template import RequestContext
 from etcetera.service import models as service
 from etcetera.service import forms as woforms
 from etcetera.equipment import models as equipment
-from etcetera.extras.mailer import wo_mail, wo_mail_complete, wo_mail_pickup, wo_mail_create
+from etcetera.service.mailer import created_mail, completed_mail, pickup_mail, patron_mail
 from etcetera.extras.search import get_query
 
 def service_form(request):
@@ -35,7 +35,7 @@ def service_form(request):
 			wo.description = cd['description']
 			wo.work_type = cd['work_type']
 			wo.save()
-			wo_mail(wo, cd['coordinator_check'])
+			created_mail(wo, cd['coordinator_check'])
 			return HttpResponseRedirect('/thanks.html')
 	# If data is not being sent in POST, our form is an empty one.
 	else:
@@ -135,7 +135,7 @@ def edit(request, object_id):
 			if cd['archived']:
 				cd['completion_date'] = dt.datetime.now()
 				if cd['email']:
-					wo_mail_complete(wo)
+					completed_mail(wo)
 			else:
 				cd['completion_date'] = wo.completion_date
 			if cd['uncomplete']:
@@ -176,7 +176,7 @@ def pickup(request, object_id):
 	wo = get_object_or_404(service.WorkOrder, id=object_id)
 	wo.technician = request.user
 	wo.save()
-	wo_mail_pickup(wo)
+	pickup_mail(wo)
 	return HttpResponseRedirect(reverse(
 		'service-detail',
 		args=(wo.id,),
@@ -194,7 +194,7 @@ def new(request):
 			else:
 				cd['equipment'] = None
 			wo = form.save()
-			wo_mail_create(wo)
+			created_mail(wo)
 			return HttpResponseRedirect(reverse(
 				'service-detail',
 				args=(wo.id,),
