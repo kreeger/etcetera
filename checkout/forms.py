@@ -85,6 +85,21 @@ class CheckoutPublicForm(forms.ModelForm):
 			'comments',
 			'completion_date',
 		)
+		
+	out_date = forms.DateTimeField(
+		widget=adminwidgets.AdminSplitDateTime,
+		help_text="The date/time you'll pick up equipment, or \
+			when ETC should deliver it.<br /> \
+			<strong>Date should be YYYY-MM-DD. Use 24-hour time \
+			(HH:MM:SS)</strong>.",
+	)
+	return_date = forms.DateTimeField(
+		widget=adminwidgets.AdminSplitDateTime,
+		help_text="The date/time you'll bring back equipment, or when \
+			ETC should pick it up.<br /> \
+			<strong>Date should be YYYY-MM-DD. Use 24-hour time \
+			(HH:MM:SS)</strong>.",
+	)
 
 class CheckoutEquipmentForm(forms.Form):
 	barcodes = forms.CharField(

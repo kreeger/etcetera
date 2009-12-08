@@ -1,6 +1,14 @@
 {% extends "etc.html" %}
 
-{% block script %}{% endblock %}
+{% block fullscript %}
+   <script type="text/javascript" src="/admin/jsi18n/"></script>
+   <script type="text/javascript" src="/media/js/core.js"></script> 
+   <script type="text/javascript" src="/media/js/admin/RelatedObjectLookups.js"></script>
+   
+   {{ form.media }}
+{% endblock %}
+
+{% block script %}/_media/js/checkoutform.js{% endblock %}
 
 {% block breadcrumb %}Faculty Equipment Lending Form{% endblock %}
 
@@ -14,7 +22,7 @@
 			<p class="error">Please correct the error{{ form.errors|pluralize }} below.</p>
 		{% endif %}
 		<table>
-      	<tr{% if form.checkout_type.errors %} class="errorlist"{% endif %}>
+      	<tr id="checkout_type_row"{% if form.checkout_type.errors %} class="errorlist"{% endif %}>
    	      <th>{{ form.checkout_type.label }}</th>
    	      <td>{{ form.checkout_type }}</td>
       		<td{% if form.checkout_type.errors %}>
@@ -23,7 +31,7 @@
       		   {% endif %}
       		</td>
       	</tr>
-      	<tr{% if form.return_type.errors %} class="errorlist"{% endif %}>
+      	<tr id="return_type_row"{% if form.return_type.errors %} class="errorlist"{% endif %}>
    	      <th>{{ form.return_type.label }}</th>
    	      <td>{{ form.return_type }}</td>
       		<td{% if form.return_type.errors %}>{{ form.return_type.errors }}
@@ -31,7 +39,12 @@
       		   {% endif %}
       		</td>
       	</tr>
-		   <tr{% if form.first_name.errors %} class="errorlist"{% endif %}>
+      	<tr id="help_text">
+      	   <td colspan="3">
+      	      <p style="text-align: center"><em>You must answer the first two questions before the rest of the form will appear.</em></p>
+      	   </td>
+      	</tr>
+		   <tr id="first_name_row"{% if form.first_name.errors %} class="errorlist"{% endif %}>
 		      <th>{{ form.first_name.label }}</th>
 		      <td>{{ form.first_name }}</td>
 				<td{% if form.first_name.errors %}>{{ form.first_name.errors }}
@@ -39,7 +52,7 @@
    				{% endif %}
 				</td>
 			</tr>
-			<tr{% if form.last_name.errors %} class="errorlist"{% endif %}>
+			<tr id="last_name_row"{% if form.last_name.errors %} class="errorlist"{% endif %}>
 			   <th>{{ form.last_name.label }}</th>
 			   <td>{{ form.last_name }}</td>
 				<td{% if form.last_name.errors %}>{{ form.last_name.errors }}
@@ -47,7 +60,7 @@
 				   {% endif %}
 				</td>
 			</tr>
-   	   <tr{% if form.department_text.errors %} class="errorlist"{% endif %}>
+   	   <tr id="department_text_row"{% if form.department_text.errors %} class="errorlist"{% endif %}>
    	      <th>{{ form.department_text.label }}</th>
    	      <td>{{ form.department_text }}</td>
    			<td{% if form.department_text.errors %}>
@@ -56,7 +69,7 @@
    			   {% endif %}
    			</td>
    		</tr>	
-	      <tr{% if form.course.errors %} class="errorlist"{% endif %}>
+	      <tr id="course_row"{% if form.course.errors %} class="errorlist"{% endif %}>
 	         <th>{{ form.course.label }}</th>
 	         <td>{{ form.course }}</td>
 				<td{% if form.course.errors %}>{{ form.course.errors }}
@@ -64,7 +77,7 @@
 				   {% endif %}
 				</td>
 			</tr>	
-   	   <tr{% if form.phone.errors %} class="errorlist"{% endif %}>
+   	   <tr id="phone_row"{% if form.phone.errors %} class="errorlist"{% endif %}>
    	      <th>{{ form.phone.label }}</th>
    	      <td>{{ form.phone }}</td>
    			<td{% if form.phone.errors %}>{{ form.phone.errors }}
@@ -72,7 +85,7 @@
    			   {% endif %}
    			</td>
    		</tr>
-   	   <tr{% if form.email.errors %} class="errorlist"{% endif %}>
+   	   <tr id="email_row"{% if form.email.errors %} class="errorlist"{% endif %}>
    	      <th>{{ form.email.label }}</th>
    	      <td>{{ form.email }}</td>
    			<td{% if form.email.errors %}>{{ form.email.errors }}
@@ -80,7 +93,7 @@
    			   {% endif %}
    		   </td>
    		</tr>
-   	   <tr{% if form.building.errors %} class="errorlist"{% endif %}>
+   	   <tr id="building_row"{% if form.building.errors %} class="errorlist"{% endif %}>
    	      <th>{{ form.building.label }}</th>
    	      <td>{{ form.building }}</td>
       		<td{% if form.building.errors %}>{{ form.building.errors }}
@@ -88,7 +101,7 @@
       		   {% endif %}
       		</td>
       	</tr>
-      	<tr{% if form.room.errors %} class="errorlist"{% endif %}>
+      	<tr id="room_row"{% if form.room.errors %} class="errorlist"{% endif %}>
    	      <th>{{ form.room.label }}</th>
    	      <td>{{ form.room }}</td>
       		<td{% if form.room.errors %}>{{ form.room.errors }}
@@ -96,7 +109,7 @@
       		   {% endif %}
       		</td>
       	</tr>
-      	<tr{% if form.equipment_needed.errors %} class="errorlist"{% endif %}>
+      	<tr id="equipment_needed_row"{% if form.equipment_needed.errors %} class="errorlist"{% endif %}>
    	      <th>{{ form.equipment_needed.label }}</th>
    	      <td>{{ form.equipment_needed }}</td>
       		<td{% if form.equipment_needed.errors %}>
@@ -105,60 +118,29 @@
       		   {% endif %}
       		</td>
       	</tr>
-      	<tr{% if form.out_date.errors %} class="errorlist"{% endif %}>
+      	<tr id="out_date_row"{% if form.out_date.errors %} class="errorlist"{% endif %}>
    	      <th>{{ form.out_date.label }}</th>
-   	      <td>{{ form.out_date }}</td>
-      		<td{% if form.out_date.errors %}>{{ form.out_date.errors }}
-      		   {% else %} class="note">{{ form.out_date.help_text }}
+   	      <td colspan="2">{{ form.out_date }}
+   	         {% if form.out_date.errors %}{{ form.out_date.errors }}
+      		   {% else %}
+      		      <span class="note">
+         		      {{ form.out_date.help_text|safe }}
+         		   </span>
       		   {% endif %}
       		</td>
       	</tr>
-      	<tr{% if form.return_date.errors %} class="errorlist"{% endif %}>
+      	<tr id="return_date_row"{% if form.return_date.errors %} class="errorlist"{% endif %}>
    	      <th>{{ form.return_date.label }}</th>
-   	      <td>{{ form.return_date }}</td>
-      		<td{% if form.return_date.errors %}>{{ form.return_date.errors }}
-      		   {% else %} class="note">{{ form.return_date.help_text }}
+   	      <td colspan="2">{{ form.return_date }}
+   	         {% if form.return_date.errors %}{{ form.return_date.errors }}
+      		   {% else %}
+      		      <span class="note">
+         		      {{ form.return_date.help_text|safe }}
+         		   </span>
       		   {% endif %}
       		</td>
       	</tr>
-			<tr id="coordinator_row"{% if form.coordinator_check.errors %} class="errorlist"{% endif %}>
-			   <th colspan="2">
-			      {{ form.coordinator_check.label }} {{ form.coordinator_check }}
-			   </th>
-      		<td{% if form.coordinator_check.errors %}>
-      		      {{ form.coordinator_check.errors }}
-   		      {% else %} class="note">
-   		         {{ form.coordinator_check.help_text }}
-   		      {% endif %}
-   		   </td>
-   		</tr>		
-			<tr id="equipment_row"{% if form.equipment_text.errors %} class="errorlist"{% endif %}>
-			   <th>{{ form.equipment_text.label }}</th>
-			   <td>{{ form.equipment_text }}</td>
-      		<td{% if form.equipment_text.errors %}>
-      		      {{ form.equipment_text.errors }}
-      		   {% else %} class="note">
-      		      {{ form.equipment_text.help_text }}
-      		   {% endif %}
-      		</td>
-      	</tr>
-			<tr id="barcode_row"{% if form.barcode.errors %} class="errorlist"{% endif %}>
-			   <th>{{ form.barcode.label }}</th>
-			   <td>{{ form.barcode }}</td>
-      		<td{% if form.barcode.errors %}>{{ form.barcode.errors }}
-      		   {% else %} class="note">{{ form.barcode.help_text }}
-      		   {% endif %}
-      		</td>
-      	</tr>
-			<tr id="description_row"{% if form.description.errors %} class="errorlist"{% endif %}>
-			   <th>{{ form.description.label }}</th>
-			   <td>{{ form.description }}</td>
-      		<td{% if form.description.errors %}>{{ form.description.errors }}
-      		   {% else %} class="note">{{ form.description.help_text }}
-      		   {% endif %}
-      		</td>
-      	</tr>
-			<tr>
+			<tr id="submit_row">
 			   <th>&nbsp;</th>
 			   <td>
 			      <p><small>Please click the Submit button only once. A few seconds will pass as we process your information.</small></p>
