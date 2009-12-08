@@ -8,8 +8,6 @@
    {{ form.media }}
 {% endblock %}
 
-{% block script %}/_media/js/checkoutform.js{% endblock %}
-
 {% block breadcrumb %}Faculty Equipment Lending Form{% endblock %}
 
 {% block content %}
@@ -20,6 +18,7 @@
 	<form action="" method="POST">
 		{% if form.errors %}
 			<p class="error">Please correct the error{{ form.errors|pluralize }} below.</p>
+			<p>{% for err in form.errors %}{{ err }}<br />{% endfor %}</p>
 		{% endif %}
 		<table>
       	<tr id="checkout_type_row"{% if form.checkout_type.errors %} class="errorlist"{% endif %}>
@@ -38,11 +37,6 @@
       		   {% else %} class="note">{{ form.return_type.help_text }}
       		   {% endif %}
       		</td>
-      	</tr>
-      	<tr id="help_text">
-      	   <td colspan="3">
-      	      <p style="text-align: center"><em>You must answer the first two questions before the rest of the form will appear.</em></p>
-      	   </td>
       	</tr>
 		   <tr id="first_name_row"{% if form.first_name.errors %} class="errorlist"{% endif %}>
 		      <th>{{ form.first_name.label }}</th>

@@ -77,7 +77,7 @@ class CheckoutPublicForm(forms.ModelForm):
 			'equipment_list',
 			'department',
 			'creating_user',
-			'creating_date',
+			'creation_date',
 			'delivering_user',
 			'completed',
 			'returning_user',
