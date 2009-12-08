@@ -148,29 +148,31 @@
    <h3>Equipment needed</h3>
    {{ object.equipment_needed|linebreaks }}
    
-   <h3>Personnel information</h3>
-   <table>
-      {% if object.creating_user %}
-         <tr>
-            <td class="tablehead">Created by</td>
-            <td>
-               <a href="{% url etcetera-user object.creating_user.username %}">
-                  {{ object.creating_user.get_full_name }}
-               </a>
-            </td>
-         </tr>
-      {% endif %}
-      {% if object.delivering_user %}
-         <tr>
-            <td class="tablehead">Delivered by</td>
-            <td>
-               <a href="{% url etcetera-user object.delivering_user.username %}">
-                  {{ object.delivering_user.get_full_name }}
-               </a>
-            </td>
-         </tr>
-      {% endif %}
-   </table>
+   {% if object.creating_user or object.delivering_user %}
+      <h3>Personnel information</h3>
+      <table>
+         {% if object.creating_user %}
+            <tr>
+               <td class="tablehead">Created by</td>
+               <td>
+                  <a href="{% url etcetera-user object.creating_user.username %}">
+                     {{ object.creating_user.get_full_name }}
+                  </a>
+               </td>
+            </tr>
+         {% endif %}
+         {% if object.delivering_user %}
+            <tr>
+               <td class="tablehead">Delivered by</td>
+               <td>
+                  <a href="{% url etcetera-user object.delivering_user.username %}">
+                     {{ object.delivering_user.get_full_name }}
+                  </a>
+               </td>
+            </tr>
+         {% endif %}
+      </table>
+   {% endif %}
    
    <h3>Equipment list</h3>
    {% if object.equipment_list.all %}
