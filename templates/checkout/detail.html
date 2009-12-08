@@ -2,12 +2,12 @@
 {% load etcetera_tags %}
 
 {% block title %}
-   {{ object.first_name }} {{ object.last_name }} (Checkout #{{ object.id }})
+   Checkout &raquo; {{ object.first_name }} {{ object.last_name }} #{{ object.id }}
 {% endblock %}
 
 {% block breadcrumb %}
    <a href="{% url etcetera-home %}">Home</a> &rsaquo;
-   <a href="{% url checkout-index %}">Checkout List</a> &rsaquo;
+   <a href="{% url checkout-index %}">Checkout</a> &rsaquo;
    Checkout #{{ object.id }}
 {% endblock %}
 

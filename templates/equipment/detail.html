@@ -36,7 +36,9 @@
          {% if object.building %}
             {% ifequal object.status "missing" %}from
                {% else %}{% ifequal object.status "checkedout" %}from
-                  {% else %}in
+                  {% else %}{% ifequal object.status "reserved" %}from
+                     {% else %}in
+                  {% endifequal %}
                {% endifequal %}
             {% endifequal %}
             {{ object.building.abbreviation }} {{ object.room }}

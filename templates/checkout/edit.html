@@ -2,7 +2,7 @@
 {% load etcetera_tags %}
 
 {% block title %}
-   Editing Checkout #{{ object.id }}
+   Checkout &raquo; Editing Checkout #{{ object.id }}
 {% endblock %}
 
 {% block fullscript %}
@@ -14,7 +14,7 @@
 
 {% block breadcrumb %}
    <a href="{% url etcetera-home %}">Home</a> &rsaquo;
-   <a href="{% url checkout-index %}">Checkout List</a> &rsaquo;
+   <a href="{% url checkout-index %}">Checkout</a> &rsaquo;
    <a href="{% url checkout-detail object.id %}">Checkout #{{ object.id }}</a> &rsaquo;
    Edit
 {% endblock %}
