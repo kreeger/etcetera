@@ -162,7 +162,8 @@ def new(request):
 			# Also save the user who made it to the ticket
 			co.creating_user = request.user
 			co.save()
-			# created_mail(co)
+			if co.mail:
+				# created_mail(co)
 			# Redirect to the detail page for the new ticket
 			return HttpResponseRedirect(reverse(
 				'checkout-detail',
