@@ -131,7 +131,7 @@ def edit(request, object_id):
 							if okay_to_proceed:
 								eq.status = 'checkout'
 								eq.save()
-					# completed_mail(checkout)
+					# completed_mail(co)
 			form.save()
 			# Then redirect to the detail page for this checkout
 			return HttpResponseRedirect(reverse(

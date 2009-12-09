@@ -3,7 +3,7 @@ from django.contrib.auth.models import Group, User
 from etcetera.settings import EMAIL_ADDRESS
 
 def created_mail(checkout):
-	body = "A new equipment checkout (#%i) created by %s %s has been entered into Etcetera. Click here to view this ticket: http://etc.missouristate.edu/etcetera/checkout/%i.\n\nType:\t\t%s / %s returns\nName:\t\t%s %s\nDepartment:\t%s\nPhone:\t\t%s\nEmail:\t\t%s\nLocation:\t%s %s\nEquipment:\t%s\nFrom:\t\t%s\nUntil:\t\t%s\n\n-------------\nPlease do not reply to this message, as nobody will receive it.\n\nThanks!\n- Etcetera" % (
+	body = "A new equipment checkout (#%i) for %s %s has been entered into Etcetera. Click here to view this ticket: http://etc.missouristate.edu/etcetera/checkout/%i.\n\nType:\t\t%s / %s returns\nName:\t\t%s %s\nDepartment:\t%s\nPhone:\t\t%s\nEmail:\t\t%s\nLocation:\t%s %s\nEquipment:\t%s\nFrom:\t\t%s\nUntil:\t\t%s\n\n-------------\nPlease do not reply to this message, as nobody will receive it.\n\nThanks!\n- Etcetera" % (
 		checkout.id,
 		checkout.first_name, checkout.last_name,
 		checkout.id,
