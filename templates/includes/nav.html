@@ -4,8 +4,9 @@
 	   <li><a href="{% url equipment-index %}">Equipment</a></li>
    	<li><a href="{% url checkout-index %}">Checkout</a></li>
    	<li><a href="{% url service-index %}">Service</a></li>
-   	<li><a href="{% url mlab-index %}">mLab</a></li>
+   	<li><a href="{% url structure-index 'buildings' %}">Structure</a></li>
    	<li><a href="#">Reports</a></li>
+   	<li><a href="{% url mlab-index %}">mLab</a></li>
 	   {% if user.is_staff %}
    	   <li><a href="{% url admin:index %}" id="admin">Admin</a></li>
    	{% endif %}

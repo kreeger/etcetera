@@ -45,7 +45,9 @@ urlpatterns += patterns('',
 # etcetera.reports.views
 
 # For university structure management.
-# etcetera.structure.views
+urlpatterns += patterns('',
+	url(r'^structure/', include('etcetera.structure.urls')),
+)
 
 # For extra things.
 urlpatterns += patterns('',

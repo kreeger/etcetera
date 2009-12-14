@@ -17,3 +17,8 @@ def paginate(context, url_args=''):
 @register.filter
 def money(value):
 	return "$%.2f" % value
+
+# This filter un-pluralizes
+@register.filter
+def unpluralize(value, suffix_length=1):
+	return value[:-suffix_length]

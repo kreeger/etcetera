@@ -1,0 +1,97 @@
+{% extends "root.html" %}
+{% load etcetera_tags %}
+
+{% block title %}{{ type|capfirst }}{% endblock %}
+
+{% block breadcrumb %}
+   <a href="{% url etcetera-home %}">Home</a> &rsaquo;
+   {{ type|capfirst }}
+{% endblock %}
+
+{% block subnav %}
+   <ul>
+      <li><a href="{% url structure-index 'buildings' %}">
+            Buildings
+         </a>
+      </li>
+      <li><a href="{% url structure-index 'departments' %}">
+            Departments
+         </a>
+      </li>
+   </ul>
+{% endblock %}
+
+{% block content %}
+<div id="list">
+   <h1>
+      <span class="right">
+         <a href="#">add a new {{ type|unpluralize }}</a>
+      </span>
+      
+      {{ type|capfirst }}
+      
+      {% if q %}
+         <span class="head">searching for: "{{ q }}"</span>
+         <span class="small">(<a href=".">click here to reset</a>)</span>
+      {% endif %}
+   </h1>
+   
+   {% if form %}
+   <div id="searchform">
+      <form action="">
+         {{ form.q }}
+         <input type="submit" name="submit" value="Search" id="submit" />
+      </form>
+      {% if q %} {% endif %}
+   </div>
+   {% endif %}
+   <table id="list">
+      <tr id="headerrow">
+         <td>{{ type|capfirst|unpluralize }}
+         {% ifequal type 'buildings' %}
+            <td>Abbreviation</td>
+            <td>Campus</td>
+         {% endifequal %}
+         {% ifequal type 'departments' %}
+            <td>Parent</td>
+         {% endifequal %}
+      </tr>
+      {% for object in object_list %}
+         <tr class="datarow">
+            <td>
+               <a href="#">
+                  {{ object.name }}
+               </a>
+            </td>
+            {% ifequal type 'buildings' %}
+               <td>
+                  <a href="#">
+                     {{ object.abbreviation }}
+                  </a>
+               </td>         
+               <td>
+                  <a href="#">
+                     {{ object.campus }}
+                  </a>
+               </td>
+            {% endifequal %}
+            {% ifequal type 'departments' %}
+               <td>
+                  <a href="#">
+                     {{ object.parent.name }}
+                  </a>
+               </td>
+            {% endifequal %}
+         </tr>
+      {% endfor %}
+   </table>
+   
+   {% if paged_objects %}
+      {% if form.as_url_args %}
+         {% paginate form.as_url_args %}
+      {% else %}
+         {% paginate %}
+      {% endif %}
+   {% endif %}
+</div>
+{% endblock %}
