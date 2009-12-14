@@ -54,7 +54,7 @@ div#subnav div.wrapper { padding: 0 10px; border-left: 1px solid #AAA; border-ri
 div#subnav { font-size: 11px; text-align: center; display: block; }
 div#subnav ul { margin: 0; padding: 0; list-style-type: none; }
 div#subnav ul li { display: inline; }
-div#subnav a { padding: 4px 10px; display: inline-block; }
+div#subnav a { padding: 4px 10px; display: inline-block; width: 105px; }
 div#subnav a:hover { background-color: #CCC; text-decoration: none; }
 
 div#body { background: url(../images/backtop.png) repeat-x; }
@@ -82,6 +82,7 @@ table#list { margin: 0px; padding: 0px; border-spacing: 0px; border: 1px solid #
 table#list tr.datarow a, table#list tr#headerrow td { padding-top: 5px; padding-bottom: 5px; }
 table#list tr#headerrow { background-color: #DDD; }
 table#list tr#headerrow td { border-bottom: 1px solid #AAA; text-align: left; font-weight: bold; }
+table#list tr#headerrow td:last-child { text-align: right; }
 table#list tr.datarow td a { display: block; }
 table#list tr.datarow td.buttons a { display: inline-block; padding: 0px; }
 table#list td:first-child { padding-left: 8px; font-weight: bold; }

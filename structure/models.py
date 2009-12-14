@@ -44,7 +44,7 @@ class Building(models.Model):
 	campus = models.ForeignKey(Campus)
 	
 	class Meta:
-		ordering = ('campus', 'name',)
+		ordering = ('name',)
 	
 	def save(self, *args, **kwargs):
 		if not self.abbreviation:
