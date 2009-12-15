@@ -69,8 +69,14 @@ def index(request, structure_kind='buildings'):
 		context_instance=RequestContext(request)
 	)
 
-#def buildings_detail(request, abbreviation):
-#	pass
+def buildings_detail(request, abbreviation):
+	bldg = get_object_or_404(structure.Structure, abbrevation=abbreviation)
+	context = {'object': bldg,}
+	return render_to_response(
+		"structure/detail.html",
+		context,
+		context_instance=RequestContext(request)
+	)
 
 #def departments_detail(request, object_id):
 #	pass
