@@ -11,7 +11,7 @@ input, select { font: 14px "Helvetica Neue", Helvetica, Arial, sans-serif; }
 h1 input, h1 select { font-weight: bold; }
 
 .disabled { color: #BBB; font-weight: normal; }
-.drop-pop { width: 250px; height: 23px; text-align: center; font-weight: bold; }
+.drop-pop { width: 250px; height: 23px; text-align: center; font-weight: bold; float: left; position: relative; right: 5px; }
 .errorlist { color: #f00; font-size: .9em; background-color: #FFBBBB; }
 .head { color: #808080; text-transform: lowercase; text-align: right; font-weight: normal; font-style: normal; }
 .note { font-weight: normal; font-size: 11px; color: #797979; }
@@ -93,7 +93,7 @@ table#list tr.datarow:hover { background-color: #4A0010; }
 table#list { margin: 0px; padding: 0px; border-spacing: 0px; border: 1px solid #AAA; font-size: .85em; width: 100%; }
 
 div#barcode { background: url(../images/barcode-250.png) no-repeat; padding-top: 60px; letter-spacing: 4px;  font-size: 13px; }
-div#detail div#barcode { float: left; position: relative; right: 5px; }
+
 div#detail div#equip-submit { width: 195px; display: inline-block; text-align: right; }
 div#detail div.right h3 { margin-top: 0px; }
 div#detail div.right table td.head { width: 80px; }

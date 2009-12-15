@@ -14,6 +14,7 @@ Dependencies
 
 * `Django 1.1 or higher <http://www.djangoproject.com/download/>`_
 * `Python Imaging Library <http://www.pythonware.com/products/pil/>`_
+* `google-chartwrapper <http://code.google.com/p/google-chartwrapper/>`_
 * `PostgreSQL <http://postgresql.org/>`_
 * `psycopg2 <http://initd.org/>`_
 

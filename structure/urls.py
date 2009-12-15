@@ -8,10 +8,10 @@ urlpatterns = patterns('',
 
 # Buildings
 urlpatterns += patterns('',
-#	url(r'^buildings/(?P<abbreviation>\w{4})/$',
-#		buildings_detail,
-#		name="buildings-detail"
-#	),
+	url(r'^buildings/(?P<abbreviation>\w{2,4})/$',
+		buildings_detail,
+		name="buildings-detail"
+	),
 )
 
 # Departments

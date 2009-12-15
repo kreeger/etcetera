@@ -29,7 +29,7 @@
 <div id="detail">
    <form action="" method="POST">
       
-   <div id="barcode{% if form.barcode.errors %}-error{% endif %}">
+   <div class="drop-pop" id="barcode{% if form.barcode.errors %}-error{% endif %}">
       {{ form.barcode }}
       {% if form.barcode.errors %}
          <br />{{ form.barcode.errors }}

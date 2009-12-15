@@ -70,13 +70,26 @@ def index(request, structure_kind='buildings'):
 	)
 
 def buildings_detail(request, abbreviation):
-	bldg = get_object_or_404(structure.Structure, abbrevation=abbreviation)
-	context = {'object': bldg,}
+	bldg = get_object_or_404(
+		structure.Building,
+		abbreviation=abbreviation
+	)
+	data = [10, 20, 30]
+	context = {'object': bldg,'data': data}
 	return render_to_response(
-		"structure/detail.html",
+		"structure/buildings_detail.html",
 		context,
 		context_instance=RequestContext(request)
 	)
 
-#def departments_detail(request, object_id):
-#	pass
+def organizationalunits_detail(request, object_id):
+	ou = get_object_or_404(
+		structure.OrganizationalUnit,
+		pk=object_id
+	)
+	context = {'object': ou,}
+	return render_to_response(
+		"structure/organizationalunits_detail.html",
+		context,
+		context_instance=RequestContext(request)
+	)
