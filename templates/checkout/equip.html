@@ -21,7 +21,7 @@
    <p>Note that if you're checking out a TV/DVD cart with a Video Unit
       number, just add the barcode on the cart, and the rest of the equipment
       will be added automatically.</p> 
-   {% if notfound.barcodes or notfound.video_unit or notfound.cc_unit %}
+   {% if notfound.barcodes or notfound.video_unit or notfound.cc_unit or notfound.for_checkout %}
       <div id="error" class="banner">
          {% if notfound.barcodes %}
             The following barcodes were not found:
@@ -34,6 +34,12 @@
          {% endif %}
          {% if notfound.cc_unit %}
             Computer cart unit {{ notfound.cc_unit }} was not found.
+         {% endif %}
+         {% if notfound.for_checkout %}
+            The following barcodes are not available for checkout:
+            {% for barcode in notfound.for_checkout %}
+               {{ barcode }}
+            {% endfor %}
          {% endif %}
       </div>
    {% endif %}

@@ -194,6 +194,7 @@ def equip(request, object_id):
 			# Prepare the list of something can't be found (Not Found)
 			notfound = {
 				'barcodes': [],
+				'for_checkout': [],
 				'video_unit': None,
 				'cc_unit': None,
 			}
@@ -205,25 +206,25 @@ def equip(request, object_id):
 					try:
 						# Get equipment object from DB with that barcode
 						eq = equipment.Equipment.objects.get(barcode=item)
-						# If the checkout is for the future
-						if co.out_date > now:
-							# Set the item's status as reserved
-							eq.status = 'reserved'
-							eq.save()
-						if co.out_date < now and co.return_date > now:
-							eq.status = 'checkedout'
-							eq.save()
-						# Check if the equipment is part of a video unit (cart)
-						if eq.video_unit:
-							# For each equipment in a list of equipment with
-							# the same video unit number, add each equipment
-							# to the checkout's equipment list
-							for vu_item in equipment.Equipment.objects.filter(
-								video_unit=eq.video_unit):
-								co.equipment_list.add(vu_item)
+						# Check the equipment's status
+						if eq.status == 'checkout':
+							# If the checkout is for the future
+							if co.out_date > now:
+								# Set the item's status as reserved
+								eq.status = 'reserved'
+								eq.save()
+							# If now is within the checkout time
+							if co.out_date < now and co.return_date > now:
+								# It's already checked out then
+								eq.status = 'checkedout'
+								eq.save()
+							else:
+								# Otherwise, add the equipment itself
+								co.equipment_list.add(eq)
 						else:
-							# Otherwise, add the equipment itself
-							co.equipment_list.add(eq)
+							# If the equipment isn't set as checkout, say it's
+							# not available for checkout
+							notfound['for_checkout'].append(item)
 					except equipment.Equipment.DoesNotExist:
 						# If the equipment doesn't exist, add the barcode to a
 						# list of barcodes to be returned to the user
@@ -300,6 +301,9 @@ def equip_remove(request, object_id, eq_id):
 			# Remove it, save the checkout
 			co.equipment_list.remove(eq)
 			co.save()
+			# Update the equipment and set its status back to checkout
+			eq.status = 'checkout'
+			eq.save()
 	# Otherwise, a redirect happens back to the submitting page
 	return HttpResponseRedirect(reverse(
 		'checkout-equip',

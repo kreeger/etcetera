@@ -1,13 +1,16 @@
-from django.shortcuts import render_to_response, get_object_or_404
+import datetime as dt
+
 from django.contrib.auth.decorators import login_required
-from django.http import HttpResponseRedirect, Http404
-from django.core.urlresolvers import reverse
 from django.core.paginator import Paginator, InvalidPage, EmptyPage
+from django.core.urlresolvers import reverse
+from django.http import HttpResponseRedirect, Http404
+from django.shortcuts import render_to_response, get_object_or_404
 from django.template import RequestContext
 
-from etcetera.structure import models as structure
-from etcetera.structure import forms as stforms
 from etcetera.extras.search import get_query
+from etcetera.structure import forms as stforms
+from etcetera.structure import models as structure
+from etcetera.equipment import graphs as eqgraphs
 
 def index(request, structure_kind='buildings'):
 	if not structure_kind == 'buildings':
@@ -70,11 +73,15 @@ def index(request, structure_kind='buildings'):
 	)
 
 def buildings_detail(request, abbreviation):
+	# Get our building
 	bldg = get_object_or_404(
 		structure.Building,
 		abbreviation=abbreviation
 	)
-	data = [10, 20, 30]
+	
+	# Call a custom function that gives us back a graph URL in a string
+	
+	
 	context = {'object': bldg,'data': data}
 	return render_to_response(
 		"structure/buildings_detail.html",
