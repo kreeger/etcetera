@@ -218,9 +218,7 @@ def equip(request, object_id):
 								# It's already checked out then
 								eq.status = 'checkedout'
 								eq.save()
-							else:
-								# Otherwise, add the equipment itself
-								co.equipment_list.add(eq)
+							co.equipment_list.add(eq)
 						else:
 							# If the equipment isn't set as checkout, say it's
 							# not available for checkout
