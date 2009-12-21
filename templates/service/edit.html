@@ -12,7 +12,7 @@
    <a href="{% if object.completed %}{% url service-completed %}">Service (Completed){% else %}{% url service-index %}">Service{% endif %}</a> &rsaquo;
    {% if object %}
       <a href="{% url service-detail object.id %}">
-         Work Order {{ object.id }}
+         Work Order #{{ object.id }}
       </a> &rsaquo; Edit
    {% else %}
       New
