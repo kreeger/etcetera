@@ -35,7 +35,7 @@ def checkout_form(request):
 	)
 
 @login_required
-def index(request):
+def index(request, completed=False):
 	# Setup our paging and query objects ahead of time
 	paged_objects = None
 	q = None
@@ -55,14 +55,17 @@ def index(request):
 				# in a Django filter to get our queryset.
 				checkout_query = get_query(data['q'], form.get_list())
 				paged_objects = checkout.Checkout.objects.filter(
-					checkout_query
+					checkout_query).filter(
+					completed=completed
 				)
 				q = data['q']
-			# If it's not valid or nothing was checked, get all objects from db
-			else:
-				paged_objects = checkout.Checkout.objects.all()
 	else:
-		paged_objects = checkout.Checkout.objects.all()
+		# If it's not valid or nothing was checked, get all objects from db
+		paged_objects = checkout.Checkout.objects.filter(completed=completed)
+	if completed:
+		paged_objects = paged_objects.order_by('-completion_date')
+	else:
+		paged_objects = paged_objects.order_by('-creation_date')
 	# Repackage everything into paged_objects using Paginator.
 	paginator = Paginator(paged_objects, 20)
 	# Make sure the page request is an int -- if not, then deliver page 1.
@@ -81,6 +84,7 @@ def index(request):
 		'paged_objects': paged_objects,
 		'object_list': paged_objects.object_list,
 		'form': form,
+		'completed': completed,
 		'q': q,
 	}
 	return render_to_response(
@@ -131,9 +135,15 @@ def edit(request, object_id):
 							if okay_to_proceed:
 								eq.status = 'checkout'
 								eq.save()
-					# completed_mail(co)
-			form.save()
-			# Then redirect to the detail page for this checkout
+					if form.cleaned_data['email']:
+						completed_mail(co)
+			co = form.save()
+			# Then redirect to the detail page for this checkout unless it's
+			# completed, then redirect to index
+			if co.completed:
+				return HttpResponseRedirect(reverse(
+					'checkout-index',
+				))
 			return HttpResponseRedirect(reverse(
 				'checkout-detail',
 				args=(co.id,),
