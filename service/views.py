@@ -48,8 +48,9 @@ def service_form(request):
 	)
 
 @login_required
-def index(request, archived=False):
+def index(request, completed=False):
 	paged_objects = None
+	q = None
 	form = woforms.SearchForm()
 	if request.GET and request.GET.get('q'):
 		form = woforms.SearchForm(request.GET)
@@ -73,13 +74,13 @@ def index(request, archived=False):
 					'description',
 				])
 				paged_objects = service.WorkOrder.objects.filter(
-					service_query
-				).filter(
-					archived=archived
+					service_query).filter(
+					completed=completed
 				)
+				q = data['q']
 	else:
-		paged_objects = service.WorkOrder.objects.filter(archived=archived)
-	if archived:
+		paged_objects = service.WorkOrder.objects.filter(completed=completed)
+	if completed:
 		paged_objects = paged_objects.order_by('-completion_date')
 	else:
 		paged_objects = paged_objects.order_by('-creation_date')
@@ -100,7 +101,8 @@ def index(request, archived=False):
 	context = {
 		'paged_objects': paged_objects,
 		'form': form,
-		'archived': archived,
+		'completed': completed,
+		'q': q,
 	}
 	return render_to_response(
 		"service/index.html",
@@ -119,27 +121,34 @@ def detail(request, object_id):
 	)
 
 @login_required
-def edit(request, object_id):	
+def edit(request, object_id):
+	# Get the workorder from the db	
 	wo = get_object_or_404(service.WorkOrder, id=object_id)
 	if request.method == 'POST':
+		# Fill our form with the wo instance and post data
 		form = woforms.WorkOrderModelForm(request.POST, instance=wo)
 		if form.is_valid():
 			cd = form.cleaned_data
-			# I should eventually move this into forms.WorkOrderModelForm
-			if cd['archived']:
-				cd['completion_date'] = dt.datetime.now()
-				if cd['email']:
-					completed_mail(wo)
-			else:
-				cd['completion_date'] = wo.completion_date
-			if cd['uncomplete']:
-				cd['completion_date'] = None;
+			# If the work order is newly completed, send an email, if there is
+			# an email specified in the form data
+			if not wo.completed:
+				if cd['completed']:
+					if cd['email']:
+						completed_mail(wo)
+			# If there's a new barcode, look it up and add it
+			# Future project: move to the model form
 			if cd['barcode']:
-				cd['equipment'] = wo.barcode_lookup(cd['barcode'])
+				if not cd['barcode'] == wo.equipment.barcode:
+					try:
+						cd['equipment'] = equipment.Equipment.objects.get(
+							barcode=cd['barcode']
+						)
+					except equipment.Equipment.DoesNotExist:
+						cd['equipment'] = None
 			else:
 				cd['equipment'] = None
 			form.save()
-			if cd['archived']:
+			if cd['completed']:
 				return HttpResponseRedirect(reverse(
 					'service-index',
 				))

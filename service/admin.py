@@ -11,13 +11,13 @@ class WorkOrderAdmin(admin.ModelAdmin):
 	    'equipment_text',
 	    'priority',
 	    'work_type',
-	    'archived',
+	    'completed',
 	)
 	list_filter = (
 	    'work_type',
 	    'priority',
 	    'creation_date',
-	    'archived',
+	    'completed',
 	)
 	search_fields = (
 	    'first_name',

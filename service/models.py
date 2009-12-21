@@ -46,16 +46,21 @@ class WorkOrder(models.Model):
 		null=True
 	)
 	budget = models.CharField(blank=True, max_length=25)
-	archived = models.BooleanField()
+	completed = models.BooleanField()
+	
+	# What fun! We're overriding save. For logging changes.
+	def save(self, force_insert=False, force_update=False):
+		# This checks to see if this an update, and not brand new.
+		if self.pk is not None:
+			# Get original object
+			orig = WorkOrder.objects.get(pk=self.pk)
+			# For each entry in the original data
+			if self.completed and not orig.completed:
+				self.completion_date = dt.datetime.now()
+		# Call super.save
+		super(WorkOrder, self).save(force_insert, force_update)
 	
 	def __unicode__(self):
 		return u"%s, %s (%s)" % (self.last_name, self.equipment,
 			self.creation_date)
-	
-	def barcode_lookup(self, barcode):
-		try:
-			result = equipment.Equipment.objects.get(barcode=barcode)
-		except equipment.Equipment.DoesNotExist:
-			result = None
-		return result
 	

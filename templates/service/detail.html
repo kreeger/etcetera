@@ -2,7 +2,7 @@
 {% load etcetera_tags %}
 
 {% block title %}
-   WO #{{ object.id }}
+   Service &raquo; {{ object.first_name }} {{ object.last_name }} #{{ object.id }}
 {% endblock %}
 
 {% block breadcrumb %}
@@ -13,7 +13,7 @@
          Archive
       {% endif %}
    </a> &rsaquo;
-   Work Order {{ object.id }}
+   Work Order #{{ object.id }}
 {% endblock %}
 
 {% block content %}
@@ -28,7 +28,7 @@
       
       {% ifequal object.technician user %}
          <div id="notify" class="banner">
-            This ticket has  been assigned to you.
+            This ticket has been assigned to you.
          </div>
       {% endifequal %}
    {% endif %}

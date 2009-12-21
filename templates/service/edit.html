@@ -2,20 +2,15 @@
 {% load etcetera_tags %}
 
 {% block title %}
-   {% if form.initial %}editing WO #{{ object.id }}
+   {% if object %}Service &raquo; Editing work order #{{ object.id }}
       {% else %}New work order
    {% endif %}
 {% endblock %}
 
 {% block breadcrumb %}
    <a href="{% url etcetera-home %}">Home</a> &rsaquo; 
-   <a href="{% if object.archived %}{% url service-archive %}{% else %}{% url service-index %}{% endif %}">
-      Service
-      {% if object.archived %}
-         Archive
-      {% endif %}
-   </a> &rsaquo;
-   {% if form.initial %}
+   <a href="{% if object.completed %}{% url service-completed %}">Service (Completed){% else %}{% url service-index %}">Service{% endif %}</a> &rsaquo;
+   {% if object %}
       <a href="{% url service-detail object.id %}">
          Work Order {{ object.id }}
       </a> &rsaquo; Edit
@@ -31,7 +26,7 @@
       <span class="right">
          <input type="submit" name="save" value="save" id="save" />
       </span>
-      {% if form.initial %}
+      {% if object %}
          WO #{{ object.id }}: <span class="head">edit mode</span>
       {% else %}
          New work order <span class="head">creation mode</span>
@@ -51,34 +46,27 @@
    </table>
    
    <h2>
-      {% if form.initial %}
+      {% if object %}
          <span class="right">
-            <span class="head">
-               completed
-               {% if not object.completion_date %}
-                  ?</span> {{ form.archived }}
-               {% else %}
-                  </span>
-                  {{ object.completion_date|date:'n/j/Y g:iA' }}
-                  (un-complete{{ form.uncomplete }})
-               {% endif %}
+            <span class="head">completed?</span> 
+               {{ form.completed }} {{ form.completed.errors }}
          </span>
       {% endif %}
       {% if form.priority.errors %}
          <span class="errorlist">
       {% endif %}
-      {% if not form.initial %}
+      {% if not object %}
          Priority:
       {% endif %}
       {{ form.priority }}       
-      {% if form.initial %}
+      {% if object %}
          priority
       {% endif %}
       {{ form.priority.errors }}
       {% if form.priority.errors %}
          </span>
       {% endif %}
-      {% if not form.initial %}
+      {% if not object %}
          <br />Work type:
       {% endif %}
       {% if form.work_type.errors %}
@@ -88,7 +76,7 @@
       {% if form.work_type.errors %}
          </span>
       {% endif %}
-      {% if form.initial %}
+      {% if object %}
          &rsaquo; <span class="head">Created</span>
          {{ object.creation_date|date:'n/j/Y g:iA' }}
       {% endif %}
@@ -181,7 +169,7 @@
       <span class="right">
          <input type="submit" name="save" value="save" id="save" />
       </span>
-      {% if form.inital %}
+      {% if object %}
          WO #{{ object.id }}: <span class="head">edit mode</span>
       {% else %}
          New work order <span class="head">creation mode</span>

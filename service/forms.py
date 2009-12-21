@@ -65,7 +65,6 @@ class ServiceForm(forms.Form):
 	)
 
 class WorkOrderModelForm(forms.ModelForm):
-	uncomplete = forms.BooleanField(required=False)
 	barcode = forms.CharField(
 		label="ETC Barcode",
 		max_length=6,
