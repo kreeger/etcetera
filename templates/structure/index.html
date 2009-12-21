@@ -58,12 +58,12 @@
       </tr>
       {% for object in object_list %}
          <tr class="datarow">
+            <td>
+               <a href="#">
+                  {{ object.name }}
+               </a>
+            </td>
             {% ifequal type 'buildings' %}
-               <td>
-                  <a href="#">
-                     {{ object.name }}
-                  </a>
-               </td>
                <td>
                   <a href="#">
                      {{ object.abbreviation }}
