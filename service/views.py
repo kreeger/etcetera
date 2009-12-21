@@ -194,7 +194,8 @@ def new(request):
 			else:
 				cd['equipment'] = None
 			wo = form.save()
-			created_mail(wo)
+			if wo.mail:
+				created_mail(wo)
 			return HttpResponseRedirect(reverse(
 				'service-detail',
 				args=(wo.id,),

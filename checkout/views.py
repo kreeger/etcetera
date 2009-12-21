@@ -22,7 +22,7 @@ def checkout_form(request):
 			# Form object saves the model in the db itself
 			co = form.save()
 			# Send an email to the appropriate people using form data
-			# created_mail(co)
+			created_mail(co)
 			return HttpResponseRedirect('/thanks.html')
 	# If data is not being sent in POST, our form is an empty one.
 	else:
@@ -162,8 +162,8 @@ def new(request):
 			# Also save the user who made it to the ticket
 			co.creating_user = request.user
 			co.save()
-			# if co.mail:
-				# created_mail(co)
+			if co.mail:
+				created_mail(co)
 			# Redirect to the detail page for the new ticket
 			return HttpResponseRedirect(reverse(
 				'checkout-detail',
