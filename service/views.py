@@ -77,14 +77,8 @@ def index(request, archived=False):
 				).filter(
 					archived=archived
 				)
-			else:
-				paged_objects = service.WorkOrder.objects.filter(
-					archived=archived
-				)
 	else:
-		paged_objects = service.WorkOrder.objects.filter(
-			archived=archived
-		)
+		paged_objects = service.WorkOrder.objects.filter(archived=archived)
 	if archived:
 		paged_objects = paged_objects.order_by('-completion_date')
 	else:

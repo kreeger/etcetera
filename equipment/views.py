@@ -29,8 +29,6 @@ def index(request):
 					equipment_query
 				)
 				q = data['q']
-			else:
-				paged_objects = equipment.Equipment.objects.all()
 	else:
 		paged_objects = equipment.Equipment.objects.all()
 	# Repackage everything into paged_objects using Paginator.
