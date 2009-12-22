@@ -53,10 +53,10 @@
                         </td>
                      </tr>
                   {% endif %}
-                  {% if the_user.checkouts_created %}
+                  {% if the_user.checkouts_handled %}
                      <tr>
-                        <td class="tablehead">checkouts created</td>
-                        <td>{{ the_user.checkouts_created }}</td>
+                        <td class="tablehead">checkouts handled</td>
+                        <td>{{ the_user.checkouts_handled }}</td>
                      </tr>
                   {% endif %}
                   {% if the_user.checkouts_delivered %}

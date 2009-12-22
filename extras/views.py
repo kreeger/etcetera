@@ -45,8 +45,8 @@ def profile(request, the_user):
 	the_user.workorders_closed = workorders.filter(completed=True).count()
 	the_user.workorders_open = workorders.filter(completed=False).count()
 	# Get ticket counts.
-	the_user.checkouts_created = checkout.Checkout.objects.filter(
-		creating_user=the_user).count()
+	the_user.checkouts_handled = checkout.Checkout.objects.filter(
+		handling_user=the_user).count()
 	the_user.checkouts_delivered = checkout.Checkout.objects.filter(
 		delivering_user=the_user).count()
 	context = {

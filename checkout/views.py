@@ -115,6 +115,7 @@ def detail(request, object_id):
 def edit(request, object_id):	
 	# Get the checkout from the URL
 	co = get_object_or_404(checkout.Checkout, id=object_id)
+	now = dt.datetime.now()
 	if request.method == 'POST':
 		# If POST data is sent, bring in that data to a CheckoutModelForm,
 		# validate it, and save it
@@ -146,7 +147,7 @@ def edit(request, object_id):
 					if form.cleaned_data['email']:
 						completed_mail(co)
 				# If a new delivery person is added, send them an email
-				if not co.delivering_user:
+				if not co.delivering_user and not co.return_date < now:
 					if form.cleaned_data['delivering_user']:
 						delivery_assignment_mail(
 							co,
