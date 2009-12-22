@@ -34,7 +34,7 @@ def patron_mail(checkout):
 	subject = "A new equipment checkout (#%i) has been created for you" % (
 		checkout.id,
 	)
-	body = "%s,\nYour new equpiment checkout has been submitted successfully and our technicians have been notified.\n\nIf, at any time, you'd like to view your ticket, click here: http://etc.missouristate.edu/etcetera/service/%i.\n\n-------------\nPlease do not reply to this message, as nobody will receive it.\n\nRegards,\nEducational Technology Center\nMissouri State University" % (
+	body = "%s,\nYour new equpiment checkout has been submitted successfully and our technicians have been notified.\n\nIf, at any time, you'd like to view your ticket, click here: http://etc.missouristate.edu/etcetera/service/%i.\n\nNote that this message does not confirm that your equipment is available for the date and time you've specified; you will receive another email once everything has been confirmed. Otherwise you will be contacted to schedule another date and time (or alternate equipment).\n\n-------------\nPlease do not reply to this message, as nobody will receive it.\n\nRegards,\nEducational Technology Center\nMissouri State University" % (
 		checkout.first_name,
 		checkout.id
 	)
@@ -70,6 +70,32 @@ def completed_mail(checkout):
 		checkout.first_name,
 		checkout.id,
 		checkout.id
+	)
+	send_mail(
+		subject,
+		body,
+		EMAIL_ADDRESS,
+		[checkout.email],
+		fail_silently=False
+	)
+	
+def confirmation_mail(checkout):
+	subject = "ETC Equipment Checkout Confirmation (Ticket #%i)" % (
+		checkout.id,
+	)
+	body = "%s,\nCongratulations! We have just confirmed your equipment checkout request (ticket #%i). Your equipment will be ready for %s at the date and time shown below.\n\nEquipment:\t%s\nFrom:\t\t%s\nUntil:\t\t%s\n\n" % (
+		checkout.first_name,
+		checkout.id,
+		checkout.checkout_type,
+		checkout.equipment_needed,
+		checkout.out_date,
+		checkout.return_date,
+	)
+	if checkout.return_type == 'requestor':
+		body += "Remember that your equipment is due back on time. If you do not bring the equipment back by the time shown above, late fees will be assessed. Please remember to keep the equipment secure when not in use.\n\n"
+	
+	body += "If, at any time, you'd like to view your ticket, click here: http://etc.missouristate.edu/etcetera/service/%i.\n\n-------------\nPlease do not reply to this message, as nobody will receive it.\n\nRegards,\nEducational Technology Center\nMissouri State University" % (
+		checkout.id,
 	)
 	send_mail(
 		subject,

@@ -73,10 +73,10 @@ class Checkout(models.Model):
 		help_text='The date/time you will bring back the equipment, or when \
 			ETC should pick it up.',
 	)
-	creating_user = models.ForeignKey(
+	handling_user = models.ForeignKey(
 		auth.User,
 		blank=True, null=True,
-		related_name='created_checkouts',
+		related_name='handled_checkouts',
 	)
 	delivering_user = models.ForeignKey(
 		auth.User,
@@ -98,6 +98,7 @@ class Checkout(models.Model):
 		blank=True, null=True,
 	)
 	other_equipment = models.TextField(blank=True)
+	confirmation_sent = models.BooleanField()
 	completed = models.BooleanField()
 	completion_date = models.DateTimeField(blank=True, null=True)
 	comments = models.TextField(blank=True)

@@ -59,7 +59,7 @@ class CheckoutModelForm(forms.ModelForm):
 			'equipment_list',
 			'department_text',
 			'creation_date',
-			'creating_user',
+			'handling_user',
 			'completion_date',
 		)
 	
@@ -76,7 +76,7 @@ class CheckoutPublicForm(forms.ModelForm):
 		exclude = (
 			'equipment_list',
 			'department',
-			'creating_user',
+			'handling_user',
 			'creation_date',
 			'delivering_user',
 			'completed',

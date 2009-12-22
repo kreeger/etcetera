@@ -178,7 +178,7 @@ def new(request):
 			# If valid, save it into database, which returns the id (to co)
 			co = form.save()
 			# Also save the user who made it to the ticket
-			co.creating_user = request.user
+			co.handling_user = request.user
 			co.save()
 			if co.email:
 				created_mail(co)
@@ -325,3 +325,27 @@ def equip_remove(request, object_id, eq_id):
 		'checkout-equip',
 		args=(co.id,),
 	))
+
+@login_required
+def confirm(request, object_id):
+	co = get_object_or_404(checkout.Checkout, id=object_id)
+	if request.method == 'GET':
+		# If confirmation hasn't yet been sent, and there is an email
+		if not co.completed and not co.confirmation_sent and co.email:
+			# If it's a delivery, there must also be a delivering user
+			if co.checkout_type == 'delivery' and co.delivering_user:
+				confirmation_mail(co)
+				co.confirmation_sent = True
+				co.handling_user = request.user
+				co.save()
+			# If it's a pickup, go for it
+			else:
+				confirmation_mail(co)
+				co.confirmation_sent = True
+				co.handling_user = request.user
+				co.save()
+	# Redirect to detail
+	return HttpResponseRedirect(reverse(
+		'checkout-detail',
+		args=(co.id,),
+	))		

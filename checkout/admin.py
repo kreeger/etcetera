@@ -16,7 +16,7 @@ class CheckoutAdmin(admin.ModelAdmin):
 				'building',
 				'room',
 				'creation_date',
-				'creating_user',
+				'handling_user',
 			),
 		}),
 		('Checkout information', {
