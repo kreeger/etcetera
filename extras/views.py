@@ -42,8 +42,8 @@ def profile(request, the_user):
 	# Get work order counts for user.
 	workorders = service.WorkOrder.objects.filter(
 		technician=the_user)
-	the_user.workorders_closed = workorders.filter(archived=True).count()
-	the_user.workorders_open = workorders.filter(archived=False).count()
+	the_user.workorders_closed = workorders.filter(completed=True).count()
+	the_user.workorders_open = workorders.filter(completed=False).count()
 	# Get ticket counts.
 	the_user.checkouts_created = checkout.Checkout.objects.filter(
 		creating_user=the_user).count()
