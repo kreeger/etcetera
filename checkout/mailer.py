@@ -104,3 +104,20 @@ def confirmation_mail(checkout):
 		[checkout.email],
 		fail_silently=False
 	)
+
+def delivery_assignment_mail(checkout, delivering_user):
+	subject = "An equipment checkout (#%i) has been given to you for delivery" % (
+		checkout.id,
+	)
+	body = "%s,\nAn equipment checkout ticket (#%i) has been given to you for delivery. You may view this ticket here: http://etc.missouristate.edu/etcetera/service/%i.\n\nIt will also show up in your list of tickets for delivery. To view these once you're logged into Etcetera, click your name in the upper-right-hand corner of the page.\n\n-------------\nPlease do not reply to this message, as nobody will receive it.\n\nRegards,\nEducational Technology Center\nMissouri State University" % (
+		delivering_user.first_name,
+		checkout.id,
+		checkout.id,
+	)
+	send_mail(
+		subject,
+		body,
+		EMAIL_ADDRESS,
+		[delivering_user.email],
+		fail_silently=False
+	)

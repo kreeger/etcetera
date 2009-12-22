@@ -145,6 +145,13 @@ def edit(request, object_id):
 								eq.save()
 					if form.cleaned_data['email']:
 						completed_mail(co)
+				# If a new delivery person is added, send them an email
+				if not co.delivering_user:
+					if form.cleaned_data['delivering_user']:
+						delivery_assignment_mail(
+							co,
+							form.cleaned_data['delivering_user']
+						)
 			co = form.save()
 			# Then redirect to the detail page for this checkout unless it's
 			# completed, then redirect to index
