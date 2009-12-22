@@ -155,15 +155,15 @@
    <h3>Equipment needed</h3>
    {{ object.equipment_needed|linebreaks }}
    
-   {% if object.creating_user or object.delivering_user %}
+   {% if object.handling_user or object.delivering_user %}
       <h3>Personnel information</h3>
       <table>
-         {% if object.creating_user %}
+         {% if object.handling_user %}
             <tr>
-               <td class="tablehead">Created by</td>
+               <td class="tablehead">Handled by</td>
                <td>
-                  <a href="{% url etcetera-user object.creating_user.username %}">
-                     {{ object.creating_user.get_full_name }}
+                  <a href="{% url etcetera-user object.handling_user.username %}">
+                     {{ object.handling_user.get_full_name }}
                   </a>
                </td>
             </tr>
