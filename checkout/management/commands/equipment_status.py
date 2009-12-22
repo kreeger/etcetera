@@ -16,6 +16,6 @@ class Command(NoArgsCommand):
 			return_date__gte=now).filter(
 			completed=False):
 			for eq in checkout.equipment_list.all():
-				if eq.status == 'reserved':
+				if eq.status == 'reserved' or eq.status == 'checkout':
 					eq.status = 'checkedout'
 					eq.save()
