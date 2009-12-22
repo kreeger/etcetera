@@ -35,10 +35,11 @@ def checkout_form(request):
 	)
 
 @login_required
-def index(request, completed=False):
+def index(request, completed=False, current=False):
 	# Setup our paging and query objects ahead of time
 	paged_objects = None
 	q = None
+	now = dt.datetime.now()
 	# Set up an empty form
 	form = coforms.SearchForm()
 	# If there's a GET request, specifically one with a search query
@@ -66,6 +67,12 @@ def index(request, completed=False):
 		paged_objects = paged_objects.order_by('-completion_date')
 	else:
 		paged_objects = paged_objects.order_by('-creation_date')
+	# If this is a current list, filter it down to only current checkouts
+	if current:
+		paged_objects = paged_objects.filter(
+			out_date__lte=now).filter(
+			return_date__gte=now
+		)
 	# Repackage everything into paged_objects using Paginator.
 	paginator = Paginator(paged_objects, 20)
 	# Make sure the page request is an int -- if not, then deliver page 1.
@@ -85,6 +92,7 @@ def index(request, completed=False):
 		'object_list': paged_objects.object_list,
 		'form': form,
 		'completed': completed,
+		'current': current,
 		'q': q,
 	}
 	return render_to_response(
@@ -217,7 +225,7 @@ def equip(request, object_id):
 						# Get equipment object from DB with that barcode
 						eq = equipment.Equipment.objects.get(barcode=item)
 						# Check the equipment's status
-						if eq.status == 'checkout':
+						if eq.status == 'checkout' or eq.status == 'reserved':
 							# If the checkout is for the future
 							if co.out_date > now:
 								# Set the item's status as reserved

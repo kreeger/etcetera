@@ -10,7 +10,28 @@
    Checkout
    {% if completed %}
       (Completed)
+   {% else %}
+      {% if current %}
+         (Current)
+      {% endif %}
    {% endif %}
+{% endblock %}
+
+{% block subnav %}
+   <ul>
+      <li><a href="{% url checkout-index %}">
+            All Active
+         </a>
+      </li>
+      <li><a href="{% url checkout-current %}">
+            Current
+         </a>
+      </li>
+      <li><a href="{% url checkout-completed %}">
+            Completed
+         </a>
+      </li>
+   </ul>
 {% endblock %}
 
 {% block content %}
@@ -22,17 +43,12 @@
       </span>
       {% if completed %}
          Completed
+      {% else %}
+         {% if current %}
+            Current
+         {% endif %}
       {% endif %}
       Checkout List
-         <span class="small">
-            <a href="{% if completed %}{% url checkout-index %}{% else %}{% url checkout-completed %}{% endif %}">
-               view
-               {% if completed %}
-                  active
-               {% else %}
-                  completed
-               {% endif %}
-            </a>
             {% if q %}
                (<a href=".">searching for "{{ q }}" — click here to reset</a>)
             {% endif %}
