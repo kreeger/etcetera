@@ -233,7 +233,7 @@ def equip(request, object_id):
 						# Get equipment object from DB with that barcode
 						eq = equipment.Equipment.objects.get(barcode=item)
 						# Check the equipment's status
-						if eq.status == 'checkout' or eq.status == 'reserved' or eq.status == 'checked out':
+						if eq.status == 'checkout' or eq.status == 'reserved' or eq.status == 'checkedout':
 							# If the checkout is for the future
 							if co.out_date > now:
 								# Set the item's status as reserved
