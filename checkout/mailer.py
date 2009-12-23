@@ -34,7 +34,7 @@ def patron_mail(checkout):
 	subject = "A new equipment checkout (#%i) has been created for you" % (
 		checkout.id,
 	)
-	body = "%s,\nYour new equpiment checkout has been submitted successfully and our technicians have been notified.\n\nIf, at any time, you'd like to view your ticket, click here: http://etc.missouristate.edu/etcetera/service/%i.\n\nNote that this message does not confirm that your equipment is available for the date and time you've specified; you will receive another email once everything has been confirmed. Otherwise you will be contacted to schedule another date and time (or alternate equipment).\n\n-------------\nPlease do not reply to this message, as nobody will receive it.\n\nRegards,\nEducational Technology Center\nMissouri State University" % (
+	body = "%s,\nYour new equpiment checkout has been submitted successfully and our technicians have been notified.\n\nIf, at any time, you'd like to view your ticket, click here: http://etc.missouristate.edu/etcetera/checkout/%i.\n\nNote that this message does not confirm that your equipment is available for the date and time you've specified; you will receive another email once everything has been confirmed. Otherwise you will be contacted to schedule another date and time (or alternate equipment).\n\n-------------\nPlease do not reply to this message, as nobody will receive it.\n\nRegards,\nEducational Technology Center\nMissouri State University" % (
 		checkout.first_name,
 		checkout.id
 	)
@@ -50,7 +50,7 @@ def updated_mail(checkout):
 	subject = "Your ETC equipment checkout (#%i) has been updated" % (
 		checkout.id,
 	)
-	body = "%s,\nYour equipment checkout has been updated by a member of our service staff.\n\nVisit this link to view your updated ticket: http://etc.missouristate.edu/etcetera/service/%i.\n\n-------------\nPlease do not reply to this message, as nobody will receive it.\n\nRegards,\nEducational Technology Center\nMissouri State University" % (
+	body = "%s,\nYour equipment checkout has been updated by a member of our service staff.\n\nVisit this link to view your updated ticket: http://etc.missouristate.edu/etcetera/checkout/%i.\n\n-------------\nPlease do not reply to this message, as nobody will receive it.\n\nRegards,\nEducational Technology Center\nMissouri State University" % (
 		checkout.first_name,
 		checkout.id
 	)
@@ -66,7 +66,7 @@ def completed_mail(checkout):
 	subject = "Your ETC equipment checkout (#%i) has been closed" % (
 		checkout.id,
 	)
-	body = "%s,\nYour equipment checkout (#%i) has been completed.\n\nIf, at any time, you'd like to view your completed checkout, it is available here: http://etc.missouristate.edu/etcetera/service/%i.\n\n-------------\nPlease do not reply to this message, as nobody will receive it.\n\nRegards,\nEducational Technology Center\nMissouri State University" % (
+	body = "%s,\nYour equipment checkout (#%i) has been completed.\n\nIf, at any time, you'd like to view your completed checkout, it is available here: http://etc.missouristate.edu/etcetera/checkout/%i.\n\n-------------\nPlease do not reply to this message, as nobody will receive it.\n\nRegards,\nEducational Technology Center\nMissouri State University" % (
 		checkout.first_name,
 		checkout.id,
 		checkout.id
@@ -94,7 +94,7 @@ def confirmation_mail(checkout):
 	if checkout.return_type == 'requestor':
 		body += "Remember that your equipment is due back on time. If you do not bring the equipment back by the time shown above, late fees will be assessed. Please remember to keep the equipment secure when not in use.\n\n"
 	
-	body += "If, at any time, you'd like to view your ticket, click here: http://etc.missouristate.edu/etcetera/service/%i.\n\n-------------\nPlease do not reply to this message, as nobody will receive it.\n\nRegards,\nEducational Technology Center\nMissouri State University" % (
+	body += "If, at any time, you'd like to view your ticket, click here: http://etc.missouristate.edu/etcetera/checkout/%i.\n\n-------------\nPlease do not reply to this message, as nobody will receive it.\n\nRegards,\nEducational Technology Center\nMissouri State University" % (
 		checkout.id,
 	)
 	send_mail(
@@ -109,7 +109,7 @@ def delivery_assignment_mail(checkout, delivering_user):
 	subject = "An equipment checkout (#%i) has been given to you for delivery" % (
 		checkout.id,
 	)
-	body = "%s,\nAn equipment checkout ticket (#%i) has been given to you for delivery. You may view this ticket here: http://etc.missouristate.edu/etcetera/service/%i.\n\nIt will also show up in your list of tickets for delivery. To view these once you're logged into Etcetera, click your name in the upper-right-hand corner of the page.\n\n-------------\nPlease do not reply to this message, as nobody will receive it.\n\nRegards,\nEducational Technology Center\nMissouri State University" % (
+	body = "%s,\nAn equipment checkout ticket (#%i) has been given to you for delivery. You may view this ticket here: http://etc.missouristate.edu/etcetera/checkout/%i.\n\nIt will also show up in your list of tickets for delivery. To view these once you're logged into Etcetera, click your name in the upper-right-hand corner of the page.\n\n-------------\nPlease do not reply to this message, as nobody will receive it.\n\nRegards,\nEducational Technology Center\nMissouri State University" % (
 		delivering_user.first_name,
 		checkout.id,
 		checkout.id,
