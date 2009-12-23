@@ -34,12 +34,14 @@
       {% if user.is_authenticated %}
          <span class="right">
             {% if not object.completed %}
-               {% if not object.confirmation_sent %}
-                  <a href="{% url checkout-confirm object.id %}">
-                     send confirmation
-                  </a> &bull;
-               {% else %}
-                  <span class="disabled">confirmation sent</span> &bull;
+               {% if object.email and object.delivering_user %}
+                  {% if not object.confirmation_sent %}
+                     <a href="{% url checkout-confirm object.id %}">
+                        send confirmation
+                     </a> &bull;
+                  {% else %}
+                     <span class="disabled">confirmation sent</span> &bull;
+                  {% endif %}
                {% endif %}
                <a href="{% url checkout-equip object.id %}">
                   add/remove equipment
