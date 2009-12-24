@@ -14,7 +14,7 @@
 {% block content %}
 <div id="detail">
    {% if user.is_authenticated and not object.completed %}
-      {% if not object.equipment_list.all and not object.other_equipment and not object.completed %}
+      {% if not object.equipment_list.all and not object.other_equipment %}
          <div id="alert" class="banner">
             This checkout doesn't have any equipment associated with it.
                To associate equipment with it, 
@@ -22,12 +22,16 @@
          </div>
       {% endif %}
       {% ifequal object.delivering_user user %}
-         {% if not object.completed %}
-            <div id="notify" class="banner">
-               You've been assigned to deliver this ticket.
-            </div>
-         {% endif %}
+         <div id="notify" class="banner">
+            You've been assigned to deliver this ticket.
+         </div>
       {% endifequal %}
+      {% if object.overdue %}
+         <div id="error" class="banner">
+            This ticket is overdue.
+            {# This ticket has been overdue for {{ object.overdue }} days. #}
+         </div>
+      {% endif %}
    {% endif %}
    
    <h1>

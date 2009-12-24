@@ -4,8 +4,21 @@ from etcetera.checkout.views import *
 urlpatterns = patterns('',
 	url(r'^form/$', checkout_form, name="checkout-form"),
 	url(r'^$', index, name="checkout-index"),
-	url(r'^completed/$', index, {'completed': True}, name="checkout-completed"),
-	url(r'^current/$', index, {'current': True}, name="checkout-current"),
+	url(r'^completed/$',
+		index,
+		{'view_type': 'completed'},
+		name="checkout-completed"
+	),
+	url(r'^current/$',
+		index,
+		{'view_type': 'current'},
+		name="checkout-current"
+	),
+	url(r'^overdue/$',
+		index,
+		{'view_type': 'overdue'},
+		name="checkout-overdue"
+	),
 	url(r'^new/$', new, name="checkout-new"),
 	url(r'^(?P<object_id>\d+)/$', detail, name="checkout-detail"),
 	url(r'^(?P<object_id>\d+)/edit/$', edit, name="checkout-edit"),

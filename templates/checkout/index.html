@@ -8,13 +8,13 @@
 {% block breadcrumb %}
    <a href="{% url etcetera-home %}">Home</a> &rsaquo;
    Checkout
-   {% if completed %}
+   {% ifequal view_type 'completed' %}
       (Completed)
    {% else %}
-      {% if current %}
+      {% ifequal view_type 'current' %}
          (Current)
-      {% endif %}
-   {% endif %}
+      {% endifequal %}
+   {% endifequal %}
 {% endblock %}
 
 {% block subnav %}
@@ -31,6 +31,10 @@
             Completed
          </a>
       </li>
+      <li><a href="{% url checkout-overdue %}">
+            Overdue
+         </a>
+      </li>
    </ul>
 {% endblock %}
 
@@ -41,13 +45,13 @@
       <span class="right">
          <a href="{% url checkout-new %}">manually add a new checkout</a>
       </span>
-      {% if completed %}
+      {% ifequal view_type 'completed' %}
          Completed
       {% else %}
-         {% if current %}
+         {% ifequal view_type 'current' %}
             Current
-         {% endif %}
-      {% endif %}
+         {% endifequal %}
+      {% endifequal %}
       Checkout List
             {% if q %}
                (<a href=".">searching for "{{ q }}" — click here to reset</a>)
@@ -74,11 +78,15 @@
          <td>Equipment</td>
          <td>Location</td>
          <td>
-            {% if completed %}
+            {% ifequal view_type 'completed' %}
                Completion
             {% else %}
-               Out
-            {% endif %}
+               {% ifequal view_type 'overdue' %}
+                  Return
+               {% else %}
+                  Out
+               {% endifequal %}
+            {% endifequal %}
             date
          </td>
          <td>Type</td>
@@ -111,11 +119,15 @@
          </td>
          <td>
             <a href="{% url checkout-detail object.id %}">
-               {% if completed %}
+               {% ifequal view_type 'completed' %}
                   {% firstof object.completion_date|date:'n/j/Y g:iA' object.return_date|date:'n/j/Y g:iA' %}
                {% else %}
-                  {{ object.out_date|date:'n/j/Y g:iA' }}
-               {% endif %}
+                  {% ifequal view_type 'overdue' %}
+                     {{ object.return_date|date:'n/j/Y g:iA' }}
+                  {% else %}
+                     {{ object.out_date|date:'n/j/Y g:iA' }}
+                  {% endifequal %}
+               {% endifequal %}
             </a>
          </td>
          <td>
