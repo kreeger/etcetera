@@ -19,6 +19,11 @@ urlpatterns = patterns('',
 		{'view_type': 'overdue'},
 		name="checkout-overdue"
 	),
+	url(r'^deliveries/$',
+		index,
+		{'view_type': 'deliveries'},
+		name="checkout-deliveries"
+	),
 	url(r'^new/$', new, name="checkout-new"),
 	url(r'^(?P<object_id>\d+)/$', detail, name="checkout-detail"),
 	url(r'^(?P<object_id>\d+)/edit/$', edit, name="checkout-edit"),

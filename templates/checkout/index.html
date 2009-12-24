@@ -10,11 +10,13 @@
    Checkout
    {% ifequal view_type 'completed' %}
       (Completed)
-   {% else %}
-      {% ifequal view_type 'current' %}
-         (Current)
-      {% endifequal %}
    {% endifequal %}
+   {% ifequal view_type 'current' %}
+      (Current)
+   {% endifequal %}
+   {% ifequal view_type 'deliveries' %}
+       (Deliveries)
+    {% endifequal %}
 {% endblock %}
 
 {% block subnav %}
@@ -25,6 +27,10 @@
       </li>
       <li><a href="{% url checkout-current %}">
             Current
+         </a>
+      </li>
+      <li><a href="{% url checkout-deliveries %}">
+            Deliveries
          </a>
       </li>
       <li><a href="{% url checkout-completed %}">
@@ -38,6 +44,24 @@
    </ul>
 {% endblock %}
 
+{% block subsubnav %}
+   {% ifequal view_type 'deliveries' %}
+   <ul>
+      <li><a href="{% url checkout-deliveries %}">
+            Today
+         </a>
+      </li>
+      <li><a href="{% url checkout-deliveries %}">
+            Tomorrow
+         </a>
+      </li>
+      <li><a href="{% url checkout-deliveries %}">
+            This Week
+         </a>
+      </li>
+   {% endifequal %}
+{% endblock %}
+
 {% block content %}
 
 <div id="list">   
@@ -47,10 +71,15 @@
       </span>
       {% ifequal view_type 'completed' %}
          Completed
-      {% else %}
-         {% ifequal view_type 'current' %}
-            Current
-         {% endifequal %}
+      {% endifequal %}
+      {% ifequal view_type 'current' %}
+         Current
+      {% endifequal %}
+      {% ifequal view_type 'deliveries' %}
+         Delivery
+      {% endifequal %}
+      {% ifequal view_type 'overdue' %}
+         Overdue
       {% endifequal %}
       Checkout List
             {% if q %}

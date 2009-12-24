@@ -84,6 +84,15 @@ def index(request, view_type='active'):
 			completed=False).order_by(
 			'-return_date'
 		)
+	elif view_type == 'deliveries':
+		paged_objects = paged_objects.filter(
+			out_date__year=now.year).filter(
+			out_date__month=now.month).filter(
+			out_date__day=now.day).filter(
+			completed=False).filter(
+			checkout_type='delivery').order_by(
+			'out_date'
+		)
 	# Repackage everything into paged_objects using Paginator.
 	paginator = Paginator(paged_objects, 20)
 	# Make sure the page request is an int -- if not, then deliver page 1.
