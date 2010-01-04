@@ -102,6 +102,11 @@ class CheckoutPublicForm(forms.ModelForm):
 			<strong>Date should be YYYY-MM-DD. Use 24-hour time \
 			(HH:MM:SS)</strong>.",
 	)
+	email = forms.EmailField(
+		help_text="Your university email address.",
+		required=True,
+		max_length=75,
+	)
 
 class CheckoutEquipmentForm(forms.Form):
 	barcodes = forms.CharField(
