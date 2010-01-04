@@ -35,7 +35,7 @@ def checkout_form(request):
 	)
 
 @login_required
-def index(request, completed=False, current=False):
+def index(request, view_type='active'):
 	# Setup our paging and query objects ahead of time
 	paged_objects = None
 	q = None
@@ -56,22 +56,42 @@ def index(request, completed=False, current=False):
 				# in a Django filter to get our queryset.
 				checkout_query = get_query(data['q'], form.get_list())
 				paged_objects = checkout.Checkout.objects.filter(
-					checkout_query).filter(
-					completed=completed
-				)
+					checkout_query)
 				q = data['q']
 	else:
 		# If it's not valid or nothing was checked, get all objects from db
-		paged_objects = checkout.Checkout.objects.filter(completed=completed)
-	if completed:
-		paged_objects = paged_objects.order_by('-completion_date')
-	else:
-		paged_objects = paged_objects.order_by('-creation_date')
-	# If this is a current list, filter it down to only current checkouts
-	if current:
+		paged_objects = checkout.Checkout.objects.all()
+	if 	view_type == 'active':
+		paged_objects = paged_objects.filter(
+			completed=False).order_by(
+			'-out_date'
+		)
+	elif view_type == 'completed':
+		paged_objects = paged_objects.filter(
+			completed=True).order_by(
+			'-completion_date'
+		)
+	elif view_type == 'current':
 		paged_objects = paged_objects.filter(
 			out_date__lte=now).filter(
-			return_date__gte=now
+			return_date__gte=now).filter(
+			completed=False).order_by(
+			'-out_date'
+		)
+	elif view_type == 'overdue':
+		paged_objects = paged_objects.filter(
+			return_date__lte=now).filter(
+			completed=False).order_by(
+			'-return_date'
+		)
+	elif view_type == 'deliveries':
+		paged_objects = paged_objects.filter(
+			out_date__year=now.year).filter(
+			out_date__month=now.month).filter(
+			out_date__day=now.day).filter(
+			completed=False).filter(
+			checkout_type='delivery').order_by(
+			'out_date'
 		)
 	# Repackage everything into paged_objects using Paginator.
 	paginator = Paginator(paged_objects, 20)
@@ -91,8 +111,7 @@ def index(request, completed=False, current=False):
 		'paged_objects': paged_objects,
 		'object_list': paged_objects.object_list,
 		'form': form,
-		'completed': completed,
-		'current': current,
+		'view_type': view_type,
 		'q': q,
 	}
 	return render_to_response(
@@ -104,6 +123,12 @@ def index(request, completed=False, current=False):
 def detail(request, object_id):
 	# Get the ticket from the URL, bundle it in a context, and send it out.
 	co = get_object_or_404(checkout.Checkout, id=object_id)
+	# Check if item is overdue.
+	now = dt.datetime.now()
+	co.overdue = None
+	if now > co.return_date and not co.completed:
+		co.overdue = True
+		# Needs to be timedelta between now-return_date
 	context = {'object': co,}
 	return render_to_response(
 		"checkout/detail.html",
