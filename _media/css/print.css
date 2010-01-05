@@ -70,8 +70,8 @@ div#detail div.right table td.head { width: 80px; }
 #checkout-print { padding: 10px; border: 1px solid #000; background-color: #EEE; }
 table.signature { width: 100%; }
 table.signature td:nth-child(even) { border-bottom: 1px solid #000; }
-table.signature td:first-child { width: 220px; }
+table.signature td:first-child { width: 230px; }
 table.signature td:nth-child(3) { width: 50px; }
-table.signature td:last-child { width: 30%; }
+table.signature td:last-child { width: 100px; }
 
 div#footer { margin-top: 5px; padding-top: 5px; display: none; }
