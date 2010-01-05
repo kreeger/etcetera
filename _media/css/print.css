@@ -2,6 +2,7 @@
 	http://localhost/_media/css/screen.css
 	http://localhost/_media/css/print.css
 	http://localhost:8000/_media/css/screen.css
+	http://localhost:8000/_media/css/print.css
 */
 
 body { background-color: #FFF; margin: 0; padding: 0; font: .9em "Helvetica Neue", Helvetica, Arial, sans-serif; z-index: -300; }
@@ -65,5 +66,12 @@ div#detail table#toprow input { width: auto; }
 div#detail td#barcode { text-align: right; }
 div#detail table td.head { width: 115px; }
 div#detail div.right table td.head { width: 80px; }
+
+#checkout-print { padding: 10px; border: 1px solid #000; background-color: #EEE; }
+table.signature { width: 100%; }
+table.signature td:nth-child(even) { border-bottom: 1px solid #000; }
+table.signature td:first-child { width: 220px; }
+table.signature td:nth-child(3) { width: 50px; }
+table.signature td:last-child { width: 30%; }
 
 div#footer { margin-top: 5px; padding-top: 5px; display: none; }

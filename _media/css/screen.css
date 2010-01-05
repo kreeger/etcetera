@@ -147,6 +147,7 @@ div#detail table.profile { width: 100%; margin-top: 5px; }
 div#detail table.profile>tbody>tr>td { vertical-align: top; }
 div#detail table.profile>tbody>tr>td:first-child { width: 168px; height: auto; text-align: center; vertical-align: top; }
 div#detail td#barcode { text-align: right; }
+div#detail #checkout-print { display: none; }
 
 div#times table caption { font-style: italic; font-weight: normal; font-size: .8em; text-align: left; }
 div#times table td input { width: 80px; }
