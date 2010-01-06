@@ -93,6 +93,14 @@ def index(request, view_type='active'):
 			checkout_type='delivery').order_by(
 			'out_date'
 		)
+	elif view_type == 'mine':
+		paged_objects = paged_objects.filter(
+			completed=False).filter(
+			checkout_type='delivery').filter(
+			out_date__gte=now.today).filter(
+			delivering_user=request.user).order_by(
+			'out_date'
+		)
 	# Repackage everything into paged_objects using Paginator.
 	paginator = Paginator(paged_objects, 20)
 	# Make sure the page request is an int -- if not, then deliver page 1.

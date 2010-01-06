@@ -17,6 +17,9 @@
    {% ifequal view_type 'deliveries' %}
        (Deliveries)
     {% endifequal %}
+    {% ifequal view_type 'mine' %}
+       (My Deliveries)
+    {% endifequal %}
 {% endblock %}
 
 {% block subnav %}
@@ -31,6 +34,10 @@
       </li>
       <li><a href="{% url checkout-deliveries %}">
             Deliveries
+         </a>
+      </li>
+      <li><a href="{% url checkout-mine %}">
+            My Deliveries
          </a>
       </li>
       <li><a href="{% url checkout-completed %}">
@@ -80,6 +87,9 @@
       {% endifequal %}
       {% ifequal view_type 'overdue' %}
          Overdue
+      {% endifequal %}
+      {% ifequal view_type 'mine' %}
+         My Delivery
       {% endifequal %}
       Checkout List
             {% if q %}

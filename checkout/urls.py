@@ -24,6 +24,11 @@ urlpatterns = patterns('',
 		{'view_type': 'deliveries'},
 		name="checkout-deliveries"
 	),
+	url(r'^deliveries/mine/$',
+		index,
+		{'view_type': 'mine'},
+		name="checkout-mine"
+	),
 	url(r'^new/$', new, name="checkout-new"),
 	url(r'^(?P<object_id>\d+)/$', detail, name="checkout-detail"),
 	url(r'^(?P<object_id>\d+)/edit/$', edit, name="checkout-edit"),
