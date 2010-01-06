@@ -105,6 +105,9 @@ class Checkout(models.Model):
 	
 	# What fun! We're overriding save. For logging changes.
 	def save(self, force_insert=False, force_update=False):
+		# Ensure capitalization.
+		self.first_name = self.first_name.capitalize()
+		self.last_name = self.last_name.capitalize()
 		# This checks to see if this an update, and not brand new.
 		if self.pk is not None:
 			# Get original object
