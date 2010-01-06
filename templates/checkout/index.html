@@ -8,18 +8,18 @@
 {% block breadcrumb %}
    <a href="{% url etcetera-home %}">Home</a> &rsaquo;
    Checkout
-   {% ifequal view_type 'completed' %}
+   {% if view_type == 'completed' %}
       (Completed)
-   {% endifequal %}
-   {% ifequal view_type 'current' %}
+   {% endif %}
+   {% if view_type == 'current' %}
       (Current)
-   {% endifequal %}
-   {% ifequal view_type 'deliveries' %}
+   {% endif %}
+   {% if view_type == 'deliveries' %}
        (Deliveries)
-    {% endifequal %}
-    {% ifequal view_type 'mine' %}
+    {% endif %}
+    {% if view_type == 'my_deliveries' %}
        (My Deliveries)
-    {% endifequal %}
+    {% endif %}
 {% endblock %}
 
 {% block subnav %}
@@ -52,7 +52,7 @@
 {% endblock %}
 
 {% block subsubnav %}
-   {% ifequal view_type 'deliveries' %}
+   {% if view_type == 'deliveries' or view_type == 'my_deliveries' %}
    <ul>
       <li><a href="{% url checkout-deliveries %}">
             Today
@@ -66,7 +66,7 @@
             This Week
          </a>
       </li>
-   {% endifequal %}
+   {% endif %}
 {% endblock %}
 
 {% block content %}
@@ -76,21 +76,21 @@
       <span class="right">
          <a href="{% url checkout-new %}">manually add a new checkout</a>
       </span>
-      {% ifequal view_type 'completed' %}
+      {% if view_type == 'completed' %}
          Completed
-      {% endifequal %}
-      {% ifequal view_type 'current' %}
+      {% endif %}
+      {% if view_type == 'current' %}
          Current
-      {% endifequal %}
-      {% ifequal view_type 'deliveries' %}
+      {% endif %}
+      {% if view_type == 'deliveries' %}
          Delivery
-      {% endifequal %}
-      {% ifequal view_type 'overdue' %}
+      {% endif %}
+      {% if view_type == 'overdue' %}
          Overdue
-      {% endifequal %}
-      {% ifequal view_type 'mine' %}
+      {% endif %}
+      {% if view_type == 'my_deliveries' %}
          My Delivery
-      {% endifequal %}
+      {% endif %}
       Checkout List
             {% if q %}
                (<a href=".">searching for "{{ q }}" — click here to reset</a>)
@@ -117,15 +117,15 @@
          <td>Equipment</td>
          <td>Location</td>
          <td>
-            {% ifequal view_type 'completed' %}
+            {% if view_type == 'completed' %}
                Completion
             {% else %}
-               {% ifequal view_type 'overdue' %}
+               {% if view_type == 'overdue' %}
                   Return
                {% else %}
                   Out
-               {% endifequal %}
-            {% endifequal %}
+               {% endif %}
+            {% endif %}
             date
          </td>
          <td>Type</td>
@@ -158,15 +158,15 @@
          </td>
          <td>
             <a href="{% url checkout-detail object.id %}">
-               {% ifequal view_type 'completed' %}
+               {% if view_type == 'completed' %}
                   {% firstof object.completion_date|date:'n/j/Y g:iA' object.return_date|date:'n/j/Y g:iA' %}
                {% else %}
-                  {% ifequal view_type 'overdue' %}
+                  {% if view_type == 'overdue' %}
                      {{ object.return_date|date:'n/j/Y g:iA' }}
                   {% else %}
                      {{ object.out_date|date:'n/j/Y g:iA' }}
-                  {% endifequal %}
-               {% endifequal %}
+                  {% endif %}
+               {% endif %}
             </a>
          </td>
          <td>

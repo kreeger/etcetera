@@ -24,9 +24,9 @@ urlpatterns = patterns('',
 		{'view_type': 'deliveries'},
 		name="checkout-deliveries"
 	),
-	url(r'^deliveries/mine/$',
+	url(r'^my_deliveries/$',
 		index,
-		{'view_type': 'mine'},
+		{'view_type': 'my_deliveries'},
 		name="checkout-mine"
 	),
 	url(r'^new/$', new, name="checkout-new"),

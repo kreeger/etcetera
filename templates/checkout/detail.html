@@ -21,11 +21,11 @@
                <a href="{% url checkout-equip object.id %}">click here</a>.
          </div>
       {% endif %}
-      {% ifequal object.delivering_user user %}
+      {% if object.delivering_user == user %}
          <div id="notify" class="banner">
             You've been assigned to deliver this ticket.
          </div>
-      {% endifequal %}
+      {% endif %}
       {% if object.overdue %}
          <div id="error" class="banner">
             This ticket is overdue.
@@ -75,17 +75,17 @@
                {% endif %}
          </span>
       {% endif %}
-      {% ifequal object.checkout_type 'delivery' %}
+      {% if object.checkout_type == 'delivery' %}
          ETC will deliver
       {% else %}
          Patron will pick up
-      {% endifequal %}
+      {% endif %}
       at {{ object.out_date|date:'n/j/Y g:iA' }}<br />
-      {% ifequal object.return_type 'etc' %}
+      {% if object.return_type == 'etc' %}
          ETC
       {% else %}
          Patron
-      {% endifequal %}
+      {% endif %}
       will return at {{ object.return_date|date:'n/j/Y g:iA' }}
    </h2>
    
@@ -136,9 +136,9 @@
       {% if object.building %}
          <tr>
             <td class="tablehead">
-               {% ifequal object.checkout_type "delivery" %}
+               {% if object.checkout_type == "delivery" %}
                   Delivery
-               {% endifequal %}
+               {% endif %}
                Location
             </td>
             <td>{{ object.building.name }} {{ object.room }}</td>

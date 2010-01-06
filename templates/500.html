@@ -3,10 +3,10 @@
 {% block title %}Uh-oh! 500{% endblock %}
 
 {% block breadcrumb %}
-   <a href="/etcetera">Home</a> &rsaquo; Uh-oh! 500
+   <a href="{% url etcetera-home %}">Home</a> &rsaquo; Uh-oh! 500
 {% endblock %}
 
 {% block content %}
 	<p>You're seeing this page because there's something wrong with our server. <strong>An email has been sent automatically to our developers</strong></a>. We'll get right on it.</p>
-	<p>Other than that, you'll have to try your request again later. Would you like to <a href="/etcetera">go to our home page</a>?</p>
+	<p>Other than that, you'll have to try your request again later. Would you like to <a href="{% url etcetera-home %}">go to our home page</a>?</p>
 {% endblock %}

@@ -35,7 +35,7 @@ def checkout_form(request):
 	)
 
 @login_required
-def index(request, view_type='active'):
+def index(request, view_type='all', date_range=None):
 	# Setup our paging and query objects ahead of time
 	paged_objects = None
 	q = None
@@ -61,15 +61,10 @@ def index(request, view_type='active'):
 	else:
 		# If it's not valid or nothing was checked, get all objects from db
 		paged_objects = checkout.Checkout.objects.all()
-	if 	view_type == 'active':
+	if 	view_type == 'all':
 		paged_objects = paged_objects.filter(
 			completed=False).order_by(
 			'-out_date'
-		)
-	elif view_type == 'completed':
-		paged_objects = paged_objects.filter(
-			completed=True).order_by(
-			'-completion_date'
 		)
 	elif view_type == 'current':
 		paged_objects = paged_objects.filter(
@@ -78,13 +73,7 @@ def index(request, view_type='active'):
 			completed=False).order_by(
 			'-out_date'
 		)
-	elif view_type == 'overdue':
-		paged_objects = paged_objects.filter(
-			return_date__lte=now).filter(
-			completed=False).order_by(
-			'-return_date'
-		)
-	elif view_type == 'deliveries':
+	elif view_type == 'pickups':
 		paged_objects = paged_objects.filter(
 			out_date__year=now.year).filter(
 			out_date__month=now.month).filter(
@@ -93,7 +82,15 @@ def index(request, view_type='active'):
 			checkout_type='delivery').order_by(
 			'out_date'
 		)
-	elif view_type == 'mine':
+	elif view_type == 'deliveries':
+		paged_objects = paged_objects.filter(
+			checkout_type='delivery').filter(
+			out_date__gte=now.today).filter(
+			completed=False).filter(
+			checkout_type='delivery').order_by(
+			'out_date'
+		)
+	elif view_type == 'my_deliveries':
 		paged_objects = paged_objects.filter(
 			completed=False).filter(
 			checkout_type='delivery').filter(
@@ -101,6 +98,30 @@ def index(request, view_type='active'):
 			delivering_user=request.user).order_by(
 			'out_date'
 		)
+	elif view_type == 'completed':
+		paged_objects = paged_objects.filter(
+			completed=True).order_by(
+			'-completion_date'
+		)
+	elif view_type == 'overdue':
+		paged_objects = paged_objects.filter(
+			return_date__lte=now).filter(
+			completed=False).order_by(
+			'-return_date'
+		)
+	if date_range == 'today':
+		paged_objects = paged_objects.filter(
+			out_date__year=now.year).filter(
+			out_date__month=now.month).filter(
+			out_date__day=now.day
+		)
+	elif date_range == 'tomorrow':
+		paged_objects = paged_objects.filter(
+			out_date__year=now.year).filter(
+			out_date__month=now.month).filter(
+			out_date__day=(now.day + 1)
+		)
+
 	# Repackage everything into paged_objects using Paginator.
 	paginator = Paginator(paged_objects, 20)
 	# Make sure the page request is an int -- if not, then deliver page 1.
