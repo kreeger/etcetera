@@ -89,7 +89,6 @@ class CheckoutPublicForm(forms.ModelForm):
 		)
 	department_text = forms.CharField(
 		max_length=100,
-		verbose_name='department',
 		help_text='The university department the request should be under.',
 	)	
 	out_date = forms.DateTimeField(
