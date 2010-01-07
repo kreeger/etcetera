@@ -12,7 +12,6 @@ from etcetera.checkout import models as checkout
 from etcetera.checkout.mailer import *
 from etcetera.equipment import models as equipment
 from etcetera.extras.search import get_query
-from etcetera.extras.functions import check_time_array
 
 def checkout_form(request):
 	# If data is being sent in POST, then get that data, clean it, and assign
