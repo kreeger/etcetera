@@ -125,3 +125,11 @@ class CheckoutEquipmentForm(forms.Form):
 		help_text="If you'd like to add a data projector/computer cart, type \
 			in the computer cart's AV or Cart #.",
 	)
+
+class DupeForm(forms.Form):
+	out_date = forms.DateTimeField(
+		widget=adminwidgets.AdminSplitDateTime,
+	)
+	return_date = forms.DateTimeField(
+		widget=adminwidgets.AdminSplitDateTime,
+	)

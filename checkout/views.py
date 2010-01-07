@@ -12,6 +12,7 @@ from etcetera.checkout import models as checkout
 from etcetera.checkout.mailer import *
 from etcetera.equipment import models as equipment
 from etcetera.extras.search import get_query
+from etcetera.extras.functions import check_time_array
 
 def checkout_form(request):
 	# If data is being sent in POST, then get that data, clean it, and assign
@@ -411,4 +412,53 @@ def confirm(request, object_id):
 	return HttpResponseRedirect(reverse(
 		'checkout-detail',
 		args=(co.id,),
-	))		
+	))
+
+@login_required
+def dupe(request, object_id):
+	"""
+	Allows for duplication of checkout tickets, like recurring tickets.
+	
+	"""
+	# Setup a few variables
+	co = get_object_or_404(checkout.Checkout, id=object_id)
+	msg = None
+	# If data is coming in via POST, perform the duplication!
+	if request.method == 'POST':
+		form = coforms.DupeForm(request.POST)
+		if form.is_valid():
+			# Copy our object
+			new_co = co
+			# Remove its primary key so Django thinks it's new
+			new_co.pk = None
+			# Set the appropriate settings
+			new_co.creation_date = dt.datetime.now()
+			new_co.handling_user = request.user
+			new_co.out_date = form.cleaned_data['out_date']
+			new_co.return_date = form.cleaned_data['return_date']
+			# Save model
+			new_co.save()
+			msg = "Checkout %i saved." % (new_co.id,)
+			context = {
+				'form': coforms.DupeForm(),
+				'object': checkout.Checkout.objects.get(pk=object_id),
+				'msg': msg,
+			}
+			return render_to_response(
+				"checkout/dupe.html",
+				context,
+				context_instance=RequestContext(request)
+			)
+	# If neither request type, send an empty form.
+	else:
+		form = coforms.DupeForm()
+	context = {
+		'form': form,
+		'object': co,
+		'msg': msg,
+	}
+	return render_to_response(
+		"checkout/dupe.html",
+		context,
+		context_instance=RequestContext(request)
+	)

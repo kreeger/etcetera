@@ -5,16 +5,16 @@
 {% block content %}
    <div id="detail">
       <h1>
-         {% ifequal the_user user %}
+         {% if the_user == user %}
             <span class="right">
                <a href="{% url edit-profile %}">edit profile</a>
                &bull; <a href="{% url change-password %}">change password</a>
             </span>
-         {% endifequal %}
+         {% endif %}
          {{ the_user.first_name }} {{ the_user.last_name }}
-         {% ifequal the_user user %}
+         {% if the_user == user %}
             <span class="head">this is you</span>
-         {% endifequal %}
+         {% endif %}
       </h1>
       
       <table class="profile">

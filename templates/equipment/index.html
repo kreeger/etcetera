@@ -5,13 +5,13 @@
 
 {% block breadcrumb %}
    <a href="{% url etcetera-home %}">Home</a> &rsaquo;
-   {% ifequal type 'index' %}
+   {% if view_type == 'index' %}
       Equipment Inventory
-   {% endifequal %}
-   {% ifequal type 'weekly' %}
+   {% endif %}
+   {% if view_type == 'weekly' %}
       <a href="{% url equipment-index %}">Equipment</a>
       &rsaquo; Weekly Checklist
-   {% endifequal %}
+   {% endif %}
 {% endblock %}
 
 {% block subnav %}
@@ -28,12 +28,12 @@
          <a href="{% url equipment-new %}">add a new item</a>
       </span>
       
-      {% ifequal type 'weekly' %}
+      {% if view_type == 'weekly' %}
          Weekly Equipment Checklist
-      {% endifequal %}
-      {% ifequal type 'index' %}
+      {% endif %}
+      {% if view_type == 'index' %}
          Equipment Inventory
-      {% endifequal %}
+      {% endif %}
       
       {% if q %}
          <span class="head">searching for: "{{ q }}"</span>
@@ -46,61 +46,61 @@
       <form action="">
          {{ form.q }}
          Search in:
-         {{ form.equipment_type }} {{ form.equipment_type.label }}
+         {{ form.equipment_view_type }} {{ form.equipment_view_type.label }}
          {{ form.barcode }} {{ form.barcode.label }}
          {{ form.location }} {{ form.location.label }}
          {{ form.serial }} {{ form.serial.label }}
          {{ form.smsu_id }} {{ form.smsu_id.label }}
          {{ form.comments }} {{ form.comments.label }}
-         <input type="submit" name="submit" value="Search" id="submit" />
+         <input view_type="submit" name="submit" value="Search" id="submit" />
       </form>
       {% if q %} {% endif %}
    </div>
    {% endif %}
    <table id="list">
       <tr id="headerrow">
-         {% ifequal type 'weekly' %}
+         {% if view_type == 'weekly' %}
             <td>&radic;</td>
-         {% endifequal %}
+         {% endif %}
          <td>Barcode</td>
-         {% ifequal type 'weekly' %}
+         {% if view_type == 'weekly' %}
             <td>SMS #</td>
-         {% endifequal %}
-         <td>Type</td>
+         {% endif %}
+         <td>view_type</td>
          <td>Make &amp; Model</td>
          <td>Status</td>
          <td>Location</td>
-         {% ifequal type 'weekly' %}
+         {% if view_type == 'weekly' %}
             <td>Serial #</td>
             <td>Vid Unit</td>
             <td>Comp Unit</td>
             <td>Comments</td>
-         {% endifequal %}
+         {% endif %}
       </tr>
       {% for object in object_list %}
          <tr class="datarow">
-            {% ifequal type 'weekly' %}
+            {% if view_type == 'weekly' %}
                <td>
                   <a href="{% url equipment-detail object.id %}">
                      &nbsp;
                   </a>
                </td>
-            {% endifequal %}
+            {% endif %}
             <td>
                <a href="{% url equipment-detail object.id %}">
                   {{ object.barcode }}
                </a>
             </td>
-            {% ifequal type 'weekly' %}
+            {% if view_type == 'weekly' %}
                <td>
                   <a href="{% url equipment-detail object.id %}">
                      {{ object.smsu_id }}
                   </a>
                </td>
-            {% endifequal %}
+            {% endif %}
             <td>
                <a href="{% url equipment-detail object.id %}">
-                  {{ object.equipment_type.name }}
+                  {{ object.equipment_view_type.name }}
                </a>
             </td>
             <td>
@@ -118,7 +118,7 @@
                   {{ object.building.abbreviation }} {{ object.room }}
                </a>
             </td>
-            {% ifequal type 'weekly' %}
+            {% if view_type == 'weekly' %}
                <td>
                   <a href="{% url equipment-detail object.id %}">
                      {{ object.serial }}
@@ -139,7 +139,7 @@
                      {{ object.comments }}
                   </a>
                </td>
-            {% endifequal %}
+            {% endif %}
          </tr>
       {% endfor %}
    </table>

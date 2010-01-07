@@ -49,7 +49,7 @@ def index(request):
 		'paged_objects': paged_objects,
 		'object_list': paged_objects.object_list,
 		'form': form,
-		'type': 'index',
+		'view_type': 'index',
 		'q': q,
 	}
 	return render_to_response(
@@ -72,7 +72,7 @@ def weekly_list(request):
 	)
 	context = {
 		'object_list': object_list,
-		'type': 'weekly',
+		'view_type': 'weekly',
 	}
 	return render_to_response(
 		"equipment/index.html",

@@ -33,19 +33,17 @@
    
    <h2>
       {% if object.status %}
-         {% ifequal object.status "checkout" %}Available for {% endifequal %}
+         {% if object.status == "checkout" %}Available for {% endif %}
          {{ object.get_status_display }}
-         {% if user.is_authenticated %}
-            {% if object.building %}
-               {% ifequal object.status "missing" %}from
-                  {% else %}{% ifequal object.status "checkedout" %}from
-                     {% else %}{% ifequal object.status "reserved" %}from
-                        {% else %}in
-                     {% endifequal %}
-                  {% endifequal %}
-               {% endifequal %}
-               {{ object.building.abbreviation }} {{ object.room }}
+         {% if user.is_authenticated and object.building %}
+            {% if object.status == "missing" %}from
+               {% else %}{% if object.status == "checkedout" %}from
+                  {% else %}{% if object.status == "reserved" %}from
+                     {% else %}in
+                  {% endif %}
+               {% endif %}
             {% endif %}
+            {{ object.building.abbreviation }} {{ object.room }}
          {% endif %}
          {% else %}(this item has no status)
       {% endif %}

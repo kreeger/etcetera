@@ -47,6 +47,9 @@
                      <span class="disabled">confirmation sent</span> &bull;
                   {% endif %}
                {% endif %}
+               <a href="{% url checkout-dupe object.id %}">
+                  duplicate
+               </a> &bull;
                <a href="{% url checkout-equip object.id %}">
                   add/remove equipment
                </a>
