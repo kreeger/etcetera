@@ -16,6 +16,7 @@ class Checkout(models.Model):
 		max_length=100,
 		verbose_name='department',
 		help_text='The university department the request should be under.',
+		blank=True,
 	)
 	department = models.ForeignKey(
 		structure.OrganizationalUnit,

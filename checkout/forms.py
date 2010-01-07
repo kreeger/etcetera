@@ -87,7 +87,11 @@ class CheckoutPublicForm(forms.ModelForm):
 			'completion_date',
 			'confirmation_sent',
 		)
-		
+	department_text = forms.CharField(
+		max_length=100,
+		verbose_name='department',
+		help_text='The university department the request should be under.',
+	)	
 	out_date = forms.DateTimeField(
 		widget=adminwidgets.AdminSplitDateTime,
 		help_text="The date/time you'll pick up equipment, or \
