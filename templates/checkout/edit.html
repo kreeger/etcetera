@@ -38,7 +38,9 @@
       {% if object %}
          <span class="right">
             <span class="head">completed?</span> 
-               {{ form.completed }} {{ form.completed.errors }}
+               {{ form.completed }} {{ form.completed.errors }}<br />
+            <span class="head">confirmation sent?</span> 
+               {{ form.confirmation_sent }} {{ form.confirmation_sent.errors }}
          </span>
       {% endif %}
       Checkout type {{ form.checkout_type }} {{ form.checkout_type.errors }}<br />
