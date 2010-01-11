@@ -39,12 +39,12 @@
          <span class="right">
             {% if not object.completed %}
                {% if object.email %}
-                  {% if not object.confirmation_sent %}
+                  {% if object.confirmation_sent %}
+                     <span class="disabled">confirmation sent</span> &bull;
+                  {% else %}
                      <a href="{% url checkout-confirm object.id %}">
                         send confirmation
                      </a> &bull;
-                  {% else %}
-                     <span class="disabled">confirmation sent</span> &bull;
                   {% endif %}
                {% endif %}
                <a href="{% url checkout-dupe object.id %}">
