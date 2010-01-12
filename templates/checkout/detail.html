@@ -41,7 +41,8 @@
                {% if object.email %}
                   {% if object.confirmation_sent %}
                      <span class="disabled">confirmation sent</span> &bull;
-                  {% else %}
+                  {% endif %}
+                  {% if not object.confirmation_sent %}
                      <a href="{% url checkout-confirm object.id %}">
                         send confirmation
                      </a> &bull;

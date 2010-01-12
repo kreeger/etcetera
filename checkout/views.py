@@ -431,7 +431,6 @@ def dupe(request, object_id):
 			new_co.out_date = form.cleaned_data['out_date']
 			new_co.return_date = form.cleaned_data['return_date']
 			new_co.confirmation_sent = False
-			new_co.equipment_list = None
 			# Save model
 			new_co.save()
 			msg = "Checkout %i saved." % (new_co.id,)
