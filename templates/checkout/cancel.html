@@ -9,7 +9,7 @@
    <script type="text/javascript" charset="utf-8">
       $(function() {
          $('#cancel').click(function() {
-            window.location = {% url checkout-detail object.id %};
+            window.location = '{% url checkout-detail object.id %}';
          });
       });
    </script>
