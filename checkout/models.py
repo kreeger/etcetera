@@ -101,7 +101,7 @@ class Checkout(models.Model):
 	other_equipment = models.TextField(blank=True)
 	confirmation_sent = models.BooleanField()
 	completed = models.BooleanField()
-	canceled = models.NullBooleanField()
+	canceled = models.NullBooleanField(blank=True, null=True)
 	completion_date = models.DateTimeField(blank=True, null=True)
 	comments = models.TextField(blank=True)
 	
