@@ -179,7 +179,8 @@ def pickup(request, object_id):
 	wo = get_object_or_404(service.WorkOrder, id=object_id)
 	wo.technician = request.user
 	wo.save()
-	pickup_mail(wo)
+	if wo.email:
+		pickup_mail(wo)
 	return HttpResponseRedirect(reverse(
 		'service-detail',
 		args=(wo.id,),
