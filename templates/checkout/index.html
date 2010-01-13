@@ -117,21 +117,17 @@
          <td>Equipment</td>
          <td>Location</td>
          <td>
-            {% if view_type == 'completed' %}
-               Completion
+            {% if view_type == 'completed' or view_type == 'overdue' or view_type == 'returns' %}
+               Return
             {% else %}
-               {% if view_type == 'overdue' %}
-                  Return
-               {% else %}
-                  Out
-               {% endif %}
+               Out
             {% endif %}
             date
          </td>
          <td>Type</td>
       </tr>
       {% for object in paged_objects.object_list %}
-      <tr class="datarow">
+      <tr{% if object.canceled %} class="canceled"{% endif %}>
          <td>
             <a href="{% url checkout-detail object.id %}">
                {{ object.first_name }} {{ object.last_name }}
@@ -158,14 +154,10 @@
          </td>
          <td>
             <a href="{% url checkout-detail object.id %}">
-               {% if view_type == 'completed' %}
-                  {% firstof object.completion_date|date:'n/j/Y g:iA' object.return_date|date:'n/j/Y g:iA' %}
+               {% if view_type == 'completed' or view_type == 'overdue' or view_type == 'returns' %}
+                  {{ object.return_date|date:'n/j/Y g:iA' }}
                {% else %}
-                  {% if view_type == 'overdue' %}
-                     {{ object.return_date|date:'n/j/Y g:iA' }}
-                  {% else %}
-                     {{ object.out_date|date:'n/j/Y g:iA' }}
-                  {% endif %}
+                  {{ object.out_date|date:'n/j/Y g:iA' }}
                {% endif %}
             </a>
          </td>

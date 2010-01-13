@@ -97,7 +97,7 @@ def index(request, view_type='all', date_range=None):
 	elif view_type == 'completed':
 		paged_objects = paged_objects.filter(
 			completed=True).order_by(
-			'-completion_date'
+			'-return_date'
 		)
 	elif view_type == 'overdue':
 		paged_objects = paged_objects.filter(
@@ -172,6 +172,7 @@ def edit(request, object_id):
 		if form.is_valid():
 			# If the form isn't previously marked complete, but is now marked
 			if not co.completed:
+				# Maybe in the future I should move this into the save() method
 				if form.cleaned_data['completed']:
 					# For each associated equipment item
 					for eq in co.equipment_list.all():
@@ -454,6 +455,41 @@ def dupe(request, object_id):
 	}
 	return render_to_response(
 		"checkout/dupe.html",
+		context,
+		context_instance=RequestContext(request)
+	)
+
+@login_required
+def cancel(request, object_id):
+	"""
+	Allows for the cancellation of checkout tickets.
+	
+	"""
+	# Get the object from the database
+	co = get_object_or_404(checkout.Checkout, id=object_id)
+	# If page is accessed via GET
+	if request.method == 'POST':
+		# Check to see if the order has not yet been canceled
+		if not co.canceled and not co.completed:
+			# If not, set it as such and save it
+			co.canceled = True
+			co.completed = True
+			co.save()
+			# Then trigger each equipment as available
+			for eq in co.equipment_list.all():
+				eq.status = 'checkout'
+				eq.save()
+			# Then a redirect happens back to the submitting page
+			return HttpResponseRedirect(reverse(
+				'checkout-detail',
+				args=(co.id,),
+			))
+	# Otherwise create the context
+	context = {
+		'object': co,
+	}
+	return render_to_response(
+		"checkout/cancel.html",
 		context,
 		context_instance=RequestContext(request)
 	)

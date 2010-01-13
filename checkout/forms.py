@@ -61,6 +61,7 @@ class CheckoutModelForm(forms.ModelForm):
 			'creation_date',
 			'handling_user',
 			'completion_date',
+			'canceled',
 		)
 	
 	out_date = forms.DateTimeField(widget=adminwidgets.AdminSplitDateTime)
@@ -85,6 +86,7 @@ class CheckoutPublicForm(forms.ModelForm):
 			'comments',
 			'completion_date',
 			'confirmation_sent',
+			'canceled',
 		)
 	department_text = forms.CharField(
 		max_length=100,
