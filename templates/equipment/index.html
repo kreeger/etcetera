@@ -46,7 +46,7 @@
       <form action="">
          {{ form.q }}
          Search in:
-         {{ form.equipment_view_type }} {{ form.equipment_view_type.label }}
+         {{ form.equipment_type }} {{ form.equipment_type.label }}
          {{ form.barcode }} {{ form.barcode.label }}
          {{ form.location }} {{ form.location.label }}
          {{ form.serial }} {{ form.serial.label }}
@@ -66,7 +66,7 @@
          {% if view_type == 'weekly' %}
             <td>SMS #</td>
          {% endif %}
-         <td>view_type</td>
+         <td>Type</td>
          <td>Make &amp; Model</td>
          <td>Status</td>
          <td>Location</td>
@@ -100,7 +100,7 @@
             {% endif %}
             <td>
                <a href="{% url equipment-detail object.id %}">
-                  {{ object.equipment_view_type.name }}
+                  {{ object.equipment_type.name }}
                </a>
             </td>
             <td>
