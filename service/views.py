@@ -137,8 +137,17 @@ def edit(request, object_id):
 						completed_mail(wo)
 			# If there's a new barcode, look it up and add it
 			# Future project: move to the model form
+			# Brain hurts. Re-factor later
 			if cd['barcode']:
-				if not cd['barcode'] == wo.equipment.barcode:
+				if wo.equipment:
+					if cd['barcode'] != wo.equipment.barcode:
+						try:
+							cd['equipment'] = equipment.Equipment.objects.get(
+								barcode=cd['barcode']
+							)
+						except equipment.Equipment.DoesNotExist:
+							cd['equipment'] = None
+				else:
 					try:
 						cd['equipment'] = equipment.Equipment.objects.get(
 							barcode=cd['barcode']
