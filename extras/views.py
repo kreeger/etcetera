@@ -20,7 +20,7 @@ def error_mail(request):
 def index(request):
 	# Hack to put the trailing slash on the root
 	if not request.META['REQUEST_URI'].endswith('/'):
-	    return HttpResponseRedirect("%s" % request.path)
+	    return HttpResponseRedirect("etcetera/%s" % request.path)
 	posts = extras.Post.objects.all()[:3]
 	context = {
 		'object_list': posts,
