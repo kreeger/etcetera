@@ -66,6 +66,13 @@ def index(request, view_type='all', date_range=None):
 			completed=False).order_by(
 			'-out_date'
 		)
+	elif view_type == 'unconfirmed':
+		paged_objects = paged_objects.filter(
+			confirmation_sent=False).filter(
+			completed=False).exclude(
+			email='').order_by(
+			'-out_date'
+		)
 	elif view_type == 'current':
 		paged_objects = paged_objects.filter(
 			out_date__lte=now).filter(
@@ -87,9 +94,15 @@ def index(request, view_type='all', date_range=None):
 			completed=False).order_by(
 			'out_date'
 		)
+	elif view_type == 'my_tickets':
+		paged_objects = paged_objects.filter(
+			out_date__gte=now.today).filter(
+			completed=False).filter(
+			delivering_user=request.user).order_by(
+			'out_date'
+		)
 	elif view_type == 'returns':
 		paged_objects = paged_objects.filter(
-			checkout_type='delivery').filter(
 			return_date__gte=now.today).filter(
 			completed=False).order_by(
 			'return_date'

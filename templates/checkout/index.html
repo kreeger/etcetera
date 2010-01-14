@@ -17,8 +17,11 @@
    {% if view_type == 'deliveries' %}
        (Deliveries)
     {% endif %}
-    {% if view_type == 'my_deliveries' %}
-       (My Deliveries)
+    {% if view_type == 'my_tickets' %}
+       (My Tickets)
+    {% endif %}
+    {% if view_type == 'unconfirmed' %}
+       (Unconfirmed)
     {% endif %}
 {% endblock %}
 
@@ -28,8 +31,16 @@
             All Active
          </a>
       </li>
+      <li><a href="{% url checkout-unconfirmed %}">
+            Unconfirmed
+         </a>
+      </li>
       <li><a href="{% url checkout-current %}">
             Current
+         </a>
+      </li>
+      <li><a href="{% url checkout-pickups %}">
+            Req. Pickups
          </a>
       </li>
       <li><a href="{% url checkout-deliveries %}">
@@ -37,7 +48,11 @@
          </a>
       </li>
       <li><a href="{% url checkout-mine %}">
-            My Deliveries
+            My Tickets
+         </a>
+      </li>
+      <li><a href="{% url checkout-returns %}">
+            Returns
          </a>
       </li>
       <li><a href="{% url checkout-completed %}">
@@ -52,7 +67,7 @@
 {% endblock %}
 
 {% block subsubnav %}
-   {% if view_type == 'deliveries' or view_type == 'my_deliveries' %}
+   {% if view_type == 'deliveries' or view_type == 'my_tickets' %}
    <ul>
       <li><a href="{% url checkout-deliveries %}">
             Today
@@ -88,8 +103,17 @@
       {% if view_type == 'overdue' %}
          Overdue
       {% endif %}
-      {% if view_type == 'my_deliveries' %}
-         My Delivery
+      {% if view_type == 'my_tickets' %}
+         My
+      {% endif %}
+      {% if view_type == 'unconfirmed' %}
+         Unconfirmed
+      {% endif %}
+      {% if view_type == 'pickups' %}
+         Requestor Pickup
+      {% endif %}
+      {% if view_type == 'returns' %}
+         Returning
       {% endif %}
       Checkout List
             {% if q %}
@@ -163,7 +187,11 @@
          </td>
          <td>
             <a href="{% url checkout-detail object.id %}">
-               {{ object.get_checkout_type_display }}
+               {% if view_type == 'returns' %}
+                  {{ object.get_return_type_display }}
+               {% else %}
+                  {{ object.get_checkout_type_display }}
+               {% endif %}
             </a>
          </td>
       </tr>

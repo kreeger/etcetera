@@ -52,7 +52,7 @@ ul#navul, ul#navul ul { margin: 0px auto; padding: 0; list-style-type: none; }
 div#breadcrumb div.wrapper { padding: 4px 10px; border-left: 1px solid #AAA; border-right: 1px solid #AAA; background: url(../images/breadback.png) repeat-x; left: 40px; }
 div#breadcrumb { font-size: .8em; }
 
-div#subnav a { padding: 4px 10px; display: inline-block; width: 105px; }
+div#subnav a { padding: 4px 10px; display: inline-block; width: 80px; }
 div#subnav a:hover { background-color: #CCC; text-decoration: none; }
 div#subnav div.wrapper { padding: 0 10px; border-left: 1px solid #AAA; border-right: 1px solid #AAA; background-color: #EAEAEA; border-bottom: 1px solid #CCC; }
 div#subnav ul li { display: inline; }

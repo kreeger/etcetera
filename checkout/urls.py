@@ -8,6 +8,11 @@ urlpatterns = patterns('',
 		index,
 		{'view_type': 'completed'},
 		name="checkout-completed"
+	),	
+	url(r'^unconfirmed/$',
+		index,
+		{'view_type': 'unconfirmed'},
+		name="checkout-unconfirmed"
 	),
 	url(r'^current/$',
 		index,
@@ -19,14 +24,24 @@ urlpatterns = patterns('',
 		{'view_type': 'overdue'},
 		name="checkout-overdue"
 	),
+	url(r'^pickups/$',
+		index,
+		{'view_type': 'pickups'},
+		name="checkout-pickups"
+	),
 	url(r'^deliveries/$',
 		index,
 		{'view_type': 'deliveries'},
 		name="checkout-deliveries"
 	),
-	url(r'^my_deliveries/$',
+	url(r'^returns/$',
 		index,
-		{'view_type': 'my_deliveries'},
+		{'view_type': 'returns'},
+		name="checkout-returns"
+	),
+	url(r'^my_tickets/$',
+		index,
+		{'view_type': 'my_tickets'},
 		name="checkout-mine"
 	),
 	url(r'^new/$', new, name="checkout-new"),
