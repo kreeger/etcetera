@@ -37,10 +37,10 @@
    <h2{% if form.completed.errors or form.checkout_type.errors or form.return_type.errors %} class="errorlist"{% endif %}>
       {% if object %}
          <span class="right">
-            <span class="head">completed?</span> 
+            <span class="head">completed?</span>
                {{ form.completed }} {{ form.completed.errors }}<br />
-            <span class="head">confirmation sent?</span> 
-               {{ form.confirmation_sent }} {{ form.confirmation_sent.errors }}
+            <span class="head">canceled?</span>
+               {{ form.canceled }} {{ form.canceled.errors }}<br />
          </span>
       {% endif %}
       Checkout type {{ form.checkout_type }} {{ form.checkout_type.errors }}<br />

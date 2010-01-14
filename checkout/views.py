@@ -475,6 +475,8 @@ def cancel(request, object_id):
 			co.canceled = True
 			co.completed = True
 			co.save()
+			if co.email:
+				canceled_mail(co)
 			# Then trigger each equipment as available
 			for eq in co.equipment_list.all():
 				eq.status = 'checkout'
