@@ -20,12 +20,12 @@ def error_mail(request):
 	return HttpResponseRedirect('etcetera-index')
 
 def index(request):
-	repo = Repo(SITE_ROOT)
-	commits = repo.commits('master', max_count=3)
-	posts = extras.Post.objects.all()[:3]
+	#repo = Repo(SITE_ROOT)
+	#commits = repo.commits('master', max_count=3)
+	#posts = extras.Post.objects.all()[:3]
 	context = {
 		'object_list': posts,
-		'commits': commits,
+	#	'commits': commits,
 	}
 	return render_to_response(
 		"index.html",
