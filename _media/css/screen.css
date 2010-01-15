@@ -24,7 +24,7 @@ h1 input, h1 select { font-weight: bold; }
 .priority5 { color: #1f00ff; }
 .right { float: right; }
 .small { font-size: .8em; }
-.tablehead { -webkit-border-top-left-radius: 10px; -moz-border-radius-topleft: 10px; -webkit-border-bottom-left-radius: 10px; -moz-border-radius-bottomleft: 10px; background-color: #EAEAEA; vertical-align: middle; color: #666; text-align: right; text-transform: lowercase; font-weight: normal; font-weight: normal; padding: 0 3px 0 10px; }
+.datahead { -webkit-border-top-left-radius: 10px; -moz-border-radius-topleft: 10px; -webkit-border-bottom-left-radius: 10px; -moz-border-radius-bottomleft: 10px; background-color: #EAEAEA; vertical-align: inherit; color: #666; text-align: right; text-transform: lowercase; font-weight: normal; height: inherit; width: 160px; display: inline-table; }
 .wrapper { width: 950px; margin: 0px auto; }
 div.greeting { font-size: 10px; text-align: right; width: 300px; display: inline-table; padding-bottom: 5px; }
 div.greeting p:last-child { font-size: 12px; padding-top: 3px; }
@@ -97,60 +97,29 @@ table#list { margin: 0px; padding: 0px; border-spacing: 0px; border: 1px solid #
 
 div#barcode { background: url(../images/barcode-250.png) no-repeat; padding-top: 60px; letter-spacing: 4px;  font-size: 13px; }
 
-div#detail div#equip-submit { width: 195px; display: inline-block; text-align: right; }
-div#detail div.right h3 { margin-top: 0px; }
-div#detail div.right table td.head { width: 80px; }
-div#detail div.right { width: 450px; margin-left: 20px; }
-div#detail form div#barcode input { text-align: center; font-weight: bold; letter-spacing: 2px; }
-div#detail form div.right table { width: 100%; }
-div#detail form input#id_barcodes { width: 600px; }
-div#detail form input#id_equipment_text { width: 450px; }
-div#detail form input#save { border: 0px; background-color: transparent; font-size: 1em; padding: 0; font-weight: bold; margin: 0; color: #4A0010; }
-div#detail form input#save:hover { text-decoration: underline; cursor: pointer; }
-div#detail form p.datetime img { padding-left: 1px; }
-div#detail form p.datetime input { width: 200px; margin-right: 10px; }
-div#detail form p.datetime { font-size: 12px; margin: 0px; font-weight: normal; }
-div#detail form select#id_building { width: 200px; }
-div#detail form select#id_equipment_type { width: 30%; }
-div#detail form select#id_technician { width: 100%; }
-div#detail form table input { width: 100%; }
-div#detail form table#equip-add input { width: 300px; }
-div#detail form table#equip-add td.note { width: 300px; }
-div#detail form table#equip-add { width: 750px; display: inline-block; }
-div#detail form table.h1-head td:first-child { width: 167px; }
-div#detail form table.h1-head td:last-child { width: 297px; }
-div#detail form table.h1-head td:nth-child(2) { width: 178px; }
-div#detail form table.h1-head { padding-left: 5px; }
-div#detail form table.profile>tbody>tr>td:first-child { -webkit-border-radius: 10px; -moz-border-radius: 10px; border: 1px solid #CCC; background: url(/_media/images/profile-placeholder-back.png) no-repeat; padding: 0 15px 10px; vertical-align: bottom; height: 235px; }
-div#detail form textarea { width: 100%; padding: 5px; }
-div#detail form textarea#id_actions { width: 49%; }
-div#detail h1 span.head { color: #AAA; }
-div#detail h1 { margin-bottom: 0; }
-div#detail h2, div#detail table.h2-head { margin: 0 0 10px 0; padding: 3px; background-color: #DEDEDE; font-size: .8em; }
-div#detail h3 { margin: 10px 0; border-bottom: 1px solid #888; color: #444; font-weight: normal; font-style: normal; }
-div#detail table td.head { width: 115px; }
-div#detail table { font-weight: bold; font-size: 1.1em; }
-div#detail table#info td.tablehead { width: 250px; }
-div#detail table#list td:last-child { text-align: inherit; }
-div#detail table#list { font-weight: inherit; font-size: .85em; }
-div#detail table#tickets a { font-size: 12px; display: block; padding: 3px; font-weight: bold; }
-div#detail table#tickets a:hover { background-color: #4A0010; color: #CCC; text-decoration: none; }
-div#detail table#tickets td:last-child { font-size: 12px; vertical-align: middle; }
-div#detail table#toprow input { width: auto; }
-div#detail table#toprow { width: 100%; }
-div#detail table.h2-head td:first-child { width: 75px; }
-div#detail table.h2-head td:last-child input { width: 170px; }
-div#detail table.h2-head td:last-child { width: 200px; }
-div#detail table.h2-head td:nth-child(2) { width: 300px; }
-div#detail table.h2-head td:nth-child(3) { width: 120px; }
-div#detail table.h2-head tr:last-child td:nth-child(2) input { width: 80px; margin-left: 5px; }
-div#detail table.profile img { width: 200px; -webkit-border-radius: 10px; -moz-border-radius: 10px; border: 1px solid #CCC; }
-div#detail table.profile td:last-child { width: 740px; vertical-align: top; text-align: left; }
-div#detail table.profile { width: 100%; margin-top: 5px; }
-div#detail table.profile>tbody>tr>td { vertical-align: top; }
-div#detail table.profile>tbody>tr>td:first-child { width: 168px; height: auto; text-align: center; vertical-align: top; }
-div#detail td#barcode { text-align: right; }
-div#detail #checkout-print { display: none; }
+/* Doing the detail page BETTER. */
+div#headers { width: 770px; display: inline-table; vertical-align: top; }
+	div#headers ul { list-style-type: none; padding: 4px; margin: 0; background-color: #DEDEDE; font-size: 12px; font-weight: bold; }
+	div#headers li.created, div#headers li.closed { float: right; clear: both; }
+	
+div#actions { width: 170px; display: inline-table; background-color: #DEDEDE; border: 1px solid #BBB; padding: 10px; font-size: 12px; float: right; }
+	div#actions ul { list-style-type: none; padding: 0; margin: 0; }
+	div#detail div#actions h2 { font-size: 14px; margin: 0 0 5px 0; }
+	div#actions p { padding: 0; margin: 0; }
+
+div#detail { font-size: 14px; }
+	div#detail h1 { margin-bottom: 0; }
+	div#detail h2 { margin: 10px 0; border-bottom: 1px solid #888; color: #444; font-weight: normal; font-style: normal; }
+	
+
+.profile img { width: 200px; -webkit-border-radius: 10px; -moz-border-radius: 10px; border: 1px solid #CCC; }
+.profile td:last-child { width: 740px; vertical-align: top; text-align: left; }
+.profile { width: 100%; margin-top: 5px; }
+.profile>tbody>tr>td { vertical-align: top; }
+.profile>tbody>tr>td:first-child { width: 168px; height: auto; text-align: center; vertical-align: top; }
+
+#barcode { text-align: right; }
+#checkout-print { display: none; }
 
 div#times table caption { font-style: italic; font-weight: normal; font-size: .8em; text-align: left; }
 div#times table td input { width: 80px; }

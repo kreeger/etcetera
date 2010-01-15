@@ -34,89 +34,159 @@
       {% endif %}
    {% endif %}
    
-   <h1>
-      {% if user.is_authenticated %}
-         <span class="right">
-            {% if not object.completed %}
-               {% if not object.canceled %}
-                  <a href="{% url checkout-cancel object.id %}">
-                     cancel
-                  </a> &bull;
+   <div id="headers">
+      <h1>
+         {{ object.first_name }} {{ object.last_name }}
+            (Checkout #{{ object.id }})
+            <span class="head">{{ object.get_checkout_type_display }}</span>
+         {% if object.completed %}
+            <span class="head">/
+               {% if object.canceled %}
+                  canceled
+               {% else %}
+                  completed
                {% endif %}
-               {% if object.email %}
-                  {% if object.confirmation_sent %}
-                     <span class="disabled">confirmed</span> &bull;
-                  {% endif %}
-                  {% if not object.confirmation_sent %}
-                     <a href="{% url checkout-confirm object.id %}">
-                        send confirmation
-                     </a> &bull;
-                  {% endif %}
-               {% endif %}
-               <a href="{% url checkout-dupe object.id %}">
-                  duplicate
-               </a> &bull;
-               <a href="{% url checkout-equip object.id %}">
-                  change equipment
-               </a>
-            {% else %}
-               <span class="disabled">can't change equipment</span>
-            {% endif %}
-         &bull; <a href="{% url checkout-edit object.id %}">edit</a>
-         </span>
-      {% endif %}
-      
-      {{ object.first_name }} {{ object.last_name }}
-         (Checkout #{{ object.id }})
-         <span class="head">{{ object.get_checkout_type_display }}</span>
-      {% if object.completed %}
-         <span class="head">/
-            {% if object.canceled %}
-               canceled
-            {% else %}
-               completed
-            {% endif %}
-         </span>
-      {% endif %}
-   </h1>
-   
-   <h2>
-      {% if object.creation_date %}
-         <span class="right">
-            <span class="head">Created</span> 
-               {{ object.creation_date|date:'n/j/Y g:iA' }}<br />
-               {% if object.completion_date and object.completed %}
+            </span>
+         {% endif %}
+      </h1>
+      <ul>
+         {% if object.creation_date %}
+            <li class="created">
+               <span class="head">Created</span> 
+               {{ object.creation_date|date:'n/j/Y g:iA' }}
+            </li>
+            {% if object.completion_date and object.completed %}
+               <li class="closed">
                   <span class="head">Closed</span>
                   {{ object.completion_date|date:'n/j/Y g:iA' }}
-               {% endif %}
-         </span>
-      {% endif %}
-      {% if object.checkout_type == 'delivery' %}
-         ETC will deliver
-      {% else %}
-         Patron will pick up
-      {% endif %}
-      at {{ object.out_date|date:'n/j/Y g:iA' }}<br />
-      {% if object.return_type == 'etc' %}
-         ETC
-      {% else %}
-         Patron
-      {% endif %}
-      will return at {{ object.return_date|date:'n/j/Y g:iA' }}
-   </h2>
+               </li>
+            {% endif %}
+         {% endif %}
+         <li>
+            {% if object.checkout_type == 'delivery' %}
+               ETC will deliver
+            {% else %}
+               Patron will pick up
+            {% endif %}
+            at {{ object.out_date|date:'n/j/Y g:iA' }}
+         </li>
+         <li>
+            {% if object.return_type == 'etc' %}
+               ETC
+            {% else %}
+               Patron
+            {% endif %}
+            will return at {{ object.return_date|date:'n/j/Y g:iA' }}
+         </li>
+      </ul>
+   </div>
    
-   <div class="right">
-      <h3>Contact information</h3>
+   <div id="actions">
+      <h2>Actions</h2>
+      {% if user.is_authenticated %}
+         <ul>
+            {% if not object.completed %}
+               {% if not object.canceled %}
+                  <li>
+                     <a href="{% url checkout-cancel object.id %}">cancel</a>
+                  </li>
+               {% endif %}
+               {% if object.email %}
+                  <li>
+                  {% if object.confirmation_sent %}
+                     <span class="disabled">confirmed</span>
+                  {% else %}
+                        <a href="{% url checkout-confirm object.id %}">
+                           send confirmation
+                        </a>
+                  {% endif %}
+                  </li>
+               {% endif %}
+               <li>
+                  <a href="{% url checkout-dupe object.id %}">duplicate</a>
+               </li>
+               <li>
+                  <a href="{% url checkout-equip object.id %}">
+                     change equipment
+                  </a>
+               </li>
+            {% else %}
+               <li>
+                  <span class="disabled">can't change equipment</span>
+               </li>
+            {% endif %}
+            <li>
+               <a href="{% url checkout-edit object.id %}">edit</a>
+            </li>
+         </ul>
+      {% else %}
+         <p>You must be logged in to perform actions on this ticket.</p>
+      {% endif %}
+   </div>
+   
+   <div id="brief-information">
+      <h2>Brief information</h2>
+      <table>
+         <tr>
+            <td>Patron</td>
+            <td>{{ object.first_name }} {{ object.last_name }}</td>
+         </li>
+         {% if object.department or object.department_text %}
+            <tr>
+               <td>Department</td>
+               <td>
+                  {% if object.department %}
+                     {{ object.department }}
+                  {% else %}
+                     {{ object.department_text }} (user-submitted)
+                  {% endif %}
+               </td>
+            </tr>
+         {% endif %}
+         {% if object.course %}
+            <tr>
+               <td>Course</td>
+               <td>{{ object.course }}</td>
+            </tr>
+         {% endif %}
+         {% if object.building %}
+            <tr>
+               <td>
+                  {% if object.checkout_type == "delivery" %}
+                     Delivery
+                  {% endif %}
+                  Location
+               </td>
+               <td>{{ object.building.name }} {{ object.room }}</td>
+            </tr>
+         {% endif %}
+         {% if object.location_text %}
+            <tr>
+               <td>Other location</td>
+               <td>{{ object.location_text }}</td>
+            </tr>
+         {% endif %}
+         {% if object.returning_person %}
+            <tr>
+               <td>Returning person</td>
+               <td>{{ object.returning_person }}</td>
+            </tr>
+         {% endif %}
+      </table>
+   </div>
+
+   <div id="contact-information">
+      <h2>Contact information</h2>
       <table>
          {% if object.phone %}
             <tr>
-               <td class="tablehead">Phone</td>
+               <td>Phone</td> 
                <td>{{ object.phone }}</td>
             </tr>
          {% endif %}
          {% if object.email %}
             <tr>
-               <td class="tablehead">Email</td>
+               <td>Email</td>
                <td>
                   <a href="mailto:{{ object.email }}">{{ object.email }}</a>
                </td>
@@ -124,134 +194,95 @@
          {% endif %}
       </table>
    </div>
-   
-   <h3>Brief information</h3>
-   <table>
-      <tr>
-         <td class="tablehead">Submitted by</td>
-         <td>{{ object.first_name }} {{ object.last_name }}</td>
-      </tr>
-      {% if object.department or object.department_text %}
-         <tr>
-            <td class="tablehead">Department</td>
-            <td>
-               {% if object.department %}
-                  {{ object.department }}
-               {% else %}
-                  {{ object.department_text }} (user-submitted)
-               {% endif %}
-            </td>
-         </tr>
-      {% endif %}
-      {% if object.course %}
-         <tr>
-            <td class="tablehead">Course</td>
-            <td>{{ object.course }}</td>
-         </tr>
-      {% endif %}
-      {% if object.building %}
-         <tr>
-            <td class="tablehead">
-               {% if object.checkout_type == "delivery" %}
-                  Delivery
-               {% endif %}
-               Location
-            </td>
-            <td>{{ object.building.name }} {{ object.room }}</td>
-         </tr>
-      {% endif %}
-      {% if object.location_text %}
-         <tr>
-            <td class="tablehead">Other location</td>
-            <td>{{ object.location_text }}</td>
-         </tr>
-      {% endif %}
-      {% if object.returning_person %}
-         <tr>
-            <td class="tablehead">Returning person</td>
-            <td>{{ object.returning_person }}</td>
-         </tr>
-      {% endif %}
-   </table>
-    
-   <h3>Equipment needed</h3>
-   {{ object.equipment_needed|linebreaks }}
-   
+
+   <div id="equipment-needed">
+      <h2>Equipment needed</h2>
+      {{ object.equipment_needed|linebreaks }}
+   </div>
+
    {% if object.handling_user or object.delivering_user %}
-      <h3>Personnel information</h3>
-      <table>
-         {% if object.handling_user %}
+      <div id="personnel-information">
+         <h2>Personnel information</h2>
+         <table>
+            {% if object.handling_user %}
+               <tr>
+                  <td>Handled by</td>
+                  <td>
+                     <a href="{% url etcetera-user object.handling_user.username %}">
+                        {{ object.handling_user.get_full_name }}
+                     </a>
+                  </td>
+               </tr>
+            {% endif %}
+            {% if object.delivering_user %}
+               <tr>
+                  <td>Delivered by</td>
+                  <td>
+                     <a href="{% url etcetera-user object.delivering_user.username %}">
+                        {{ object.delivering_user.get_full_name }}
+                     </a>
+                  </td>
+               </tr>
+            {% endif %}
+         </table>
+      </div>
+   {% endif %}
+
+   <div id="equipment-list">
+      <h2>Equipment list</h2>
+      {% if object.equipment_list.all %}
+         <table>
             <tr>
-               <td class="tablehead">Handled by</td>
-               <td>
-                  <a href="{% url etcetera-user object.handling_user.username %}">
-                     {{ object.handling_user.get_full_name }}
-                  </a>
-               </td>
+               <td>Barcode</td>
+               <td>Type</td>
+               <td>Make/Model</td>
+               <td>Serial</td>
             </tr>
-         {% endif %}
-         {% if object.delivering_user %}
-            <tr>
-               <td class="tablehead">Delivered by</td>
-               <td>
-                  <a href="{% url etcetera-user object.delivering_user.username %}">
-                     {{ object.delivering_user.get_full_name }}
-                  </a>
-               </td>
-            </tr>
-         {% endif %}
-      </table>
-   {% endif %}
-   
-   <h3>Equipment list</h3>
-   {% if object.equipment_list.all %}
-      <table id="list">
-         <tr id="headerrow">
-            <td>Barcode</td>
-            <td>Type</td>
-            <td>Make/Model</td>
-            <td>Serial</td>
-         </tr>
-         {% for item in object.equipment_list.all %}
-            <tr class="datarow">
-               <td>
-                  <a href="{% url equipment-detail item.id %}">
-                     {{ item.barcode }}
-                  </a>
-               </td>
-               <td>
-                  <a href="{% url equipment-detail item.id %}">
-                     {{ item.equipment_type.name }}
-                  </a>
-               </td>
-               <td>
-                  <a href="{% url equipment-detail item.id %}">
-                     {{ item.make.name }} {{ item.model }}
-                  </a>
-               </td>
-               <td>
-                  <a href="{% url equipment-detail item.id %}">
-                     {{ item.serial }}
-                  </a>
-               </td>
-            </tr>
-         {% endfor %}
-      </table>
-   {% else %}
-      <p>No specific equipment has been attached to this checkout yet.</p>
-   {% endif %}
-   
-   <h3>Other equipment</h3>
-   {% if object.other_equipment %}
-      {{ object.other_equipment|linebreaks }}
-   {% else %}
-      <p>No extra equipment (cables, adapters, etc.) have been
-            attached to this checkout.</p>
-   {% endif %}
-   
+            {% for item in object.equipment_list.all %}
+               <tr>
+                  <td>
+                     <a href="{% url equipment-detail item.id %}">
+                        {{ item.barcode }}
+                     </a>
+                  </td>
+                  <td>
+                     <a href="{% url equipment-detail item.id %}">
+                        {{ item.equipment_type.name }}
+                     </a>
+                  </td>
+                  <td>
+                     <a href="{% url equipment-detail item.id %}">
+                        {{ item.make.name }} {{ item.model }}
+                     </a>
+                  </td>
+                  <td>
+                     <a href="{% url equipment-detail item.id %}">
+                        {{ item.serial }}
+                     </a>
+                  </td>
+               </tr>
+            {% endfor %}
+         </table>
+      {% else %}
+         <p>No specific equipment has been attached to this checkout yet.</p>
+      {% endif %}
+   </div>
+
+   <div id="other-equipment">
+      <h2>Other equipment</h2>
+      {% if object.other_equipment %}
+         {{ object.other_equipment|linebreaks }}
+      {% else %}
+         <p>No extra equipment (cables, adapters, etc.) have been
+               attached to this checkout.</p>
+      {% endif %}
+   </div>
+
    {% if object.comments %}
-   <h3>Comments</h3>
-      {{ object.comments|linebreaks }}
+      <div id="comments">
+         <h2>Comments</h2>
+         {{ object.comments|linebreaks }}
+      </div>
    {% endif %}
    
    <div id="checkout-print">
@@ -265,5 +296,6 @@
          </tr>
       </table>
    </div>
+   
 </div>
 {% endblock %}
