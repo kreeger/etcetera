@@ -20,16 +20,12 @@ def error_mail(request):
 	return HttpResponseRedirect('etcetera-index')
 
 def index(request):
-	# Hack to put the trailing slash on the root
-	if not request.META['REQUEST_URI'].endswith('/'):
-		# This is bad and I should most likely NOT hardcode this
-		return HttpResponseRedirect("etcetera%s" % request.path)
-	#repo = Repo(SITE_ROOT)
-	#commits = repo.commits('master', max_count=3)
+	repo = Repo(SITE_ROOT)
+	commit_history = repo.commits('master', max_count=3)
 	posts = extras.Post.objects.all()[:3]
 	context = {
 		'object_list': posts,
-	#	'commits': commits,
+		'commit_history': commit_history,
 	}
 	return render_to_response(
 		"index.html",
