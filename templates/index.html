@@ -10,15 +10,14 @@
       
       <h1>Updates from the Developer</h1>
       
+      {% if commit_history %}
       <h2>Latest three commit messages</h2>
-
-         {% if commits %}
-            {% for commit in commits %}
-            <div id="git" class="banner">
-               Commit <strong>{{ commit.id|truncate_chars:7 }}</strong> by {{ commit.author.name }}: <em>{{ commit.message|safe }}</em>
-            </div>
-            {% endfor %}
-         {% endif %}
+         {% for commit in commit_history %}
+         <div id="git" class="banner">
+            Commit <strong>{{ commit.id|truncate_chars:7 }}</strong> by {{ commit.author.name }}: <em>{{ commit.message|safe }}</em>
+         </div>
+         {% endfor %}
+      {% endif %}
          
       {% for post in object_list %}
          <div id="post-{{ post.id }}">
