@@ -12,11 +12,12 @@ The first phase of the project is to build the equipment database and the repair
 Dependencies
 ------------
 
-* `Django 1.1 or higher <http://www.djangoproject.com/download/>`_
-* `Python Imaging Library <http://www.pythonware.com/products/pil/>`_
-* `google-chartwrapper <http://code.google.com/p/google-chartwrapper/>`_
-* `PostgreSQL <http://postgresql.org/>`_
-* `psycopg2 <http://initd.org/>`_
+* `Django trunk <http://www.djangoproject.com/download/>`_ for Django (features will be locked at v1.2)
+* `Python Imaging Library <http://www.pythonware.com/products/pil/>`_ for profile images
+* `google-chartwrapper <http://code.google.com/p/google-chartwrapper/>`_ for reporting charts
+* `GitPython <http://gitorious.org/git-python>`_ for main page Git commits
+* `PostgreSQL <http://postgresql.org/>`_ for database storage
+* `psycopg2 <http://initd.org/>`_ for Python<-->PostgreSQL communication
 
 *Actually, you can use whatever DB you want, but I like PostgreSQL.*
 
