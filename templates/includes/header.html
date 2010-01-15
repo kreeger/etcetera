@@ -1,12 +1,16 @@
-<p>
-   <span class="small">Version 0.97.</span>
-   {% if user.is_authenticated %}
-		Welcome,
-		<a href="{% url etcetera-user user.username %}">
-		   {% firstof user.first_name user %}</a>.
-		<a href="{% url etcetera-logout %}">Logout?</a>
-   {% else %}
-   	Welcome. <a href="{% url etcetera-login %}">Login</a>?
-   {% endif %}
-</p>
 <h1><img src="/_media/images/etceteralogo_o.png" alt="" /></h1>
+<div class="greeting">
+   <p>
+      Version 0.97.
+   </p>
+   <p>
+      {% if user.is_authenticated %}
+   		Welcome,
+   		<a href="{% url etcetera-user user.username %}">
+   		   {% firstof user.first_name user %}</a>.
+   		<a href="{% url etcetera-logout %}">Logout?</a>
+      {% else %}
+      	Welcome. <a href="{% url etcetera-login %}">Login</a>?
+      {% endif %}
+   </p>
+</div>

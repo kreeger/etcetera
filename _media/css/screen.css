@@ -26,6 +26,8 @@ h1 input, h1 select { font-weight: bold; }
 .small { font-size: .8em; }
 .tablehead { -webkit-border-top-left-radius: 10px; -moz-border-radius-topleft: 10px; -webkit-border-bottom-left-radius: 10px; -moz-border-radius-bottomleft: 10px; background-color: #EAEAEA; vertical-align: middle; color: #666; text-align: right; text-transform: lowercase; font-weight: normal; font-weight: normal; padding: 0 3px 0 10px; }
 .wrapper { width: 950px; margin: 0px auto; }
+div.greeting { font-size: 10px; text-align: right; width: 300px; display: inline-table; padding-bottom: 5px; }
+div.greeting p:last-child { font-size: 12px; padding-top: 3px; }
 
 a.add { width: 16px; height: 16px; background-image: url(../images/icons/buttonplu32.png); }
 a.remove { width: 16px; height: 16px; background-image: url(../images/icons/buttonmin32.png); }
@@ -34,8 +36,7 @@ td.tablehead { width: 150px; }
 
 div#header a { color: #BBB; }
 div#header h1 img { display: none; }
-div#header h1 { height: 120px; background: url(../images/etceteralogo.png) no-repeat; }
-div#header p { float: right; font-size: 0.8em; padding-top: 100px; }
+div#header h1 { height: 120px; background: url(../images/etceteralogo.png) no-repeat; width: 646px; display: inline-table; }
 div#header p, div#header h1 { margin: 0; color: #EEE; }
 div#header { background-image: url(../images/header.png); height: 120px; border-bottom: 1px solid #333; }
 
@@ -71,6 +72,7 @@ div#content p { margin: 0 0 10px 0; padding: 5px 0; }
 div#alert { background: #ffcb57 url(../images/icons/alert48.png) no-repeat 3px -8px; }
 div#error { background: #ffaaaa url(../images/icons/error48.png) no-repeat 3px -8px; }
 div#notify { background: #cccdff url(../images/icons/notify48.png) no-repeat 3px -8px; }
+div#git { background: #444 url(../images/icons/git48.png) no-repeat 5px -8px; color: #AAA; padding-left: 60px; font-size: 12px; margin-top: 10px; }
 div.banner { display: block; padding: 8px 8px 8px 55px; margin-bottom: 10px; -moz-border-radius-bottomleft: 10px; -moz-border-radius-topright: 10px; -webkit-border-bottom-left-radius: 10px; -webkit-border-top-right-radius: 10px; }
 
 div#searchform { height: 10px; margin-bottom: 20px; padding: 0px; width: 100%; }

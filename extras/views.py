@@ -5,6 +5,7 @@ from django.core.urlresolvers import reverse
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import models as auth
 
+from etcetera.settings import SITE_ROOT
 from etcetera.extras.mailer import error_mail
 from etcetera.extras import models as extras
 from etcetera.extras import forms as exforms
@@ -12,19 +13,19 @@ from etcetera.service import models as service
 from etcetera.checkout import models as checkout
 
 from docutils.core import publish_parts
+from git import *
 
 def error_mail(request):
 	error_mail(request)
 	return HttpResponseRedirect('etcetera-index')
 
 def index(request):
-	# Hack to put the trailing slash on the root
-	if not request.META['REQUEST_URI'].endswith('/'):
-		# This is bad and I should most likely NOT hardcode this
-	    return HttpResponseRedirect("etcetera%s" % request.path)
+	repo = Repo(SITE_ROOT)
+	commits = repo.commits('master', max_count=3)
 	posts = extras.Post.objects.all()[:3]
 	context = {
 		'object_list': posts,
+		'commits': commits,
 	}
 	return render_to_response(
 		"index.html",

@@ -22,3 +22,13 @@ def money(value):
 @register.filter
 def unpluralize(value, suffix_length=1):
 	return value[:-suffix_length]
+
+# From http://w.holeso.me/2008/08/a-simple-django-truncate-filter/
+@register.filter("truncate_chars")  
+def truncate_chars(value, max_length):  
+    if len(value) > max_length:  
+        truncd_val = value[:max_length]  
+        if value[max_length+1] != " ":  
+            truncd_val = truncd_val[:truncd_val.rfind(" ")]  
+        return truncd_val  
+    return value
