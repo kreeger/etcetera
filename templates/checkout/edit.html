@@ -22,35 +22,102 @@
 {% block content %}
 <div id="detail">
    <form action="" method="POST">
-   <h1>
+   
+   <div id="headers">
+      <h1>
+         {% if not object %}
+            Adding a new
+         {% endif %}
+         Checkout
+         {% if object %}
+            #{{ object.id }} <span class="head">edit mode</span>
+         {% endif %}
+      </h1>
+      <ul{% if form.completed.errors or form.checkout_type.errors or form.return_type.errors %} class="errorlist"{% endif %}>
+         {% if object %}
+            <li class="created">
+               <span class="head">completed?</span>
+               {{ form.completed }} {{ form.completed.errors }}
+            </li>
+            <li class="closed">
+               <span class="head">canceled?</span>
+               {{ form.canceled }} {{ form.canceled.errors }}
+            </li>
+         {% endif %}
+         <li>
+            Checkout type
+            {{ form.checkout_type }} {{ form.checkout_type.errors }}
+         </li>
+         <li>
+            Return type
+            {{ form.return_type }} {{ form.return_type.errors }}
+         </li>
+      </ul>
+   </div>
+   
+   <div id="actions">
+      <h2>Actions</h2>
       {% if user.is_authenticated %}
-         <span class="right">
+         <ul>
             <input type="submit" name="save" value="save" id="save" />
-         </span>
+         </ul>
       {% endif %}
-      {% if not object %}Adding a new {% endif %}
-      Checkout{% if object %} #{{ object.id }}
-         <span class="head">edit mode</span>
-      {% endif %}
-   </h1>
+   </div>
    
-   <h2{% if form.completed.errors or form.checkout_type.errors or form.return_type.errors %} class="errorlist"{% endif %}>
-      {% if object %}
-         <span class="right">
-            <span class="head">completed?</span>
-               {{ form.completed }} {{ form.completed.errors }}<br />
-            <span class="head">canceled?</span>
-               {{ form.canceled }} {{ form.canceled.errors }}<br />
-         </span>
-      {% endif %}
-      Checkout type {{ form.checkout_type }} {{ form.checkout_type.errors }}<br />
-      Return type {{ form.return_type }} {{ form.return_type.errors }}
-   </h2>
-   {% if form.errors %}<p>{% for e in form.errors %}{{ e }}{% endfor %}</p>{% endif %}
-   
-   <div class="right">
-      <h3>Contact information</h3>
-      <table>
+   <div id="brief-information">
+      <h2>Brief information</h2>
+      <table class="detail">
+         <tr{% if form.first_name.errors %} class="errorlist"{% endif %}>
+            <td class="tablehead">{{ form.first_name.label }}</td>
+            <td>{{ form.first_name }} {{ form.first_name.errors }}</td>
+         </tr>
+         <tr{% if form.last_name.errors %} class="errorlist"{% endif %}>
+            <td class="tablehead">{{ form.last_name.label }}</td>
+            <td>{{ form.last_name }} {{ form.last_name.errors }}</td>
+         </tr>
+         <tr{% if form.department.errors %} class="errorlist"{% endif %}>
+            <td class="tablehead">{{ form.department.label }}</td>
+            <td>{{ form.department }} {{ form.department.errors }}</td>
+         </tr>
+         {% if object.department_text %}
+            <tr>
+               <td class="tablehead">Department (user)</td>
+               <td>{{ object.department_text }}</td>
+            </tr>
+         {% endif %}
+         <tr{% if form.course.errors %} class="errorlist"{% endif %}>
+            <td class="tablehead">{{ form.course.label }}</td>
+            <td>{{ form.course }} {{ form.course.errors }}</td>
+         </tr>
+         <tr{% if form.building.errors %} class="errorlist"{% endif %}>
+            <td class="tablehead">{{ form.building.label }}</td>
+            <td>{{ form.building }} {{ form.building.errors }}</td>
+         </tr>
+         <tr{% if form.room.errors %} class="errorlist"{% endif %}>
+            <td class="tablehead">{{ form.room.label }}</td>
+            <td>{{ form.room }} {{ form.room.errors }}</td>
+         </tr>
+         <tr{% if form.returning_person.errors %} class="errorlist"{% endif %}>
+            <td class="tablehead">{{ form.returning_person.label }}</td>
+            <td>
+               {{ form.returning_person }}
+               {{ form.returning_person.errors }}
+            </td>
+         </tr>
+         <tr{% if form.out_date.errors %} class="errorlist"{% endif %}>
+            <td class="tablehead">{{ form.out_date.label }}</td>
+            <td>{{ form.out_date }} {{ form.out_date.errors }}</td>
+         </tr>
+         <tr{% if form.return_date.errors %} class="errorlist"{% endif %}>
+            <td class="tablehead">{{ form.return_date.label }}</td>
+            <td>{{ form.return_date }} {{ form.return_date.errors }}</td>
+         </tr>
+      </table>
+   </div>
+
+   <div id="contact-information">
+      <h2>Contact information</h2>
+      <table class="detail">
          <tr{% if form.phone.errors %} class="errorlist"{% endif %}>
             <td class="tablehead">{{ form.phone.label }}</td>
             <td>{{ form.phone }} {{ form.phone.errors }}</td>
@@ -61,90 +128,53 @@
          </tr>
       </table>
    </div>
-   
-   <h3>Brief information</h3>
-   <table>
-      <tr{% if form.first_name.errors %} class="errorlist"{% endif %}>
-         <td class="tablehead">{{ form.first_name.label }}</td>
-         <td>{{ form.first_name }} {{ form.first_name.errors }}</td>
-      </tr>
-      <tr{% if form.last_name.errors %} class="errorlist"{% endif %}>
-         <td class="tablehead">{{ form.last_name.label }}</td>
-         <td>{{ form.last_name }} {{ form.last_name.errors }}</td>
-      </tr>
-      <tr{% if form.department.errors %} class="errorlist"{% endif %}>
-         <td class="tablehead">{{ form.department.label }}</td>
-         <td>{{ form.department }} {{ form.department.errors }}</td>
-      </tr>
-      {% if object.department_text %}
-         <tr>
-            <td class="tablehead">Department (user)</td>
-            <td>{{ object.department_text }}</td>
-         </tr>
-      {% endif %}
-      <tr{% if form.course.errors %} class="errorlist"{% endif %}>
-         <td class="tablehead">{{ form.course.label }}</td>
-         <td>{{ form.course }} {{ form.course.errors }}</td>
-      </tr>
-      <tr{% if form.building.errors %} class="errorlist"{% endif %}>
-         <td class="tablehead">{{ form.building.label }}</td>
-         <td>{{ form.building }} {{ form.building.errors }}</td>
-      </tr>
-      <tr{% if form.room.errors %} class="errorlist"{% endif %}>
-         <td class="tablehead">{{ form.room.label }}</td>
-         <td>{{ form.room }} {{ form.room.errors }}</td>
-      </tr>
-      <tr{% if form.returning_person.errors %} class="errorlist"{% endif %}>
-         <td class="tablehead">{{ form.returning_person.label }}</td>
-         <td>
-            {{ form.returning_person }}
-            {{ form.returning_person.errors }}
-         </td>
-      </tr>
-      <tr{% if form.out_date.errors %} class="errorlist"{% endif %}>
-         <td class="tablehead">{{ form.out_date.label }}</td>
-         <td>{{ form.out_date }} {{ form.out_date.errors }}</td>
-      </tr>
-      <tr{% if form.return_date.errors %} class="errorlist"{% endif %}>
-         <td class="tablehead">{{ form.return_date.label }}</td>
-         <td>{{ form.return_date }} {{ form.return_date.errors }}</td>
-      </tr>
-   </table>
-   
-   <h3>{{ form.equipment_needed.label }}</h3>
-   <p{% if form.equipment_needed.errors %} class="errorlist"{% endif %}>
-      {{ form.equipment_needed }} {{ form.equipment_needed.errors }}
-   </p>
-   
-   <h3>Personnel information</h3>
-   <table>
-      {% if object.handling_user %}
-         <tr>
-            <td class="tablehead">Handled by</td>
-            <td>
-               <a href="{% url etcetera-user object.handling_user.username %}">
-                  {{ object.handling_user.get_full_name }}
-               </a>
-            </td>
-         </tr>
-      {% endif %}
-      <tr{% if form.delivering_user.errors %} class="errorlist"{% endif %}>
-         <td class="tablehead">{{ form.delivering_user.label }}</td>
-         <td>{{ form.delivering_user }} {{ form.delivering_user.errors }}</td>
-      </tr>
-   </table>
-   
-   <h3>{{ form.other_equipment.label }}</h3>
-   <p{% if form.other_equipment.errors %} class="errorlist"{% endif %}>
-      {{ form.other_equipment }}
-      {{ form.other_equipment.errors }}
-   </p>
-   
-   <h3>{{ form.comments.label }}</h3>
-   <p{% if form.comments.errors %} class="errorlist"{% endif %}>
-      {{ form.comments }}
-      {{ form.comments.errors }}
-   </p>
+
+   <div id="equipment-needed">
+      <h2>{{ form.equipment_needed.label }}</h2>
+      <p{% if form.equipment_needed.errors %} class="errorlist"{% endif %}>
+         {{ form.equipment_needed }} {{ form.equipment_needed.errors }}
+      </p>
+   </div>
+
+   {% if object.handling_user or object.delivering_user %}
+      <div id="personnel-information">
+         <h2>Personnel information</h2>
+         <table class="detail">
+            {% if object.handling_user %}
+               <tr>
+                  <td class="tablehead">Handled by</td>
+                  <td>
+                     <a href="{% url etcetera-user object.handling_user.username %}">
+                        {{ object.handling_user.get_full_name }}
+                     </a>
+                  </td>
+               </tr>
+            {% endif %}
+            <tr{% if form.delivering_user.errors %} class="errorlist"{% endif %}>
+               <td class="tablehead">{{ form.delivering_user.label }}</td>
+               <td>{{ form.delivering_user }} {{ form.delivering_user.errors }}</td>
+            </tr>
+         </table>
+      </div>
+   {% endif %}
+
+   <div id="other-equipment">
+      <h2>{{ form.other_equipment.label }}</h2>
+      <p{% if form.other_equipment.errors %} class="errorlist"{% endif %}>
+         {{ form.other_equipment }}
+         {{ form.other_equipment.errors }}
+      </p>
+   </div>
+
+   {% if object.comments %}
+      <div id="comments">
+         <h2>{{ form.comments.label }}</h2>
+         <p{% if form.comments.errors %} class="errorlist"{% endif %}>
+            {{ form.comments }}
+            {{ form.comments.errors }}
+         </p>
+      </div>
+   {% endif %}
    </form>
 </div>
 {% endblock %}
