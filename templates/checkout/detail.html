@@ -126,7 +126,7 @@
    
    <div id="brief-information">
       <h2>Brief information</h2>
-      <table>
+      <table class="detail">
          <tr>
             <td>Patron</td>
             <td>{{ object.first_name }} {{ object.last_name }}</td>
@@ -177,7 +177,7 @@
 
    <div id="contact-information">
       <h2>Contact information</h2>
-      <table>
+      <table class="detail">
          {% if object.phone %}
             <tr>
                <td>Phone</td> 
@@ -203,7 +203,7 @@
    {% if object.handling_user or object.delivering_user %}
       <div id="personnel-information">
          <h2>Personnel information</h2>
-         <table>
+         <table class="detail">
             {% if object.handling_user %}
                <tr>
                   <td>Handled by</td>
@@ -228,45 +228,43 @@
       </div>
    {% endif %}
 
-   <div id="equipment-list">
-      <h2>Equipment list</h2>
-      {% if object.equipment_list.all %}
-         <table>
+   <h2>Equipment list</h2>
+   {% if object.equipment_list.all %}
+      <table id="list">
+         <tr>
+            <td>Barcode</td>
+            <td>Type</td>
+            <td>Make/Model</td>
+            <td>Serial</td>
+         </tr>
+         {% for item in object.equipment_list.all %}
             <tr>
-               <td>Barcode</td>
-               <td>Type</td>
-               <td>Make/Model</td>
-               <td>Serial</td>
+               <td>
+                  <a href="{% url equipment-detail item.id %}">
+                     {{ item.barcode }}
+                  </a>
+               </td>
+               <td>
+                  <a href="{% url equipment-detail item.id %}">
+                     {{ item.equipment_type.name }}
+                  </a>
+               </td>
+               <td>
+                  <a href="{% url equipment-detail item.id %}">
+                     {{ item.make.name }} {{ item.model }}
+                  </a>
+               </td>
+               <td>
+                  <a href="{% url equipment-detail item.id %}">
+                     {{ item.serial }}
+                  </a>
+               </td>
             </tr>
-            {% for item in object.equipment_list.all %}
-               <tr>
-                  <td>
-                     <a href="{% url equipment-detail item.id %}">
-                        {{ item.barcode }}
-                     </a>
-                  </td>
-                  <td>
-                     <a href="{% url equipment-detail item.id %}">
-                        {{ item.equipment_type.name }}
-                     </a>
-                  </td>
-                  <td>
-                     <a href="{% url equipment-detail item.id %}">
-                        {{ item.make.name }} {{ item.model }}
-                     </a>
-                  </td>
-                  <td>
-                     <a href="{% url equipment-detail item.id %}">
-                        {{ item.serial }}
-                     </a>
-                  </td>
-               </tr>
-            {% endfor %}
-         </table>
-      {% else %}
-         <p>No specific equipment has been attached to this checkout yet.</p>
-      {% endif %}
-   </div>
+         {% endfor %}
+      </table>
+   {% else %}
+      <p>No specific equipment has been attached to this checkout yet.</p>
+   {% endif %}
 
    <div id="other-equipment">
       <h2>Other equipment</h2>

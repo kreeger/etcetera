@@ -14,7 +14,7 @@ h1 input, h1 select { font-weight: bold; }
 .drop-pop { width: 250px; height: 23px; text-align: center; font-weight: bold; float: left; position: relative; right: 5px; }
 .errorlist { color: #f00; font-size: .9em; background-color: #FFBBBB; }
 .canceled { background-color: #ffe6e6; }
-.head { color: #808080; text-transform: lowercase; text-align: right; font-weight: normal; font-style: normal; }
+.head { color: #808080; text-transform: lowercase; text-align: right; font-weight: 200; font-style: normal; }
 .note { font-weight: normal; font-size: 11px; color: #797979; }
 .padded { padding: 5px; }
 .priority1 { color: #f00; }
@@ -24,8 +24,10 @@ h1 input, h1 select { font-weight: bold; }
 .priority5 { color: #1f00ff; }
 .right { float: right; }
 .small { font-size: .8em; }
-.datahead { -webkit-border-top-left-radius: 10px; -moz-border-radius-topleft: 10px; -webkit-border-bottom-left-radius: 10px; -moz-border-radius-bottomleft: 10px; background-color: #EAEAEA; vertical-align: inherit; color: #666; text-align: right; text-transform: lowercase; font-weight: normal; height: inherit; width: 160px; display: inline-table; }
+.tablehead, table.detail td:first-child { -webkit-border-top-left-radius: 10px; -moz-border-radius-topleft: 10px; -webkit-border-bottom-left-radius: 10px; -moz-border-radius-bottomleft: 10px; background-color: #EAEAEA; vertical-align: middle; color: #666; text-align: right; text-transform: lowercase; font-weight: normal; width: 160px; display: block; padding: 5px 5px 5px 10px; }
 .wrapper { width: 950px; margin: 0px auto; }
+.datetime { font-weight: normal; font-size: 13px; }
+
 div.greeting { font-size: 10px; text-align: right; width: 300px; display: inline-table; padding-bottom: 5px; }
 div.greeting p:last-child { font-size: 12px; padding-top: 3px; }
 
@@ -82,18 +84,18 @@ div#searchform input#submit { margin-left: 5px; }
 
 div#list ul { display: block; list-style-type: none; padding: 0; border: 1px solid #AAA; margin-top: 3px; }
 
-table#list td:first-child { padding-left: 8px; font-weight: bold; }
-table#list td:last-child { padding-right: 8px; text-align: right; }
-table#list tr#headerrow td { border-bottom: 1px solid #AAA; text-align: left; font-weight: bold; }
-table#list tr#headerrow td:last-child { text-align: right; }
-table#list tr#headerrow { background-color: #DDD; }
-table#list tr a, table#list tr#headerrow td { padding-top: 5px; padding-bottom: 5px; }
-table#list tr td a { display: block; }
-table#list tr td.buttons a { display: inline-block; padding: 0px; }
-table#list tr td:last-child { font-size: .8em; }
-table#list tr:hover a { color: #CCC; text-decoration: none; }
-table#list tr:hover { background-color: #4A0010; }
 table#list { margin: 0px; padding: 0px; border-spacing: 0px; border: 1px solid #AAA; font-size: .85em; width: 100%; }
+	table#list td:first-child { padding-left: 8px; font-weight: bold;}
+	table#list td:last-child { padding-right: 8px; text-align: right; font-size: 11px; }
+	table#list tr:first-child { background-color: #DDD; }
+		table#list tr:first-child td { border-bottom: 1px solid #AAA; font-weight: bold; color: #000; }
+		table#list tr:first-child td:first-child { border-bottom: 1px solid #AAA; }
+	table#list tr a, table#list tr:first-child td { padding-top: 5px; padding-bottom: 5px; }
+	table#list a { display: block; }
+	table#list td.buttons a { display: inline-block; padding: 0px; }
+	table#list tr:hover { background-color: #4A0010; }
+		table#list tr:hover a { color: #CCC; text-decoration: none; }
+		table#list tr:first-child:hover { background-color: #DDD; }
 
 div#barcode { background: url(../images/barcode-250.png) no-repeat; padding-top: 60px; letter-spacing: 4px;  font-size: 13px; }
 
@@ -104,13 +106,17 @@ div#headers { width: 770px; display: inline-table; vertical-align: top; }
 	
 div#actions { width: 170px; display: inline-table; background-color: #DEDEDE; border: 1px solid #BBB; padding: 10px; font-size: 12px; float: right; }
 	div#actions ul { list-style-type: none; padding: 0; margin: 0; }
-	div#detail div#actions h2 { font-size: 14px; margin: 0 0 5px 0; }
+	div#detail div#actions h2 { font-size: 14px; margin: 0 0 5px 0; font-weight: 200; }
 	div#actions p { padding: 0; margin: 0; }
 
-div#detail { font-size: 14px; }
+div#detail { font-size: 15px; }
 	div#detail h1 { margin-bottom: 0; }
-	div#detail h2 { margin: 10px 0; border-bottom: 1px solid #888; color: #444; font-weight: normal; font-style: normal; }
-	
+	div#detail h2 { margin: 10px 0; border-bottom: 1px solid #888; color: #444; font-weight: 200; font-style: normal; }
+	div#detail table td:last-child { font-weight: bold; }
+	div#detail textarea { width: 100%; }
+	div#detail table input { width: 300px; font-size: 14px; }
+	div#detail input#save { border: 1px solid #AAA; width: 100%; background-color: #EEE; cursor: pointer; }
+	div#detail input#save:hover { background-color: #AAA; }
 
 .profile img { width: 200px; -webkit-border-radius: 10px; -moz-border-radius: 10px; border: 1px solid #CCC; }
 .profile td:last-child { width: 740px; vertical-align: top; text-align: left; }
