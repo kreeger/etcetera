@@ -8,7 +8,7 @@ from etcetera.equipment import models as equipment
 class EquipmentModelForm(forms.ModelForm):
 	class Meta:
 		model = equipment.Equipment
-		exclude = ('custname',)
+		exclude = ('custname','last_inventoried',)
 
 class EquipmentTypeModelForm(forms.ModelForm):
 	class Meta:

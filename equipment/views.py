@@ -172,3 +172,12 @@ def dupe(request, object_id):
 		context,
 		context_instance=RequestContext(request)
 	)
+
+@login_required
+def inventory(request, object_id):
+	eq = get_object_or_404(equipment.Equipment, id=object_id)
+	if request.method == 'GET':
+		if eq.last_inventoried != dt.datetime.today():
+			eq.last_inventoried = dt.datetime.today()
+			eq.save()
+	return HttpResponseRedirect(reverse('equipment-detail', args=(eq.id,),))
