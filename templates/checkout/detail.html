@@ -85,12 +85,15 @@
       <h2>Actions</h2>
       {% if user.is_authenticated %}
          <ul>
+            <li>
+               <a href="{% url checkout-edit object.id %}">edit</a>
+            </li>
             {% if not object.completed %}
-               {% if not object.canceled %}
-                  <li>
-                     <a href="{% url checkout-cancel object.id %}">cancel</a>
-                  </li>
-               {% endif %}
+               <li>
+                  <a href="{% url checkout-equip object.id %}">
+                     change equipment
+                  </a>
+               </li>
                {% if object.email %}
                   <li>
                   {% if object.confirmation_sent %}
@@ -105,19 +108,16 @@
                <li>
                   <a href="{% url checkout-dupe object.id %}">duplicate</a>
                </li>
-               <li>
-                  <a href="{% url checkout-equip object.id %}">
-                     change equipment
-                  </a>
-               </li>
+               {% if not object.canceled %}
+                  <li>
+                     <a href="{% url checkout-cancel object.id %}">cancel</a>
+                  </li>
+               {% endif %}
             {% else %}
                <li>
                   <span class="disabled">can't change equipment</span>
                </li>
             {% endif %}
-            <li>
-               <a href="{% url checkout-edit object.id %}">edit</a>
-            </li>
          </ul>
       {% else %}
          <p>You must be logged in to perform actions on this ticket.</p>

@@ -14,205 +14,225 @@
 {% block content %}
 <div id="detail">
    
-   {% if object.barcode %}
-      <div class="drop-pop" id="barcode">
-         {{ object.barcode }}
-      </div>
-   {% endif %}
-   
-   <h1>
-      {% if user.is_authenticated %}
-         <span class="right">
-            <a href="{% url equipment-dupe object.id %}">duplicate</a>
-            &bull; <a href="{% url equipment-edit object.id %}">edit</a>
-         </span>
+   <div id="headers">
+      {% if object.barcode %}
+         <div class="drop-pop" id="barcode">
+            {{ object.barcode }}
+         </div>
       {% endif %}
-      {{ object.make }} {{ object.model }}
-      <span class="head">{{ object.equipment_type }}</span>
-   </h1>
+      
+      <h1>
+         {{ object.make }} {{ object.model }}
+         <span class="head">{{ object.equipment_type }}</span>
+      </h1>
    
-   <h2>
-      {% if object.status %}
-         {% if object.status == "checkout" %}Available for {% endif %}
-         {{ object.get_status_display }}
-         {% if user.is_authenticated and object.building %}
-            {% if object.status == "missing" %}from
-               {% else %}{% if object.status == "checkedout" %}from
-                  {% else %}{% if object.status == "reserved" %}from
-                     {% else %}in
+      <ul>
+         {% if object.status %}
+            <li>
+               {% if object.status == "checkout" %}Available for {% endif %}
+               {{ object.get_status_display }}
+               {% if user.is_authenticated and object.building %}
+                  {% if object.status == "missing" %}from
+                     {% else %}{% if object.status == "checkedout" %}from
+                        {% else %}{% if object.status == "reserved" %}from
+                           {% else %}in
+                        {% endif %}
+                     {% endif %}
                   {% endif %}
+               <strong>
+                  {{ object.building.abbreviation }} {{ object.room }}
+               </strong>
                {% endif %}
+            </li>
+            {% else %}<li>(this item has no status)</li>
+         {% endif %}
+         {% if user.is_authenticated %}
+            {% if object.last_inventoried %}
+               <li>
+                  Last inventoried on
+                  {{ object.last_inventoried|date:'n/j/Y' }}
+               </li>
             {% endif %}
-            {{ object.building.abbreviation }} {{ object.room }}
+            {% if object.on_weekly_checklist %}
+               <li>This item is on the weekly checklist.</li>
+            {% endif %}
          {% endif %}
-         {% else %}(this item has no status)
-      {% endif %}
-      <br />
+      </ul>
+   </div>
+   
+   <div id="actions">
+      <h2>Actions</h2>
       {% if user.is_authenticated %}
-         {% if object.last_inventoried %}
-            Last inventoried on {{ object.last_inventoried|date:'n/j/Y' }}
-         {% else %}
-            &nbsp;
-         {% endif %}
-         <br />
-         {% if object.on_weekly_checklist %}
-            This item is on the weekly checklist.
-         {% else %}
-            &nbsp;
-         {% endif %}
+         <ul>
+            <li><a href="{% url equipment-edit object.id %}">edit</a></li>
+            <li><a href="{% url equipment-dupe object.id %}">duplicate</a></li>
+            <li>
+               <a href="{% url equipment-inventory object.id %}">
+                  mark as inventoried
+               </a>
+            </li>
+         </ul>
       {% else %}
-         &nbsp;<br />&nbsp;
+         <p>You must be logged in to perform actions on this ticket.</p>
       {% endif %}
-   </h2>
+   </div>
+   
+   <div id="brief-information">
+      <h2>Brief information</h2>
+      {% if object.serial or object.smsu_id or object.video_unit or object.cc_unit or object.lamp_type or object.property_control %}
+      <table class="detail">
+         {% if object.serial %}
+            <tr>
+               <td>Serial #</td>
+               <td>{{ object.serial }}</td>
+            </tr>
+         {% endif %}
+         {% if object.smsu_id %}
+            <tr>
+               <td>SMSU ID #</td>
+               <td>{{ object.smsu_id }}</td>
+            </tr>
+         {% endif %}
+         {% if object.video_unit %}
+            <tr>
+               <td>Video unit #</td>
+               <td>{{ object.video_unit }}</td>
+            </tr>
+         {% endif %}
+         {% if object.cc_unit %}
+            <tr>
+               <td>Computer unit #</td>
+               <td>{{ object.cc_unit }}</td>
+            </tr>
+         {% endif %}
+         {% if object.lamp_type %}
+            <tr>
+               <td>Lamp type</td>
+               <td>{{ object.lamp_type }}</td>
+            </tr>
+         {% endif %}
+         {% if object.property_control %}
+            <tr>
+               <td>Property control #</td>
+               <td>{{ object.property_control }}</td>
+            </tr>
+         {% endif %}
+         {% if object.ticket %}
+            <tr>
+               <td>Ticket #</td>
+               <td>{{ object.ticket }}</td>
+            </tr>
+         {% endif %}
+      </table>
+      {% else %}
+         <p>Basic information hasn't been entered yet for this item.</p>
+      {% endif %}
+   </div>
    
    {% if user.is_authenticated %}
-      <div class="right">
-         <h3>Currently in the hands of...</h3>
-         {% if object.custname or object.checkout_to or object.department %}
-         <table>
-            {% if object.custname or object.checkout_to %}
-            <tr>
-               <td class="tablehead">Patron</td>
-               <td>
-                  {% if object.custname %}
-                     {{ object.custname }}
-                  {% else %}
-                     {{ object.checkout_to }}
-                  {% endif %}
-               </td>
-            </tr>
-            {% endif %}
-            {% if object.department %}
-               <tr>
-                  <td class="tablehead">Department</td>
-                  <td>{{ object.department }}</td>
-               </tr>
-            {% endif %}
-         </table>
+      <div id="origin-and-purchase-information">
+         <h2>Origin and purchase information</h2>
+         {% if object.value or object.dof or object.purchase_order or object.budget %}
+            <table>
+               {% if object.received_from %}
+                  <tr>
+                     <td class="tablehead">Received from</td>
+                     <td>{{ object.received_from }}</td>
+                  </tr>
+               {% endif %}
+               {% if object.received_date %}
+                  <tr>
+                     <td class="tablehead">Received date</td>
+                     <td>{{ object.received_date }}</td>
+                  </tr>
+               {% endif %}
+               {% if object.value %}
+                  <tr>
+                     <td class="tablehead">Value</td>
+                     <td>{{ object.value|money }}</td>
+                  </tr>
+               {% endif %}
+               {% if object.dof %}
+                  <tr>
+                     <td class="tablehead">DOF</td>
+                     <td>{{ object.dof }}</td>
+                  </tr>
+               {% endif %}
+               {% if object.purchase_order %}
+                  <tr>
+                     <td class="tablehead">Purchase order</td>
+                     <td>{{ object.purchase_order }}</td>
+                  </tr>
+               {% endif %}
+               {% if object.budget %}
+                  <tr>
+                     <td class="tablehead">Funding source</td>
+                     <td>{{ object.get_budget_display }}</td>
+                  </tr>
+               {% endif %}
+            </table>
          {% else %}
-            <p>...nobody.</p>
+            <p>Purchase information hasn't been entered yet for this item.</p>
          {% endif %}
       </div>
-   {% endif %}
-   
-   <h3>Brief information</h3>
-   {% if object.serial or object.smsu_id or object.video_unit or object.cc_unit or object.lamp_type or object.property_control %}
-   <table>
-      {% if object.serial %}
-         <tr>
-            <td class="tablehead">Serial #</td>
-            <td>{{ object.serial }}</td>
-         </tr>
-      {% endif %}
-      {% if object.smsu_id %}
-         <tr>
-            <td class="tablehead">SMSU ID #</td>
-            <td>{{ object.smsu_id }}</td>
-         </tr>
-      {% endif %}
-      {% if object.video_unit %}
-         <tr>
-            <td class="tablehead">Video unit #</td>
-            <td>{{ object.video_unit }}</td>
-         </tr>
-      {% endif %}
-      {% if object.cc_unit %}
-         <tr>
-            <td class="tablehead">Computer unit #</td>
-            <td>{{ object.cc_unit }}</td>
-         </tr>
-      {% endif %}
-      {% if object.lamp_type %}
-         <tr>
-            <td class="tablehead">Lamp type</td>
-            <td>{{ object.lamp_type }}</td>
-         </tr>
-      {% endif %}
-      {% if object.property_control %}
-         <tr>
-            <td class="tablehead">Property control #</td>
-            <td>{{ object.property_control }}</td>
-         </tr>
-      {% endif %}
-      {% if object.ticket %}
-         <tr>
-            <td class="tablehead">Ticket #</td>
-            <td>{{ object.ticket }}</td>
-         </tr>
-      {% endif %}
-   </table>
-   {% else %}
-      <p>Basic information hasn't been entered yet for this item.</p>
-   {% endif %}
-   
-   {% if user.is_authenticated %}
-      <h3>Origin and purchase information</h3>
-      {% if object.value or object.dof or object.purchase_order or object.budget %}
-         <table>
-            {% if object.received_from %}
+      
+      {% if user.is_authenticated %}
+         <div id="currently-in-the-hands-of">
+            <h2>Currently in the hands of...</h2>
+            {% if object.custname or object.checkout_to or object.department %}
+            <table class="detail">
+               {% if object.custname or object.checkout_to %}
                <tr>
-                  <td class="tablehead">Received from</td>
-                  <td>{{ object.received_from }}</td>
+                  <td>Patron</td>
+                  <td>
+                     {% if object.custname %}
+                        {{ object.custname }}
+                     {% else %}
+                        {{ object.checkout_to }}
+                     {% endif %}
+                  </td>
                </tr>
+               {% endif %}
+               {% if object.department %}
+                  <tr>
+                     <td>Department</td>
+                     <td>{{ object.department }}</td>
+                  </tr>
+               {% endif %}
+            </table>
+            {% else %}
+               <p>...nobody.</p>
             {% endif %}
-            {% if object.received_date %}
-               <tr>
-                  <td class="tablehead">Received date</td>
-                  <td>{{ object.received_date }}</td>
-               </tr>
-            {% endif %}
-            {% if object.value %}
-               <tr>
-                  <td class="tablehead">Value</td>
-                  <td>{{ object.value|money }}</td>
-               </tr>
-            {% endif %}
-            {% if object.dof %}
-               <tr>
-                  <td class="tablehead">DOF</td>
-                  <td>{{ object.dof }}</td>
-               </tr>
-            {% endif %}
-            {% if object.purchase_order %}
-               <tr>
-                  <td class="tablehead">Purchase order</td>
-                  <td>{{ object.purchase_order }}</td>
-               </tr>
-            {% endif %}
-            {% if object.budget %}
-               <tr>
-                  <td class="tablehead">Funding source</td>
-                  <td>{{ object.get_budget_display }}</td>
-               </tr>
-            {% endif %}
-         </table>
-      {% else %}
-         <p>Purchase information hasn't been entered yet for this item.</p>
+         </div>
       {% endif %}
    
-      <h3>Comments</h3>
-      {% if object.comments %}
-         {{ object.comments|linebreaks }}
-      {% else %}
-         <p>Comments haven't been entered yet for this item.</p>
-      {% endif %}
+      <div id="comments">
+         <h2>Comments</h2>
+         {% if object.comments %}
+            {{ object.comments|linebreaks }}
+         {% else %}
+            <p>Comments haven't been entered yet for this item.</p>
+         {% endif %}
+      </div>
    
-      <h3>History</h3>
-      {% if object.logs %}
-         <ul id="history">
-            {% for log in object.logs %}
-               <li>
-                  <strong>{{ log.datetime|date:'Y.n.j, g:i:s A' }}</strong>
-                  {% if log.user %}
-                     &rsaquo; {{ log.user.get_full_name }}
-                  {% endif %}
-                  Changed <strong>{{ log.field }}</strong>
-                  from <em>{{ log.old }}</em> to <em>{{ log.new }}</em>
-               </li>
-            {% endfor %}
-         </ul>
-      {% else %}<p>This item has no history.</p>
-      {% endif %}
+      <div id="history">
+         <h2>History</h2>
+         {% if object.logs %}
+            <ul>
+               {% for log in object.logs %}
+                  <li>
+                     <strong>{{ log.datetime|date:'Y.n.j, g:i:s A' }}</strong>
+                     {% if log.user %}
+                        &rsaquo; {{ log.user.get_full_name }}
+                     {% endif %}
+                     Changed <strong>{{ log.field }}</strong>
+                     from <em>{{ log.old }}</em> to <em>{{ log.new }}</em>
+                  </li>
+               {% endfor %}
+            </ul>
+         {% else %}<p>This item has no history.</p>
+         {% endif %}
+      </div>
    {% endif %}
 
 </div>

@@ -68,48 +68,48 @@
       <h2>Brief information</h2>
       <table class="detail">
          <tr{% if form.first_name.errors %} class="errorlist"{% endif %}>
-            <td class="tablehead">{{ form.first_name.label }}</td>
+            <td>{{ form.first_name.label }}</td>
             <td>{{ form.first_name }} {{ form.first_name.errors }}</td>
          </tr>
          <tr{% if form.last_name.errors %} class="errorlist"{% endif %}>
-            <td class="tablehead">{{ form.last_name.label }}</td>
+            <td>{{ form.last_name.label }}</td>
             <td>{{ form.last_name }} {{ form.last_name.errors }}</td>
          </tr>
          <tr{% if form.department.errors %} class="errorlist"{% endif %}>
-            <td class="tablehead">{{ form.department.label }}</td>
+            <td>{{ form.department.label }}</td>
             <td>{{ form.department }} {{ form.department.errors }}</td>
          </tr>
          {% if object.department_text %}
             <tr>
-               <td class="tablehead">Department (user)</td>
+               <td>Department (user)</td>
                <td>{{ object.department_text }}</td>
             </tr>
          {% endif %}
          <tr{% if form.course.errors %} class="errorlist"{% endif %}>
-            <td class="tablehead">{{ form.course.label }}</td>
+            <td>{{ form.course.label }}</td>
             <td>{{ form.course }} {{ form.course.errors }}</td>
          </tr>
          <tr{% if form.building.errors %} class="errorlist"{% endif %}>
-            <td class="tablehead">{{ form.building.label }}</td>
+            <td>{{ form.building.label }}</td>
             <td>{{ form.building }} {{ form.building.errors }}</td>
          </tr>
          <tr{% if form.room.errors %} class="errorlist"{% endif %}>
-            <td class="tablehead">{{ form.room.label }}</td>
+            <td>{{ form.room.label }}</td>
             <td>{{ form.room }} {{ form.room.errors }}</td>
          </tr>
          <tr{% if form.returning_person.errors %} class="errorlist"{% endif %}>
-            <td class="tablehead">{{ form.returning_person.label }}</td>
+            <td>{{ form.returning_person.label }}</td>
             <td>
                {{ form.returning_person }}
                {{ form.returning_person.errors }}
             </td>
          </tr>
          <tr{% if form.out_date.errors %} class="errorlist"{% endif %}>
-            <td class="tablehead">{{ form.out_date.label }}</td>
+            <td>{{ form.out_date.label }}</td>
             <td>{{ form.out_date }} {{ form.out_date.errors }}</td>
          </tr>
          <tr{% if form.return_date.errors %} class="errorlist"{% endif %}>
-            <td class="tablehead">{{ form.return_date.label }}</td>
+            <td>{{ form.return_date.label }}</td>
             <td>{{ form.return_date }} {{ form.return_date.errors }}</td>
          </tr>
       </table>
@@ -119,11 +119,11 @@
       <h2>Contact information</h2>
       <table class="detail">
          <tr{% if form.phone.errors %} class="errorlist"{% endif %}>
-            <td class="tablehead">{{ form.phone.label }}</td>
+            <td>{{ form.phone.label }}</td>
             <td>{{ form.phone }} {{ form.phone.errors }}</td>
          </tr>
          <tr{% if form.email.errors %} class="errorlist"{% endif %}>
-            <td class="tablehead">{{ form.email.label }}</td>
+            <td>{{ form.email.label }}</td>
             <td>{{ form.email }} {{ form.email.errors }}</td>
          </tr>
       </table>
@@ -142,7 +142,7 @@
          <table class="detail">
             {% if object.handling_user %}
                <tr>
-                  <td class="tablehead">Handled by</td>
+                  <td>Handled by</td>
                   <td>
                      <a href="{% url etcetera-user object.handling_user.username %}">
                         {{ object.handling_user.get_full_name }}
@@ -151,7 +151,7 @@
                </tr>
             {% endif %}
             <tr{% if form.delivering_user.errors %} class="errorlist"{% endif %}>
-               <td class="tablehead">{{ form.delivering_user.label }}</td>
+               <td>{{ form.delivering_user.label }}</td>
                <td>{{ form.delivering_user }} {{ form.delivering_user.errors }}</td>
             </tr>
          </table>
