@@ -22,7 +22,10 @@
       {% if not object.technician %}
          <div id="alert" class="banner">
             This ticket has not been assigned to anybody yet.
-            To pick it up, <a href="pickup">click here</a>.
+            To pick it up,
+            <a href="{% url service-pickup object.id %}">
+               click here
+            </a>.
          </div>
       {% endif %}
       
@@ -33,57 +36,84 @@
       {% endifequal %}
    {% endif %}
    
-   <h1>
-      {% if user.is_authenticated %}
-         <span class="right">
-            <a href="{% url service-edit object.id %}">edit</a>
-         </span>
-      {% endif %}
-      WO #{{ object.id }}:
-      {% if object.equipment %}
-         {{ object.equipment.make.name }}
-         {{ object.equipment.model }}
-         {{ object.equipment.equipment_type.name }}
-         ({{ object.equipment_text }})
-      {% else %}
-         {{ object.equipment_text }}
-      {% endif %}
-      <span class="head">
-         {% if object.archived %}
-            archived
+   <div id="headers">
+      <h1>
+         WO #{{ object.id }}:
+         {% if object.equipment %}
+            {{ object.equipment.make.name }}
+            {{ object.equipment.model }}
+            {{ object.equipment.equipment_type.name }}
+            ({{ object.equipment_text }})
          {% else %}
-            active
+            {{ object.equipment_text }}
          {% endif %}
-      </span>
-   </h1>
-   
-   <h2>
-      {% if object.completion_date %}
-         <span class="right">
-            <span class="head">Completed</span>
-            {{ object.completion_date|date:'n/j/Y g:iA' }}
+         <span class="head">
+            {% if object.completed %}
+               completed
+            {% else %}
+               active
+            {% endif %}
          </span>
-      {% endif %}
-      <span class="priority{{ object.priority }}">
-         {{ object.get_priority_display }} priority
-         {{ object.work_type }}
-      </span>
-      &rsaquo; <span class="head">Created</span>
-      {{ object.creation_date|date:'n/j/Y g:iA' }}
-   </h2>
+      </h1>
+
+      <ul>
+         {% if object.completion_date %}
+            <li class="closed">
+               <span class="head">Closed</span>
+               {{ object.completion_date|date:'n/j/Y g:iA' }}
+            </li>
+         {% endif %}
+         <li class="priority{{ object.priority }}">
+            {{ object.get_priority_display }} priority
+            {{ object.work_type }}
+         </li>
+         <li>
+            <span class="head">Created</span>
+            {{ object.creation_date|date:'n/j/Y g:iA' }}
+         </li>
+      </ul>
+   </div>
    
-   <div class="right">
-      <h3>Contact information</h3>
-      <table>
+   <div id="actions">
+      <h2>Actions</h2>
+      {% if user.is_authenticated %}
+         <ul>
+            <li>
+               <a href="{% url service-edit object.id %}">edit</a>
+            </li>   
+            {% if not object.technician and not object.completed %}
+               <li>
+                  <a href="{% url service-pickup object.id %}">pickup</a>
+               </a>
+            {% endif %}
+         </ul>
+      {% else %}
+         <p>You must be logged in to perform actions on this ticket.</p>
+      {% endif %}
+   </div>
+   
+   <div id="brief-information">
+      <h2>Brief information</h2>
+      <table class="detail">
+         <tr>
+            <td>Submitted by</td>
+            <td>{{ object.first_name }} {{ object.last_name }}</td>
+         </tr>
+         {% if object.department %}
+            <tr>
+               <td>Department</td>
+               <td>{{ object.department }}</td>
+            </tr>
+         {% endif %}
          {% if object.phone %}
             <tr>
-               <td class="tablehead">Phone</td>
+               <td>Phone</td>
                <td>{{ object.phone }}</td>
             </tr>
          {% endif %}
          {% if object.email %}
             <tr>
-               <td class="tablehead">Email</td>
+               <td>Email</td>
                <td>
                   <a href="mailto:{{ object.email }}">
                      {{ object.email }}
@@ -91,44 +121,63 @@
                </td>
             </tr>
          {% endif %}
+         {% if object.building %}
+            <tr>
+               <td>Location</td>
+               <td>{{ object.building.name }} {{ object.room }}</td>
+            </tr>
+         {% endif %}
+         {% if object.location_text %}
+            <tr>
+               <td>Other location</td>
+               <td>{{ object.location_text }}</td>
+            </tr>
+         {% endif %}
       </table>
    </div>
    
-   <h3>Brief information</h3>
-   <table>
-      <tr>
-         <td class="tablehead">Submitted by</td>
-         <td>{{ object.first_name }} {{ object.last_name }}</td>
-      </tr>
-      {% if object.department %}
-         <tr>
-            <td class="tablehead">Department</td>
-            <td>{{ object.department }}</td>
-         </tr>
-      {% endif %}
-      {% if object.building %}
-         <tr>
-            <td class="tablehead">Location</td>
-            <td>{{ object.building.name }} {{ object.room }}</td>
-         </tr>
-      {% endif %}
-      {% if object.location_text %}
-         <tr>
-            <td class="tablehead">Other location</td>
-            <td>{{ object.location_text }}</td>
-         </tr>
-      {% endif %}
-   </table>
+   <div id="financial-information">
+      <h2>Financial information</h2>
+      <table class="detail">
+         {% if object.labor %}
+            <tr>
+               <td>Labor hours</td>
+               <td>{{ object.labor }}</td>
+            </tr>
+         {% endif %}
+         {% if object.material_costs %}
+            <tr>
+               <td>Material costs</td>
+               <td>{{ object.material_costs|money }}</td>
+            </tr>
+         {% endif %}
+         {% if object.funding_source %}
+            <tr>
+               <td>Funding source</td>
+               <td>{{ object.get_funding_source_display }}</td>
+            </tr>
+         {% endif %}
+         {% if object.budget %}
+            <tr>
+               <td>Budget</td>
+               <td>{{ object.budget }}</td>
+            </tr>
+         {% endif %}
+      </table>
+   </div>
    
-   <h3>Description</h3>
-   {{ object.description|linebreaks }}
+   <div id="description">
+      <h2>Description</h2>
+      {{ object.description|linebreaks }}
+   </div>
    
-   <div class="right">
-      <h3>Technician information</h3>
-      <table>
+   <div id="technician-information">
+      <h2>Technician information</h2>
+      {% if object.technician or object.tech_legacy %}
+      <table class="detail">
          {% if object.technician or object.tech_legacy %}
             <tr>
-               <td class="tablehead">Name</td>
+               <td>Name</td>
                <td>
                   {% if object.technician %}
                      <a href="{% url etcetera-user object.technician.username %}">
@@ -142,7 +191,7 @@
          {% endif %}
          {% if object.technician %}
             <tr>
-               <td class="tablehead">Email</td>
+               <td>Email</td>
                <td>
                   <a href="mailto:{{ object.technician.email }}">
                      {{ object.technician.email }}
@@ -151,41 +200,19 @@
             </tr>
          {% endif %}
       </table>
+      {% else %}
+         <p>No technician information is assigned to this ticket.</p>
+      {% endif %}
    </div>
    
-   <h3>Actions taken</h3>
-   {% if object.actions %}
-      {{ object.actions|linebreaks }}
-   {% else %}
-      <p>No actions have been performed on this ticket yet.</p>
-   {% endif %}
+   <div id="actions-taken">
+      <h2>Actions taken</h2>
+      {% if object.actions %}
+         {{ object.actions|linebreaks }}
+      {% else %}
+         <p>No actions have been performed on this ticket.</p>
+      {% endif %}
+   </div>
    
-   <h3>Financial information</h3>
-   <table>
-      {% if object.labor %}
-         <tr>
-            <td class="tablehead">Labor hours</td>
-            <td>{{ object.labor }}</td>
-         </tr>
-      {% endif %}
-      {% if object.material_costs %}
-         <tr>
-            <td class="tablehead">Material costs</td>
-            <td>{{ object.material_costs|money }}</td>
-         </tr>
-      {% endif %}
-      {% if object.funding_source %}
-         <tr>
-            <td class="tablehead">Funding source</td>
-            <td>{{ object.get_funding_source_display }}</td>
-         </tr>
-      {% endif %}
-      {% if object.budget %}
-         <tr>
-            <td class="tablehead">Budget</td>
-            <td>{{ object.budget }}</td>
-         </tr>
-      {% endif %}
-   </table>
 </div>
 {% endblock %}
