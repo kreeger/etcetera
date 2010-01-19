@@ -317,6 +317,8 @@ def equip(request, object_id):
 						# If the equipment doesn't exist, add the barcode to a
 						# list of barcodes to be returned to the user
 						notfound['barcodes'].append(item)
+					except equipment.Equipment.MultipleObjectsReturned:
+						pass
 			# If there is a video unit, do the following		
 			# I'm gonna say this totally violates DRY. May fix sometime soon
 			if form.cleaned_data['video_unit']:
