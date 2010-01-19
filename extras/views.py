@@ -23,7 +23,6 @@ def error_mail(request):
 
 def index(request):
 	#repo = Repo(SITE_ROOT)
-	#repo = Repo("/Users/benjaminkreeger/Sites/etcetera-env/etcetera")
 	#commit_history = repo.commits('master', max_count=3)
 	posts = extras.Post.objects.all()[:3]
 	context = {
