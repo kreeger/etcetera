@@ -13,6 +13,19 @@
    {% endif %}
 {% endblock %}
 
+{% block subnav %}
+   <ul>
+      <li><a href="{% url service-index %}">
+            Active
+         </a>
+      </li>
+      <li><a href="{% url service-completed %}">
+            Completed
+         </a>
+      </li>
+   </ul>
+{% endblock %}
+
 {% block content %}
 <div id="list">   
    <h1>
@@ -23,17 +36,6 @@
          Completed
       {% endif %}
       Work Order List
-      
-      <span class="small">
-         <a href="{% if completed %}{% url service-index %}{% else %}{% url service-completed %}{% endif %}">
-            view
-            {% if completed %}
-               active
-            {% else %}
-               completed
-            {% endif %}
-         </a>
-      </span>
    </h1>
    
    <div id="searchform">
@@ -49,7 +51,7 @@
    </div>
    
    <table id="list">
-      <tr id="headerrow">
+      <tr>
          <td>Submitted by</td>
          <td>Department</td>
          <td>Equipment</td>
@@ -66,7 +68,7 @@
          </td>
       </tr>
       {% for object in paged_objects.object_list %}
-      <tr class="datarow">
+      <tr class="priority{{ object.priority }}">
          <td>
             <a href="{% url service-detail object.id %}">
                {{ object.first_name }} {{ object.last_name }}

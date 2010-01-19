@@ -102,11 +102,16 @@ div#barcode { background: url(../images/barcode-250.png) no-repeat; padding-top:
 
 /* Doing the detail page BETTER. */
 div#headers { width: 770px; display: inline-table; vertical-align: top; }
-	div#headers ul { list-style-type: none; padding: 4px; margin: 0; background-color: #DEDEDE; font-size: 12px; font-weight: bold; }
+	div#headers ul { list-style-type: none; padding: 4px; margin: 0; background-color: #DEDEDE; font-size: 12px; font-weight: bold; color: inherit;}
 	div#headers li.created, div#headers li.closed { float: right; clear: both; }
 	
 div#actions { width: 170px; display: inline-table; background-color: #DEDEDE; border: 1px solid #BBB; padding: 10px; font-size: 12px; float: right; }
 	div#actions ul { list-style-type: none; padding: 0; margin: 0; }
+		div#headers ul.priority1 { background-color: #fed3d2; }
+		div#headers ul.priority2 { background-color: #fed37e; }
+		div#headers ul.priority3 { background-color: #fefbaa; }
+		div#headers ul.priority4 { background-color: #d6faa9; }
+		div#headers ul.priority5 { background-color: #a7d3fd; }
 	div#detail div#actions h2 { font-size: 14px; margin: 0 0 5px 0; font-weight: 200; }
 	div#actions p { padding: 0; margin: 0; }
 

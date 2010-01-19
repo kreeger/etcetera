@@ -61,36 +61,34 @@
    
       <div id="actions">
          <h2>Actions</h2>
-         {% if user.is_authenticated %}
-            <ul>
-               <input type="submit" name="save" value="save" id="save" />
-            </ul>
-         {% endif %}
+         <ul>
+            <input type="submit" name="save" value="save" id="save" />
+         </ul>
       </div>
    
       <div id="brief-information">
          <h2>Brief information</h2>
          <table class="detail">
             <tr{% if form.make.errors %} class="errorlist"{% endif %}>
-               <td>{{ form.make.label }} #</td>
+               <td>{{ form.make.label }}</td>
                <td>{{ form.make }}{{ form.make.errors }}</td>
             </tr>
             <tr{% if form.model.errors %} class="errorlist"{% endif %}>
-               <td>{{ form.model.label }} #</td>
+               <td>{{ form.model.label }}</td>
                <td>{{ form.model }}{{ form.model.errors }}</td>
             </tr>
             <tr{% if form.equipment_type.errors %} class="errorlist"{% endif %}>
-               <td>{{ form.equipment_type.label }} #</td>
+               <td>{{ form.equipment_type.label }}</td>
                <td>
                   {{ form.equipment_type }}{{ form.equipment_type.errors }}
                </td>
             </tr>
             <tr{% if form.building.errors %} class="errorlist"{% endif %}>
-               <td>{{ form.building.label }} #</td>
+               <td>{{ form.building.label }}</td>
                <td>{{ form.building }}{{ form.building.errors }}</td>
             </tr>
             <tr{% if form.room.errors %} class="errorlist"{% endif %}>
-               <td>{{ form.room.label }} #</td>
+               <td>{{ form.room.label }}</td>
                <td>{{ form.room }}{{ form.room.errors }}</td>
             </tr>
             <tr{% if form.serial.errors %} class="errorlist"{% endif %}>
@@ -98,7 +96,7 @@
                <td>{{ form.serial }}{{ form.serial.errors }}</td>
             </tr>
             <tr{% if form.smsu_id.errors %} class="errorlist"{% endif %}>
-               <td>{{ form.smsu_id.label }} #</td>
+               <td>{{ form.smsu_id.label }}</td>
                <td>{{ form.smsu_id }}{{ form.smsu_id.errors }}</td>
             </tr>
             <tr{% if form.video_unit.errors %} class="errorlist"{% endif %}>

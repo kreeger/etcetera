@@ -1,3 +1,5 @@
+import os
+
 from django.http import HttpResponseRedirect
 from django.shortcuts import render_to_response, get_object_or_404
 from django.template import RequestContext
@@ -20,12 +22,13 @@ def error_mail(request):
 	return HttpResponseRedirect('etcetera-index')
 
 def index(request):
-	repo = Repo(SITE_ROOT)
-	commit_history = repo.commits('master', max_count=3)
+	#repo = Repo(SITE_ROOT)
+	#repo = Repo("/Users/benjaminkreeger/Sites/etcetera-env/etcetera")
+	#commit_history = repo.commits('master', max_count=3)
 	posts = extras.Post.objects.all()[:3]
 	context = {
 		'object_list': posts,
-		'commit_history': commit_history,
+		#'commit_history': commit_history,
 	}
 	return render_to_response(
 		"index.html",
