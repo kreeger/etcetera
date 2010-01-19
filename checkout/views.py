@@ -40,6 +40,7 @@ def index(request, view_type='all', date_range=None):
 	paged_objects = None
 	q = None
 	now = dt.datetime.now()
+	today = dt.date.today()
 	# Set up an empty form
 	form = coforms.SearchForm()
 	# If there's a GET request, specifically one with a search query
@@ -82,7 +83,7 @@ def index(request, view_type='all', date_range=None):
 		)
 	elif view_type == 'pickups':
 		paged_objects = paged_objects.filter(
-			out_date__gte=now.today).filter(
+			out_date__gte=today).filter(
 			completed=False).filter(
 			checkout_type='pickup').order_by(
 			'out_date'
@@ -90,20 +91,20 @@ def index(request, view_type='all', date_range=None):
 	elif view_type == 'deliveries':
 		paged_objects = paged_objects.filter(
 			checkout_type='delivery').filter(
-			out_date__gte=now.today).filter(
+			out_date__gte=today).filter(
 			completed=False).order_by(
 			'out_date'
 		)
 	elif view_type == 'my_tickets':
 		paged_objects = paged_objects.filter(
-			out_date__gte=now.today).filter(
+			out_date__gte=today).filter(
 			completed=False).filter(
 			delivering_user=request.user).order_by(
 			'out_date'
 		)
 	elif view_type == 'returns':
 		paged_objects = paged_objects.filter(
-			return_date__gte=now.today).filter(
+			return_date__gte=today).filter(
 			completed=False).order_by(
 			'return_date'
 		)
@@ -114,7 +115,7 @@ def index(request, view_type='all', date_range=None):
 		)
 	elif view_type == 'overdue':
 		paged_objects = paged_objects.filter(
-			return_date__lte=now).filter(
+			return_date__lt=today).filter(
 			completed=False).order_by(
 			'-return_date'
 		)
