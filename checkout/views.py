@@ -220,10 +220,6 @@ def edit(request, object_id):
 			co = form.save()
 			# Then redirect to the detail page for this checkout unless it's
 			# completed, then redirect to index
-			if co.completed:
-				return HttpResponseRedirect(reverse(
-					'checkout-index',
-				))
 			return HttpResponseRedirect(reverse(
 				'checkout-detail',
 				args=(co.id,),
@@ -427,10 +423,6 @@ def confirm(request, object_id):
 
 @login_required
 def dupe(request, object_id):
-	"""
-	Allows for duplication of checkout tickets, like recurring tickets.
-	
-	"""
 	# Setup a few variables
 	co = get_object_or_404(checkout.Checkout, id=object_id)
 	msg = None
@@ -477,10 +469,6 @@ def dupe(request, object_id):
 
 @login_required
 def cancel(request, object_id):
-	"""
-	Allows for the cancellation of checkout tickets.
-	
-	"""
 	# Get the object from the database
 	co = get_object_or_404(checkout.Checkout, id=object_id)
 	# If page is accessed via GET
@@ -508,6 +496,43 @@ def cancel(request, object_id):
 	}
 	return render_to_response(
 		"checkout/cancel.html",
+		context,
+		context_instance=RequestContext(request)
+	)
+
+@login_required
+def activate(request, object_id):
+	# Get the object from the database
+	co = get_object_or_404(checkout.Checkout, id=object_id)
+	error = None
+	msg = None
+	# If page is accessed via GET
+	if request.method == 'GET':
+		# Check to see if the order has not yet been canceled
+		if not co.completed and not co.action_date:
+			if co.equipment_list.all() or co.other_equipment:
+				# Mark the time, save it
+				co.action_date = dt.datetime.now()
+				co.save()
+				# Then trigger each equipment as checked out
+				for eq in co.equipment_list.all():
+					eq.status = 'checkedout'
+					eq.save()
+				msg = "Equipment has been marked as "
+				if co.checkout_type == 'delivery':
+					msg += "delivered."
+				else:
+					msg += "picked up by the patron."
+			else:
+				# If no equipment, make the msg
+				error = "Equipment must be attached to the checkout first."
+	context = {
+		'object': co,
+		'msg': msg,
+		'error': error,
+	}
+	return render_to_response(
+		"checkout/detail.html",
 		context,
 		context_instance=RequestContext(request)
 	)

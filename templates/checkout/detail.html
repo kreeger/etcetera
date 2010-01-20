@@ -32,6 +32,16 @@
             {# This ticket has been overdue for {{ object.overdue }} days. #}
          </div>
       {% endif %}
+      {% if msg %}
+         <div id="notify" class="banner">
+            {{ msg }}
+         </div>
+      {% endif %}
+      {% if error %}
+         <div id="error" class="banner">
+            {{ error }}
+         </div>
+      {% endif %}
    {% endif %}
    
    <div id="headers">
@@ -69,6 +79,16 @@
                Patron will pick up
             {% endif %}
             at {{ object.out_date|date:'n/j/Y g:iA' }}
+            {% if object.action_date %}
+               <span class="head">
+                  {% if object.checkout_type == 'delivery' %}
+                     (Delivered
+                  {% else %}
+                     (Patron picked up
+                  {% endif %}
+                  at {{ object.action_date|date:'n/j/Y g:iA' }})
+               </span>
+            {% endif %}
          </li>
          <li>
             {% if object.return_type == 'etc' %}
@@ -105,6 +125,17 @@
                   {% endif %}
                   </li>
                {% endif %}
+               <li>
+                  {% if not object.action_date %}
+                     <a href="{% url checkout-activate object.id %}">mark as
+                        {% if object.checkout_type == 'delivery' %}
+                           delivered
+                        {% else %}
+                           picked up
+                        {% endif %}
+                     </a>
+                  {% endif %}
+               </li>
                <li>
                   <a href="{% url checkout-dupe object.id %}">duplicate</a>
                </li>
