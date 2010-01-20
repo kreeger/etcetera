@@ -30,6 +30,7 @@ class CheckoutAdmin(admin.ModelAdmin):
 				'out_date',
 				'return_date',
 				'delivering_user',
+				'action_date',
 				'returning_person',
 				'equipment_list',
 				'other_equipment',
