@@ -39,11 +39,6 @@ urlpatterns = patterns('',
 		{'view_type': 'returns'},
 		name="checkout-returns"
 	),
-	url(r'^my_tickets/$',
-		index,
-		{'view_type': 'my_tickets'},
-		name="checkout-mine"
-	),
 	url(r'^new/$', new, name="checkout-new"),
 	url(r'^(?P<object_id>\d+)/$', detail, name="checkout-detail"),
 	url(r'^(?P<object_id>\d+)/edit/$', edit, name="checkout-edit"),

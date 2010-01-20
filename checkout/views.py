@@ -82,23 +82,18 @@ def index(request, view_type='all', date_range=None):
 		)
 	elif view_type == 'pickups':
 		paged_objects = paged_objects.filter(
+			checkout_type='pickup').filter(
 			action_date=None).filter(
-			completed=False).filter(
-			checkout_type='pickup').order_by(
+			return_date__gte=today).filter(
+			completed=False).order_by(
 			'out_date'
 		)
 	elif view_type == 'deliveries':
 		paged_objects = paged_objects.filter(
 			checkout_type='delivery').filter(
 			action_date=None).filter(
+			return_date__gte=today).filter(
 			completed=False).order_by(
-			'out_date'
-		)
-	elif view_type == 'my_tickets':
-		paged_objects = paged_objects.filter(
-			action_date=None).filter(
-			completed=False).filter(
-			delivering_user=request.user).order_by(
 			'out_date'
 		)
 	elif view_type == 'returns':

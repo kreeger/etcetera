@@ -17,9 +17,6 @@
    {% if view_type == 'deliveries' %}
        (Deliveries)
     {% endif %}
-    {% if view_type == 'my_tickets' %}
-       (My Tickets)
-    {% endif %}
     {% if view_type == 'unconfirmed' %}
        (Unconfirmed)
     {% endif %}
@@ -47,10 +44,6 @@
             Deliveries
          </a>
       </li>
-      <li><a href="{% url checkout-mine %}">
-            My Tickets
-         </a>
-      </li>
       <li><a href="{% url checkout-returns %}">
             Returns
          </a>
@@ -66,7 +59,7 @@
    </ul>
 {% endblock %}
 
-{% block subsubnav %}
+{# {% block subsubnav %}
    {% if view_type == 'deliveries' or view_type == 'my_tickets' %}
    <ul>
       <li><a href="{% url checkout-deliveries %}">
@@ -82,7 +75,7 @@
          </a>
       </li>
    {% endif %}
-{% endblock %}
+{% endblock %}#}
 
 {% block content %}
 
@@ -102,9 +95,6 @@
       {% endif %}
       {% if view_type == 'overdue' %}
          Overdue
-      {% endif %}
-      {% if view_type == 'my_tickets' %}
-         My
       {% endif %}
       {% if view_type == 'unconfirmed' %}
          Unconfirmed
