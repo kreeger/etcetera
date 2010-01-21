@@ -28,19 +28,19 @@ h1 input, h1 select { font-weight: bold; }
 .wrapper { width: 950px; margin: 0px auto; }
 .datetime { font-weight: normal; font-size: 13px; }
 
-div.greeting { font-size: 10px; text-align: right; width: 300px; display: inline-table; padding-bottom: 5px; }
-div.greeting p:last-child { font-size: 12px; padding-top: 3px; }
-
 a.add { width: 16px; height: 16px; background-image: url(../images/icons/buttonplu32.png); }
 a.remove { width: 16px; height: 16px; background-image: url(../images/icons/buttonmin32.png); }
 h2 .right { text-align: right; }
 td.tablehead { width: 150px; }
 
-div#header a { color: #BBB; }
-div#header h1 img { display: none; }
-div#header h1 { height: 120px; background: url(../images/etceteralogo.png) no-repeat; width: 646px; display: inline-table; }
-div#header p, div#header h1 { margin: 0; color: #EEE; }
 div#header { background-image: url(../images/header.png); height: 120px; border-bottom: 1px solid #333; }
+	div#header a { color: #BBB; }
+	div#header h1 img { display: none; }
+	div#header h1 { height: 120px; background: url(../images/etceteralogo.png) no-repeat; width: 646px; display: inline-block; }
+	div#header p, div#header h1 { margin: 0; color: #EEE; }
+
+div.greeting { font-size: 10px; text-align: right; width: 300px; display: inline-block; padding-bottom: 10px; vertical-align: bottom;}
+div.greeting p:last-child { font-size: 12px; padding-top: 2px; }
 
 #navul li:hover ul, #navul li li:hover ul, #navul li li li:hover ul, #navul li li li li:hover ul { display: inline-block; font-size: .8em; }
 div#nav div.wrapper { background-color: #D1D1D1; padding: 0px 10px; border-left: 1px solid #AAA; border-right: 1px solid #AAA; }
@@ -55,12 +55,12 @@ ul#navul, ul#navul ul { margin: 0px auto; padding: 0; list-style-type: none; }
 div#breadcrumb div.wrapper { padding: 4px 10px; border-left: 1px solid #AAA; border-right: 1px solid #AAA; background: url(../images/breadback.png) repeat-x; left: 40px; }
 div#breadcrumb { font-size: .8em; }
 
-div#subnav a { padding: 4px 10px; display: inline-block; width: 80px; }
-div#subnav a:hover { background-color: #CCC; text-decoration: none; }
-div#subnav div.wrapper { padding: 0 10px; border-left: 1px solid #AAA; border-right: 1px solid #AAA; background-color: #EAEAEA; border-bottom: 1px solid #CCC; }
-div#subnav ul li { display: inline; }
-div#subnav ul { margin: 0; padding: 0; list-style-type: none; }
-div#subnav { font-size: 11px; text-align: center; display: block; }
+div.subnav a { padding: 4px 10px; display: inline-block; width: 80px; }
+div.subnav a:hover { background-color: #CCC; text-decoration: none; }
+div.subnav div.wrapper { padding: 0 10px; border-left: 1px solid #AAA; border-right: 1px solid #AAA; background-color: #EAEAEA; border-bottom: 1px solid #CCC; }
+div.subnav ul li { display: inline; }
+div.subnav ul { margin: 0; padding: 0; list-style-type: none; }
+div.subnav { font-size: 11px; text-align: center; display: block; }
 
 div#body { background: url(../images/backtop.png) repeat-x; }
 
@@ -101,11 +101,11 @@ div#barcode { background: url(../images/barcode-250.png) no-repeat; padding-top:
 	div#barcode input { text-align: center; letter-spacing: 4px; }
 
 /* Doing the detail page BETTER. */
-div#headers { width: 770px; display: inline-table; vertical-align: top; }
+div#headers { width: 770px; display: inline-block; vertical-align: top; }
 	div#headers ul { list-style-type: none; padding: 4px; margin: 0; background-color: #DEDEDE; font-size: 12px; font-weight: bold; color: inherit;}
 	div#headers li.created, div#headers li.closed { float: right; clear: both; }
 	
-div#actions { width: 170px; display: inline-table; background-color: #DEDEDE; border: 1px solid #BBB; padding: 10px; font-size: 12px; float: right; }
+div#actions { width: 150px; display: inline-block; background-color: #DEDEDE; border: 1px solid #BBB; padding: 10px; font-size: 12px; float: right; }
 	div#actions ul { list-style-type: none; padding: 0; margin: 0; }
 		div#headers ul.priority1 { background-color: #fed3d2; }
 		div#headers ul.priority2 { background-color: #fed37e; }

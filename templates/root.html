@@ -3,8 +3,8 @@
 <head>
 	<title>Etcetera &raquo; {% block title %}{% endblock %}</title>
 	{% block stylesheet_extra %}{% endblock %}
-	<link rel="stylesheet" href="/_media/css/screen.css" type="text/css" media="screen" charset="utf-8">
-	<link rel="stylesheet" href="/_media/css/print.css" type="text/css" media="print" charset="utf-8">
+	<link rel="stylesheet" href="/_media/css/screen.css" type="text/css" media="screen" />
+	<link rel="stylesheet" href="/_media/css/print.css" type="text/css" media="print" />
 	<script type="text/javascript" src="/_media/js/jquery.min.js"></script>
 	{% block fullscript %}<script type="text/javascript" src="{% block script %}{% endblock %}"></script>{% endblock %}
 </head>
@@ -25,12 +25,12 @@
    			{% block breadcrumb %}Home{% endblock %}
    		</div>
    	</div>
-   	<div id="subnav">
+   	<div class="subnav">
    		<div class="wrapper">
    		   {% block subnav %}{% endblock %}
    		</div>
    	</div>
-   	<div id="subnav">
+   	<div class="subnav">
    		<div class="wrapper">
    		   {% block subsubnav %}{% endblock %}
    		</div>
