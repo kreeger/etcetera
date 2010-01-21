@@ -72,7 +72,7 @@ def index(request, view_type='all', date_range=None):
 			confirmation_sent=False).filter(
 			completed=False).exclude(
 			email='').order_by(
-			'-out_date'
+			'out_date'
 		)
 	elif view_type == 'current':
 		paged_objects = paged_objects.filter(
