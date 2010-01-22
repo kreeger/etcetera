@@ -2,7 +2,7 @@ import datetime as dt
 
 from django.shortcuts import render_to_response, get_object_or_404
 from django.contrib.auth.decorators import login_required
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, Http404
 from django.core.urlresolvers import reverse
 from django.core.paginator import Paginator, InvalidPage, EmptyPage
 from django.template import RequestContext
@@ -181,3 +181,34 @@ def inventory(request, object_id):
 			eq.last_inventoried = dt.datetime.today()
 			eq.save()
 	return HttpResponseRedirect(reverse('equipment-detail', args=(eq.id,),))
+
+@login_required
+def history(request, object_id, history_type):
+	eq = get_object_or_404(equipment.Equipment, id=object_id)
+	if history_type not in ['checkout','service']:
+		raise Http404
+	if history_type == 'checkout': history = eq.checkouts.all()
+	if history_type == 'service': history = eq.workorder_set.all()
+	# Repackage everything into paged_objects using Paginator.
+	paginator = Paginator(history, 20)
+	# Make sure the page request is an int -- if not, then deliver page 1.
+	try:
+		page = int(request.GET.get('page','1'))
+	except ValueError:
+		page = 1
+	# If the page request is out of range, deliver the last page of results.
+	try:
+		history = paginator.page(page)
+	except (EmptyPage, InvalidPage):
+		history = paginator.page(paginator.num_pages)
+	context = {
+		'object': eq,
+		'history_type': history_type,
+		'paged_objects': history,
+		'object_list': history.object_list,
+	}
+	return render_to_response(
+		"equipment/history.html",
+		context,
+		context_instance=RequestContext(request)
+	)
