@@ -66,11 +66,12 @@ class Checkout(models.Model):
 	)
 	creation_date = models.DateTimeField(default=dt.datetime.now)
 	out_date = models.DateTimeField(
-		verbose_name='Pickup/delivery date',
+		verbose_name='Pickup/delivery date/time',
 		help_text='The date/time you will pick up the equipment, or \
 			when ETC should deliver it.',
 	)
 	return_date = models.DateTimeField(
+		verbose_name='Return/ETC-pickup date/time',
 		help_text='The date/time you will bring back the equipment, or when \
 			ETC should pick it up.',
 	)
