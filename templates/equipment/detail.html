@@ -71,16 +71,20 @@
                   mark as inventoried
                </a>
             </li>
+            {% if object.checkouts.all %}
             <li>
                <a href="{% url equipment-history object.id 'checkout' %}">
                   view checkout history
                </a>
             </li>
+            {% endif %}
+            {% if object.workorder_set.all %}
             <li>
                <a href="{% url equipment-history object.id 'service' %}">
                   view service history
                </a>
             </li>
+            {% endif %}
          </ul>
       {% else %}
          <p>You must be logged in to perform actions on this ticket.</p>

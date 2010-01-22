@@ -114,7 +114,7 @@ div#actions { width: 150px; display: inline-block; background-color: #DEDEDE; bo
 
 div#detail { font-size: 15px; }
 	div#detail h1 { margin-bottom: 0; }
-	div#detail h2 { margin: 10px 0; border-bottom: 1px solid #888; color: #444; font-weight: 200; font-style: normal; }
+	div#detail h2 { margin: 10px 0; border-bottom: 1px solid #888; color: #444; font-weight: 200; font-style: normal; font-size: 17px; }
 	div#detail table td:last-child { font-weight: bold; }
 	div#detail textarea { width: 938px; }
 	div#detail table input { width: 300px; font-size: 14px; }
