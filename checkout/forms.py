@@ -8,6 +8,7 @@ from django.contrib.admin import widgets as adminwidgets
 from etcetera.structure import models as structure
 from etcetera.checkout import models as checkout
 from etcetera.extras import forms as ef
+from etcetera.extras.dateutil import formfield_callback, DateTimeField
 
 class SearchForm(forms.Form):
 	# The search query
@@ -53,6 +54,7 @@ class SearchForm(forms.Form):
 		return out_list
 
 class CheckoutModelForm(forms.ModelForm):
+	formfield_callback = formfield_callback
 	class Meta:
 		model = checkout.Checkout
 		exclude = (
@@ -65,14 +67,13 @@ class CheckoutModelForm(forms.ModelForm):
 			'action_date',
 		)
 	
-	out_date = forms.DateTimeField(widget=adminwidgets.AdminSplitDateTime)
-	return_date = forms.DateTimeField(widget=adminwidgets.AdminSplitDateTime)
 	delivering_user = ef.UserModelChoiceField(
 		auth.User.objects.all().order_by('last_name'),
 		required=False,
 	)
 
 class CheckoutPublicForm(forms.ModelForm):
+	formfield_callback = formfield_callback
 	class Meta:
 		model = checkout.Checkout
 		exclude = (
@@ -93,20 +94,6 @@ class CheckoutPublicForm(forms.ModelForm):
 	department_text = forms.CharField(
 		max_length=100,
 		help_text='The university department the request should be under.',
-	)	
-	out_date = forms.DateTimeField(
-		widget=adminwidgets.AdminSplitDateTime,
-		help_text="The date/time you'll pick up equipment, or \
-			when ETC should deliver it.<br /> \
-			<strong>Date should be YYYY-MM-DD. Use 24-hour time \
-			(HH:MM:SS)</strong>.",
-	)
-	return_date = forms.DateTimeField(
-		widget=adminwidgets.AdminSplitDateTime,
-		help_text="The date/time you'll bring back equipment, or when \
-			ETC should pick it up.<br /> \
-			<strong>Date should be YYYY-MM-DD. Use 24-hour time \
-			(HH:MM:SS)</strong>.",
 	)
 	email = forms.EmailField(
 		help_text="Your university email address.",
@@ -133,9 +120,5 @@ class CheckoutEquipmentForm(forms.Form):
 	)
 
 class DupeForm(forms.Form):
-	out_date = forms.DateTimeField(
-		widget=adminwidgets.AdminSplitDateTime,
-	)
-	return_date = forms.DateTimeField(
-		widget=adminwidgets.AdminSplitDateTime,
-	)
+	out_date = DateTimeField()
+	return_date = DateTimeField()

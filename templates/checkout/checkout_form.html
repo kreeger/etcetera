@@ -116,16 +116,12 @@
       		   {% endif %}
       		</td>
       	</tr>
-      	<tr>
-      	   <td>&nbsp;</td>
-      	   <td colspan="2"><strong>Date should be YYYY-MM-DD. Use 24-hour time (HH:MM:SS).</strong></td>
-      	</tr>
       	<tr id="out_date_row"{% if form.out_date.errors %} class="errorlist"{% endif %}>
    	      <th>{{ form.out_date.label }}</th>
    	      <td>{{ form.out_date }}</td>
    	      <td{% if form.out_date.errors %}>
       		   {{ form.out_date.errors }}
-      		   {% else %} class="note">{{ form.out_date.help_text|safe }}
+      		   {% else %} class="note">{{ form.out_date.help_text }}
       		   {% endif %}
       		</td>
       	</tr>
@@ -134,7 +130,7 @@
    	      <td>{{ form.return_date }}</td>
    	      <td{% if form.return_date.errors %}>
       		   {{ form.return_date.errors }}
-      		   {% else %} class="note">{{ form.return_date.help_text|safe }}
+      		   {% else %} class="note">{{ form.return_date.help_text }}
       		   {% endif %}
       		</td>
       	</tr>
