@@ -10,6 +10,10 @@ urlpatterns = patterns('',
 		inventory,
 		name="equipment-inventory"
 	),
+	url(r'^(?P<object_id>\d+)/(?P<history_type>\w+)-history/$',
+		history,
+		name="equipment-history"
+	),
 	url(r'^new/$', new, name="equipment-new"),
 	url(r'^weekly/$', weekly_list, name="equipment-weekly"),
 )

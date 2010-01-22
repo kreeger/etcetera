@@ -71,6 +71,16 @@
                   mark as inventoried
                </a>
             </li>
+            <li>
+               <a href="{% url equipment-history object.id 'checkout' %}">
+                  view checkout history
+               </a>
+            </li>
+            <li>
+               <a href="{% url equipment-history object.id 'service' %}">
+                  view service history
+               </a>
+            </li>
          </ul>
       {% else %}
          <p>You must be logged in to perform actions on this ticket.</p>

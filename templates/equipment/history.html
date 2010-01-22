@@ -1,0 +1,156 @@
+{% extends "root.html" %}
+{% load etcetera_tags %}
+
+{% block title %}{{ history_type }} History for {{ object.make }} {{ object.model }} ({{ object.equipment_type }}){% endblock %}
+
+{% block breadcrumb %}
+   <a href="{% url etcetera-home %}">Home</a> &rsaquo;
+   <a href="{% url equipment-index %}">Equipment Inventory</a> &rsaquo;
+   <a href="{% url equipment-detail object.id %}">
+      {{ object.make }} {{ object.model }} ({{ object.equipment_type }})
+   </a> &rsaquo;
+      {{ history_type|capfirst }} History
+{% endblock %}
+
+{% block content %}
+<div id="list">
+   <div id="headers">
+      {% if object.barcode %}
+         <div class="drop-pop" id="barcode">
+            {{ object.barcode }}
+         </div>
+      {% endif %}
+      
+      <h1>
+         {{ history_type|capfirst }}
+         History for {{ object.make }} {{ object.model }}
+         <span class="head">{{ object.equipment_type }}</span>
+      </h1>
+   </div>
+   
+   <div id="actions">
+      <h2>Actions</h2>
+      {% if user.is_authenticated %}
+         <ul>
+            <li><a href="{% url equipment-detail object.id %}">go back</a></li>
+            <li>
+               {% if history_type == 'checkout' %}
+                  <a href="{% url equipment-history object.id 'service' %}">
+                     view service history
+                  </a>
+               {% endif %}
+               {% if history_type == 'service' %}
+                  <a href="{% url equipment-history object.id 'checkout' %}">
+                     view checkout history
+                  </a>
+               {% endif %}
+            </li>
+            <li><a href="#">add {{ history_type }} ticket</a></li>
+         </ul>
+      {% else %}
+         <p>You must be logged in to perform actions on this ticket.</p>
+      {% endif %}
+   </div>
+   
+   <table id="list">
+      {% if history_type == 'service' %}
+         <tr>
+            <td>Submitted by</td>
+            <td>Department</td>
+            <td>Location</td>
+            <td>Work type</td>
+            <td>Creation date</td>
+         </tr>
+         {% for object in paged_objects.object_list %}
+            <tr class="priority{{ object.priority }}">
+               <td>
+                  <a href="{% url service-detail object.id %}">
+                     {{ object.first_name }} {{ object.last_name }}
+                  </a>
+               </td>
+               <td>
+                  <a href="{% url service-detail object.id %}">
+                     {{ object.department }}
+                  </a>
+               </td>
+               <td>
+                  <a href="{% url service-detail object.id %}">
+                     {% if object.building %}
+                        {{ object.building.abbreviation }} {{ object.room }}
+                     {% else %}
+                        {{ object.location_text }}
+                     {% endif %}
+                  </a>
+               </td>
+               <td>
+                  <a href="{% url service-detail object.id %}">
+                     {{ object.get_work_type_display }}
+                  </a>
+               </td>
+               <td>
+                  <a href="{% url service-detail object.id %}">
+                     {{ object.creation_date|date:'n/j/Y g:iA' }}
+                  </a>
+               </td>
+            </tr>
+         {% endfor %}
+      {% endif %}
+      {% if history_type == 'checkout' %}
+         <tr>
+            <td>Name</td>
+            <td>Department</td>
+            <td>Equipment</td>
+            <td>Location</td>
+            <td>Out date</td>
+            <td>Type</td>
+         </tr>
+         {% for object in paged_objects.object_list %}
+            <tr>
+               <td>
+                  <a href="{% url checkout-detail object.id %}">
+                     {{ object.first_name }} {{ object.last_name }}
+                  </a>
+               </td>
+               <td>
+                  <a href="{% url checkout-detail object.id %}">
+                     {% if object.department %}
+                        {{ object.department|truncatewords:3 }}
+                     {% else %}
+                        {{ object.department_text }}
+                     {% endif %}
+                  </a>
+               </td>
+               <td>
+                  <a href="{% url checkout-detail object.id %}">
+                     {{ object.equipment_needed|truncatewords:6 }}
+                  </a>
+               </td>
+               <td>
+                  <a href="{% url checkout-detail object.id %}">
+                     {{ object.building.abbreviation }} {{ object.room }}
+                  </a>
+               </td>
+               <td>
+                  <a href="{% url checkout-detail object.id %}">
+                     {{ object.out_date|date:'n/j/Y g:iA' }}
+                  </a>
+               </td>
+               <td>
+                  <a href="{% url checkout-detail object.id %}">
+                     {{ object.get_checkout_type_display }}
+                  </a>
+               </td>
+            </tr>
+         {% endfor %}
+      {% endif %}
+   </table>
+   
+   {% if paged_objects %}
+      {% if form.as_url_args %}
+         {% paginate form.as_url_args %}
+      {% else %}
+         {% paginate %}
+      {% endif %}
+   {% endif %}
+</div>
+{% endblock %}

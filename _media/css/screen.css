@@ -9,6 +9,7 @@ a:hover { text-decoration: underline; }
 a:active { color: #CCC; }
 input, select { font: 14px "Helvetica Neue", Helvetica, Arial, sans-serif; }
 h1 input, h1 select { font-weight: bold; }
+textarea { font: .9em "Helvetica Neue", Helvetica, Arial, sans-serif; padding: 5px; }
 
 .disabled { color: #BBB; font-weight: normal; }
 .drop-pop { width: 250px; height: 23px; text-align: center; font-weight: bold; float: left; position: relative; right: 5px; }
@@ -30,7 +31,6 @@ h1 input, h1 select { font-weight: bold; }
 
 a.add { width: 16px; height: 16px; background-image: url(../images/icons/buttonplu32.png); }
 a.remove { width: 16px; height: 16px; background-image: url(../images/icons/buttonmin32.png); }
-h2 .right { text-align: right; }
 td.tablehead { width: 150px; }
 
 div#header { background-image: url(../images/header.png); height: 120px; border-bottom: 1px solid #333; }
@@ -68,7 +68,6 @@ div#content div.wrapper { padding: 10px; background-color: #F4F4F4; -moz-border-
 div#content h1 span.right { font-size: .55em; margin: 0; padding-top: 9px; }
 div#content h1 span.small { font-size: .55em; padding-left: .3em; }
 div#content h1 { border-bottom: 1px solid #333; font-size: 1.5em; margin-top: 5px; }
-div#content h2 { font-size: 1.2em; }
 div#content p { margin: 0 0 10px 0; padding: 5px 0; }
 
 div#alert { background: #ffcb57 url(../images/icons/alert48.png) no-repeat 3px -8px; }
@@ -81,8 +80,6 @@ div#searchform { height: 10px; margin-bottom: 20px; padding: 0px; width: 100%; }
 div#searchform form { display: inline-block; }
 div#searchform input#q { width: 300px; margin: 0; }
 div#searchform input#submit { margin-left: 5px; }
-
-div#list ul { display: block; list-style-type: none; padding: 0; border: 1px solid #AAA; margin-top: 3px; }
 
 table#list { margin: 0px; padding: 0px; border-spacing: 0px; border: 1px solid #AAA; font-size: .85em; width: 100%; }
 	table#list td:first-child { padding-left: 8px; font-weight: bold;}
@@ -112,14 +109,14 @@ div#actions { width: 150px; display: inline-block; background-color: #DEDEDE; bo
 		div#headers ul.priority3 { background-color: #fefbaa; }
 		div#headers ul.priority4 { background-color: #d6faa9; }
 		div#headers ul.priority5 { background-color: #a7d3fd; }
-	div#detail div#actions h2 { font-size: 14px; margin: 0 0 5px 0; font-weight: 200; }
+	div#actions h2, div#detail div#actions h2 { font-size: 14px; color: #444; margin: 0 0 5px 0; font-weight: 200; border-bottom: 1px solid #888; }
 	div#actions p { padding: 0; margin: 0; }
 
 div#detail { font-size: 15px; }
 	div#detail h1 { margin-bottom: 0; }
 	div#detail h2 { margin: 10px 0; border-bottom: 1px solid #888; color: #444; font-weight: 200; font-style: normal; }
 	div#detail table td:last-child { font-weight: bold; }
-	div#detail textarea { width: 100%; }
+	div#detail textarea { width: 938px; }
 	div#detail table input { width: 300px; font-size: 14px; }
 	div#detail input#save { border: 1px solid #AAA; width: 100%; background-color: #EEE; cursor: pointer; }
 	div#detail input#save:hover { background-color: #AAA; }
@@ -151,34 +148,3 @@ table.h1-head tbody { font-size: 11px; }
 
 div#footer h4 { margin: 0; text-align: center; color: #b3b3b3; font-size: .7em; font-weight: normal; font-style: normal; }
 div#footer { margin-top: 5px; padding-top: 5px; }
-
-/* CALENDARS & CLOCKS IMPORTED FROM ADMIN */
-
-.calendarbox, .clockbox { margin: 5px auto; font-size: 11px; width: 16em; text-align: center; background: white; position: relative; border: 1px solid #444; }
-.clockbox h2 { margin: 0; font-size: 13px; border-bottom: 1px solid #222; padding: 3px; background-color: #EEE; }
-.clockbox { width: auto; }
-
-.calendar caption { height: 18px; font-weight: bold; }
-.calendar caption, .calendarbox h2 { margin: 0; font-size: 12px; text-align: center; border-top: none; background-color: #EEE; }
-.calendar table { margin: 0; padding: 0; border-collapse: collapse; background: white; width: 100%; }
-.calendar td a, .timelist a { display: block; font-weight: bold; padding: 4px; text-decoration: none; color: #444; }
-.calendar td a:active, .timelist a:active { background: #CCC; color: white; }
-.calendar td a:hover, .timelist a:hover { background: #4A0010; color: white; }
-.calendar td { font-size: 11px; text-align: center; padding: 0; border-top: 1px solid #eee; border-bottom: none; }
-.calendar td.nonday { background: #efefef; }
-.calendar td.selected a { background: #C9DBED; }
-.calendar td.today a { background: #ffc; }
-.calendar th { font-size: 10px; color: #666; padding: 2px 3px; text-align: center; background: #e1e1e1 url(../img/admin/nav-bg.gif) 0 50% repeat-x; border-bottom: 1px solid #ddd; }
-.calendar { margin: 0; padding: 0; }
-.calendar-cancel a { padding: 2px; color: #999; }
-.calendar-cancel { margin: 0 !important; padding: 0; font-size: 10px; background: #e1e1e1 url(../img/admin/nav-bg.gif) 0 50% repeat-x; border-top: 1px solid #ddd; }
-.calendar-shortcuts { background: white; font-size: 10px; line-height: 11px; border-top: 1px solid #eee; padding: 3px 0 4px; color: #ccc; }
-.calendarbox .calendarnav-previous, .calendarbox .calendarnav-next { display: block; position: absolute; font-weight: bold; font-size: 12px; background: #AAA url(../img/admin/default-bg.gif) bottom left repeat-x; padding: 1px 4px 2px 4px; color: white; }
-.calendarnav a:link, #calendarnav a:visited, #calendarnav a:hover { color: #999; }
-.calendarnav { font-size: 10px; text-align: center; color: #ccc; margin: 0; padding: 1px 3px; }
-.calendarnav-next { top: 0; right: 0; }
-.calendarnav-previous { top: 0; left: 0; }
-.calendarnav-previous:hover, .calendarnav-next:hover { background: #4A0010; }
-
-.timelist a { padding: 2px; }
-ul.timelist, .timelist li { list-style-type: none; margin: 0; padding: 0; }

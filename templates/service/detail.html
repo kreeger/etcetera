@@ -121,6 +121,16 @@
                </td>
             </tr>
          {% endif %}
+         {% if object.equipment %}
+            <tr>
+               <td>Equipment</td>
+               <td>
+                  <a href="{% url equipment-detail object.equipment.id %}">
+                     {{ object.equipment }}
+                  </a>
+               </td>
+            </tr>
+         {% endif %}
          {% if object.building %}
             <tr>
                <td>Location</td>
