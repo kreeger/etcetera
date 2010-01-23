@@ -99,10 +99,14 @@
             <td>Submitted by</td>
             <td>{{ object.first_name }} {{ object.last_name }}</td>
          </tr>
-         {% if object.department %}
+         {% if object.department or object.department_text %}
             <tr>
-               <td>Department</td>
-               <td>{{ object.department }}</td>
+               <td>Department
+                  {% if object.department_text and not object.department %}
+                     (from user)
+                  {% endif %}
+               </td>
+               <td>{% firstof object.department object.department_text %}</td>
             </tr>
          {% endif %}
          {% if object.phone %}
