@@ -113,18 +113,6 @@ def index(request, view_type='all', date_range=None):
 			completed=False).order_by(
 			'-return_date'
 		)
-	if date_range == 'today':
-		paged_objects = paged_objects.filter(
-			out_date__year=now.year).filter(
-			out_date__month=now.month).filter(
-			out_date__day=now.day
-		)
-	elif date_range == 'tomorrow':
-		paged_objects = paged_objects.filter(
-			out_date__year=now.year).filter(
-			out_date__month=now.month).filter(
-			out_date__day=(now.day + 1)
-		)
 	# Repackage everything into paged_objects using Paginator.
 	paginator = Paginator(paged_objects, 20)
 	# Make sure the page request is an int -- if not, then deliver page 1.
