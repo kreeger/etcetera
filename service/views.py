@@ -24,7 +24,7 @@ def service_form(request):
 			name = cd['name'].split(' ')
 			wo.first_name = name[0]
 			wo.last_name = name[-1]
-			wo.department = cd['department']
+			wo.department_text = cd['department']
 			wo.phone = cd['phone']
 			wo.email = cd['email']
 			wo.building = cd['building']
