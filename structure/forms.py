@@ -1,4 +1,7 @@
 from django import forms
+
+from etcetera.structure import models as structure
+
 import urllib
 
 class SearchForm(forms.Form):
@@ -18,3 +21,11 @@ class SearchForm(forms.Form):
 	
 	def as_url_args(self):
 		return urllib.urlencode(self.cleaned_data)
+
+class BuildingModelForm(forms.ModelForm):
+	class Meta:
+		model = structure.Building
+
+class OrganizationalUnitModelForm(forms.ModelForm):
+	class Meta:
+		model = structure.OrganizationalUnit

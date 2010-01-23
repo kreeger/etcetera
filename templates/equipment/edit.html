@@ -2,26 +2,27 @@
 {% load etcetera_tags %}
 
 {% block title %}
+   Equipment &raquo; 
    {% if form.initial %}
       Editing {{ object.make }} {{ object.model }}
       {% if object.barcode %}
          ({{ object.barcode }})
       {% endif %}
    {% else %}
-      New equipment
+      Creating a new equipment item
    {% endif %}
 {% endblock %}
 
 {% block breadcrumb %}
    <a href="{% url etcetera-home %}">Home</a> &rsaquo;
-   <a href="{% url equipment-index %}">Equipment Inventory</a> &rsaquo;
+   <a href="{% url equipment-index %}">Equipment</a> &rsaquo;
    {% if form.initial %}
       <a href="{% url equipment-detail object.id %}">
          {{ object.make }} {{ object.model }} ({{ object.equipment_type }})
       </a>
       &rsaquo; Edit
    {% else %}
-      New
+      Creating a new equipment item
    {% endif %}
 {% endblock %}
 
@@ -62,7 +63,9 @@
       <div id="actions">
          <h2>Actions</h2>
          <ul>
-            <input type="submit" name="save" value="save" id="save" />
+            <li>
+               <input type="submit" name="save" value="save" id="save" />
+            </li>
          </ul>
       </div>
    

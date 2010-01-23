@@ -13,12 +13,28 @@ class WorkOrder(models.Model):
 	"""A work order."""
 	first_name = models.CharField(max_length=100)
 	last_name = models.CharField(max_length=100)
-	department = models.CharField(max_length=100, blank=True)
+	department_text = models.CharField(max_length=100, blank=True)
+	department = models.ForeignKey(
+		structure.OrganizationalUnit,
+		blank=True,
+		null=True,
+		related_name='workorders',
+	)
 	phone = lfus.PhoneNumberField(blank=True)
 	email = models.EmailField(max_length=75, blank=True)
 	equipment_text = models.CharField(max_length=75, blank=True)
-	equipment = models.ForeignKey(equipment.Equipment, null=True, blank=True)
-	building = models.ForeignKey(structure.Building, null=True, blank=True)
+	equipment = models.ForeignKey(
+		equipment.Equipment,
+		null=True,
+		blank=True,
+		related_name='workorders',
+	)
+	building = models.ForeignKey(
+		structure.Building, 
+		null=True,
+		blank=True,
+		related_name='workorders',
+	)
 	room = models.CharField(max_length=25, blank=True)
 	location_text = models.CharField(max_length=75, blank=True, null=True)
 	creation_date = models.DateTimeField(default=dt.datetime.now, null=True)

@@ -2,13 +2,14 @@
 {% load etcetera_tags %}
 
 {% block title %}
+   Equipment &raquo;
    Duplicating {{ object.make }} {{ object.model }}
    {% if object.barcode %}(#{{ object.barcode }}){% endif %}
 {% endblock %}
 
 {% block breadcrumb %}
    <a href="{% url etcetera-home %}">Home</a> &rsaquo;
-   <a href="{% url equipment-index %}">Equipment Inventory</a> &rsaquo;
+   <a href="{% url equipment-index %}">Equipment</a> &rsaquo;
    <a href="{% url equipment-detail object.id %}">
       {{ object.make }} {{ object.model }} ({{ object.equipment_type }})
    </a> &rsaquo;

@@ -1,0 +1,88 @@
+{% extends "root.html" %}
+{% load etcetera_tags %}
+
+{% block title %}
+   {% if view_type == 'buildings' %}
+      Buildings
+   {% else %}
+      Departments
+   {% endif %} &raquo;
+   {% if object %}
+      Editing {{ object.name }}
+   {% else %}
+      Creating a new {{ view_type|unpluralize }}
+   {% endif %}
+{% endblock %}
+
+{% block breadcrumb %}
+   <a href="{% url etcetera-home %}">Home</a> &rsaquo;
+   {% if view_type == 'buildings' %}
+      <a href="{% url structure-index 'buildings' %}">Buildings</a>
+   {% else %}
+      <a href="{% url structure-index 'departments' %}">Departments</a>
+   {% endif %} &rsaquo;
+   {% if object %}
+      {% if view_type == 'buildings' %}
+         <a href="{% url building-detail object.abbreviation %}">
+      {% else %}
+         <a href="{% url organizationalunit-detail object.id %}">
+      {% endif %}
+      {{ object.name }}</a> &rsaquo; Edit
+      </a>
+   {% else %}
+      Creating a new {{ view_type|unpluralize }}
+   {% endif %}
+{% endblock %}
+
+{% block content %}
+<div id="detail">
+   <form action="" method="POST">
+      <div id="headers">
+         <h1>
+            {% if object %}
+               {{ object.name }}
+               {% if object.abbreviation %}
+                  <span class="head">({{ object.abbreviation }})</span>
+               {% endif %}
+            {% else %}
+               Creating a new {{ view_type|unpluralize }}
+            {% endif %}
+         </h1>
+      </div>
+   
+      <div id="actions">
+         <h2>Actions</h2>
+         <ul>
+            <li>
+               <input type="submit" name="save" value="save" id="save" />
+            </li>
+         </ul>
+      </div>
+   
+      <div id="brief-information">
+         <h2>Brief information</h2>
+         <table class="detail">
+            <tr{% if form.name.errors %} class="errorlist"{% endif %}>
+               <td>{{ form.name.label }}</td>
+               <td>{{ form.name }}{{ form.name.errors }}</td>
+            </tr>
+            <tr{% if form.abbreviation.errors %} class="errorlist"{% endif %}>
+               <td>{{ form.abbreviation.label }}</td>
+               <td>{{ form.abbreviation }}{{ form.abbreviation.errors }}</td>
+            </tr>
+            {% if view_type == 'buildings' %}
+               <tr{% if form.campus.errors %} class="errorlist"{% endif %}>
+                  <td>{{ form.campus.label }}</td>
+                  <td>{{ form.campus }}{{ form.campus.errors }}</td>
+               </tr>
+            {% else %}
+               <tr{% if form.parent.errors %} class="errorlist"{% endif %}>
+                  <td>{{ form.parent.label }}</td>
+                  <td>{{ form.parent }} {{ form.parent.errors }}</td>
+               </tr>
+            {% endif %}
+         </table>
+      </div>
+   </form>
+</div>
+{% endblock %}

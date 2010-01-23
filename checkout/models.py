@@ -22,6 +22,7 @@ class Checkout(models.Model):
 		structure.OrganizationalUnit,
 		null=True,
 		blank=True,
+		related_name='checkouts',
 	)
 	course = models.CharField(
 		max_length=20,

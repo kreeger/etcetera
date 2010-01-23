@@ -185,8 +185,7 @@ def inventory(request, object_id):
 @login_required
 def history(request, object_id, history_type):
 	eq = get_object_or_404(equipment.Equipment, id=object_id)
-	if history_type not in ['checkout','service']:
-		raise Http404
+	if history_type not in ['checkout','service']: raise Http404
 	if history_type == 'checkout': history = eq.checkouts.all()
 	if history_type == 'service': history = eq.workorder_set.all()
 	# Repackage everything into paged_objects using Paginator.

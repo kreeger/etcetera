@@ -15,13 +15,11 @@
 
 {% block subnav %}
    <ul>
-      <li><a href="{% url service-index %}">
-            Active
-         </a>
+      <li{% if not completed %} class="active"{% endif %}>
+         <a href="{% url service-index %}">Active</a>
       </li>
-      <li><a href="{% url service-completed %}">
-            Completed
-         </a>
+      <li{% if completed %} class="active"{% endif %}>
+         <a href="{% url service-completed %}">Completed</a>
       </li>
    </ul>
 {% endblock %}
