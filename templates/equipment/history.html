@@ -1,11 +1,15 @@
 {% extends "root.html" %}
 {% load etcetera_tags %}
 
-{% block title %}{{ history_type }} History for {{ object.make }} {{ object.model }} ({{ object.equipment_type }}){% endblock %}
+{% block title %}
+   Equipment &raquo;
+   {{ history_type }} History for
+   {{ object.make }} {{ object.model }} ({{ object.equipment_type }})
+{% endblock %}
 
 {% block breadcrumb %}
    <a href="{% url etcetera-home %}">Home</a> &rsaquo;
-   <a href="{% url equipment-index %}">Equipment Inventory</a> &rsaquo;
+   <a href="{% url equipment-index %}">Equipment</a> &rsaquo;
    <a href="{% url equipment-detail object.id %}">
       {{ object.make }} {{ object.model }} ({{ object.equipment_type }})
    </a> &rsaquo;

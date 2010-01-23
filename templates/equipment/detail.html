@@ -2,12 +2,12 @@
 {% load etcetera_tags %}
 
 {% block title %}
-   {{ object.make }} {{ object.model }} ({{ object.equipment_type }})
+   Equipment &raquo; {{ object.make }} {{ object.model }} ({{ object.equipment_type }})
 {% endblock %}
 
 {% block breadcrumb %}
    <a href="{% url etcetera-home %}">Home</a> &rsaquo;
-   <a href="{% url equipment-index %}">Equipment Inventory</a> &rsaquo;
+   <a href="{% url equipment-index %}">Equipment</a> &rsaquo;
    {{ object.make }} {{ object.model }} ({{ object.equipment_type }})
 {% endblock %}
 

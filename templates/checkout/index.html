@@ -24,58 +24,32 @@
 
 {% block subnav %}
    <ul>
-      <li><a href="{% url checkout-index %}">
-            All Active
-         </a>
+      <li{% if view_type == 'all' %} class="active"{% endif %}>
+         <a href="{% url checkout-index %}">All Active</a>
       </li>
-      <li><a href="{% url checkout-unconfirmed %}">
-            Unconfirmed
-         </a>
+      <li{% if view_type == 'unconfirmed' %} class="active"{% endif %}>
+         <a href="{% url checkout-unconfirmed %}">Unconfirmed</a>
       </li>
-      <li><a href="{% url checkout-current %}">
-            Current
-         </a>
+      <li{% if view_type == 'current' %} class="active"{% endif %}>
+         <a href="{% url checkout-current %}">Current</a>
       </li>
-      <li><a href="{% url checkout-pickups %}">
-            Req. Pickups
-         </a>
+      <li{% if view_type == 'pickups' %} class="active"{% endif %}>
+         <a href="{% url checkout-pickups %}">Req. Pickups</a>
       </li>
-      <li><a href="{% url checkout-deliveries %}">
-            Deliveries
-         </a>
+      <li{% if view_type == 'deliveries' %} class="active"{% endif %}>
+         <a href="{% url checkout-deliveries %}">Deliveries</a>
       </li>
-      <li><a href="{% url checkout-returns %}">
-            Returns
-         </a>
+      <li{% if view_type == 'returns' %} class="active"{% endif %}>
+         <a href="{% url checkout-returns %}">Returns</a>
       </li>
-      <li><a href="{% url checkout-completed %}">
-            Completed
-         </a>
+      <li{% if view_type == 'completed' %} class="active"{% endif %}>
+         <a href="{% url checkout-completed %}">Completed</a>
       </li>
-      <li><a href="{% url checkout-overdue %}">
-            Overdue
-         </a>
+      <li{% if view_type == 'overdue' %} class="active"{% endif %}>
+         <a href="{% url checkout-overdue %}">Overdue</a>
       </li>
    </ul>
 {% endblock %}
-
-{# {% block subsubnav %}
-   {% if view_type == 'deliveries' or view_type == 'my_tickets' %}
-   <ul>
-      <li><a href="{% url checkout-deliveries %}">
-            Today
-         </a>
-      </li>
-      <li><a href="{% url checkout-deliveries %}">
-            Tomorrow
-         </a>
-      </li>
-      <li><a href="{% url checkout-deliveries %}">
-            This Week
-         </a>
-      </li>
-   {% endif %}
-{% endblock %}#}
 
 {% block content %}
 

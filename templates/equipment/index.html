@@ -6,7 +6,7 @@
 {% block breadcrumb %}
    <a href="{% url etcetera-home %}">Home</a> &rsaquo;
    {% if view_type == 'index' %}
-      Equipment Inventory
+      Equipment
    {% endif %}
    {% if view_type == 'weekly' %}
       <a href="{% url equipment-index %}">Equipment</a>
@@ -16,8 +16,12 @@
 
 {% block subnav %}
    <ul>
-      <li><a href="{% url equipment-index %}">Inventory</a></li>
-      <li><a href="{% url equipment-weekly %}">Checklist</a></li>
+      <li{% if view_type == 'index' %} class="active"{% endif %}>
+         <a href="{% url equipment-index %}">Inventory</a>
+      </li>
+      <li{% if view_type == 'weekly' %} class="active"{% endif %}>
+         <a href="{% url equipment-weekly %}">Checklist</a>
+      </li>
    </ul>
 {% endblock %}
 

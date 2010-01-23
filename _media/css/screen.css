@@ -28,6 +28,7 @@ textarea { font: .9em "Helvetica Neue", Helvetica, Arial, sans-serif; padding: 5
 .tablehead, table.detail td:first-child { -webkit-border-top-left-radius: 10px; -moz-border-radius-topleft: 10px; -webkit-border-bottom-left-radius: 10px; -moz-border-radius-bottomleft: 10px; background-color: #EAEAEA; vertical-align: middle; color: #666; text-align: right; text-transform: lowercase; font-weight: normal; width: 160px; display: block; padding: 5px 5px 5px 10px; }
 .wrapper { width: 950px; margin: 0px auto; }
 .datetime { font-weight: normal; font-size: 13px; }
+.active a { background-color: #CCC; cursor: default; }
 
 a.add { width: 16px; height: 16px; background-image: url(../images/icons/buttonplu32.png); }
 a.remove { width: 16px; height: 16px; background-image: url(../images/icons/buttonmin32.png); }

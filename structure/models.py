@@ -40,7 +40,7 @@ class Campus(models.Model):
 class Building(models.Model):
 	"""A level-two container for building structure"""
 	name = models.CharField(max_length=100)
-	abbreviation = models.CharField(max_length=20, blank=True, unique=True)
+	abbreviation = models.CharField(max_length=4, blank=True, unique=True)
 	campus = models.ForeignKey(Campus)
 	
 	class Meta:
@@ -48,7 +48,7 @@ class Building(models.Model):
 	
 	def save(self, *args, **kwargs):
 		if not self.abbreviation:
-			self.abbreviation = self.name.split()[0]
+			self.abbreviation = self.name.split()[0][:3]
 		super(Building, self).save(*args, **kwargs)
 	
 	def __unicode__(self):

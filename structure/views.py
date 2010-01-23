@@ -12,10 +12,9 @@ from etcetera.structure import forms as stforms
 from etcetera.structure import models as structure
 from etcetera.equipment import graphs as eqgraphs
 
+@login_required
 def index(request, structure_kind='buildings'):
-	if not structure_kind == 'buildings':
-		if not structure_kind == 'departments':
-			raise Http404
+	if not structure_kind in ['buildings','departments']: raise Http404
 	paged_objects = None
 	q = None
 	form = stforms.SearchForm()
@@ -63,7 +62,7 @@ def index(request, structure_kind='buildings'):
 		'paged_objects': paged_objects,
 		'object_list': paged_objects.object_list,
 		'form': form,
-		'type': structure_kind,
+		'view_type': structure_kind,
 		'q': q,
 	}
 	return render_to_response(
@@ -72,31 +71,121 @@ def index(request, structure_kind='buildings'):
 		context_instance=RequestContext(request)
 	)
 
-def buildings_detail(request, abbreviation):
+def detail(request, abbreviation=None, object_id=None):
+	view_type = None
+	stru_obj = None
+	if abbreviation:
 	# Get our building
-	bldg = get_object_or_404(
-		structure.Building,
-		abbreviation=abbreviation
-	)
+		stru_obj = get_object_or_404(
+			structure.Building,
+			abbreviation=abbreviation.upper()
+		)
+		view_type = 'buildings'
+	elif object_id:
+		stru_obj = get_object_or_404(
+			structure.OrganizationalUnit,
+			pk=object_id
+		)
+		view_type = 'departments'
+	stru_obj.checkouts_open = stru_obj.checkouts.filter(completed=False)
+	stru_obj.workorders_open = stru_obj.workorders.filter(completed=False)
 	
 	# Call a custom function that gives us back a graph URL in a string
 	
-	
-	context = {'object': bldg,'data': data}
+	context = {
+		'object': stru_obj,
+		'view_type': view_type,
+	}
 	return render_to_response(
-		"structure/buildings_detail.html",
+		"structure/detail.html",
 		context,
 		context_instance=RequestContext(request)
 	)
 
-def organizationalunits_detail(request, object_id):
-	ou = get_object_or_404(
-		structure.OrganizationalUnit,
-		pk=object_id
-	)
-	context = {'object': ou,}
+@login_required
+def edit(request, abbreviation=None, object_id=None):
+	view_type = None
+	stru_obj = None
+	form = None
+	return_reverse = None
+	if abbreviation:
+	# Get our building
+		stru_obj = get_object_or_404(
+			structure.Building,
+			abbreviation=abbreviation.upper()
+		)
+		form = stforms.BuildingModelForm(instance=stru_obj)
+		view_type = 'buildings'
+	elif object_id:
+		stru_obj = get_object_or_404(
+			structure.OrganizationalUnit,
+			pk=object_id
+		)
+		form = stforms.OrganizationalUnitModelForm(instance=stru_obj)
+		view_type = 'departments'
+	if request.method == 'POST':
+		if abbreviation:
+			form = stforms.BuildingModelForm(request.POST, instance=stru_obj)
+		elif object_id:
+			form = stforms.OrganizationalUnitModelForm(
+				request.POST, instance=stru_obj
+			)
+		if form.is_valid():
+			stru_obj = form.save()
+			if abbreviation:
+				return_reverse = reverse(
+					'building-detail',
+					args=(stru_obj.abbreviation,),
+				)
+			elif object_id:
+				return_reverse = reverse(
+					'organizationalunit-detail',
+					args=(stru_obj.id,),
+				)
+			return HttpResponseRedirect(return_reverse)
+	context = {
+		'object': stru_obj,
+		'view_type': view_type,
+		'form': form,
+	}
 	return render_to_response(
-		"structure/organizationalunits_detail.html",
+		"structure/edit.html",
+		context,
+		context_instance=RequestContext(request)
+	)
+
+@login_required
+def new(request, structure_kind):	
+	if structure_kind not in ['buildings','departments']: raise Http404
+	form = None
+	return_reverse = None
+	if structure_kind == 'buildings':
+		form = stforms.BuildingModelForm()
+	else:
+		form = stforms.OrganizationalUnitModelForm()
+	if request.method == 'POST':
+		if structure_kind == 'buildings':
+			form = stforms.BuildingModelForm(request.POST)
+		else:
+			form = stforms.OrganizationalUnitModelForm(request.POST)
+		if form.is_valid():
+			stru_obj = form.save()
+			if structure_kind == 'buildings':
+				return_reverse = reverse(
+					'building-detail',
+					args=(stru_obj.abbreviation,),
+				)
+			else:
+				return_reverse = reverse(
+					'organizationalunit-detail',
+					args=(stru_obj.id,),
+				)
+			return HttpResponseRedirect(return_reverse)
+	context = {
+		'form': form,
+	}
+	return render_to_response(
+		"structure/edit.html",
 		context,
 		context_instance=RequestContext(request)
 	)

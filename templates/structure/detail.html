@@ -1,0 +1,215 @@
+{% extends "root.html" %}
+{% load etcetera_tags %}
+
+{% block title %}
+   {% if view_type == 'buildings' %}
+      Buildings
+   {% else %}
+      Departments
+   {% endif %}
+   &raquo; {{ object.name }}
+{% endblock %}
+
+{% block breadcrumb %}
+   <a href="{% url etcetera-home %}">Home</a> &rsaquo;
+   {% if view_type == 'buildings' %}
+      <a href="{% url structure-index 'buildings' %}">Buildings</a>
+   {% else %}
+      <a href="{% url structure-index 'departments' %}">Departments</a>
+   {% endif %}
+    &rsaquo; {{ object.name }}
+{% endblock %}
+
+{% block content %}
+<div id="detail">
+   <div id="headers">
+      <h1>
+         {{ object.name }}
+            {% if object.abbreviation %}
+               <span class="head">({{ object.abbreviation }})</span>
+            {% endif %}
+      </h1>
+      <ul>
+         <li>Total checkouts: {{ object.checkouts.count }}</li>
+         <li>Total open checkouts: {{ object.checkouts_open.count }}</li>
+         <li>Total work orders: {{ object.workorders.count }}</li>
+         <li>Total open work orders: {{ object.workorders_open.count }}</li>
+      </ul>
+   </div>
+   
+   <div id="actions">
+      <h2>Actions</h2>
+      {% if user.is_authenticated %}
+         <ul>
+            <li>
+               {% if view_type == 'buildings' %}
+                  <a href="{% url building-edit object.abbreviation %}">
+               {% else %}
+                  <a href="{% url organizationalunit-edit object.id %}">
+               {% endif %}
+                  edit
+               </a>
+            </li>
+         </ul>
+      {% else %}
+         <p>You must be logged in to perform actions on this building.</p>
+      {% endif %}
+   </div>
+   
+   <div id="brief-information">
+      <h2>Brief information</h2>
+      <table class="detail">
+         <tr>
+            <td>Name</td>
+            <td>{{ object.name }}</td>
+         </li>
+         {% if object.abbreviation %}
+            <tr>
+               <td>Abbreviation</td>
+               <td>{{ object.abbreviation }}</td>
+            </tr>
+         {% endif %}
+         {% if object.campus %}
+            <tr>
+               <td>Campus</td>
+               <td>{{ object.campus }}</td>
+            </tr>
+         {% endif %}
+         {% if object.parent %}
+            <tr>
+               <td>Parent department</td>
+               <td>
+                  <a href="{% url organizationalunit-detail object.parent.id %}">
+                     {{ object.parent.name }}
+                  </a>
+               </td>
+            </tr>
+            {% endif %}
+      </table>
+   </div>
+   
+   {% if object.checkouts_open.all %}
+      <div id="open-checkouts">
+      <h2>Open checkouts</h2>
+         <table id="list">
+            <tr>
+               <td>Name</td>
+               <td>Department</td>
+               {% if not view_type == 'department' %}
+                  <td>Equipment</td>
+               {% endif %}
+               <td>Location</td>
+               <td>Out date</td>
+               <td>Type</td>
+            </tr>
+            {% for item in object.checkouts_open.all %}
+            <tr>
+               <td>
+                  <a href="{% url checkout-detail item.id %}">
+                     {{ item.first_name }} {{ item.last_name }}
+                  </a>
+               </td>
+               {% if not view_type == 'department' %}
+               <td>
+                  <a href="{% url checkout-detail item.id %}">
+                     {% if item.department %}
+                        {{ item.department|truncatewords:3 }}
+                     {% else %}
+                        {{ item.department_text }}
+                     {% endif %}
+                  </a>
+               </td>
+               {% endif %}
+               <td>
+                  <a href="{% url checkout-detail item.id %}">
+                     {{ item.equipment_needed|truncatewords:6 }}
+                  </a>
+               </td>
+               <td>
+                  <a href="{% url checkout-detail item.id %}">
+                     {{ item.building.abbreviation }} {{ item.room }}
+                  </a>
+               </td>
+               <td>
+                  <a href="{% url checkout-detail item.id %}">
+                     {{ item.out_date|date:'n/j/Y g:iA' }}
+                  </a>
+               </td>
+               <td>
+                  <a href="{% url checkout-detail item.id %}">
+                     {{ item.get_checkout_type_display }}
+                  </a>
+               </td>
+            </tr>
+            {% endfor %}
+         </table>
+      </div>   
+   {% endif %}
+   
+   {% if object.workorders_open.all %}
+      <div id="open-workorders">
+      <h2>Open work orders</h2>
+         <table id="list">
+            <tr>
+               <td>Submitted by</td>
+               {% if not view_type == 'department' %}
+                  <td>Department</td>
+               {% endif %}
+               <td>Equipment</td>
+               <td>Location</td>
+               <td>Priority</td>
+               <td>Work type</td>
+               <td>Creation date</td>
+            </tr>
+            {% for item in object.workorders_open.all %}
+            <tr class="priority{{ item.priority }}">
+               <td>
+                  <a href="{% url service-detail item.id %}">
+                     {{ item.first_name }} {{ item.last_name }}
+                  </a>
+               </td>
+               {% if not view_type == 'department' %}
+                  <td>
+                     <a href="{% url service-detail item.id %}">
+                        {{ item.department }}
+                     </a>
+                  </td>
+               {% endif %}
+               <td>
+                  <a href="{% url service-detail item.id %}">
+                     {% if item.equipment %}
+                        {{ item.equipment.make.name }}
+                        {{ item.equipment.model }}
+                     {% else %}
+                        {{ item.equipment_text|truncatewords:5 }}
+                     {% endif %}
+                  </a>
+               </td>
+               <td>
+                  <a href="{% url service-detail item.id %}">
+                     {{ item.building.abbreviation }} {{ item.room }}
+                  </a>
+               </td>
+               <td>
+                  <a href="{% url service-detail item.id %}" class="priority{{ item.priority }}">
+                     {{ item.get_priority_display }}
+                  </a>
+               </td>
+               <td>
+                  <a href="{% url service-detail item.id %}">
+                     {{ item.get_work_type_display }}
+                  </a>
+               </td>
+               <td>
+                  <a href="{% url service-detail item.id %}">
+                     {{ item.creation_date|date:'n/j/Y g:iA' }}
+                  </a>
+               </td>
+            </tr>
+            {% endfor %}
+         </table>
+      </div>   
+   {% endif %}
+   
+</div>
+{% endblock %}

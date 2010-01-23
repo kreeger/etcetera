@@ -1,20 +1,22 @@
 {% extends "root.html" %}
 {% load etcetera_tags %}
 
-{% block title %}{{ type|capfirst }}{% endblock %}
+{% block title %}{{ view_type|capfirst }}{% endblock %}
 
 {% block breadcrumb %}
    <a href="{% url etcetera-home %}">Home</a> &rsaquo;
-   {{ type|capfirst }}
+   {{ view_type|capfirst }}
 {% endblock %}
 
 {% block subnav %}
    <ul>
-      <li><a href="{% url structure-index 'buildings' %}">
+      <li{% if view_type == 'buildings' %} class="active"{% endif %}>
+         <a href="{% url structure-index 'buildings' %}">
             Buildings
          </a>
       </li>
-      <li><a href="{% url structure-index 'departments' %}">
+      <li{% if view_type == 'departments' %} class="active"{% endif %}>
+         <a href="{% url structure-index 'departments' %}">
             Departments
          </a>
       </li>
@@ -25,10 +27,10 @@
 <div id="list">
    <h1>
       <span class="right">
-         <a href="#">add a new {{ type|unpluralize }}</a>
+         <a href="#">add a new {{ view_type|unpluralize }}</a>
       </span>
       
-      {{ type|capfirst }}
+      {{ view_type|capfirst }}
       
       {% if q %}
          <span class="head">searching for: "{{ q }}"</span>
@@ -48,40 +50,42 @@
    <table id="list">
       <tr id="headerrow">
          <td>{{ type|capfirst|unpluralize }}
-         {% ifequal type 'buildings' %}
+         {% if view_type == 'buildings' %}
             <td>Abbreviation</td>
             <td>Campus</td>
-         {% endifequal %}
-         {% ifequal type 'departments' %}
+         {% else %}
             <td>Parent</td>
-         {% endifequal %}
+         {% endif %}
       </tr>
       {% for object in object_list %}
          <tr class="datarow">
             <td>
-               <a href="#">
+               {% if view_type == 'buildings' %}
+                  <a href="{% url building-detail object.abbreviation %}">
+               {% else %}
+                  <a href="{% url organizationalunit-detail object.id %}">
+               {% endif %}
                   {{ object.name }}
                </a>
             </td>
-            {% ifequal type 'buildings' %}
+            {% if view_type == 'buildings' %}
                <td>
-                  <a href="#">
+                  <a href="{% url building-detail object.abbreviation %}">
                      {{ object.abbreviation }}
                   </a>
                </td>         
                <td>
-                  <a href="#">
+                  <a href="{% url building-detail object.abbreviation %}">
                      {{ object.campus }}
                   </a>
                </td>
-            {% endifequal %}
-            {% ifequal type 'departments' %}
+            {% else %}
                <td>
-                  <a href="#">
+                  <a href="{% url organizationalunit-detail object.id %}">
                      {{ object.parent.name }}
                   </a>
                </td>
-            {% endifequal %}
+            {% endif %}
          </tr>
       {% endfor %}
    </table>
