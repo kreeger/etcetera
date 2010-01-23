@@ -164,14 +164,12 @@
          </li>
          {% if object.department or object.department_text %}
             <tr>
-               <td>Department</td>
-               <td>
-                  {% if object.department %}
-                     {{ object.department }}
-                  {% else %}
-                     {{ object.department_text }} (user-submitted)
+               <td>Department
+                  {% if object.department_text and not object.department %}
+                     (from user)
                   {% endif %}
                </td>
+               <td>{% firstof object.department object.department_text %}</td>
             </tr>
          {% endif %}
          {% if object.course %}

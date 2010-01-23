@@ -63,6 +63,7 @@ def index(request, completed=False):
 				service_query = get_query(data['q'], [
 					'first_name',
 					'last_name',
+					'department_text',
 					'department',
 					'equipment__equipment_type__name',
 					'equipment__make__name',

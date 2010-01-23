@@ -14,6 +14,7 @@ SERVICE_CHOICES = (
 )
 
 class ServiceForm(forms.Form):
+	# Need to retool this in the future to make it based on a ModelForm
 	name = forms.CharField(
 		max_length=200,
 		help_text='Your first and last name'

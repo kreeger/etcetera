@@ -72,6 +72,12 @@
             <td>{{ form.department.label }}</td>
             <td>{{ form.department }}{{ form.department.errors }}</td>
          </tr>
+         {% if object %}
+            <tr>
+               <td>Department (user)</td>
+               <td>{{ object.department_text }}</td>
+            </tr>
+         {% endif %}
          <tr{% if form.phone.errors %} class="errorlist"{% endif %}>
             <td>{{ form.phone.label }}</td>
             <td>{{ form.phone }}{{ form.phone.errors }}</td>
