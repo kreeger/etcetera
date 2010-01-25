@@ -17,7 +17,13 @@
    {% else %}
       <a href="{% url structure-index 'departments' %}">Departments</a>
    {% endif %}
-    &rsaquo; {{ object.name }}
+    &rsaquo; 
+    {% if room %}
+      <a href="{% url building-detail object.abbreviation %}">
+         {{ object.name }}</a> &rsaquo; {{ room }}
+   {% else %}
+      {{ object.name }}
+   {% endif %}
 {% endblock %}
 
 {% block content %}
@@ -25,15 +31,25 @@
    <div id="headers">
       <h1>
          {{ object.name }}
-            {% if object.abbreviation %}
-               <span class="head">({{ object.abbreviation }})</span>
+            {% if room %}
+               <span class="head">{{ room }}</span>
+            {% else %}
+               {% if object.abbreviation %}
+                  <span class="head">({{ object.abbreviation }})</span>
+               {% endif %}
             {% endif %}
       </h1>
       <ul>
-         <li>Total checkouts: {{ object.checkouts.count }}</li>
-         <li>Total open checkouts: {{ object.checkouts_open.count }}</li>
-         <li>Total work orders: {{ object.workorders.count }}</li>
-         <li>Total open work orders: {{ object.workorders_open.count }}</li>
+         <li>
+            Total checkouts: 
+            {% firstof object.room_checkouts.count object.checkouts.count %}
+         </li>
+         <li>Open checkouts: {{ object.checkouts_open.count }}</li>
+         <li>
+            Total work orders:
+            {% firstof object.room_workorders.count object.workorders.count %}
+         </li>
+         <li>Open work orders: {{ object.workorders_open.count }}</li>
       </ul>
    </div>
    

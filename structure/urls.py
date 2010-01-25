@@ -13,6 +13,10 @@ urlpatterns += patterns('',
 		detail,
 		name="building-detail"
 	),
+	url(r'^buildings/(?P<abbreviation>\w{2,4})/(?P<room>.*)/$',
+		detail,
+		name="building-detail"
+	),
 	url(r'^buildings/(?P<abbreviation>\w{2,4})/edit/$',
 		edit,
 		name="building-edit"

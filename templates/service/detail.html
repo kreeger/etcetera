@@ -106,7 +106,15 @@
                      (from user)
                   {% endif %}
                </td>
-               <td>{% firstof object.department object.department_text %}</td>
+               <td>
+                  {% if object.department %}
+                     <a href="{% url organizationalunit-detail object.department.id %}">
+                        {{ object.department }}
+                     </a>
+                  {% else %}
+                     {{ object.department_text }}
+                  {% endif %}
+               </td>
             </tr>
          {% endif %}
          {% if object.phone %}
@@ -138,7 +146,10 @@
          {% if object.building %}
             <tr>
                <td>Location</td>
-               <td>{{ object.building.name }} {{ object.room }}</td>
+               <td>
+                  <a href="{% url building-detail object.building.abbreviation %}">
+                     {{ object.building.name }}</a> {{ object.room }}
+               </td>
             </tr>
          {% endif %}
          {% if object.location_text %}
