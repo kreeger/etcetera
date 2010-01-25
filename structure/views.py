@@ -71,15 +71,16 @@ def index(request, structure_kind='buildings'):
 		context_instance=RequestContext(request)
 	)
 
-def detail(request, abbreviation=None, object_id=None):
+def detail(request, abbreviation=None, object_id=None, room=None):
 	view_type = None
 	stru_obj = None
 	if abbreviation:
-	# Get our building
+		# Get our building
 		stru_obj = get_object_or_404(
 			structure.Building,
 			abbreviation=abbreviation.upper()
 		)
+		#building_rooms = structure.Building.objects.filter()
 		view_type = 'buildings'
 	elif object_id:
 		stru_obj = get_object_or_404(
@@ -89,12 +90,18 @@ def detail(request, abbreviation=None, object_id=None):
 		view_type = 'departments'
 	stru_obj.checkouts_open = stru_obj.checkouts.filter(completed=False)
 	stru_obj.workorders_open = stru_obj.workorders.filter(completed=False)
+	if room:
+		stru_obj.room_checkouts = stru_obj.checkouts.filter(room=room)
+		stru_obj.room_workorders = stru_obj.workorders.filter(room=room)
+		stru_obj.checkouts_open = stru_obj.checkouts_open.filter(room=room)
+		stru_obj.workorders_open = stru_obj.workorders_open.filter(room=room)
 	
 	# Call a custom function that gives us back a graph URL in a string
 	
 	context = {
 		'object': stru_obj,
 		'view_type': view_type,
+		'room': room,
 	}
 	return render_to_response(
 		"structure/detail.html",

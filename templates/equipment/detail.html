@@ -40,7 +40,8 @@
                      {% endif %}
                   {% endif %}
                <strong>
-                  {{ object.building.abbreviation }} {{ object.room }}
+                  <a href="{% url building-detail object.building.abbreviation %}">
+                     {{ object.building.abbreviation }}</a> {{ object.room }}
                </strong>
                {% endif %}
             </li>
@@ -210,7 +211,11 @@
                {% if object.department %}
                   <tr>
                      <td>Department</td>
-                     <td>{{ object.department }}</td>
+                     <td>
+                        <a href="{% url organizationalunit-detail object.department.id %}">
+                           {{ object.department }}
+                        </a>
+                     </td>
                   </tr>
                {% endif %}
             </table>

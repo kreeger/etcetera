@@ -169,7 +169,15 @@
                      (from user)
                   {% endif %}
                </td>
-               <td>{% firstof object.department object.department_text %}</td>
+               <td>
+                  {% if object.department %}
+                     <a href="{% url organizationalunit-detail object.department.id %}">
+                        {{ object.department }}
+                     </a>
+                  {% else %}
+                     {{ object.department_text }}
+                  {% endif %}
+               </td>
             </tr>
          {% endif %}
          {% if object.course %}
@@ -186,13 +194,10 @@
                   {% endif %}
                   Location
                </td>
-               <td>{{ object.building.name }} {{ object.room }}</td>
-            </tr>
-         {% endif %}
-         {% if object.location_text %}
-            <tr>
-               <td>Other location</td>
-               <td>{{ object.location_text }}</td>
+               <td>
+                  <a href="{% url building-detail object.building.abbreviation %}">
+                     {{ object.building.name }}</a> {{ object.room }}
+               </td>
             </tr>
          {% endif %}
          {% if object.returning_person %}
