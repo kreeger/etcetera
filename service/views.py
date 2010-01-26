@@ -64,7 +64,7 @@ def index(request, completed=False):
 					'first_name',
 					'last_name',
 					'department_text',
-					'department',
+					'department__name',
 					'equipment__equipment_type__name',
 					'equipment__make__name',
 					'equipment__model',

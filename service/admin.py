@@ -22,7 +22,8 @@ class WorkOrderAdmin(admin.ModelAdmin):
 	search_fields = (
 	    'first_name',
 	    'last_name',
-	    'department',
+	    'department__name',
+		'department_text',
 	    'equipment__equipment_type__name',
 	    'equipment_text','building__name',
 	    'room',
