@@ -37,7 +37,7 @@
       </h1>
       <ul>
          <li>
-            Total checkouts: 
+            Total checkouts:
             {% firstof object.room_checkouts.count object.checkouts.count '0' %}
          </li>
          <li>Open checkouts: {{ object.checkouts_open.count }}</li>
