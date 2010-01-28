@@ -88,7 +88,7 @@ def detail(request, abbreviation=None, object_id=None, room=None):
 			pk=object_id
 		)
 		view_type = 'departments'
-	stru_obj.checkouts_open = stru_obj.checkouts.filter(completed=False)
+	stru_obj.checkouts_open = stru_obj.checkouts.filter(completion_date=None)
 	stru_obj.workorders_open = stru_obj.workorders.filter(completed=False)
 	if room:
 		stru_obj.room_checkouts = stru_obj.checkouts.filter(room=room)

@@ -64,7 +64,7 @@ def index(request, view_type='all', date_range=None):
 		paged_objects = checkout.Checkout.objects.all()
 	if 	view_type == 'all':
 		paged_objects = paged_objects.filter(
-			completed=False).order_by(
+			completion_date=None).order_by(
 			'-out_date'
 		)
 	elif view_type == 'unconfirmed':
@@ -76,7 +76,7 @@ def index(request, view_type='all', date_range=None):
 		)
 	elif view_type == 'current':
 		paged_objects = paged_objects.filter(
-			completed=False).exclude(
+			completion_date=None).exclude(
 			action_date=None).order_by(
 			'-out_date'
 		)
@@ -85,7 +85,7 @@ def index(request, view_type='all', date_range=None):
 			checkout_type='pickup').filter(
 			action_date=None).filter(
 			return_date__gte=today).filter(
-			completed=False).order_by(
+			completion_date=None).order_by(
 			'out_date'
 		)
 	elif view_type == 'deliveries':
@@ -93,24 +93,24 @@ def index(request, view_type='all', date_range=None):
 			checkout_type='delivery').filter(
 			action_date=None).filter(
 			return_date__gte=today).filter(
-			completed=False).order_by(
+			completion_date=None).order_by(
 			'out_date'
 		)
 	elif view_type == 'returns':
 		paged_objects = paged_objects.filter(
 			return_date__gte=today).filter(
-			completed=False).order_by(
+			completion_date=None).order_by(
 			'return_date'
 		)
 	elif view_type == 'completed':
-		paged_objects = paged_objects.filter(
-			completed=True).order_by(
+		paged_objects = paged_objects.exclude(
+			completion_date=None).order_by(
 			'-return_date'
 		)
 	elif view_type == 'overdue':
 		paged_objects = paged_objects.filter(
-			return_date__lt=today).filter(
-			completed=False).order_by(
+			return_date__lt=today).exclude(
+			completion_date=None).order_by(
 			'-return_date'
 		)
 	# Repackage everything into paged_objects using Paginator.
@@ -146,7 +146,7 @@ def detail(request, object_id):
 	# Check if item is overdue.
 	now = dt.datetime.now()
 	co.overdue = None
-	if now > co.return_date and not co.completed:
+	if now > co.return_date and not co.completion_date:
 		co.overdue = True
 		# Needs to be timedelta between now-return_date
 	context = {'object': co,}
@@ -166,32 +166,8 @@ def edit(request, object_id):
 		# validate it, and save it
 		form = coforms.CheckoutModelForm(request.POST, instance=co)
 		if form.is_valid():
-			# If the form isn't previously marked complete, but is now marked
-			if not co.completed:
-				# Maybe in the future I should move this into the save() method
-				if form.cleaned_data['completed']:
-					# For each associated equipment item
-					for eq in co.equipment_list.all():
-						# If it's marked as checkedout or overdue
-						if eq.status == 'checkedout' or eq.status == 'overdue':
-							# Declare a flag that says if it's okay to change
-							# an equipment's status
-							okay_to_proceed = True
-							# For each checkout occuring currently or in the
-							# future that the equipment's associated with
-							for future_co in eq.checkouts.filter(
-								return_date__gte=dt.datetime.now()).filter(
-								completed=False):
-								# As long as it's not this current checkout
-								if future_co != co:
-									# Then it's not okay to change the status
-									okay_to_proceed = False
-							# If okay_to_proceed, then modify the status & save
-							if okay_to_proceed:
-								eq.status = 'checkout'
-								eq.save()
-					if form.cleaned_data['email']:
-						completed_mail(co)
+			# If the form isn't already marked as complete
+			if not co.completion_date:
 				# If a new delivery person is added, send them an email
 				if not co.delivering_user and not co.return_date < now:
 					if form.cleaned_data['delivering_user']:
@@ -384,7 +360,7 @@ def confirm(request, object_id):
 	co = get_object_or_404(checkout.Checkout, id=object_id)
 	if request.method == 'GET':
 		# If confirmation hasn't yet been sent, and there is an email
-		if not co.completed and not co.confirmation_sent and co.email:
+		if not co.completion_date and not co.confirmation_sent and co.email:
 			# If it's a delivery, there must also be a delivering user
 			if co.checkout_type == 'delivery' and co.delivering_user:
 				confirmation_mail(co)
@@ -453,13 +429,13 @@ def dupe(request, object_id):
 def cancel(request, object_id):
 	# Get the object from the database
 	co = get_object_or_404(checkout.Checkout, id=object_id)
-	# If page is accessed via GET
+	# If page is accessed via POST
 	if request.method == 'POST':
 		# Check to see if the order has not yet been canceled
-		if not co.canceled and not co.completed:
+		if not co.canceled and not co.completion_date:
 			# If not, set it as such and save it
 			co.canceled = True
-			co.completed = True
+			co.completion_date = dt.datetime.now()
 			co.save()
 			if co.email:
 				canceled_mail(co)
@@ -491,7 +467,7 @@ def activate(request, object_id):
 	# If page is accessed via GET
 	if request.method == 'GET':
 		# Check to see if the order has not yet been canceled
-		if not co.completed and not co.action_date:
+		if not co.completion_date and not co.action_date:
 			if co.equipment_list.all() or co.other_equipment:
 				# Mark the time, save it
 				co.action_date = dt.datetime.now()
@@ -518,3 +494,41 @@ def activate(request, object_id):
 		context,
 		context_instance=RequestContext(request)
 	)
+
+@login_required
+def complete(request, object_id):
+	co = get_object_or_404(checkout.Checkout, id=object_id)
+	now = dt.datetime.now()
+	# Maybe in the future I should move this into the save() method
+	if not co.completion_date:
+		# For each associated equipment item
+		for eq in co.equipment_list.all():
+			# If it's marked as checkedout or overdue
+			if eq.status == 'checkedout' or eq.status == 'overdue':
+				# Declare a flag that says if it's okay to change
+				# an equipment's status
+				okay_to_proceed = True
+				# For each checkout occuring currently or in the
+				# future that the equipment's associated with
+				for future_co in eq.checkouts.filter(
+					return_date__gte=now).exclude(
+					completion_date=None):
+					# As long as it's not this current checkout
+					if future_co != co:
+						# Then it's not okay to change the status
+						okay_to_proceed = False
+				# If okay_to_proceed, then modify the status & save
+				if okay_to_proceed:
+					eq.status = 'checkout'
+			# Then mark as inventoried and save
+			eq.last_inventoried = now
+			eq.save()
+		co.completion_date = now
+		co.save()
+		if co.email:
+			completed_mail(co)
+	# Redirect to detail
+	return HttpResponseRedirect(reverse(
+		'checkout-detail',
+		args=(co.id,),
+	))

@@ -47,6 +47,7 @@ urlpatterns = patterns('',
 	url(r'^(?P<object_id>\d+)/confirm/$', confirm, name="checkout-confirm"),
 	url(r'^(?P<object_id>\d+)/activate/$', activate, name="checkout-activate"),
 	url(r'^(?P<object_id>\d+)/cancel/$', cancel, name="checkout-cancel"),
+	url(r'^(?P<object_id>\d+)/complete/$', complete, name="checkout-complete"),
 	url(r'^(?P<object_id>\d+)/equip/rem/(?P<eq_id>\d+)/$',
 		equip_remove,
 		name="checkout-eqrem"

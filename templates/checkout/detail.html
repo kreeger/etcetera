@@ -7,13 +7,13 @@
 
 {% block breadcrumb %}
    <a href="{% url etcetera-home %}">Home</a> &rsaquo;
-   <a href="{% if object.completed %}{% url checkout-completed %}">Checkout (Completed){% else %}{% url checkout-index %}">Checkout{% endif %}</a> &rsaquo;
+   <a href="{% if object.completion_date %}{% url checkout-completed %}">Checkout (Completed){% else %}{% url checkout-index %}">Checkout{% endif %}</a> &rsaquo;
    Checkout #{{ object.id }}
 {% endblock %}
 
 {% block content %}
 <div id="detail">
-   {% if user.is_authenticated and not object.completed %}
+   {% if user.is_authenticated and not object.completion_date %}
       {% if not object.equipment_list.all and not object.other_equipment %}
          <div id="alert" class="banner">
             This checkout doesn't have any equipment associated with it.
@@ -49,7 +49,7 @@
          {{ object.first_name }} {{ object.last_name }}
             (Checkout #{{ object.id }})
             <span class="head">{{ object.get_checkout_type_display }}</span>
-         {% if object.completed %}
+         {% if object.completion_date %}
             <span class="head">/
                {% if object.canceled %}
                   canceled
@@ -65,7 +65,7 @@
                <span class="head">Created</span> 
                {{ object.creation_date|date:'n/j/Y g:iA' }}
             </li>
-            {% if object.completion_date and object.completed %}
+            {% if object.completion_date %}
                <li class="closed">
                   <span class="head">Closed</span>
                   {{ object.completion_date|date:'n/j/Y g:iA' }}
@@ -108,7 +108,12 @@
             <li>
                <a href="{% url checkout-edit object.id %}">edit</a>
             </li>
-            {% if not object.completed %}
+            {% if not object.completion_date %}
+               <li>
+                  <a href="{% url checkout-complete object.id %}">
+                     mark as completed
+                  </a>
+               </li>
                <li>
                   <a href="{% url checkout-equip object.id %}">
                      change equipment
@@ -196,7 +201,10 @@
                </td>
                <td>
                   <a href="{% url building-detail object.building.abbreviation %}">
-                     {{ object.building.name }}</a> {{ object.room }}
+                     {{ object.building.name }}</a>
+                  <a href="{% url building-detail object.building.abbreviation object.room %}">
+                     {{ object.room }}
+                  </a>
                </td>
             </tr>
          {% endif %}

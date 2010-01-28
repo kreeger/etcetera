@@ -35,12 +35,6 @@
    {% endif %}
    
    <h2{% if form.completed.errors or form.checkout_type.errors or form.return_type.errors %} class="errorlist"{% endif %}>
-      {% if object %}
-         <span class="right">
-            <span class="head">completed?</span> 
-               {{ form.completed }} {{ form.completed.errors }}
-         </span>
-      {% endif %}
       Checkout type {{ form.checkout_type }} {{ form.checkout_type.errors }}<br />
       Return type {{ form.return_type }} {{ form.return_type.errors }}
    </h2>

@@ -105,7 +105,6 @@ class Checkout(models.Model):
 	)
 	other_equipment = models.TextField(blank=True)
 	confirmation_sent = models.BooleanField()
-	completed = models.BooleanField()
 	canceled = models.BooleanField()
 	completion_date = models.DateTimeField(blank=True, null=True)
 	comments = models.TextField(blank=True)
@@ -119,9 +118,6 @@ class Checkout(models.Model):
 		if self.pk is not None:
 			# Get original object
 			orig = Checkout.objects.get(pk=self.pk)
-			# For each entry in the original data
-			if self.completed and not orig.completed:
-				self.completion_date = dt.datetime.now()
 		# Call super.save
 		super(Checkout, self).save(force_insert, force_update)
 	

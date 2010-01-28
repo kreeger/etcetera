@@ -104,6 +104,32 @@
       </table>
    </div>
    
+   {% if object.children.all %}
+      <div id="children">
+         <h2>Sub-departments</h2>
+         <table id="list">
+            <tr>
+               <td>Name</td>
+               <td>Abbreviation</td>
+            </tr>
+            {% for kid in object.children.all %}
+               <tr>
+                  <td>
+                     <a href="{% url organizationalunit-detail kid.id %}">
+                        {{ kid.name }}
+                     </a>
+                  </td>
+                  <td>
+                     <a href="{% url organizationalunit-detail kid.id %}">
+                        {{ kid.abbreviation }}
+                     </a>
+                  </td>
+               </tr>
+            {% endfor %}
+         </table>
+      </div>
+   {% endif %}
+   
    {% if object.checkouts_open.all %}
       <div id="open-checkouts">
       <h2>Open checkouts</h2>

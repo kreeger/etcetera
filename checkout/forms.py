@@ -82,7 +82,6 @@ class CheckoutPublicForm(forms.ModelForm):
 			'handling_user',
 			'creation_date',
 			'delivering_user',
-			'completed',
 			'returning_user',
 			'other_equipment',
 			'comments',

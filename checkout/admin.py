@@ -35,7 +35,7 @@ class CheckoutAdmin(admin.ModelAdmin):
 				'equipment_list',
 				'other_equipment',
 				'confirmation_sent',
-				'completed',
+				'completion_date',
 			),
 		}),
     )
