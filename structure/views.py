@@ -75,14 +75,18 @@ def detail(request, abbreviation=None, object_id=None, room=None):
 	view_type = None
 	stru_obj = None
 	if abbreviation:
-		# Get our building
+		# Get our building and let the context know it's a building
 		stru_obj = get_object_or_404(
 			structure.Building,
 			abbreviation=abbreviation.upper()
 		)
-		#building_rooms = structure.Building.objects.filter()
 		view_type = 'buildings'
+		# Building-specific information retrieval
+		stru_obj.equipment_installed = stru_obj.equipments.filter(
+			status='installed'
+		)
 	elif object_id:
+		# Get our department and let the context know it's a department
 		stru_obj = get_object_or_404(
 			structure.OrganizationalUnit,
 			pk=object_id
@@ -95,6 +99,9 @@ def detail(request, abbreviation=None, object_id=None, room=None):
 		stru_obj.room_workorders = stru_obj.workorders.filter(room=room)
 		stru_obj.checkouts_open = stru_obj.checkouts_open.filter(room=room)
 		stru_obj.workorders_open = stru_obj.workorders_open.filter(room=room)
+		stru_obj.equipment_installed = stru_obj.equipment_installed.filter(
+			room=room
+		)
 	
 	# Call a custom function that gives us back a graph URL in a string
 	

@@ -46,7 +46,11 @@
             {% firstof object.room_workorders.count object.workorders.count '0' %}
          </li>
          <li>Open work orders: {{ object.workorders_open.count }}</li>
-         <li>Equipment located here: {{ object.equipments.count }}</li>
+         {% if object.equipment_installed %}
+            <li>
+               Equipment installed: {{ object.equipment_installed.count }}
+            </li>
+         {% endif %}
       </ul>
    </div>
    
