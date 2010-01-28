@@ -33,23 +33,20 @@
          {{ object.name }}
             {% if room %}
                <span class="head">{{ room }}</span>
-            {% else %}
-               {% if object.abbreviation %}
-                  <span class="head">({{ object.abbreviation }})</span>
-               {% endif %}
             {% endif %}
       </h1>
       <ul>
          <li>
             Total checkouts: 
-            {% firstof object.room_checkouts.count object.checkouts.count %}
+            {% firstof object.room_checkouts.count object.checkouts.count '0' %}
          </li>
          <li>Open checkouts: {{ object.checkouts_open.count }}</li>
          <li>
             Total work orders:
-            {% firstof object.room_workorders.count object.workorders.count %}
+            {% firstof object.room_workorders.count object.workorders.count '0' %}
          </li>
          <li>Open work orders: {{ object.workorders_open.count }}</li>
+         <li>Equipment located here: {{ object.equipments.count }}</li>
       </ul>
    </div>
    

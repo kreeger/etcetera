@@ -148,7 +148,9 @@
                <td>Location</td>
                <td>
                   <a href="{% url building-detail object.building.abbreviation %}">
-                     {{ object.building.name }}</a> {{ object.room }}
+                     {{ object.building.name }}</a>
+                  <a href="{% url building-detail object.building.abbreviation object.room %}">
+                     {{ object.room }}</a>
                </td>
             </tr>
          {% endif %}
