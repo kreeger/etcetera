@@ -5,16 +5,9 @@
    Checkout &raquo; Editing Checkout #{{ object.id }}
 {% endblock %}
 
-{% block fullscript %}
-   <script type="text/javascript" src="/admin/jsi18n/"></script>
-   <script type="text/javascript" src="/media/js/core.js"></script> 
-   <script type="text/javascript" src="/media/js/admin/RelatedObjectLookups.js"></script>
-   {{ form.media }}
-{% endblock %}
-
 {% block breadcrumb %}
    <a href="{% url etcetera-home %}">Home</a> &rsaquo;
-   <a href="{% if object.completed %}{% url checkout-completed %}">Checkout (Completed){% else %}{% url checkout-index %}">Checkout{% endif %}</a> &rsaquo;
+   <a href="{% if object.completion_date %}{% url checkout-completed %}">Checkout (Completed){% else %}{% url checkout-index %}">Checkout{% endif %}</a> &rsaquo;
    <a href="{% url checkout-detail object.id %}">Checkout #{{ object.id }}</a> &rsaquo;
    Edit
 {% endblock %}
@@ -33,11 +26,11 @@
             #{{ object.id }} <span class="head">edit mode</span>
          {% endif %}
       </h1>
-      <ul{% if form.completed.errors or form.checkout_type.errors or form.return_type.errors %} class="errorlist"{% endif %}>
+      <ul{% if form.canceled.errors or form.checkout_type.errors or form.return_type.errors %} class="errorlist"{% endif %}>
          {% if object %}
             <li class="created">
-               <span class="head">completed?</span>
-               {{ form.completed }} {{ form.completed.errors }}
+               <span class="head">completion date</span>
+                  {{ object.completion_date|date:'n/j/Y g:iA' }}
             </li>
             <li class="closed">
                <span class="head">canceled?</span>
