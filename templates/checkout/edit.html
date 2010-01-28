@@ -136,27 +136,25 @@
       </p>
    </div>
 
-   {% if object.handling_user or object.delivering_user %}
-      <div id="personnel-information">
-         <h2>Personnel information</h2>
-         <table class="detail">
-            {% if object.handling_user %}
-               <tr>
-                  <td>Handled by</td>
-                  <td>
-                     <a href="{% url etcetera-user object.handling_user.username %}">
-                        {{ object.handling_user.get_full_name }}
-                     </a>
-                  </td>
-               </tr>
-            {% endif %}
-            <tr{% if form.delivering_user.errors %} class="errorlist"{% endif %}>
-               <td>{{ form.delivering_user.label }}</td>
-               <td>{{ form.delivering_user }} {{ form.delivering_user.errors }}</td>
+   <div id="personnel-information">
+      <h2>Personnel information</h2>
+      <table class="detail">
+         {% if object.handling_user %}
+            <tr>
+               <td>Handled by</td>
+               <td>
+                  <a href="{% url etcetera-user object.handling_user.username %}">
+                     {{ object.handling_user.get_full_name }}
+                  </a>
+               </td>
             </tr>
-         </table>
-      </div>
-   {% endif %}
+         {% endif %}
+         <tr{% if form.delivering_user.errors %} class="errorlist"{% endif %}>
+            <td>{{ form.delivering_user.label }}</td>
+            <td>{{ form.delivering_user }} {{ form.delivering_user.errors }}</td>
+         </tr>
+      </table>
+   </div>
 
    <div id="other-equipment">
       <h2>{{ form.other_equipment.label }}</h2>
