@@ -31,6 +31,10 @@ h2 { margin: 10px 0; border-bottom: 1px solid #888; color: #444; font-weight: 20
 .datetime { font-weight: normal; font-size: 13px; }
 .active a { background-color: #CCC; cursor: default; }
 
+.collapse-content { display: none; width: inherit; }
+.collapse-link { color: inherit; }
+.collapse-mono { font-family: monospace; font-weight: normal; }
+
 a.add { width: 16px; height: 16px; background-image: url(../images/icons/buttonplu32.png); }
 a.remove { width: 16px; height: 16px; background-image: url(../images/icons/buttonmin32.png); }
 td.tablehead { width: 150px; }

@@ -10,6 +10,15 @@
    &raquo; {{ object.name }}
 {% endblock %}
 
+{% block fullscript %}
+   <noscript>
+      <style type="text/css"><!--
+      .collapse-content { display: block; }
+      //--></style>
+   </noscript>
+   <script src="/_media/js/collapse.js"></script>
+{% endblock %}
+
 {% block breadcrumb %}
    <a href="{% url etcetera-home %}">Home</a> &rsaquo;
    {% if view_type == 'buildings' %}
@@ -246,6 +255,48 @@
                <td>
                   <a href="{% url service-detail item.id %}">
                      {{ item.creation_date|date:'n/j/Y g:iA' }}
+                  </a>
+               </td>
+            </tr>
+            {% endfor %}
+         </table>
+      </div>   
+   {% endif %}
+   
+   {% if object.equipment_installed.all %}
+      <div id="equipment-installed">
+         <h2>
+            <a href="#" class="collapse-link">
+               <span class="collapse-mono">+</span> Equipment installed
+            </a>
+         </h2>
+         <table id="list" class="collapse-content">
+            <tr>
+               <td>Barcode</td>
+               <td>Type</td>
+               <td>Make &amp; Model</td>
+               <td>Status</td>
+            </tr>
+            {% for item in object.equipment_installed.all %}
+            <tr>
+               <td>
+                  <a href="{% url equipment-detail item.id %}">
+                     {{ item.barcode }}
+                  </a>
+               </td>
+               <td>
+                  <a href="{% url equipment-detail item.id %}">
+                     {{ item.equipment_type.name }}
+                  </a>
+               </td>
+               <td>
+                  <a href="{% url equipment-detail item.id %}">
+                     {{ item.make.name }} {{ item.model }}
+                  </a>
+               </td>
+               <td>
+                  <a href="{% url equipment-detail item.id %}">
+                     {{ item.get_status_display }}
                   </a>
                </td>
             </tr>
