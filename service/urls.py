@@ -13,5 +13,6 @@ urlpatterns = patterns('',
 	url(r'^(?P<object_id>\d+)/edit/$', edit, name="service-edit"),
 	url(r'^(?P<object_id>\d+)/pickup/$', pickup, name="service-pickup"),
 	url(r'^(?P<object_id>\d+)/cancel/$', cancel, name="service-cancel"),
+	url(r'^(?P<object_id>\d+)/complete/$', complete, name="service-complete"),
 	url(r'^new/$', new, name="service-new"),
 )

@@ -265,38 +265,36 @@ def cancel(request, object_id):
 
 @login_required
 def complete(request, object_id):
-	co = get_object_or_404(checkout.Checkout, id=object_id)
+	wo = get_object_or_404(service.WorkOrder, id=object_id)
 	now = dt.datetime.now()
+	msg = None
+	error = None
 	# Maybe in the future I should move this into the save() method
-	if not co.completion_date:
-		# For each associated equipment item
-		for eq in co.equipment_list.all():
-			# If it's marked as checkedout or overdue
-			if eq.status == 'checkedout' or eq.status == 'overdue':
-				# Declare a flag that says if it's okay to change
-				# an equipment's status
-				okay_to_proceed = True
-				# For each checkout occuring currently or in the
-				# future that the equipment's associated with
-				for future_co in eq.checkouts.filter(
-					return_date__gte=now).exclude(
-					completion_date=None):
-					# As long as it's not this current checkout
-					if future_co != co:
-						# Then it's not okay to change the status
-						okay_to_proceed = False
-				# If okay_to_proceed, then modify the status & save
-				if okay_to_proceed:
-					eq.status = 'checkout'
-			# Then mark as inventoried and save
-			eq.last_inventoried = now
-			eq.save()
-		co.completion_date = now
-		co.save()
-		if co.email:
-			completed_mail(co)
+	if not wo.completion_date:
+		if wo.technician:
+			# For  associated equipment item
+			#if wo.equipment:
+			#	# If it's marked as in repair
+			#	if eq.status == 'repair':
+			#		eq.status = 'installed'
+			#		# Then mark as inventoried and save
+			#		eq.last_inventoried = now
+			#		eq.save()
+			wo.completion_date = now
+			wo.save()
+			msg = u'Service order completed successfully. Patron has been notified.'
+			if wo.email:
+				completed_mail(wo)
+		else:
+			error = u'A technician needs to be assigned to this ticket before it can be completed.'
 	# Redirect to detail
-	return HttpResponseRedirect(reverse(
-		'checkout-detail',
-		args=(co.id,),
-	))
+	context = {
+		'object': wo,
+		'error': error,
+		'msg': msg,
+	}
+	return render_to_response(
+		"service/detail.html",
+		context,
+		context_instance=RequestContext(request)
+	)

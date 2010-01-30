@@ -115,3 +115,20 @@ def pickup_mail(work_order):
 		[work_order.email],
 		fail_silently=False
 	)
+	
+def canceled_mail(checkout):
+	subject = "Your work order (#%i) has been canceled" % (
+		checkout.id,
+	)
+	body = "%s,\nYour work order (#%i) has been canceled.\n\nIf, at any time, you'd like to view your canceled work order, it is available here: http://etc.missouristate.edu/etcetera/service/%i.\n\n-------------\nPlease do not reply to this message, as nobody will receive it. If your work order has been canceled in error, please contact Rebecca Grant at rebeccagrant@missouristate.edu.\n\nRegards,\nEducational Technology Center\nMissouri State University" % (
+		checkout.first_name,
+		checkout.id,
+		checkout.id
+	)
+	send_mail(
+		subject,
+		body,
+		EMAIL_ADDRESS,
+		[checkout.email],
+		fail_silently=False
+	)

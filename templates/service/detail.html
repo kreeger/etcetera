@@ -92,12 +92,16 @@
             <li>
                <a href="{% url service-edit object.id %}">edit</a>
             </li>   
-            {% if not object.technician and not object.completion_date %}
+            {% if not object.completion_date %}
+               {% if not object.technician %}
+                  <li>
+                     <a href="{% url service-pickup object.id %}">pickup</a>
+                  </li>
+               {% endif %}
                <li>
-                  <a href="{% url service-pickup object.id %}">pickup</a>
-               </li>
-               <li>
-                  <a href="#">mark as completed</a>
+                  <a href="{% url service-complete object.id %}">
+                     mark as completed
+                  </a>
                </li>
                <li>
                   <a href="{% url service-cancel object.id %}">cancel</a>
