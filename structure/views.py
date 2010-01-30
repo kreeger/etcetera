@@ -12,6 +12,18 @@ from etcetera.structure import forms as stforms
 from etcetera.structure import models as structure
 from etcetera.equipment import graphs as eqgraphs
 
+def count_checkouts(ou):
+	checkout_count = ou.checkouts.count()
+	for kid in ou.children.all():
+		checkout_count += count_checkouts(kid)
+	return checkout_count
+
+def count_workorders(ou):
+	workorder_count = ou.workorders.count()
+	for kid in ou.children.all():
+		workorder_count += count_workorders(kid)
+	return workorder_count
+
 @login_required
 def index(request, structure_kind='buildings'):
 	if not structure_kind in ['buildings','departments']: raise Http404
@@ -93,7 +105,7 @@ def detail(request, abbreviation=None, object_id=None, room=None):
 		)
 		view_type = 'departments'
 	stru_obj.checkouts_open = stru_obj.checkouts.filter(completion_date=None)
-	stru_obj.workorders_open = stru_obj.workorders.filter(completed=False)
+	stru_obj.workorders_open = stru_obj.workorders.filter(completion_date=None)
 	if room:
 		stru_obj.room_checkouts = stru_obj.checkouts.filter(room=room)
 		stru_obj.room_workorders = stru_obj.workorders.filter(room=room)
@@ -102,31 +114,19 @@ def detail(request, abbreviation=None, object_id=None, room=None):
 		stru_obj.equipment_installed = stru_obj.equipment_installed.filter(
 			room=room
 		)
-	child_checkout_count = 0
-	child_workorder_count = 0
-	for kid in stru_obj.children.all():
-		child_checkout_count += kid.checkouts.all().count()
-		child_workorder_count += kid.workorders.all().count()
-		for kid2 in kid.children.all():
-			child_checkout_count += kid2.checkouts.all().count()
-			child_workorder_count += kid2.workorders.all().count()
-			for kid3 in kid2.children.all():
-				child_checkout_count += kid3.checkouts.all().count()
-				child_workorder_count += kid3.workorders.all().count()
-				for kid4 in kid3.children.all():
-					child_checkout_count += kid4.checkouts.all().count()
-					child_workorder_count += kid4.workorders.all().count()
-					for kid5 in kid4.children.all():
-						child_checkout_count += kid5.checkouts.all().count()
-						child_workorder_count += kid5.workorders.all().count()
+	checkout_count = 0
+	workorder_count = 0
+	if stru_obj.children.all():
+		checkout_count = count_checkouts(stru_obj)
+		workorder_count = count_workorders(stru_obj)
 	# Call a custom function that gives us back a graph URL in a string
 	
 	context = {
 		'object': stru_obj,
 		'view_type': view_type,
 		'room': room,
-		'ccc': child_checkout_count,
-		'cwc': child_workorder_count,
+		'cc': checkout_count,
+		'wc': workorder_count,
 	}
 	return render_to_response(
 		"structure/detail.html",

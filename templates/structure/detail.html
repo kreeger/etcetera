@@ -51,7 +51,7 @@
                {{ object.room_checkouts.count }}
             {% else %}
                {% if object.checkouts.count %}
-                  {{ object.checkouts.count|add:ccc }}
+                  {% firstof cc object.checkouts.count %}
                {% else %}
                   0
                {% endif %}
@@ -60,7 +60,15 @@
          <li>Open checkouts: {{ object.checkouts_open.count }}</li>
          <li>
             Total work orders:
-            {% firstof object.room_workorders.count object.workorders.count '0' %}
+            {% if object.room_workorders.count %}
+               {{ object.room_workorders.count }}
+            {% else %}
+               {% if object.workorders.count %}
+                  {% firstof wc object.workorders.count %}
+               {% else %}
+                  0
+               {% endif %}
+            {% endif %}
          </li>
          <li>Open work orders: {{ object.workorders_open.count }}</li>
          {% if object.equipment_installed %}

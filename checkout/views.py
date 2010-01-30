@@ -499,36 +499,48 @@ def activate(request, object_id):
 def complete(request, object_id):
 	co = get_object_or_404(checkout.Checkout, id=object_id)
 	now = dt.datetime.now()
+	error = None
+	msg = None
 	# Maybe in the future I should move this into the save() method
 	if not co.completion_date:
-		# For each associated equipment item
-		for eq in co.equipment_list.all():
-			# If it's marked as checkedout or overdue
-			if eq.status == 'checkedout' or eq.status == 'overdue':
-				# Declare a flag that says if it's okay to change
-				# an equipment's status
-				okay_to_proceed = True
-				# For each checkout occuring currently or in the
-				# future that the equipment's associated with
-				for future_co in eq.checkouts.filter(
-					return_date__gte=now).exclude(
-					completion_date=None):
-					# As long as it's not this current checkout
-					if future_co != co:
-						# Then it's not okay to change the status
-						okay_to_proceed = False
-				# If okay_to_proceed, then modify the status & save
-				if okay_to_proceed:
-					eq.status = 'checkout'
-			# Then mark as inventoried and save
-			eq.last_inventoried = now
-			eq.save()
-		co.completion_date = now
-		co.save()
-		if co.email:
-			completed_mail(co)
+		if not co.department:
+			error = u'Checkout must be assigned to a department before it can be completed.'
+		else:
+			# For each associated equipment item
+			for eq in co.equipment_list.all():
+				# If it's marked as checkedout or overdue
+				if eq.status == 'checkedout' or eq.status == 'overdue':
+					# Declare a flag that says if it's okay to change
+					# an equipment's status
+					okay_to_proceed = True
+					# For each checkout occuring currently or in the
+					# future that the equipment's associated with
+					for future_co in eq.checkouts.filter(
+						return_date__gte=now).exclude(
+						completion_date=None):
+						# As long as it's not this current checkout
+						if future_co != co:
+							# Then it's not okay to change the status
+							okay_to_proceed = False
+					# If okay_to_proceed, then modify the status & save
+					if okay_to_proceed:
+						eq.status = 'checkout'
+				# Then mark as inventoried and save
+				eq.last_inventoried = now
+				eq.save()
+			co.completion_date = now
+			co.save()
+			msg = u'Checkout completed successfully. Patron has been notified via email.'
+			if co.email:
+				completed_mail(co)
 	# Redirect to detail
-	return HttpResponseRedirect(reverse(
-		'checkout-detail',
-		args=(co.id,),
-	))
+	context = {
+		'object': co,
+		'msg': msg,
+		'error': error,
+	}
+	return render_to_response(
+		"checkout/detail.html",
+		context,
+		context_instance=RequestContext(request)
+	)
