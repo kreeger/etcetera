@@ -29,7 +29,7 @@ h2 { margin: 10px 0; border-bottom: 1px solid #888; color: #444; font-weight: 20
 .tablehead, table.detail td:first-child { -webkit-border-top-left-radius: 10px; -moz-border-radius-topleft: 10px; -webkit-border-bottom-left-radius: 10px; -moz-border-radius-bottomleft: 10px; background-color: #EAEAEA; vertical-align: middle; color: #666; text-align: right; text-transform: lowercase; font-weight: normal; width: 160px; display: block; padding: 5px 5px 5px 10px; }
 .wrapper { width: 950px; margin: 0px auto; }
 .datetime { font-weight: normal; font-size: 13px; }
-.active a { background-color: #CCC; cursor: default; }
+.active a { background-color: #CCC; cursor: default; color: #333; }
 
 .collapse-content { display: none; width: inherit; }
 .collapse-link { color: inherit; }
@@ -56,16 +56,17 @@ div.greeting { font-size: 10px; text-align: right; width: 300px; display: inline
 	ul#navul ul { position: absolute; display: none; }
 	ul#navul ul a { float: left; background-color: #E7E7E7; }
 	ul#navul li { display: inline-block; position: relative; }
+	ul#navul li.active a { cursor: default; }
 		#navul li:hover ul, #navul li li:hover ul, #navul li li li:hover ul, #navul li li li li:hover ul { display: inline-block; font-size: .8em; }
 	ul#navul a { background-color: #D1D1D1; display: block; padding: 8px 0; width: 105px; white-space: nowrap; }
-		ul#navul a:hover { background: url(../images/nav_r.png) repeat-x; text-decoration: none; }
+		ul#navul a:hover, ul#navul li.active a { background: url(../images/nav_r.png) repeat-x; text-decoration: none; }
 
 #breadcrumb { font-size: .8em; }
 	#breadcrumb div.wrapper { padding: 4px 10px; border-left: 1px solid #AAA; border-right: 1px solid #AAA; background: url(../images/breadback.png) repeat-x; left: 40px; }
 
-div.subnav { font-size: 11px; text-align: center; display: block; }
+div.subnav { font-size: 11px; text-align: center; display: block; text-transform: lowercase; }
 	div.subnav a { padding: 4px 10px; display: inline-block; width: 80px; }
-		div.subnav a:hover { background-color: #CCC; text-decoration: none; }
+		div.subnav a:hover, div.subnav .active a { background-color: #CCC; text-decoration: none; }
 	div.subnav div.wrapper { padding: 0 10px; border-left: 1px solid #AAA; border-right: 1px solid #AAA; background-color: #EAEAEA; border-bottom: 1px solid #CCC; }
 	div.subnav ul { margin: 0; padding: 0; list-style-type: none; }
 		div.subnav ul li { display: inline; }

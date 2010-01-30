@@ -1,14 +1,30 @@
 <ul id="navul">
-	<li><a href="{% url etcetera-home %}">Home</a></li>
+	<li{% if path_info == '' %} class="active"{% endif %}>
+	   <a href="{% url etcetera-home %}">Home</a>
+	</li>
 	{% if user.is_authenticated %}
-	   <li><a href="{% url equipment-index %}">Equipment</a></li>
-   	<li><a href="{% url checkout-index %}">Checkout</a></li>
-   	<li><a href="{% url service-index %}">Service</a></li>
-   	<li><a href="{% url structure-index 'buildings' %}">Structure</a></li>
-   	<li><a href="#">Reports</a></li>
-   	<li><a href="{% url mlab-index %}">mLab</a></li>
+	   <li{% if path_info == 'equipment' %} class="active"{% endif %}>
+	      <a href="{% url equipment-index %}">Equipment</a>
+	   </li>
+   	<li{% if path_info == 'checkout' %} class="active"{% endif %}>
+   	   <a href="{% url checkout-index %}">Checkout</a>
+   	</li>
+   	<li{% if path_info == 'service' %} class="active"{% endif %}>
+   	   <a href="{% url service-index %}">Service</a>
+   	</li>
+   	<li{% if path_info == 'structure' %} class="active"{% endif %}>
+   	   <a href="{% url structure-index 'buildings' %}">Structure</a>
+   	</li>
+   	<li{% if path_info == 'reports' %} class="active"{% endif %}>
+   	   <a href="#">Reports</a>
+   	</li>
+   	<li{% if path_info == 'mlab' %} class="active"{% endif %}>
+   	   <a href="{% url mlab-index %}">mLab</a>
+   	</li>
 	   {% if user.is_staff %}
-   	   <li><a href="{% url admin:index %}" id="admin">Admin</a></li>
+   	   <li{% if path_info == 'admin' %} class="active"{% endif %}>
+   	      <a href="{% url admin:index %}" id="admin">Admin</a>
+   	   </li>
    	{% endif %}
 	{% endif %}
 </ul>
