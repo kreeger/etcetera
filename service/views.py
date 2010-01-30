@@ -135,12 +135,6 @@ def edit(request, object_id):
 		form = woforms.WorkOrderModelForm(request.POST, instance=wo)
 		if form.is_valid():
 			cd = form.cleaned_data
-			# If the work order is newly completed, send an email, if there is
-			# an email specified in the form data
-			if not wo.completed:
-				if cd['completed']:
-					if cd['email']:
-						completed_mail(wo)
 			# If there's a new barcode, look it up and add it
 			# Future project: move to the model form
 			# Brain hurts. Re-factor later
@@ -163,10 +157,6 @@ def edit(request, object_id):
 			else:
 				cd['equipment'] = None
 			form.save()
-			if cd['completed']:
-				return HttpResponseRedirect(reverse(
-					'service-index',
-				))
 			return HttpResponseRedirect(reverse(
 				'service-detail',
 				args=(wo.id,),

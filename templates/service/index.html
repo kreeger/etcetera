@@ -19,7 +19,7 @@
          <a href="{% url service-index %}">Active</a>
       </li>
       <li{% if view_type == 'completed' %} class="active"{% endif %}>
-         <a href="{% url service-completed %}">Completed</a>
+         <a href="{% url service-index 'completed' %}">Completed</a>
       </li>
    </ul>
 {% endblock %}
