@@ -1,7 +1,7 @@
 $(function () {
 	$("a.collapse-link").click(function(event) {
 		event.preventDefault();
-		$("table#list.collapse-content").toggle();
+		$(this).parent().next().toggle();
 		$("span.collapse-mono").text($("span.collapse-mono").text() == '+' ? '-' : '+');
 	});
 });
