@@ -22,3 +22,8 @@ def path_info(request):
 	return {
 		'path_info': request.META['PATH_INFO'].split('/')[1],
 	}
+
+def layout_elements(request):
+	return {
+		'form_actions': '<ul><li><input type="submit" name="save" value="save" id="save" /></li><li><input type="button" name="go-back" value="go back" id="go-back" /></li></ul>',
+	}

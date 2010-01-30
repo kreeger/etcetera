@@ -9,7 +9,11 @@
 
 {% block breadcrumb %}
    <a href="{% url etcetera-home %}">Home</a> &rsaquo; 
-   <a href="{% if object.completed %}{% url service-completed %}">Service (Completed){% else %}{% url service-index %}">Service{% endif %}</a> &rsaquo;
+   {% if object.completion_date %}
+      <a href="{% url service-index 'completed' %}">Service (Completed)</a>
+   {% else %}
+      <a href="{% url service-index %}">Service</a>
+   {% endif %} &rsaquo;
    {% if object %}
       <a href="{% url service-detail object.id %}">
          Work Order #{{ object.id }}
@@ -25,7 +29,7 @@
    <div id="headers">
       <h1>
          {% if object %}
-            WO #{{ object.id }}: <span class="head">edit mode</span>
+            Work Order #{{ object.id }}: <span class="head">edit mode</span>
          {% else %}
             New work order <span class="head">creation mode</span>
          {% endif %}
@@ -50,11 +54,7 @@
    
    <div id="actions">
       <h2>Actions</h2>
-      <ul>
-         <li>
-            <input type="submit" name="save" value="save" id="save" />
-         </li>
-      </ul>
+      {{ form_actions|safe }}
    </div>
    
    <div id="brief-information">

@@ -124,8 +124,8 @@ table#list { margin: 0px; padding: 0px; border-spacing: 0px; border: 1px solid #
 	#detail table td:last-child { font-weight: bold; }
 	#detail textarea { width: 938px; }
 	#detail table input { width: 300px; font-size: 14px; }
-	#detail input#save { border: 1px solid #AAA; width: 100%; background-color: #EEE; cursor: pointer; }
-	#detail input#save:hover { background-color: #AAA; }
+	input#save, input#go-back { border: 1px solid #AAA; width: 100%; background-color: #EEE; cursor: pointer; }
+	input#save:hover, input#go-back:hover { background-color: #AAA; }
 
 #history ul { list-style-type: none; padding: 0; font-size: 12px; }
 

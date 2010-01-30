@@ -8,7 +8,7 @@
 {% block breadcrumb %}
    <a href="{% url etcetera-home %}">Home</a> &rsaquo;
    {% if object.completion_date %}
-      <a href="{% url service-completed %}">Service (Completed)</a>
+      <a href="{% url service-index 'completed' %}">Service (Completed)</a>
    {% else %}
       <a href="{% url service-index %}">Service</a>
    {% endif %} &rsaquo;
