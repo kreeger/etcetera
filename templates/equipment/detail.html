@@ -43,6 +43,8 @@
                   <a href="{% url building-detail object.building.abbreviation %}">
                      {{ object.building.abbreviation }}</a>
                   <a href="{% url building-detail object.building.abbreviation object.room %}">
+                     {{ object.room }}
+                  </a>
                </strong>
                {% endif %}
             </li>

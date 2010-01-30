@@ -7,9 +7,19 @@
 
 {% block breadcrumb %}
    <a href="{% url etcetera-home %}">Home</a> &rsaquo;
-   <a href="{% if object.completion_date %}{% url checkout-completed %}">Checkout (Completed){% else %}{% url checkout-index %}">Checkout{% endif %}</a> &rsaquo;
-   <a href="{% url checkout-detail object.id %}">Checkout #{{ object.id }}</a> &rsaquo;
-   Edit
+   {% if object.completion_date %}
+      <a href="{% url checkout-completed %}">Checkout (Completed)</a>
+   {% else %}
+      <a href="{% url checkout-index %}">Checkout</a>
+   {% endif %}</a> &rsaquo;
+   {% if object %}
+      <a href="{% url checkout-detail object.id %}">
+         Checkout #{{ object.id }}
+      </a> &rsaquo;
+      Edit
+   {% else %}
+      Creating a new checkout item
+   {% endif %}
 {% endblock %}
 
 {% block content %}

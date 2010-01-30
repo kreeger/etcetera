@@ -220,7 +220,7 @@ def new(request):
 		'form': form,
 	}
 	return render_to_response(
-		"checkout/new.html",
+		"checkout/edit.html",
 		context,
 		context_instance=RequestContext(request)
 	)

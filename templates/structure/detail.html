@@ -218,6 +218,68 @@
       </div>   
    {% endif %}
    
+   {% if object.checkouts_closed.all %}
+      <div id="open-checkouts">
+      <h2>
+         <a href="#" class="collapse-link">
+            <span class="collapse-mono">+</span> Closed checkouts
+         </a>
+      </h2>
+         <table id="list" class="collapse-content">
+            <tr>
+               <td>Name</td>
+               <td>Department</td>
+               {% if not view_type == 'department' %}
+                  <td>Equipment</td>
+               {% endif %}
+               <td>Location</td>
+               <td>Out date</td>
+               <td>Type</td>
+            </tr>
+            {% for item in object.checkouts_closed.all %}
+            <tr>
+               <td>
+                  <a href="{% url checkout-detail item.id %}">
+                     {{ item.first_name }} {{ item.last_name }}
+                  </a>
+               </td>
+               {% if not view_type == 'department' %}
+               <td>
+                  <a href="{% url checkout-detail item.id %}">
+                     {% if item.department %}
+                        {{ item.department|truncatewords:3 }}
+                     {% else %}
+                        {{ item.department_text }}
+                     {% endif %}
+                  </a>
+               </td>
+               {% endif %}
+               <td>
+                  <a href="{% url checkout-detail item.id %}">
+                     {{ item.equipment_needed|truncatewords:6 }}
+                  </a>
+               </td>
+               <td>
+                  <a href="{% url checkout-detail item.id %}">
+                     {{ item.building.abbreviation }} {{ item.room }}
+                  </a>
+               </td>
+               <td>
+                  <a href="{% url checkout-detail item.id %}">
+                     {{ item.out_date|date:'n/j/Y g:iA' }}
+                  </a>
+               </td>
+               <td>
+                  <a href="{% url checkout-detail item.id %}">
+                     {{ item.get_checkout_type_display }}
+                  </a>
+               </td>
+            </tr>
+            {% endfor %}
+         </table>
+      </div>   
+   {% endif %}
+   
    {% if object.workorders_open.all %}
       <div id="open-workorders">
       <h2>
@@ -282,6 +344,75 @@
                   </a>
                </td>
             </tr>
+            {% endfor %}
+         </table>
+      </div>   
+   {% endif %}
+   
+   {% if object.workorders_closed.all %}
+      <div id="workorders">
+      <h2>
+         <a href="#" class="collapse-link">
+            <span class="collapse-mono">+</span> Closed workorders
+         </a>
+      </h2>
+         <table id="list" class="collapse-content">
+            <tr>
+               <td>Submitted by</td>
+               {% if not view_type == 'department' %}
+                  <td>Department</td>
+               {% endif %}
+               <td>Equipment</td>
+               <td>Location</td>
+               <td>Priority</td>
+               <td>Work type</td>
+               <td>Creation date</td>
+            </tr>
+            {% for item in object.workorders_closed.all %}
+               <tr class="priority{{ item.priority }}">
+                  <td>
+                     <a href="{% url service-detail item.id %}">
+                        {{ item.first_name }} {{ item.last_name }}
+                     </a>
+                  </td>
+                  {% if not view_type == 'department' %}
+                     <td>
+                        <a href="{% url service-detail item.id %}">
+                           {{ item.department }}
+                        </a>
+                     </td>
+                  {% endif %}
+                  <td>
+                     <a href="{% url service-detail item.id %}">
+                        {% if item.equipment %}
+                           {{ item.equipment.make.name }}
+                           {{ item.equipment.model }}
+                        {% else %}
+                           {{ item.equipment_text|truncatewords:5 }}
+                        {% endif %}
+                     </a>
+                  </td>
+                  <td>
+                     <a href="{% url service-detail item.id %}">
+                        {{ item.building.abbreviation }} {{ item.room }}
+                     </a>
+                  </td>
+                  <td>
+                     <a href="{% url service-detail item.id %}" class="priority{{ item.priority }}">
+                        {{ item.get_priority_display }}
+                     </a>
+                  </td>
+                  <td>
+                     <a href="{% url service-detail item.id %}">
+                        {{ item.get_work_type_display }}
+                     </a>
+                  </td>
+                  <td>
+                     <a href="{% url service-detail item.id %}">
+                        {{ item.creation_date|date:'n/j/Y g:iA' }}
+                     </a>
+                  </td>
+               </tr>
             {% endfor %}
          </table>
       </div>   
