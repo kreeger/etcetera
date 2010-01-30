@@ -35,7 +35,7 @@ def checkout_form(request):
 	)
 
 @login_required
-def index(request, view_type='all', date_range=None):
+def index(request, view_type=None, date_range=None):
 	# Setup our paging and query objects ahead of time
 	paged_objects = None
 	q = None
@@ -62,7 +62,7 @@ def index(request, view_type='all', date_range=None):
 	else:
 		# If it's not valid or nothing was checked, get all objects from db
 		paged_objects = checkout.Checkout.objects.all()
-	if 	view_type == 'all':
+	if 	view_type == None:
 		paged_objects = paged_objects.filter(
 			completion_date=None).order_by(
 			'-out_date'
@@ -70,7 +70,7 @@ def index(request, view_type='all', date_range=None):
 	elif view_type == 'unconfirmed':
 		paged_objects = paged_objects.filter(
 			confirmation_sent=False).filter(
-			completed=False).exclude(
+			completion_date=None).exclude(
 			email='').order_by(
 			'out_date'
 		)
