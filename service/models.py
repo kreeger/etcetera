@@ -62,7 +62,7 @@ class WorkOrder(models.Model):
 		null=True
 	)
 	budget = models.CharField(blank=True, max_length=25)
-	completed = models.BooleanField()
+	canceled = models.BooleanField()
 	
 	# What fun! We're overriding save. For logging changes.
 	def save(self, force_insert=False, force_update=False):
@@ -73,9 +73,6 @@ class WorkOrder(models.Model):
 		if self.pk is not None:
 			# Get original object
 			orig = WorkOrder.objects.get(pk=self.pk)
-			# For each entry in the original data
-			if self.completed and not orig.completed:
-				self.completion_date = dt.datetime.now()
 		# Call super.save
 		super(WorkOrder, self).save(force_insert, force_update)
 	

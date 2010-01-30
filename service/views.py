@@ -2,7 +2,7 @@ import datetime as dt
 
 from django.shortcuts import render_to_response, get_object_or_404
 from django.contrib.auth.decorators import login_required
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, Http404
 from django.core.urlresolvers import reverse
 from django.core.paginator import Paginator, InvalidPage, EmptyPage
 from django.template import RequestContext
@@ -48,7 +48,7 @@ def service_form(request):
 	)
 
 @login_required
-def index(request, completed=False):
+def index(request, view_type=None):
 	paged_objects = None
 	q = None
 	form = woforms.SearchForm()
@@ -75,16 +75,21 @@ def index(request, completed=False):
 					'description',
 				])
 				paged_objects = service.WorkOrder.objects.filter(
-					service_query).filter(
-					completed=completed
+					service_query
 				)
 				q = data['q']
 	else:
-		paged_objects = service.WorkOrder.objects.filter(completed=completed)
-	if completed:
-		paged_objects = paged_objects.order_by('-completion_date')
-	else:
-		paged_objects = paged_objects.order_by('-creation_date')
+		paged_objects = service.WorkOrder.objects.all()
+	if view_type == None:
+		paged_objects = paged_objects.filter(
+			completion_date=None).order_by(
+			'-creation_date'
+		)
+	elif view_type == 'completed':
+		paged_objects = paged_objects.exclude(
+			completion_date=None).order_by(
+			'-completion_date'
+		)
 	# Repackage everything into paged_objects using Paginator.
 	paginator = Paginator(paged_objects, 20)
 	# Make sure the page request is an int -- if not, then deliver page 1.
@@ -101,8 +106,8 @@ def index(request, completed=False):
 	# Bundle everything into the context and send it out.
 	context = {
 		'paged_objects': paged_objects,
+		'view_type': view_type,
 		'form': form,
-		'completed': completed,
 		'q': q,
 	}
 	return render_to_response(
@@ -224,3 +229,74 @@ def new(request):
 		context,
 		context_instance=RequestContext(request)
 	)
+
+@login_required
+def cancel(request, object_id):
+	# Get the object from the database
+	wo = get_object_or_404(service.WorkOrder, id=object_id)
+	# If page is accessed via POST
+	if request.method == 'POST':
+		# Check to see if the order has not yet been canceled
+		if not wo.canceled and not wo.completion_date:
+			# If not, set it as such and save it
+			wo.canceled = True
+			wo.completion_date = dt.datetime.now()
+			wo.save()
+			if wo.email:
+				canceled_mail(wo)
+			# Then trigger equipment as available
+			#if wo.equipment:
+			#	wo.equipment.status = 'installed'
+			#	wo.equipment.save()
+			# Then a redirect happens back to the submitting page
+			return HttpResponseRedirect(reverse(
+				'service-detail',
+				args=(wo.id,),
+			))
+	# Otherwise create the context
+	context = {
+		'object': wo,
+	}
+	return render_to_response(
+		"service/cancel.html",
+		context,
+		context_instance=RequestContext(request)
+	)
+
+@login_required
+def complete(request, object_id):
+	co = get_object_or_404(checkout.Checkout, id=object_id)
+	now = dt.datetime.now()
+	# Maybe in the future I should move this into the save() method
+	if not co.completion_date:
+		# For each associated equipment item
+		for eq in co.equipment_list.all():
+			# If it's marked as checkedout or overdue
+			if eq.status == 'checkedout' or eq.status == 'overdue':
+				# Declare a flag that says if it's okay to change
+				# an equipment's status
+				okay_to_proceed = True
+				# For each checkout occuring currently or in the
+				# future that the equipment's associated with
+				for future_co in eq.checkouts.filter(
+					return_date__gte=now).exclude(
+					completion_date=None):
+					# As long as it's not this current checkout
+					if future_co != co:
+						# Then it's not okay to change the status
+						okay_to_proceed = False
+				# If okay_to_proceed, then modify the status & save
+				if okay_to_proceed:
+					eq.status = 'checkout'
+			# Then mark as inventoried and save
+			eq.last_inventoried = now
+			eq.save()
+		co.completion_date = now
+		co.save()
+		if co.email:
+			completed_mail(co)
+	# Redirect to detail
+	return HttpResponseRedirect(reverse(
+		'checkout-detail',
+		args=(co.id,),
+	))

@@ -8,17 +8,17 @@
 {% block breadcrumb %}
    <a href="{% url etcetera-home %}">Home</a> &rsaquo;
    Service
-   {% if completed %}
+   {% if view_type == 'completed' %}
       (Completed)
    {% endif %}
 {% endblock %}
 
 {% block subnav %}
    <ul>
-      <li{% if not completed %} class="active"{% endif %}>
+      <li{% if view_type == None %} class="active"{% endif %}>
          <a href="{% url service-index %}">Active</a>
       </li>
-      <li{% if completed %} class="active"{% endif %}>
+      <li{% if view_type == 'completed' %} class="active"{% endif %}>
          <a href="{% url service-completed %}">Completed</a>
       </li>
    </ul>
@@ -30,7 +30,7 @@
       <span class="right">
          <a href="{% url service-new %}">manually add a new work order</a>
       </span>
-      {% if completed %}
+      {% if view_type == 'completed' %}
          Completed
       {% endif %}
       Work Order List
@@ -57,7 +57,7 @@
          <td>Priority</td>
          <td>Work type</td>
          <td>
-            {% if completed %}
+            {% if view_type == 'completed' %}
                Completion
             {% else %}
                Creation
@@ -108,7 +108,7 @@
          </td>
          <td>
             <a href="{% url service-detail object.id %}">
-               {% if completed %}
+               {% if view_type == 'completed' %}
                   {{ object.completion_date|date:'n/j/Y g:iA' }}
                {% else %}
                   {{ object.creation_date|date:'n/j/Y g:iA' }}

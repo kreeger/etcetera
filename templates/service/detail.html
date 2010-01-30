@@ -7,12 +7,11 @@
 
 {% block breadcrumb %}
    <a href="{% url etcetera-home %}">Home</a> &rsaquo;
-   <a href="{% if object.completed %}{% url service-completed %}{% else %}{% url service-index %}{% endif %}">
-      Service
-      {% if object.completed %}
-         (Completed)
-      {% endif %}
-   </a> &rsaquo;
+   {% if object.completion_date %}
+      <a href="{% url service-completed %}">Service (Completed)</a>
+   {% else %}
+      <a href="{% url service-index %}">Service</a>
+   {% endif %} &rsaquo;
    Work Order #{{ object.id }}
 {% endblock %}
 
@@ -29,31 +28,43 @@
          </div>
       {% endif %}
       
-      {% ifequal object.technician user %}
+      {% if object.technician == user %}
          <div id="notify" class="banner">
             This ticket has been assigned to you.
          </div>
-      {% endifequal %}
+      {% endif %}
+      {% if msg %}
+         <div id="notify" class="banner">
+            {{ msg }}
+         </div>
+      {% endif %}
+      {% if error %}
+         <div id="error" class="banner">
+            {{ error }}
+         </div>
+      {% endif %}
    {% endif %}
    
    <div id="headers">
       <h1>
-         WO #{{ object.id }}:
          {% if object.equipment %}
             {{ object.equipment.make.name }}
             {{ object.equipment.model }}
             {{ object.equipment.equipment_type.name }}
             ({{ object.equipment_text }})
          {% else %}
-            {{ object.equipment_text }}
+            {{ object.equipment_text|capfirst }}
+         {% endif %}         
+         (WO #{{ object.id }})
+         {% if object.completion_date %}
+            <span class="head">
+               {% if object.canceled %}
+                  canceled
+               {% else %}
+                  completed
+               {% endif %}
+            </span>
          {% endif %}
-         <span class="head">
-            {% if object.completed %}
-               completed
-            {% else %}
-               active
-            {% endif %}
-         </span>
       </h1>
 
       <ul class="priority{{ object.priority }}">
@@ -81,10 +92,16 @@
             <li>
                <a href="{% url service-edit object.id %}">edit</a>
             </li>   
-            {% if not object.technician and not object.completed %}
+            {% if not object.technician and not object.completion_date %}
                <li>
                   <a href="{% url service-pickup object.id %}">pickup</a>
-               </a>
+               </li>
+               <li>
+                  <a href="#">mark as completed</a>
+               </li>
+               <li>
+                  <a href="{% url service-cancel object.id %}">cancel</a>
+               </li>
             {% endif %}
          </ul>
       {% else %}

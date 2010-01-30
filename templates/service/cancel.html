@@ -1,0 +1,45 @@
+{% extends "root.html" %}
+{% load etcetera_tags %}
+
+{% block title %}
+   Canceling Work Order #{{ object.id }}
+{% endblock %}
+
+{% block fullscript %}
+   <script type="text/javascript" charset="utf-8">
+      $(function() {
+         $('#cancel').click(function() {
+            window.location = '{% url service-detail object.id %}';
+         });
+      });
+   </script>
+{% endblock %}
+
+{% block breadcrumb %}
+   <a href="{% url etcetera-home %}">Home</a> &rsaquo;
+   <a href="{% url service-index %}">Service</a> &rsaquo;
+   <a href="{% url service-detail object.id %}">
+      Work Order #{{ object.id }}
+   </a> &rsaquo;
+   Cancel
+{% endblock %}
+
+{% block content %}
+<div id="detail">
+
+   <form action="" method="POST">
+   <h1>
+      Canceling Work Order #{{ object.id }}
+   </h1>
+   
+   <p>
+      Are you sure you want to cancel work order #{{ object.id }} for {{ object.first_name }} {{ object.last_name }}?
+   </p>
+      <form action="" method="POST">
+         <p>
+            <input type="submit" name="submit" value="Yeah, do it!" id="submit" />
+            <input type="button" name="cancel" value="No, don't! Go back!" id="cancel" />
+         </p>
+   </form>
+</div>
+{% endblock %}
