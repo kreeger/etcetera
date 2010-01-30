@@ -38,8 +38,8 @@
                {{ object.creation_date|date:'n/j/Y g:iA' }}
             </li>
             <li class="closed">
-               <span class="head">Closed?</span> 
-                  {{ form.completed }}{{ form.completed.errors }}
+               <span class="head">{{ form.canceled.label }}?</span> 
+                  {{ form.canceled }}{{ form.canceled.errors }}
             </li>
          {% endif %}
          <li>Priority: {{ form.priority }}
