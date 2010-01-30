@@ -28,10 +28,12 @@
       </h1>
       <ul{% if form.canceled.errors or form.checkout_type.errors or form.return_type.errors %} class="errorlist"{% endif %}>
          {% if object %}
-            <li class="created">
-               <span class="head">completion date</span>
-                  {{ object.completion_date|date:'n/j/Y g:iA' }}
-            </li>
+            {% if object.completion_date %}
+               <li class="created">
+                  <span class="head">completion date</span>
+                     {{ object.completion_date|date:'n/j/Y g:iA' }}
+               </li>
+            {% endif %}
             <li class="closed">
                <span class="head">canceled?</span>
                {{ form.canceled }} {{ form.canceled.errors }}

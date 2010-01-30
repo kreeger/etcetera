@@ -36,16 +36,16 @@
             {# This ticket has been overdue for {{ object.overdue }} days. #}
          </div>
       {% endif %}
-      {% if msg %}
-         <div id="notify" class="banner">
-            {{ msg }}
-         </div>
-      {% endif %}
-      {% if error %}
-         <div id="error" class="banner">
-            {{ error }}
-         </div>
-      {% endif %}
+   {% endif %}   
+   {% if msg %}
+      <div id="notify" class="banner">
+         {{ msg }}
+      </div>
+   {% endif %}
+   {% if error %}
+      <div id="error" class="banner">
+         {{ error }}
+      </div>
    {% endif %}
    
    <div id="headers">

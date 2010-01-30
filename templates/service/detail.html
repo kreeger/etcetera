@@ -17,7 +17,7 @@
 
 {% block content %}
 <div id="detail">
-   {% if user.is_authenticated and not object.archived %}
+   {% if user.is_authenticated %}
       {% if not object.technician %}
          <div id="alert" class="banner">
             This ticket has not been assigned to anybody yet.
@@ -33,16 +33,16 @@
             This ticket has been assigned to you.
          </div>
       {% endif %}
-      {% if msg %}
-         <div id="notify" class="banner">
-            {{ msg }}
-         </div>
-      {% endif %}
-      {% if error %}
-         <div id="error" class="banner">
-            {{ error }}
-         </div>
-      {% endif %}
+   {% endif %}   
+   {% if msg %}
+      <div id="notify" class="banner">
+         {{ msg }}
+      </div>
+   {% endif %}
+   {% if error %}
+      <div id="error" class="banner">
+         {{ error }}
+      </div>
    {% endif %}
    
    <div id="headers">
