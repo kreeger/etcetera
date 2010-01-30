@@ -47,7 +47,15 @@
       <ul>
          <li>
             Total checkouts:
-            {% firstof object.room_checkouts.count object.checkouts.count '0' %}
+            {% if object.room_checkouts.count %}
+               {{ object.room_checkouts.count }}
+            {% else %}
+               {% if object.checkouts.count %}
+                  {{ object.checkouts.count|add:ccc }}
+               {% else %}
+                  0
+               {% endif %}
+            {% endif %}
          </li>
          <li>Open checkouts: {{ object.checkouts_open.count }}</li>
          <li>
@@ -142,8 +150,12 @@
    
    {% if object.checkouts_open.all %}
       <div id="open-checkouts">
-      <h2>Open checkouts</h2>
-         <table id="list">
+      <h2>
+         <a href="#" class="collapse-link">
+            <span class="collapse-mono">+</span> Open checkouts
+         </a>
+      </h2>
+         <table id="list" class="collapse-content">
             <tr>
                <td>Name</td>
                <td>Department</td>
@@ -200,8 +212,12 @@
    
    {% if object.workorders_open.all %}
       <div id="open-workorders">
-      <h2>Open work orders</h2>
-         <table id="list">
+      <h2>
+         <a href="#" class="collapse-link">
+            <span class="collapse-mono">+</span> Open workorders
+         </a>
+      </h2>
+         <table id="list" class="collapse-content">
             <tr>
                <td>Submitted by</td>
                {% if not view_type == 'department' %}

@@ -102,13 +102,31 @@ def detail(request, abbreviation=None, object_id=None, room=None):
 		stru_obj.equipment_installed = stru_obj.equipment_installed.filter(
 			room=room
 		)
-	
+	child_checkout_count = 0
+	child_workorder_count = 0
+	for kid in stru_obj.children.all():
+		child_checkout_count += kid.checkouts.all().count()
+		child_workorder_count += kid.workorders.all().count()
+		for kid2 in kid.children.all():
+			child_checkout_count += kid2.checkouts.all().count()
+			child_workorder_count += kid2.workorders.all().count()
+			for kid3 in kid2.children.all():
+				child_checkout_count += kid3.checkouts.all().count()
+				child_workorder_count += kid3.workorders.all().count()
+				for kid4 in kid3.children.all():
+					child_checkout_count += kid4.checkouts.all().count()
+					child_workorder_count += kid4.workorders.all().count()
+					for kid5 in kid4.children.all():
+						child_checkout_count += kid5.checkouts.all().count()
+						child_workorder_count += kid5.workorders.all().count()
 	# Call a custom function that gives us back a graph URL in a string
 	
 	context = {
 		'object': stru_obj,
 		'view_type': view_type,
 		'room': room,
+		'ccc': child_checkout_count,
+		'cwc': child_workorder_count,
 	}
 	return render_to_response(
 		"structure/detail.html",
