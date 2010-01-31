@@ -11,7 +11,7 @@ textarea { font: .9em "Helvetica Neue", Helvetica, Arial, sans-serif; padding: 5
 h2 { margin: 10px 0; border-bottom: 1px solid #888; color: #444; font-weight: 200; font-style: normal; font-size: 17px; }
 
 .disabled { color: #BBB; font-weight: normal; }
-.drop-pop { width: 250px; height: 23px; text-align: center; font-weight: bold; float: left; position: relative; right: 5px; }
+.drop-pop { width: 250px; height: 82px; text-align: center; font-weight: bold; float: left; position: relative; right: 5px; z-index: 0; }
 .canceled { background-color: #EEE; }
 .head { color: #808080; text-transform: lowercase; text-align: right; font-weight: 200; font-style: normal; }
 .note { font-weight: normal; font-size: 11px; color: #797979; }
@@ -47,7 +47,7 @@ div.banner { display: none; }
 	#content h1 { border-bottom: 1px solid #333; font-size: 1.5em; margin-top: 5px; }
 	#content p { margin: 0 0 10px 0; padding: 5px 0; }
 
-table#list { margin: 0px; padding: 0px; border-spacing: 0px; border: 1px solid #AAA; font-size: .85em; width: 100%; }
+table#list { margin: 0px; padding: 0px; border-spacing: 0px; border: 1px solid #AAA; font-size: 14px; width: 100%; }
 	table#list td:first-child { padding-left: 8px; font-weight: bold;}
 	table#list td:last-child { padding-right: 8px; text-align: right; font-size: 11px; }
 	table#list tr:first-child { background-color: #DDD; }
@@ -57,7 +57,7 @@ table#list { margin: 0px; padding: 0px; border-spacing: 0px; border: 1px solid #
 	table#list a { display: block; }
 	table#list td.buttons a { display: inline-block; padding: 0px; }
 
-#barcode { background: url(../images/barcode-250.png) no-repeat; padding-top: 60px; letter-spacing: 4px;  font-size: 13px; text-align: center; }
+#barcode { padding-top: 60px; letter-spacing: 4px;  font-size: 13px; text-align: center; position: relative; bottom: 85px; }
 	#barcode input { text-align: center; letter-spacing: 4px; }
 
 /* Doing the detail page BETTER. */
@@ -67,7 +67,7 @@ table#list { margin: 0px; padding: 0px; border-spacing: 0px; border: 1px solid #
 	
 #actions { display: none; }
 
-#detail { font-size: 15px; }
+#detail { font-size: 16px; }
 	#detail h1 { margin-bottom: 0; }
 	#detail table td:last-child { font-weight: bold; }
 

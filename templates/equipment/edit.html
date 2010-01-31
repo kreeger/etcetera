@@ -30,11 +30,15 @@
 <div id="detail">
    <form action="" method="POST">
       <div id="headers">
-         <div class="drop-pop" id="barcode{% if form.barcode.errors %}-error{% endif %}">
-            {{ form.barcode }}
-            {% if form.barcode.errors %}
-               <br />{{ form.barcode.errors }}
-            {% endif %}
+         
+         <div class="drop-pop">
+            <img src="/_media/images/barcode-250.png" alt="{{ object.barcode }}" />
+            <div id="barcode{% if form.barcode.errors %}-error{% endif %}">
+               {{ form.barcode }}
+               {% if form.barcode.errors %}
+                  {{ form.barcode.errors }}
+               {% endif %}
+            </div>
          </div>
       
          <h1>
