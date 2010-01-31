@@ -24,7 +24,7 @@
 
 {% block subnav %}
    <ul>
-      <li{% if view_type == 'all' %} class="active"{% endif %}>
+      <li{% if view_type == None %} class="active"{% endif %}>
          <a href="{% url checkout-index %}">All Active</a>
       </li>
       <li{% if view_type == 'unconfirmed' %} class="active"{% endif %}>
