@@ -102,6 +102,7 @@ table#list { margin: 0px; padding: 0px; border-spacing: 0px; border: 1px solid #
 		table#list tr:first-child:hover { background-color: #DDD; }
 
 #barcode { background: url(../images/barcode-250.png) no-repeat; padding-top: 60px; letter-spacing: 4px;  font-size: 13px; text-align: center; }
+	#barcode img { display: none; }
 	#barcode input { text-align: center; letter-spacing: 4px; }
 
 /* Doing the detail page BETTER. */
