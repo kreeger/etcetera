@@ -90,6 +90,7 @@ def index(request, view_type=None):
 			completion_date=None).order_by(
 			'-completion_date'
 		)
+	count = paged_objects.count()
 	# Repackage everything into paged_objects using Paginator.
 	paginator = Paginator(paged_objects, 20)
 	# Make sure the page request is an int -- if not, then deliver page 1.
@@ -109,6 +110,7 @@ def index(request, view_type=None):
 		'view_type': view_type,
 		'form': form,
 		'q': q,
+		'count': count,
 	}
 	return render_to_response(
 		"service/index.html",

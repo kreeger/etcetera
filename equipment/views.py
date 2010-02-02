@@ -31,6 +31,7 @@ def index(request):
 				q = data['q']
 	else:
 		paged_objects = equipment.Equipment.objects.all()
+	count = paged_objects.count()
 	# Repackage everything into paged_objects using Paginator.
 	paginator = Paginator(paged_objects, 20)
 	# Make sure the page request is an int -- if not, then deliver page 1.
@@ -51,6 +52,7 @@ def index(request):
 		'form': form,
 		'view_type': 'index',
 		'q': q,
+		'count': count,
 	}
 	return render_to_response(
 		"equipment/index.html",
@@ -70,9 +72,11 @@ def weekly_list(request):
 		'model',
 		'serial',
 	)
+	count = object_list.count()
 	context = {
 		'object_list': object_list,
 		'view_type': 'weekly',
+		'count': count,
 	}
 	return render_to_response(
 		"equipment/index.html",

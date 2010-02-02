@@ -53,9 +53,10 @@
 
 {% block content %}
 
-<div id="list">   
+<div id="list">
    <h1>
       <span class="right">
+         total: {{ count }} &bull;
          <a href="{% url checkout-new %}">manually add a new checkout</a>
       </span>
       {% if view_type == 'completed' %}

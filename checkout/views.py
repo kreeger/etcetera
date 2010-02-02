@@ -39,6 +39,7 @@ def index(request, view_type=None, date_range=None):
 	# Setup our paging and query objects ahead of time
 	paged_objects = None
 	q = None
+	count = None
 	now = dt.datetime.now()
 	today = dt.date.today()
 	# Set up an empty form
@@ -113,6 +114,7 @@ def index(request, view_type=None, date_range=None):
 			completion_date=None).order_by(
 			'-return_date'
 		)
+	count = paged_objects.count()
 	# Repackage everything into paged_objects using Paginator.
 	paginator = Paginator(paged_objects, 20)
 	# Make sure the page request is an int -- if not, then deliver page 1.
@@ -133,6 +135,7 @@ def index(request, view_type=None, date_range=None):
 		'form': form,
 		'view_type': view_type,
 		'q': q,
+		'count': count,
 	}
 	return render_to_response(
 		"checkout/index.html",
