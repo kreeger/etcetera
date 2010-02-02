@@ -62,7 +62,7 @@ class WorkOrder(models.Model):
 		null=True
 	)
 	budget = models.CharField(blank=True, max_length=25)
-	canceled = models.BooleanField()
+	canceled = models.NullBooleanField()
 	
 	# What fun! We're overriding save. For logging changes.
 	def save(self, force_insert=False, force_update=False):
