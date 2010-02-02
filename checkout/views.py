@@ -109,7 +109,7 @@ def index(request, view_type=None, date_range=None):
 		)
 	elif view_type == 'overdue':
 		paged_objects = paged_objects.filter(
-			return_date__lt=today).exclude(
+			return_date__lt=today).filter(
 			completion_date=None).order_by(
 			'-return_date'
 		)
