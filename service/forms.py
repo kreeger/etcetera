@@ -7,6 +7,7 @@ from django.contrib.auth import models as auth
 from etcetera.structure import models as structure
 from etcetera.service import models as service
 from etcetera.extras import forms as ef
+from etcetera.extras.dateutil import formfield_callback, DateTimeField
 
 SERVICE_CHOICES = (
 	('repair','Problem'),
