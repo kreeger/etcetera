@@ -4,7 +4,7 @@ from etcetera.structure.views import *
 # Universal
 urlpatterns = patterns('',
 	url(r'^(?P<structure_kind>\w+)/$', index, name="structure-index"),
-	url(r'^(?P<structure_kind>\w+)/$', new, name="structure-new"),
+	url(r'^(?P<structure_kind>\w+)/new/$', new, name="structure-new"),
 )
 
 # Buildings

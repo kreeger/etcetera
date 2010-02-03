@@ -215,6 +215,7 @@ def new(request, structure_kind):
 			return HttpResponseRedirect(return_reverse)
 	context = {
 		'form': form,
+		'view_type': structure_kind,
 	}
 	return render_to_response(
 		"structure/edit.html",

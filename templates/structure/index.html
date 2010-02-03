@@ -27,7 +27,7 @@
 <div id="list">
    <h1>
       <span class="right">
-         <a href="#">add a new {{ view_type|unpluralize }}</a>
+         <a href="{% url structure-new view_type %}">add a new {{ view_type|unpluralize }}</a>
       </span>
       
       {{ view_type|capfirst }}
