@@ -1,0 +1,73 @@
+{% extends "root.html" %}
+{% load etcetera_tags %}
+
+{% block title %}
+   Reports
+{% endblock %}
+
+{% block breadcrumb %}
+   <a href="{% url etcetera-home %}">Home</a> &rsaquo;
+   Reports
+{% endblock %}
+
+{% block content %}
+<div id="list">   
+   <h1>
+      <span class="right">
+         <a href="#">add a new report</a>
+      </span>
+      Reports
+   </h1>
+   
+   <div id="searchform">
+      <form action="">
+         {{ form.q }}
+         <input type="submit" name="submit" value="Search" id="submit" />
+      </form>
+      {% if q %}
+         <span class="small">
+            (<a href=".">searching for "{{ q }}" — click here to reset</a>)
+         </span>
+      {% endif %}
+   </div>
+   
+   <table id="list">
+      <tr>
+         <td>Name</td>
+         <td>Start date</td>
+         <td>End date</td>
+         <td>Created by</td>
+      </tr>
+      {% for object in paged_objects.object_list %}
+         <tr>
+            <td>
+               <a href="{% url reports-detail object.id %}">
+                  {{ object.name }}
+               </a>
+            </td>
+            <td>
+               <a href="{% url reports-detail object.id %}">
+                  {{ object.start_date }}
+               </a>
+            </td>
+            <td>
+               <a href="{% url reports-detail object.id %}">
+                  {{ object.end_date }}
+               </a>
+            </td>
+            <td>
+               <a href="{% url reports-detail object.id %}">
+                  {{ object.created_by.get_full_name }}
+               </a>
+            </td>
+         </tr>
+      {% endfor %}
+   </table>
+   
+   {% if form.as_url_args %}
+      {% paginate form.as_url_args %}
+   {% else %}
+      {% paginate %}
+   {% endif %}
+</div>
+{% endblock %}
