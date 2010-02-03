@@ -31,7 +31,14 @@ def service_form(request):
 			wo.room = cd['room']
 			wo.equipment_text = cd['equipment_text']
 			if cd['barcode']:
-				wo.equipment = wo.barcode_lookup(cd['barcode'])
+				try:
+					cd['equipment'] = equipment.Equipment.objects.get(
+						barcode=cd['barcode']
+					)
+				except equipment.Equipment.DoesNotExist:
+					cd['equipment'] = None
+			else:
+				cd['equipment'] = None
 			wo.description = cd['description']
 			wo.work_type = cd['work_type']
 			wo.save()
