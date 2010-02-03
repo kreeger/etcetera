@@ -123,7 +123,7 @@ class Equipment(models.Model):
 class EquipmentLog(models.Model):
 	"""Logs for when equipment is updated."""
 	
-	equipment = models.ForeignKey(Equipment)
+	equipment = models.ForeignKey(Equipment, related_name="logs",)
 	field = models.CharField(max_length=100)
 	old = models.CharField(max_length=200)
 	new = models.CharField(max_length=200)
