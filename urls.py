@@ -42,7 +42,9 @@ urlpatterns += patterns('',
 )
 
 # For report generation.
-# etcetera.reports.views
+urlpatterns += patterns('',
+	url(r'^reports/', include('etcetera.reports.urls')),
+)
 
 # For university structure management.
 urlpatterns += patterns('',
