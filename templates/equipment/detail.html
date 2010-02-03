@@ -242,9 +242,9 @@
    
       <div id="history">
          <h2>History</h2>
-         {% if object.logs %}
+         {% if object.logs.all %}
             <ul>
-               {% for log in object.logs %}
+               {% for log in object.logs.all %}
                   <li>
                      <strong>{{ log.datetime|date:'Y.n.j, g:i:s A' }}</strong>
                      {% if log.user %}

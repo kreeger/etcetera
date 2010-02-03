@@ -10,11 +10,13 @@ from django.template import RequestContext
 from etcetera.equipment import models as equipment
 from etcetera.equipment import forms as eqforms
 from etcetera.extras.search import get_query
+from etcetera.extras.constants import EQUIPMENT_STATUSES
 
 @login_required
 def index(request):
 	paged_objects = None
 	q = None
+	count_dict = {}
 	form = eqforms.SearchForm()
 	if request.GET and request.GET.get('q'):
 		form = eqforms.SearchForm(request.GET)
@@ -44,7 +46,9 @@ def index(request):
 		paged_objects = paginator.page(page)
 	except (EmptyPage, InvalidPage):
 		paged_objects = paginator.page(paginator.num_pages)
-	
+	for stat in EQUIPMENT_STATUSES:
+		count_dict[stat[0]] = equipment.Equipment.objects.filter(
+			status=stat[0]).count()
 	# Bundle everything into the context and send it out.
 	context = {
 		'paged_objects': paged_objects,
@@ -53,6 +57,7 @@ def index(request):
 		'view_type': 'index',
 		'q': q,
 		'count': count,
+		'count_dict': count_dict,
 	}
 	return render_to_response(
 		"equipment/index.html",
@@ -87,7 +92,6 @@ def weekly_list(request):
 def detail(request, object_id):
 	# Get the ticket from the URL, bundle it in a context, and send it out.
 	wo = get_object_or_404(equipment.Equipment, id=object_id)
-	wo.logs = equipment.EquipmentLog.objects.filter(equipment=wo.pk)
 	context = {'object': wo,}
 	return render_to_response(
 		"equipment/detail.html",
