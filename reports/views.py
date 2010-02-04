@@ -76,7 +76,7 @@ def edit(request, slug):
 			form.save()
 			return HttpResponseRedirect(reverse(
 				'reports-detail',
-				args=(rp.id,),
+				args=(rp.slug,),
 			))
 	else:
 		form = rpforms.ReportModelForm(instance=rp)
@@ -95,10 +95,13 @@ def new(request):
 	if request.method == 'POST':
 		form = rpforms.ReportModelForm(request.POST)
 		if form.is_valid():
-			rp = form.save(created_by=request.user)
+			rp = form.save()
+			# Assign the user as the created_by person
+			rp.created_by = request.user
+			rp.save()
 			return HttpResponseRedirect(reverse(
 				'reports-detail',
-				args=(rp.id,),
+				args=(rp.slug,),
 			))
 	else:
 		form = rpforms.ReportModelForm()

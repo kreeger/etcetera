@@ -47,12 +47,12 @@
             </td>
             <td>
                <a href="{% url reports-detail object.slug %}">
-                  {{ object.start_date }}
+                  {{ object.start_date|date }}
                </a>
             </td>
             <td>
                <a href="{% url reports-detail object.slug %}">
-                  {{ object.end_date }}
+                  {{ object.end_date|date }}
                </a>
             </td>
             <td>

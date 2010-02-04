@@ -51,6 +51,7 @@
       </div>
    
       <div id="brief-information">
+      {% for error in form.errors %}{{ error }} {% endfor %}
          <h2>Brief information</h2>
          <table class="detail">
             <tr{% if form.name.errors %} class="errorlist"{% endif %}>
@@ -68,8 +69,17 @@
          </table>
       </div>
       
-      <div id="organizationalunits">
+      <div id="related-fields">
          <h2>Departments</h2>
+         {{ form.organizationalunits }}
+         
+         <h2>Buildings</h2>
+         {{ form.buildings }}
+         
+         <h2>Equipment types</h2>
+         {{ form.equipmenttypes }}
+         
+      </div>
          
    </form>
 </div>
