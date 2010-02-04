@@ -48,6 +48,6 @@
    		</div>
    	</div>
    </div>
-   {% if google_analytics %}{{ google_analytics }}{% endif %}
+   {% if google_analytics %}{{ google_analytics|safe }}{% endif %}
 </body>
 </html>
