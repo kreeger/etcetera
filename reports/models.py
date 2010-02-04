@@ -2,6 +2,7 @@ import datetime as dt
 
 from django.db import models
 from django.contrib.auth import models as auth
+from django.template.defaultfilters import slugify
 
 from etcetera.structure import models as structure
 from etcetera.equipment import models as equipment
@@ -10,6 +11,7 @@ from etcetera.equipment import models as equipment
 class Report(models.Model):
 	"""A basic report."""
 	name = models.CharField(max_length=255)
+	slug = models.SlugField(unique=True)
 	start_date = models.DateTimeField(blank=True)
 	end_date = models.DateTimeField(blank=True, default=dt.datetime.now)
 	created_by = models.ForeignKey(
@@ -31,4 +33,8 @@ class Report(models.Model):
 	
 	def __unicode__(self):
 		return u"%s" % (self.name,)
+	
+	def save(self, *args, **kwargs):
+		self.slug = slugify(self.name)
+		super(Report, self).save(*args, **kwargs)
 	
