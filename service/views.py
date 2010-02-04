@@ -206,8 +206,6 @@ def new(request):
 		form = woforms.WorkOrderModelForm(request.POST)
 		if form.is_valid():
 			cd = form.cleaned_data
-			#wo = service.WorkOrder()
-			import pdb; pdb.set_trace()
 			if cd['barcode']:
 				try:
 					cd['equipment'] = equipment.Equipment.objects.get(
