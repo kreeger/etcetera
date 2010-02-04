@@ -78,7 +78,7 @@ class WorkOrderModelForm(forms.ModelForm):
 	
 	class Meta:
 		model = service.WorkOrder
-		exclude = ('creation_date',)
+		exclude = ('creation_date','canceled',)
 
 class SearchForm(forms.Form):
 	q = forms.CharField(max_length=50)

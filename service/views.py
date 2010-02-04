@@ -206,9 +206,15 @@ def new(request):
 		form = woforms.WorkOrderModelForm(request.POST)
 		if form.is_valid():
 			cd = form.cleaned_data
-			wo = service.WorkOrder()
+			#wo = service.WorkOrder()
+			import pdb; pdb.set_trace()
 			if cd['barcode']:
-				cd['equipment'] = wo.barcode_lookup(cd['barcode'])
+				try:
+					cd['equipment'] = equipment.Equipment.objects.get(
+						barcode=cd['barcode']
+					)
+				except equipment.Equipment.DoesNotExist:
+					cd['equipment'] = None
 			else:
 				cd['equipment'] = None
 			wo = form.save()
