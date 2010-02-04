@@ -24,8 +24,8 @@ def error_mail(request):
 def index(request):
 	if not request.META['REQUEST_URI'].endswith('/'):
 		return HttpResponseRedirect("etcetera%s" % request.path)
-	repo = Repo(SITE_ROOT)
-	commit_history = repo.commits('master', max_count=3)
+	#repo = Repo(SITE_ROOT)
+	#commit_history = repo.commits('master', max_count=3)
 	posts = extras.Post.objects.all()[:3]
 	context = {
 		'object_list': posts,
