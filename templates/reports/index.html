@@ -14,7 +14,7 @@
 <div id="list">   
    <h1>
       <span class="right">
-         <a href="#">add a new report</a>
+         <a href="{% url reports-new %}">add a new report</a>
       </span>
       Reports
    </h1>
@@ -41,22 +41,22 @@
       {% for object in paged_objects.object_list %}
          <tr>
             <td>
-               <a href="{% url reports-detail object.id %}">
+               <a href="{% url reports-detail object.slug %}">
                   {{ object.name }}
                </a>
             </td>
             <td>
-               <a href="{% url reports-detail object.id %}">
+               <a href="{% url reports-detail object.slug %}">
                   {{ object.start_date }}
                </a>
             </td>
             <td>
-               <a href="{% url reports-detail object.id %}">
+               <a href="{% url reports-detail object.slug %}">
                   {{ object.end_date }}
                </a>
             </td>
             <td>
-               <a href="{% url reports-detail object.id %}">
+               <a href="{% url reports-detail object.slug %}">
                   {{ object.created_by.get_full_name }}
                </a>
             </td>
