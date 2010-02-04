@@ -17,6 +17,7 @@ class Report(models.Model):
 	created_by = models.ForeignKey(
 		auth.User,
 		related_name='reports',
+		null=True,
 	)
 	organizationalunits = models.ManyToManyField(
 		structure.OrganizationalUnit,
@@ -34,7 +35,9 @@ class Report(models.Model):
 	def __unicode__(self):
 		return u"%s" % (self.name,)
 	
-	def save(self, *args, **kwargs):
+	def save(self, user=None, *args, **kwargs):
 		self.slug = slugify(self.name)
+		if user:
+			self.created_by = user
 		super(Report, self).save(*args, **kwargs)
 	
