@@ -28,6 +28,7 @@ class SearchForm(forms.Form):
 
 class ReportModelForm(forms.ModelForm):
 	formfield_callback = formfield_callback
+	
 	class Meta:
 		model = reports.Report
-		exclude = ('created_by','slug',)
+		exclude = ('slug','created_by',)
