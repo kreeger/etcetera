@@ -55,3 +55,58 @@ def index(request):
 		context,
 		context_instance=RequestContext(request)
 	)
+
+@login_required
+def detail(request, slug):
+	# Get the ticket from the URL, bundle it in a context, and send it out.
+	rp = get_object_or_404(reports.Report, slug=slug)
+	context = {'object': rp,}
+	return render_to_response(
+		"reports/detail.html",
+		context,
+		context_instance=RequestContext(request)
+	)
+
+@login_required
+def edit(request, slug):	
+	rp = get_object_or_404(reports.Report, slug=slug)
+	if request.method == 'POST':
+		form = rpforms.ReportModelForm(request.POST, instance=rp)
+		if form.is_valid():
+			form.save()
+			return HttpResponseRedirect(reverse(
+				'reports-detail',
+				args=(rp.id,),
+			))
+	else:
+		form = rpforms.ReportModelForm(instance=rp)
+	context = {
+		'object': rp,
+		'form': form,
+	}
+	return render_to_response(
+		"reports/edit.html",
+		context,
+		context_instance=RequestContext(request)
+	)
+
+@login_required
+def new(request):
+	if request.method == 'POST':
+		form = rpforms.ReportModelForm(request.POST)
+		if form.is_valid():
+			rp = form.save(created_by=request.user)
+			return HttpResponseRedirect(reverse(
+				'reports-detail',
+				args=(rp.id,),
+			))
+	else:
+		form = rpforms.ReportModelForm()
+	context = {
+		'form': form,
+	}
+	return render_to_response(
+		"reports/edit.html",
+		context,
+		context_instance=RequestContext(request)
+	)
