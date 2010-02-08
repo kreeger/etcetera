@@ -15,7 +15,7 @@ from etcetera.service import models as service
 from etcetera.checkout import models as checkout
 
 from docutils.core import publish_parts
-from git import *
+#from git import *
 
 def error_mail(request):
 	error_mail(request)
