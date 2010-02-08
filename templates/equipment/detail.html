@@ -85,7 +85,7 @@
                </a>
             </li>
             {% endif %}
-            {% if object.workorder_set.all %}
+            {% if object.workorders.all %}
             <li>
                <a href="{% url equipment-history object.id 'service' %}">
                   view service history

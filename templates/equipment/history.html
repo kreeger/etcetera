@@ -20,8 +20,11 @@
 <div id="list">
    <div id="headers">
       {% if object.barcode %}
-         <div class="drop-pop" id="barcode">
-            {{ object.barcode }}
+         <div class="drop-pop">
+            <img src="/_media/images/barcode-250.png" alt="{{ object.barcode }}" />
+            <div id="barcode">
+               {{ object.barcode }}
+            </div>
          </div>
       {% endif %}
       
