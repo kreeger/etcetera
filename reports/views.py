@@ -1,4 +1,5 @@
 import datetime as dt
+from operator import itemgetter
 
 from django.shortcuts import render_to_response, get_object_or_404
 from django.contrib.auth.decorators import login_required
@@ -60,7 +61,19 @@ def index(request):
 def detail(request, slug):
 	# Get the ticket from the URL, bundle it in a context, and send it out.
 	rp = get_object_or_404(reports.Report, slug=slug)
-	context = {'object': rp,}
+	eqt_cd = {}
+	for t in rp.equipmenttypes.all():
+		eqt_cd[t.name] = 0
+		for eq in t.equipment_set.all():
+			eqt_cd[t.name] += eq.checkouts.filter(
+				completion_date__gte=rp.start_date).filter(
+				completion_date__lte=rp.end_date).count()
+	# Sort the dictionary
+	eqt_cd = sorted(eqt_cd.iteritems(), key=itemgetter(0))
+	context = {
+		'object': rp,
+		'equipment_types': eqt_cd,
+	}
 	return render_to_response(
 		"reports/detail.html",
 		context,

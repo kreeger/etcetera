@@ -22,14 +22,17 @@ class Report(models.Model):
 	organizationalunits = models.ManyToManyField(
 		structure.OrganizationalUnit,
 		related_name='reports',
+		null=True, blank=True,
 	)
 	buildings = models.ManyToManyField(
 		structure.Building,
 		related_name='reports',
+		null=True, blank=True,
 	)
 	equipmenttypes = models.ManyToManyField(
 		equipment.EquipmentType,
 		related_name='reports',
+		null=True, blank=True,
 	)
 	
 	def __unicode__(self):

@@ -49,13 +49,17 @@
          <h2>Overall equipment usage</h2>
          <table class="list">
             <tr>
-               <td>s</td>
-               <td>q</td>
+               <td>Equipment type</td>
+               <td>Count</td>
             </tr>
-            <tr>
-               <td>a</td>
-               <td>w</td>
-            </tr>
+            {% for k,v in equipment_types %}
+            {% if v != 0 %}
+               <tr>
+                  <td>{{ k }}</td>
+                  <td>{{ v }}</td>
+               </tr>
+            {% endif %}
+            {% endfor %}
          </table>
       </div>
       
