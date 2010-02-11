@@ -361,26 +361,39 @@ def equip_remove(request, object_id, eq_id):
 @login_required
 def confirm(request, object_id):
 	co = get_object_or_404(checkout.Checkout, id=object_id)
+	error = None
+	msg = None
 	if request.method == 'GET':
-		# If confirmation hasn't yet been sent, and there is an email
-		if not co.completion_date and not co.confirmation_sent and co.email:
-			# If it's a delivery, there must also be a delivering user
-			if co.checkout_type == 'delivery' and co.delivering_user:
-				confirmation_mail(co)
-				co.confirmation_sent = True
-				co.handling_user = request.user
-				co.save()
-			# If it's a pickup, go for it
-			else:
-				confirmation_mail(co)
-				co.confirmation_sent = True
-				co.handling_user = request.user
-				co.save()
+		if not co.department:
+			error = u'Checkout must be assigned to a department before the patron can be sent a confirmation.'
+		else:
+			# If confirmation hasn't yet been sent, and there is an email
+			if not co.completion_date and not co.confirmation_sent and co.email:
+				# If it's a delivery, there must also be a delivering user
+				if co.checkout_type == 'delivery' and co.delivering_user:
+					confirmation_mail(co)
+					co.confirmation_sent = True
+					co.handling_user = request.user
+					co.save()
+					msg = u'Patron has been sent confirmation via email.'
+				# If it's a pickup, go for it
+				else:
+					confirmation_mail(co)
+					co.confirmation_sent = True
+					co.handling_user = request.user
+					co.save()
+					msg = u'Patron has been sent confirmation via email.'
 	# Redirect to detail
-	return HttpResponseRedirect(reverse(
-		'checkout-detail',
-		args=(co.id,),
-	))
+	context = {
+		'object': co,
+		'msg': msg,
+		'error': error,
+	}
+	return render_to_response(
+		"checkout/detail.html",
+		context,
+		context_instance=RequestContext(request)
+	)
 
 @login_required
 def dupe(request, object_id):
