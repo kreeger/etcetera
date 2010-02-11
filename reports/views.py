@@ -10,6 +10,7 @@ from django.template import RequestContext
 
 from etcetera.reports import models as reports
 from etcetera.reports import forms as rpforms
+from etcetera.checkout import models as checkout
 from etcetera.extras.search import get_query
 
 @login_required
@@ -59,20 +60,32 @@ def index(request):
 
 @login_required
 def detail(request, slug):
-	# Get the ticket from the URL, bundle it in a context, and send it out.
+	# Get our report from the Database!
 	rp = get_object_or_404(reports.Report, slug=slug)
-	eqt_cd = {}
-	for t in rp.equipmenttypes.all():
-		eqt_cd[t.name] = 0
-		for eq in t.equipment_set.all():
-			eqt_cd[t.name] += eq.checkouts.filter(
-				completion_date__gte=rp.start_date).filter(
-				completion_date__lte=rp.end_date).count()
+	# Get our checkouts applicable from the database
+	cos = checkout.Checkout.objects.filter(canceled=False)
+	# Set up our dictionaries of doom
+	eqtype_d = {}
+	ou_d = {}
+	total_d = {}
+	# If various things are specified in the report, those are added to the
+	# queryset filters one at a time
+	if rp.start_date: cos = cos.filter(completion_date__gte=rp.start_date)
+	if rp.end_date: cos = cos.filter(completion_date__lte=rp.end_date)
+	# If there are equipmenttypes in the report, initiate that dictionary
+	if rp.equipmenttypes.count():
+		for eqt in rp.equipmenttypes.all():
+			eqtype_d[eqt] = 0
+	# The master for loop(s)!
+	for co in cos:
+		for eq in co.equipment_list.all():
+			if eq.equipment_type in eqtype_d:
+				eqtype_d[eq.equipment_type] += 1
 	# Sort the dictionary
-	eqt_cd = sorted(eqt_cd.iteritems(), key=itemgetter(0))
+	eqtype_d = sorted(eqtype_d.iteritems(), key=itemgetter(0))
 	context = {
 		'object': rp,
-		'equipment_types': eqt_cd,
+		'equipment_types': eqtype_d,
 	}
 	return render_to_response(
 		"reports/detail.html",

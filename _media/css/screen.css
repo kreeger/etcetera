@@ -137,6 +137,8 @@ table#list, .list { margin: 0px; padding: 0px; border-spacing: 0px; border: 1px 
 
 #checkout-print { display: none; }
 
+#related-fields select { width: 800px; height: 400px; }
+
 #times table { width: 75%; margin-top: 5px; margin-bottom: 5px; }
 	#times table caption { font-style: italic; font-weight: normal; font-size: .8em; text-align: left; }
 	#times table td input { width: 80px; }
