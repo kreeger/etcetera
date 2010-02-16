@@ -2,7 +2,7 @@ import datetime as dt
 
 from django.shortcuts import render_to_response, get_object_or_404
 from django.contrib.auth.decorators import login_required
-from django.http import HttpResponseRedirect, HttpResponse, HttpResponseServerError
+from django.http import HttpResponseRedirect, HttpResponse, HttpResponseServerError, Http404
 from django.core.urlresolvers import reverse
 from django.core.paginator import Paginator, InvalidPage, EmptyPage
 from django.template import RequestContext
@@ -37,6 +37,15 @@ def checkout_form(request):
 @login_required
 def index(request, view_type=None, date_range=None):
 	# Setup our paging and query objects ahead of time
+	if view_type not in [
+		'unconfirmed',
+		'current',
+		'pickups',
+		'deliveries',
+		'returns',
+		'completed',
+		'overdue',
+		None,]: raise Http404
 	paged_objects = None
 	q = None
 	count = None

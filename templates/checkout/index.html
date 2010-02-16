@@ -28,25 +28,25 @@
          <a href="{% url checkout-index %}">All Active</a>
       </li>
       <li{% if view_type == 'unconfirmed' %} class="active"{% endif %}>
-         <a href="{% url checkout-unconfirmed %}">Unconfirmed</a>
+         <a href="{% url checkout-index 'unconfirmed' %}">Unconfirmed</a>
       </li>
       <li{% if view_type == 'current' %} class="active"{% endif %}>
-         <a href="{% url checkout-current %}">Current</a>
+         <a href="{% url checkout-index 'current' %}">Current</a>
       </li>
       <li{% if view_type == 'pickups' %} class="active"{% endif %}>
-         <a href="{% url checkout-pickups %}">Req. Pickups</a>
+         <a href="{% url checkout-index 'pickups' %}">Req. Pickups</a>
       </li>
       <li{% if view_type == 'deliveries' %} class="active"{% endif %}>
-         <a href="{% url checkout-deliveries %}">Deliveries</a>
+         <a href="{% url checkout-index 'deliveries' %}">Deliveries</a>
       </li>
       <li{% if view_type == 'returns' %} class="active"{% endif %}>
-         <a href="{% url checkout-returns %}">Returns</a>
+         <a href="{% url checkout-index 'returns' %}">Returns</a>
       </li>
       <li{% if view_type == 'completed' %} class="active"{% endif %}>
-         <a href="{% url checkout-completed %}">Completed</a>
+         <a href="{% url checkout-index 'completed' %}">Completed</a>
       </li>
       <li{% if view_type == 'overdue' %} class="active"{% endif %}>
-         <a href="{% url checkout-overdue %}">Overdue</a>
+         <a href="{% url checkout-index 'overdue' %}">Overdue</a>
       </li>
    </ul>
 {% endblock %}

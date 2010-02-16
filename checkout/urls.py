@@ -4,41 +4,6 @@ from etcetera.checkout.views import *
 urlpatterns = patterns('',
 	url(r'^form/$', checkout_form, name="checkout-form"),
 	url(r'^$', index, name="checkout-index"),
-	url(r'^completed/$',
-		index,
-		{'view_type': 'completed'},
-		name="checkout-completed"
-	),	
-	url(r'^unconfirmed/$',
-		index,
-		{'view_type': 'unconfirmed'},
-		name="checkout-unconfirmed"
-	),
-	url(r'^current/$',
-		index,
-		{'view_type': 'current'},
-		name="checkout-current"
-	),
-	url(r'^overdue/$',
-		index,
-		{'view_type': 'overdue'},
-		name="checkout-overdue"
-	),
-	url(r'^pickups/$',
-		index,
-		{'view_type': 'pickups'},
-		name="checkout-pickups"
-	),
-	url(r'^deliveries/$',
-		index,
-		{'view_type': 'deliveries'},
-		name="checkout-deliveries"
-	),
-	url(r'^returns/$',
-		index,
-		{'view_type': 'returns'},
-		name="checkout-returns"
-	),
 	url(r'^new/$', new, name="checkout-new"),
 	url(r'^(?P<object_id>\d+)/$', detail, name="checkout-detail"),
 	url(r'^(?P<object_id>\d+)/edit/$', edit, name="checkout-edit"),
@@ -51,5 +16,9 @@ urlpatterns = patterns('',
 	url(r'^(?P<object_id>\d+)/equip/rem/(?P<eq_id>\d+)/$',
 		equip_remove,
 		name="checkout-eqrem"
+	),
+	url(r'^(?P<view_type>\w+)/$',
+		index,
+		name="checkout-index"
 	),
 )

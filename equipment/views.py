@@ -14,7 +14,7 @@ from etcetera.extras.constants import EQUIPMENT_STATUSES
 
 @login_required
 def index(request, view_type=None):
-	if view_type not in ['weekly','counts',None]: raise Http404
+	if view_type not in ['weekly',None]: raise Http404
 	paged_objects = None
 	q = None
 	count = None
@@ -76,17 +76,7 @@ def index(request, view_type=None):
 	)
 
 def counts(request):
-	count_dict = {}	
-	for eqt in equipment.EquipmentType.objects.all():
-		the_dict = {}
-		for stat in ['checkout','checkedout','repair',]:
-			the_dict[stat[0]] = eqt.equipment_set.filter(
-				status=stat[0]).count()
-		count_dict[eqt] = the_dict
-	context = {
-		'count_dict': count_dict,
-		'view_type': 'counts',
-	}
+	
 	return render_to_response(
 		"equipment/counts.html",
 		context,
