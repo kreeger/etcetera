@@ -30,6 +30,7 @@ h2 { margin: 10px 0; border-bottom: 1px solid #888; color: #444; font-weight: 20
 .wrapper { width: 950px; margin: 0px auto; }
 .datetime { font-weight: normal; font-size: 13px; }
 .active a { background-color: #CCC; cursor: default; color: #333; }
+.shaded { background-color: #EAEAEA; }
 
 .collapse-content { display: none; width: inherit; }
 .collapse-link { color: inherit; }
@@ -90,7 +91,8 @@ div.banner { display: block; padding: 8px 8px 8px 55px; margin-bottom: 10px; -mo
 
 table#list, .list { margin: 0px; padding: 0px; border-spacing: 0px; border: 1px solid #AAA; font-size: .85em; width: 100%; }
 	table#list td:first-child, .list td:first-child { padding-left: 8px; font-weight: bold;}
-	table#list td:last-child, .list td:last-child { padding-right: 8px; text-align: right; font-size: 11px; }
+	table#list td:last-child, .list td:last-child { padding-right: 8px; text-align: right; }
+	table#list td:last-child { font-size: 11px; }
 	table#list tr:first-child, .list tr:first-child { background-color: #DDD; }
 		table#list tr:first-child td, .list tr:first-child td { border-bottom: 1px solid #AAA; font-weight: bold; color: #000; }
 		table#list tr:first-child td:first-child, , .list tr:first-child td:first-child { border-bottom: 1px solid #AAA; }
