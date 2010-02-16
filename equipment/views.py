@@ -13,10 +13,11 @@ from etcetera.extras.search import get_query
 from etcetera.extras.constants import EQUIPMENT_STATUSES
 
 @login_required
-def index(request):
+def index(request, view_type=None):
+	if view_type not in ['weekly','counts',None]: raise Http404
 	paged_objects = None
 	q = None
-	count_dict = {}
+	count = None
 	form = eqforms.SearchForm()
 	if request.GET and request.GET.get('q'):
 		form = eqforms.SearchForm(request.GET)
@@ -33,31 +34,40 @@ def index(request):
 				q = data['q']
 	else:
 		paged_objects = equipment.Equipment.objects.all()
-	count = paged_objects.count()
-	# Repackage everything into paged_objects using Paginator.
-	paginator = Paginator(paged_objects, 20)
-	# Make sure the page request is an int -- if not, then deliver page 1.
-	try:
-		page = int(request.GET.get('page','1'))
-	except ValueError:
-		page = 1
-	# If the page request is out of range, deliver the last page of results.
-	try:
-		paged_objects = paginator.page(page)
-	except (EmptyPage, InvalidPage):
-		paged_objects = paginator.page(paginator.num_pages)
-	for stat in EQUIPMENT_STATUSES:
-		count_dict[stat[0]] = equipment.Equipment.objects.filter(
-			status=stat[0]).count()
+	if view_type == 'weekly':
+		#import pdb; pdb.set_trace()
+		paged_objects.object_list = paged_objects.filter(
+			on_weekly_checklist=True
+		).order_by(
+			'equipment_type__name',
+			'video_unit',
+			'cc_unit',
+			'make__name',
+			'model',
+			'serial',
+		)	
+		count = paged_objects.object_list.count()
+	if view_type == None:	
+		count = paged_objects.count()
+		# Repackage everything into paged_objects using Paginator.
+		paginator = Paginator(paged_objects, 20)
+		# Make sure the page request is an int -- if not, then deliver page 1.
+		try:
+			page = int(request.GET.get('page','1'))
+		except ValueError:
+			page = 1
+		# If the page request is out of range, deliver the last page of results.
+		try:
+			paged_objects = paginator.page(page)
+		except (EmptyPage, InvalidPage):
+			paged_objects = paginator.page(paginator.num_pages)
 	# Bundle everything into the context and send it out.
 	context = {
 		'paged_objects': paged_objects,
-		'object_list': paged_objects.object_list,
 		'form': form,
-		'view_type': 'index',
+		'view_type': view_type,
 		'q': q,
 		'count': count,
-		'count_dict': count_dict,
 	}
 	return render_to_response(
 		"equipment/index.html",
@@ -65,26 +75,20 @@ def index(request):
 		context_instance=RequestContext(request)
 	)
 
-@login_required
-def weekly_list(request):
-	object_list = equipment.Equipment.objects.filter(
-		on_weekly_checklist=True
-	).order_by(
-		'equipment_type__name',
-		'video_unit',
-		'cc_unit',
-		'make__name',
-		'model',
-		'serial',
-	)
-	count = object_list.count()
+def counts(request):
+	count_dict = {}	
+	for eqt in equipment.EquipmentType.objects.all():
+		the_dict = {}
+		for stat in ['checkout','checkedout','repair',]:
+			the_dict[stat[0]] = eqt.equipment_set.filter(
+				status=stat[0]).count()
+		count_dict[eqt] = the_dict
 	context = {
-		'object_list': object_list,
-		'view_type': 'weekly',
-		'count': count,
+		'count_dict': count_dict,
+		'view_type': 'counts',
 	}
 	return render_to_response(
-		"equipment/index.html",
+		"equipment/counts.html",
 		context,
 		context_instance=RequestContext(request)
 	)

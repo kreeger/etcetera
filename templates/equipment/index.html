@@ -5,49 +5,48 @@
 
 {% block breadcrumb %}
    <a href="{% url etcetera-home %}">Home</a> &rsaquo;
-   {% if view_type == 'index' %}
+   {% if not view_type %}
       Equipment
    {% endif %}
    {% if view_type == 'weekly' %}
       <a href="{% url equipment-index %}">Equipment</a>
       &rsaquo; Weekly Checklist
    {% endif %}
+   {% if view_type == 'counts' %}
+      <a href="{% url equipment-index %}">Equipment</a>
+      &rsaquo; Counts
+   {% endif %}
 {% endblock %}
 
 {% block subnav %}
    <ul>
-      <li{% if view_type == 'index' %} class="active"{% endif %}>
+      <li{% if not view_type %} class="active"{% endif %}>
          <a href="{% url equipment-index %}">Inventory</a>
       </li>
       <li{% if view_type == 'weekly' %} class="active"{% endif %}>
-         <a href="{% url equipment-weekly %}">Checklist</a>
+         <a href="{% url equipment-index 'weekly' %}">Checklist</a>
+      </li>
+      <li{% if view_type == 'counts' %} class="active"{% endif %}>
+         <a href="{% url equipment-counts %}">Counts</a>
       </li>
    </ul>
 {% endblock %}
 
 {% block content %}
 <div id="list">
-   <div class="counts">
-      <table>
-         <tr>
-            
-         </tr>
-         <tr>
-            
-         </tr>
-      </table>
-   </div>
    <h1>
       <span class="right">
          total: {{ count }} &bull;
          <a href="{% url equipment-new %}">add a new item</a>
       </span>
-      
+      {% if not view_type %}
+         Equipment Inventory
+      {% endif %}
       {% if view_type == 'weekly' %}
          Weekly Equipment Checklist
       {% endif %}
-      {% if view_type == 'index' %}
-         Equipment Inventory
+      {% if view_type == 'counts' %}
+         Equipment Counts
       {% endif %}
       
       {% if q %}
@@ -73,7 +72,7 @@
    </div>
    {% endif %}
    <table id="list">
-      <tr id="headerrow">
+      <tr>
          {% if view_type == 'weekly' %}
             <td>&radic;</td>
          {% endif %}
@@ -92,8 +91,8 @@
             <td>Comments</td>
          {% endif %}
       </tr>
-      {% for object in object_list %}
-         <tr class="datarow">
+      {% for object in paged_objects.object_list %}
+         <tr>
             {% if view_type == 'weekly' %}
                <td>
                   <a href="{% url equipment-detail object.id %}">
