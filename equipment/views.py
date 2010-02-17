@@ -76,7 +76,18 @@ def index(request, view_type=None):
 	)
 
 def counts(request):
-	
+	count_dict = {}
+	for eqt in equipment.EquipmentType.objects.all():
+		count_dict[eqt] = []
+		for status in ['checkout','checkedout','repair']:
+			count_dict[eqt].append(
+				eqt.equipment_set.filter(status=status).count()
+			)
+		count_dict[eqt].append(eqt.equipment_set.count())
+	context = {
+		'count_dict': count_dict,
+		'view_type': 'counts',
+	}
 	return render_to_response(
 		"equipment/counts.html",
 		context,
