@@ -32,20 +32,23 @@
       {% endif %}
    </div>
    
-   <table class="list">
-      <tr>
-         <td>Status</td>
-         <td>Count</td>
-      </tr>
-      {% for status,count in count_dict.items %}
-         {% if count != 0 %}
+   <div id="equipment-counts">
+      <h2>Equipment counts</h2>
+      <table class="list">
          <tr>
-            <td>{{ status|capfirst }}</td>
-            <td>{{ count }}</td>
+            <td>Status</td>
+            <td>Count</td>
          </tr>
-         {% endif %}
-      {% endfor %}
-   </table>
+         {% for status,count in count_dict.items %}
+            {% if count != 0 %}
+            <tr>
+               <td>{{ status|capfirst }}</td>
+               <td>{{ count }}</td>
+            </tr>
+            {% endif %}
+         {% endfor %}
+      </table>
+   </div>
    
 </div>
 {% endblock %}
