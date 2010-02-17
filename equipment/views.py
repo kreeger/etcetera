@@ -89,7 +89,7 @@ def counts(request):
 		'view_type': 'counts',
 	}
 	return render_to_response(
-		"equipment/counts.html",
+		"equipment/index.html",
 		context,
 		context_instance=RequestContext(request)
 	)
