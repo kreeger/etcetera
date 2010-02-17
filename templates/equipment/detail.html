@@ -92,6 +92,11 @@
                </a>
             </li>
             {% endif %}
+            <li>
+               <a href="{% url equipmenttype-detail object.equipment_type.slug %}">
+                  view similar equipment
+               </a>
+            </li>
          </ul>
       {% else %}
          <p>You must be logged in to perform actions on this ticket.</p>

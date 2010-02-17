@@ -292,8 +292,8 @@ def inventory(request, object_id):
 def history(request, object_id, history_type):
 	eq = get_object_or_404(equipment.Equipment, id=object_id)
 	if history_type not in ['checkout','service']: raise Http404
-	if history_type == 'checkout': history = eq.checkouts.all()
-	if history_type == 'service': history = eq.workorders.all()
+	if history_type == 'checkout': history = eq.checkouts.all().order_by('-out_date')
+	if history_type == 'service': history = eq.workorders.all().order_by('-creation_date')
 	# Repackage everything into paged_objects using Paginator.
 	paginator = Paginator(history, 20)
 	# Make sure the page request is an int -- if not, then deliver page 1.

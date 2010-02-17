@@ -50,5 +50,41 @@
       </table>
    </div>
    
+   <div id="equipment-listing">
+      <h2>Equipment listing</h2>
+      <table id="list">
+         <tr>
+            <td>Barcode</td>
+            <td>Make &amp; Model</td>
+            <td>Status</td>
+            <td>Location</td>
+         </tr>
+         {% for object in object.equipment_set.all %}
+            <tr>
+               <td>
+                  <a href="{% url equipment-detail object.id %}">
+                     {{ object.barcode }}
+                  </a>
+               </td>
+               <td>
+                  <a href="{% url equipment-detail object.id %}">
+                     {{ object.make.name }} {{ object.model }}
+                  </a>
+               </td>
+               <td>
+                  <a href="{% url equipment-detail object.id %}">
+                     {{ object.get_status_display }}
+                  </a>
+               </td>
+               <td>
+                  <a href="{% url equipment-detail object.id %}">
+                     {{ object.building.abbreviation }} {{ object.room }}
+                  </a>
+               </td>
+            </tr>
+         {% endfor %}
+      </table>
+   </div>
+   
 </div>
 {% endblock %}
