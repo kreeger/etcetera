@@ -2,6 +2,7 @@ import datetime as dt
 
 from django.db import models
 from django.contrib.auth import models as auth
+from django.template.defaultfilters import slugify
 
 from etcetera.structure.models import Building
 from etcetera.extras import constants
@@ -9,12 +10,17 @@ from etcetera.extras import constants
 class EquipmentType(models.Model):
 	"""A category for the type of equipment"""
 	name = models.CharField(max_length=100)
+	slug = models.SlugField(unique=True)
 	
 	class Meta:
 		ordering = ('name',)
 	
 	def __unicode__(self):
 		return u"%s" % self.name
+	
+	def save(self, user=None, *args, **kwargs):
+		self.slug = slugify(self.name)
+		super(EquipmentType, self).save(*args, **kwargs)
 
 class Make(models.Model):
 	name = models.CharField(max_length=100)

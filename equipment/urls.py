@@ -15,6 +15,17 @@ urlpatterns = patterns('',
 		name="equipment-history"
 	),
 	url(r'^new/$', new, name="equipment-new"),
-	url(r'^counts/$', counts, name="equipment-counts"),
+	url(r'^types/(?P<slug>.+)/edit/$',
+		equipmenttype_edit,
+		name="equipmenttype-edit"
+	),
+	url(r'^types/(?P<slug>.+)/$',
+		equipmenttype_detail,
+		name="equipmenttype-detail"
+	),
+	url(r'^types/$',
+		equipmenttype_index,
+		name="equipmenttype-index"
+	),
 	url(r'^(?P<view_type>\w+)/$', index, name="equipment-index"),
 )

@@ -75,18 +75,48 @@ def index(request, view_type=None):
 		context_instance=RequestContext(request)
 	)
 
-def counts(request):
-	count_dict = {}
-	for eqt in equipment.EquipmentType.objects.all():
-		count_dict[eqt] = []
-		for status in ['checkout','checkedout','repair']:
-			count_dict[eqt].append(
-				eqt.equipment_set.filter(status=status).count()
-			)
-		count_dict[eqt].append(eqt.equipment_set.count())
+def equipmenttype_index(request):
+	paged_objects = None
+	q = None
+	count = None
+	form = eqforms.TypeSearchForm()
+	if request.GET and request.GET.get('q'):
+		form = eqforms.TypeSearchForm(request.GET)
+		if form.is_valid():
+			data = form.cleaned_data
+			if data['q'] and data['q'].strip() and form.get_list():
+				# This sends a query to search middleware, if such
+				# query exists. It gets a Q object back which is used
+				# in a Django filter to get our queryset.
+				equipmenttype_query = get_query(data['q'], form.get_list())
+				paged_objects = equipment.EquipmentType.objects.filter(
+					equipmenttype_query
+				)
+				q = data['q']
+	else:
+		paged_objects = equipment.EquipmentType.objects.all()
+	count = paged_objects.count()
+	for eqt in paged_objects:
+		eqt.count = eqt.equipment_set.count()
+	# Repackage everything into paged_objects using Paginator.
+	paginator = Paginator(paged_objects, 20)
+	# Make sure the page request is an int -- if not, then deliver page 1.
+	try:
+		page = int(request.GET.get('page','1'))
+	except ValueError:
+		page = 1
+	# If the page request is out of range, deliver the last page of results.
+	try:
+		paged_objects = paginator.page(page)
+	except (EmptyPage, InvalidPage):
+		paged_objects = paginator.page(paginator.num_pages)
+	# Bundle everything into the context and send it out.
 	context = {
-		'count_dict': count_dict,
-		'view_type': 'counts',
+		'paged_objects': paged_objects,
+		'form': form,
+		'view_type': 'types',
+		'q': q,
+		'count': count,
 	}
 	return render_to_response(
 		"equipment/index.html",
@@ -96,10 +126,29 @@ def counts(request):
 
 def detail(request, object_id):
 	# Get the ticket from the URL, bundle it in a context, and send it out.
-	wo = get_object_or_404(equipment.Equipment, id=object_id)
-	context = {'object': wo,}
+	eq = get_object_or_404(equipment.Equipment, id=object_id)
+	context = {'object': eq,}
 	return render_to_response(
 		"equipment/detail.html",
+		context,
+		context_instance=RequestContext(request)
+	)
+
+@login_required
+def equipmenttype_detail(request, slug):
+	# Get our equipment type, put it in a context and send it out.
+	eqt = get_object_or_404(equipment.EquipmentType, slug=slug)
+	count_dict = {}
+	for status in EQUIPMENT_STATUSES:
+		#count_dict[status[0]] = 0
+		count_dict[status[1]] = eqt.equipment_set.filter(
+			status=status[0]).count()
+	context = {
+		'object': eqt,
+		'count_dict': count_dict,
+	}
+	return render_to_response(
+		"equipment/types/detail.html",
 		context,
 		context_instance=RequestContext(request)
 	)
@@ -128,6 +177,29 @@ def edit(request, object_id):
 	)
 
 @login_required
+def equipmenttype_edit(request, slug):	
+	eqt = get_object_or_404(equipment.EquipmentType, slug=slug)
+	if request.method == 'POST':
+		form = eqforms.EquipmentTypeModelForm(request.POST, instance=eqt)
+		if form.is_valid():
+			form.save()
+			return HttpResponseRedirect(reverse(
+				'equipmenttype-detail',
+				args=(eqt.slug,),
+			))
+	else:
+		form = eqforms.EquipmentTypeModelForm(instance=eqt)
+	context = {
+		'object': eqt,
+		'form': form,
+	}
+	return render_to_response(
+		"equipment/types/edit.html",
+		context,
+		context_instance=RequestContext(request)
+	)
+
+@login_required
 def new(request):
 	if request.method == 'POST':
 		form = eqforms.EquipmentModelForm(request.POST)
@@ -144,6 +216,27 @@ def new(request):
 	}
 	return render_to_response(
 		"equipment/edit.html",
+		context,
+		context_instance=RequestContext(request)
+	)
+	
+@login_required
+def equipmenttype_new(request):
+	if request.method == 'POST':
+		form = eqforms.EquipmentTypeModelForm(request.POST)
+		if form.is_valid():
+			eq = form.save()
+			return HttpResponseRedirect(reverse(
+				'equipmenttype-detail',
+				args=(eqt.slug,),
+			))
+	else:
+		form = eqforms.EquipmentTypeModelForm()
+	context = {
+		'form': form,
+	}
+	return render_to_response(
+		"equipment/type/edit.html",
 		context,
 		context_instance=RequestContext(request)
 	)

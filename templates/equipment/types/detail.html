@@ -1,0 +1,50 @@
+{% extends "root.html" %}
+{% load etcetera_tags %}
+
+{% block title %}Equipment{% endblock %}
+
+{% block breadcrumb %}
+   <a href="{% url etcetera-home %}">Home</a> &rsaquo;
+   <a href="{% url equipment-index %}">Equipment</a> &rsaquo;
+   <a href="{% url equipmenttype-index %}">Equipment Types</a> &rsaquo;
+   {{ object.name }}
+{% endblock %}
+
+{% block content %}
+<div id="list">
+   <div id="headers">
+      <h1>
+         {{ object.name }}
+      </h1>
+   </div>
+   
+   <div id="actions">
+      <h2>Actions</h2>
+      {% if user.is_authenticated %}
+         <ul>
+            <li>
+               <a href="{% url equipmenttype-edit object.slug %}">edit</a>
+            </li>
+         </ul>
+      {% else %}
+         <p>You must be logged in to perform actions on this equipment type.</p>
+      {% endif %}
+   </div>
+   
+   <table class="list">
+      <tr>
+         <td>Status</td>
+         <td>Count</td>
+      </tr>
+      {% for status,count in count_dict.items %}
+         {% if count != 0 %}
+         <tr>
+            <td>{{ status|capfirst }}</td>
+            <td>{{ count }}</td>
+         </tr>
+         {% endif %}
+      {% endfor %}
+   </table>
+   
+</div>
+{% endblock %}

@@ -16,6 +16,7 @@ class EquipmentModelForm(forms.ModelForm):
 class EquipmentTypeModelForm(forms.ModelForm):
 	class Meta:
 		model = equipment.EquipmentType
+		exclude = ('slug',)
 
 class MakeModelForm(forms.ModelForm):
 	class Meta:
@@ -62,6 +63,20 @@ class SearchForm(forms.Form):
 			out_list.append('smsu_id')
 		if data['comments']:
 			out_list.append('comments')
+		return out_list
+
+class TypeSearchForm(forms.Form):
+	q = forms.CharField(max_length=50)
+
+	def as_url_args(self):
+		return urllib.urlencode(self.cleaned_data)
+
+	def get_list(self):
+		# The search list is automatically everything
+		out_list = [
+			'name',
+			'slug',
+		]
 		return out_list
 
 class DupeForm(forms.Form):

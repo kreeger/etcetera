@@ -7,14 +7,17 @@
    <a href="{% url etcetera-home %}">Home</a> &rsaquo;
    {% if not view_type %}
       Equipment
-   {% endif %}
-   {% if view_type == 'weekly' %}
-      <a href="{% url equipment-index %}">Equipment</a>
-      &rsaquo; Weekly Checklist
-   {% endif %}
-   {% if view_type == 'counts' %}
-      <a href="{% url equipment-index %}">Equipment</a>
-      &rsaquo; Counts
+   {% else %}
+      <a href="{% url equipment-index %}">Equipment</a> &rsaquo;
+      {% if view_type == 'weekly' %}
+         Weekly Checklist
+      {% endif %}
+      {% if view_type == 'types' %}
+         Equipment Types
+      {% endif %}
+      {% if view_type == 'makes' %}
+         Makes
+      {% endif %}
    {% endif %}
 {% endblock %}
 
@@ -26,8 +29,11 @@
       <li{% if view_type == 'weekly' %} class="active"{% endif %}>
          <a href="{% url equipment-index 'weekly' %}">Checklist</a>
       </li>
-      <li{% if view_type == 'counts' %} class="active"{% endif %}>
-         <a href="{% url equipment-counts %}">Counts</a>
+      <li{% if view_type == 'types' %} class="active"{% endif %}>
+         <a href="{% url equipmenttype-index %}">Types</a>
+      </li>
+      <li{% if view_type == 'makes' %} class="active"{% endif %}>
+         <a href="#">Makes</a>
       </li>
    </ul>
 {% endblock %}
@@ -45,7 +51,7 @@
       {% if view_type == 'weekly' %}
          Weekly Equipment Checklist
       {% endif %}
-      {% if view_type == 'counts' %}
+      {% if view_type == 'types' %}
          Equipment Counts
       {% endif %}
       
@@ -59,21 +65,23 @@
    <div id="searchform">
       <form action="">
          {{ form.q }}
-         Search in:
-         {{ form.equipment_type }} {{ form.equipment_type.label }}
-         {{ form.barcode }} {{ form.barcode.label }}
-         {{ form.location }} {{ form.location.label }}
-         {{ form.serial }} {{ form.serial.label }}
-         {{ form.smsu_id }} {{ form.smsu_id.label }}
-         {{ form.comments }} {{ form.comments.label }}
+         {% if view_type == None %}
+            Search in:
+            {{ form.equipment_type }} {{ form.equipment_type.label }}
+            {{ form.barcode }} {{ form.barcode.label }}
+            {{ form.location }} {{ form.location.label }}
+            {{ form.serial }} {{ form.serial.label }}
+            {{ form.smsu_id }} {{ form.smsu_id.label }}
+            {{ form.comments }} {{ form.comments.label }}
+         {% endif %}
          <input type="submit" name="submit" value="Search" id="submit" />
       </form>
       {% if q %} {% endif %}
    </div>
    {% endif %}
-   {% if paged_objects %}
-      <table id="list">
-         <tr>
+   <table id="list">
+      <tr>
+         {% if view_type == 'weekly' or view_type == None %}
             {% if view_type == 'weekly' %}
                <td>&radic;</td>
             {% endif %}
@@ -91,9 +99,19 @@
                <td>Comp Unit</td>
                <td>Comments</td>
             {% endif %}
-         </tr>
-         {% for object in paged_objects.object_list %}
-            <tr>
+         {% endif %}
+         {% if view_type == 'types' %}
+            <td>Equipment Type</td>
+            <td>Total</td>
+         {% endif %}
+         {% if view_type == 'makes' %}
+            <td>Make</td>
+            <td>Total</td>
+         {% endif %}
+      </tr>
+      {% for object in paged_objects.object_list %}
+         <tr>
+            {% if view_type == 'weekly' or view_type == None %}
                {% if view_type == 'weekly' %}
                   <td>
                      <a href="{% url equipment-detail object.id %}">
@@ -155,38 +173,34 @@
                      </a>
                   </td>
                {% endif %}
-            </tr>
-         {% endfor %}
-      </table>
-   {% else %}
-      {% if count_dict %}
-         <table class="list">
-            <tr>
-               <td>Equipment Type</td>
-               <td>Available for Checkout</td>
-               <td>Checked Out</td>
-               <td>In Repair</td>
-               <td>Total</td>
-            </tr>
-            {% for eqt,counts in count_dict.items %}
-               <tr>
-                  <td>
-                     <a href="{% url equipment-type eqt.slug %}">
-                        {{ eqt.name }}
-                     </a>
-                  </td>
-                  {% for count in counts %}
-                     <td>
-                        <a href="{% url equipment-type eqt.slug %}">
-                           {{ count }}
-                        </a>
-                     </td>
-                  {% endfor %}
-               </tr>
-            {% endfor %}
-         </table>
-      {% endif %}
-   {% endif %}
+            {% endif %}
+            {% if view_type == 'types' %}
+               <td>
+                  <a href="{% url equipmenttype-detail object.slug %}">
+                     {{ object.name }}
+                  </a>
+               </td>
+               <td>
+                  <a href="{% url equipmenttype-detail object.slug %}">
+                     {{ object.count }}
+                  </a>
+               </td>
+            {% endif %}
+            {% if view_type == 'makes' %}
+               <td>
+                  <a href="#">
+                     {{ object.name }}
+                  </a>
+               </td>
+               <td>
+                  <a href="#">
+                     {{ object.count }}
+                  </a>
+               </td>
+            {% endif %}
+         </tr>
+      {% endfor %}
+   </table>
    
    {% if paged_objects %}
       {% if form.as_url_args %}
