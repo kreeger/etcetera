@@ -12,7 +12,6 @@
 
 {% block breadcrumb %}
    <a href="{% url etcetera-home %}">Home</a> &rsaquo;
-   <a href="{% url equipment-index %}">Equipment</a> &rsaquo;
    <a href="{% url equipmenttype-index %}">Equipment Types</a> &rsaquo;
    {% if form.initial %}
       <a href="{% url equipmenttype-detail object.slug %}">

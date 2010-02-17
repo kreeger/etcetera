@@ -1,11 +1,12 @@
 {% extends "root.html" %}
 {% load etcetera_tags %}
 
-{% block title %}Equipment{% endblock %}
+{% block title %}
+   Equipment Types &raquo; {{ object.name }}
+{% endblock %}
 
 {% block breadcrumb %}
    <a href="{% url etcetera-home %}">Home</a> &rsaquo;
-   <a href="{% url equipment-index %}">Equipment</a> &rsaquo;
    <a href="{% url equipmenttype-index %}">Equipment Types</a> &rsaquo;
    {{ object.name }}
 {% endblock %}

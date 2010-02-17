@@ -1,23 +1,34 @@
 {% extends "root.html" %}
 {% load etcetera_tags %}
 
-{% block title %}Equipment{% endblock %}
+{% block title %}
+   {% if not view_type %}
+      Equipment
+   {% endif %}
+   {% if view_type == 'weekly' %}
+      Weekly Equipment Checklist
+   {% endif %}
+   {% if view_type == 'types' %}
+      Equipment Types
+   {% endif %}
+   {% if view_type == 'makes' %}
+      Equipment Makes
+   {% endif %}
+{% endblock %}
 
 {% block breadcrumb %}
    <a href="{% url etcetera-home %}">Home</a> &rsaquo;
    {% if not view_type %}
       Equipment
-   {% else %}
-      <a href="{% url equipment-index %}">Equipment</a> &rsaquo;
-      {% if view_type == 'weekly' %}
-         Weekly Checklist
-      {% endif %}
-      {% if view_type == 'types' %}
-         Equipment Types
-      {% endif %}
-      {% if view_type == 'makes' %}
-         Makes
-      {% endif %}
+   {% endif %}
+   {% if view_type == 'weekly' %}
+      Weekly Equipment Checklist
+   {% endif %}
+   {% if view_type == 'types' %}
+      Equipment Types
+   {% endif %}
+   {% if view_type == 'makes' %}
+      Equipment Makes
    {% endif %}
 {% endblock %}
 
@@ -52,7 +63,7 @@
          Weekly Equipment Checklist
       {% endif %}
       {% if view_type == 'types' %}
-         Equipment Counts
+         Equipment Types
       {% endif %}
       
       {% if q %}
