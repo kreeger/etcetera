@@ -18,19 +18,24 @@ class EquipmentType(models.Model):
 	def __unicode__(self):
 		return u"%s" % self.name
 	
-	def save(self, user=None, *args, **kwargs):
+	def save(self, *args, **kwargs):
 		self.slug = slugify(self.name)
 		super(EquipmentType, self).save(*args, **kwargs)
 
 class Make(models.Model):
 	name = models.CharField(max_length=100)
 	website = models.URLField(blank=True, verify_exists=False)
+	slug = models.SlugField(unique=True)
 	
 	class Meta:
 		ordering = ('name',)
 	
 	def __unicode__(self):
 		return u"%s" % self.name
+		
+	def save(self, *args, **kwargs):
+		self.slug = slugify(self.name)
+		super(Make, self).save(*args, **kwargs)
 
 class Equipment(models.Model):
 	"""One item of equipment"""

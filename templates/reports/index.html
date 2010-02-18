@@ -41,22 +41,22 @@
       {% for object in paged_objects.object_list %}
          <tr>
             <td>
-               <a href="{% url reports-detail object.slug %}">
+               <a href="{% url reports-detail object.slug 'equipmenttypes' %}">
                   {{ object.name }}
                </a>
             </td>
             <td>
-               <a href="{% url reports-detail object.slug %}">
+               <a href="{% url reports-detail object.slug 'equipmenttypes' %}">
                   {{ object.start_date|date }}
                </a>
             </td>
             <td>
-               <a href="{% url reports-detail object.slug %}">
+               <a href="{% url reports-detail object.slug 'equipmenttypes' %}">
                   {{ object.end_date|date }}
                </a>
             </td>
             <td>
-               <a href="{% url reports-detail object.slug %}">
+               <a href="{% url reports-detail object.slug 'equipmenttypes' %}">
                   {{ object.created_by.get_full_name }}
                </a>
             </td>

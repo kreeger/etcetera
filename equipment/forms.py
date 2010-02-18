@@ -21,6 +21,7 @@ class EquipmentTypeModelForm(forms.ModelForm):
 class MakeModelForm(forms.ModelForm):
 	class Meta:
 		model = equipment.Make
+		exclude = ('slug',)
 
 class SearchForm(forms.Form):
 	q = forms.CharField(max_length=50)

@@ -12,14 +12,6 @@ class SearchForm(forms.Form):
 		# The search list is automatically everything
 		out_list = [
 			'name',
-			'organizationalunits__name',
-			'organizationalunits__abbreviation',
-			'buildings__name',
-			'buildings__abbreviation',
-			'equipmenttypes__name',
-			'created_by__username',
-			'created_by__first_name',
-			'created_by__last_name',
 		]
 		return out_list
 	

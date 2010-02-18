@@ -13,6 +13,13 @@ from etcetera.reports import forms as rpforms
 from etcetera.checkout import models as checkout
 from etcetera.extras.search import get_query
 
+def incr_item(dict, key):
+	try:
+		item = dict[key]
+	except KeyError:
+		item = 0
+	dict[key] = item + 1
+
 @login_required
 def index(request):
 	paged_objects = None
@@ -59,7 +66,9 @@ def index(request):
 	)
 
 @login_required
-def detail(request, slug):
+def detail(request, slug, view_type='equipmenttypes'):
+	if view_type not in ['equipmenttypes','departments','buildings',]:
+		raise Http404
 	# Get our report from the Database!
 	rp = get_object_or_404(reports.Report, slug=slug)
 	# Get our checkouts applicable from the database
@@ -67,25 +76,58 @@ def detail(request, slug):
 	# Set up our dictionaries of doom
 	eqtype_d = {}
 	ou_d = {}
+	ou_eq_d = {}
+	bldg_d = {}
+	bldg_eq_d = {}
 	total_d = {}
 	# If various things are specified in the report, those are added to the
 	# queryset filters one at a time
 	if rp.start_date: cos = cos.filter(completion_date__gte=rp.start_date)
 	if rp.end_date: cos = cos.filter(completion_date__lte=rp.end_date)
 	# If there are equipmenttypes in the report, initiate that dictionary
+	eqt_l = []
+	ou_l = []
+	bldg_l = []
 	if rp.equipmenttypes.count():
 		for eqt in rp.equipmenttypes.all():
-			eqtype_d[eqt] = 0
+			eqt_l.append(eqt)
+	if rp.organizationalunits.count():
+		for ou in rp.organizationalunits.all():
+			ou_l.append(ou)
+	if rp.buildings.count():
+		for bldg in rp.buildings.all():
+			bldg_l.append(bldg)
 	# The master for loop(s)!
 	for co in cos:
 		for eq in co.equipment_list.all():
-			if eq.equipment_type in eqtype_d:
-				eqtype_d[eq.equipment_type] += 1
+			if eq.equipment_type in eqt_l:
+				#eqtype_d[eq.equipment_type] += 1
+				incr_item(eqtype_d, eq.equipment_type)
+			#if co.department in ou_l:
+			#	#ou_eq_d[co.department][eq.equipment_type] += 1
+			#	incr_item(ou_eq_d[co.department], eq.equipment_type)
+			#if co.building in bldg_l:
+			#	#bldg_eq_d[co.building][eq.equipment_type] += 1
+			#	incr_item(bldg_eq_d[co.building], eq.equipment_type)
+		if co.building in bldg_l:
+			#bldg_d[co.building] += 1
+			incr_item(bldg_d, co.building)
+		if co.department in ou_l:
+			#ou_d[co.department] += 1
+			incr_item(ou_d, co.department)
 	# Sort the dictionary
-	eqtype_d = sorted(eqtype_d.iteritems(), key=itemgetter(0))
+	dataset = {}
+	dataset['equipment_type_counts'] = eqtype_d
+	dataset['organizational_unit_counts'] = ou_d
+	dataset['organizational_unit_equipment_counts'] = ou_eq_d
+	dataset['building_counts'] = bldg_d
+	dataset['building_equipment_counts'] = bldg_eq_d
+	#for a_dict in dataset:
+	#	a_dict = sorted(a_dict.iteritems(), key=itemgetter(0))
 	context = {
 		'object': rp,
-		'equipment_types': eqtype_d,
+		'dataset': dataset,
+		'view_type': view_type,
 	}
 	return render_to_response(
 		"reports/detail.html",
@@ -94,7 +136,7 @@ def detail(request, slug):
 	)
 
 @login_required
-def edit(request, slug):	
+def edit(request, slug):
 	rp = get_object_or_404(reports.Report, slug=slug)
 	if request.method == 'POST':
 		form = rpforms.ReportModelForm(request.POST, instance=rp)
@@ -102,7 +144,7 @@ def edit(request, slug):
 			form.save()
 			return HttpResponseRedirect(reverse(
 				'reports-detail',
-				args=(rp.slug,),
+				args=(rp.slug, 'equipmenttypes',),
 			))
 	else:
 		form = rpforms.ReportModelForm(instance=rp)
@@ -127,7 +169,7 @@ def new(request):
 			rp.save()
 			return HttpResponseRedirect(reverse(
 				'reports-detail',
-				args=(rp.slug,),
+				args=(rp.slug, 'equipmenttypes',),
 			))
 	else:
 		form = rpforms.ReportModelForm()

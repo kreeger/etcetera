@@ -11,6 +11,20 @@
    {{ object.name }}
 {% endblock %}
 
+{% block subnav %}
+   <ul>
+      <li{% if view_type == 'equipmenttypes' %} class="active"{% endif %}>
+         <a href="{% url reports-detail object.slug 'equipmenttypes' %}">Equipment</a>
+      </li>
+      <li{% if view_type == 'departments' %} class="active"{% endif %}>
+         <a href="{% url reports-detail object.slug 'departments' %}">Departments</a>
+      </li>
+      <li{% if view_type == 'buildings' %} class="active"{% endif %}>
+         <a href="{% url reports-detail object.slug 'buildings' %}">Buildings</a>
+      </li>
+   </ul>
+{% endblock %}
+
 {% block content %}
 <div id="detail">
    <form action="" method="POST">
@@ -52,7 +66,7 @@
                <td>Equipment type</td>
                <td>Count</td>
             </tr>
-            {% for k,v in equipment_types %}
+            {% for k,v in dataset.equipment_type_counts.items %}
             {% if v != 0 %}
                <tr>
                   <td>{{ k }}</td>
@@ -69,9 +83,6 @@
          
          <h2>Buildings</h2>
          {{ form.buildings }}
-         
-         <h2>Equipment types</h2>
-         {{ form.equipmenttypes }}
          
       </div>
          
