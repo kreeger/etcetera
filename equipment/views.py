@@ -264,7 +264,8 @@ def dupe(request, object_id):
 			new_eq.save()
 			i = i + 1
 		return HttpResponseRedirect(reverse(
-			'equipment-index',
+			'equipment-detail',
+			args=(new_eq.id,),
 		))
 	else:
 		form = eqforms.DupeForm()
