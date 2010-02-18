@@ -15,7 +15,7 @@ h2 { margin: 10px 0; border-bottom: 1px solid #888; color: #444; font-weight: 20
 .disabled { color: #BBB; font-weight: normal; }
 .drop-pop { width: 250px; height: 82px; text-align: center; font-weight: bold; float: left; position: relative; right: 5px; z-index: 0; }
 .errorlist { color: #f00; font-size: .9em; background-color: #FFBBBB; }
-.canceled { background-color: #ffe6e6; }
+.canceled { text-decoration: line-through; }
 .head { color: #808080; text-transform: lowercase; text-align: right; font-weight: 200; font-style: normal; }
 .note { font-weight: normal; font-size: 11px; color: #797979; }
 .padded { padding: 5px; }
