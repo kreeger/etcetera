@@ -28,3 +28,4 @@ class PasswordForm(forms.Form):
 class UserProfileForm(forms.ModelForm):
 	class Meta:
 		model = extras.UserProfile
+		exclude = ('user',)

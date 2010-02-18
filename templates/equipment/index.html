@@ -54,7 +54,15 @@
    <h1>
       <span class="right">
          total: {{ count }} &bull;
-         <a href="{% url equipment-new %}">add a new item</a>
+         {% if not view_type %}
+            <a href="{% url equipment-new %}">add a new equipment item</a>
+         {% endif %}
+         {% if view_type == 'types' %}
+            <a href='{% url equipmenttype-new %}'>add a new equipment type</a>
+         {% endif %}
+         {% if view_type == 'makes' %}
+            <a href="#">add a new make</a>
+         {% endif %}
       </span>
       {% if not view_type %}
          Equipment Inventory

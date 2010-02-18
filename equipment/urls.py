@@ -15,6 +15,10 @@ urlpatterns = patterns('',
 		name="equipment-history"
 	),
 	url(r'^new/$', new, name="equipment-new"),
+	url(r'^types/new/$',
+		equipmenttype_new,
+		name="equipmenttype-new"
+	),
 	url(r'^types/(?P<slug>.+)/edit/$',
 		equipmenttype_edit,
 		name="equipmenttype-edit"

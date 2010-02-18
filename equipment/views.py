@@ -225,7 +225,7 @@ def equipmenttype_new(request):
 	if request.method == 'POST':
 		form = eqforms.EquipmentTypeModelForm(request.POST)
 		if form.is_valid():
-			eq = form.save()
+			eqt = form.save()
 			return HttpResponseRedirect(reverse(
 				'equipmenttype-detail',
 				args=(eqt.slug,),
@@ -236,7 +236,7 @@ def equipmenttype_new(request):
 		'form': form,
 	}
 	return render_to_response(
-		"equipment/type/edit.html",
+		"equipment/types/edit.html",
 		context,
 		context_instance=RequestContext(request)
 	)

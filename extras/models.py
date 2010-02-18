@@ -21,7 +21,7 @@ class Post(models.Model):
 
 class UserProfile(models.Model):
 	"""A user profile."""
-	user = models.ForeignKey(auth.User, unique=True, blank=True)
+	user = models.ForeignKey(auth.User, unique=True, null=True)
 	title = models.CharField('Title', blank=True, max_length=100)
 	phone = lfus.PhoneNumberField('Phone', blank=True)
 	image = models.ImageField('Profile image',upload_to="photos", blank=True, null=True)
