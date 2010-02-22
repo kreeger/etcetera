@@ -30,14 +30,14 @@
       <li{% if view_type == 'unconfirmed' %} class="active"{% endif %}>
          <a href="{% url checkout-index 'unconfirmed' %}">Unconfirmed</a>
       </li>
-      <li{% if view_type == 'current' %} class="active"{% endif %}>
-         <a href="{% url checkout-index 'current' %}">Current</a>
-      </li>
       <li{% if view_type == 'pickups' %} class="active"{% endif %}>
          <a href="{% url checkout-index 'pickups' %}">Req. Pickups</a>
       </li>
       <li{% if view_type == 'deliveries' %} class="active"{% endif %}>
          <a href="{% url checkout-index 'deliveries' %}">Deliveries</a>
+      </li>
+      <li{% if view_type == 'current' %} class="active"{% endif %}>
+         <a href="{% url checkout-index 'current' %}">Current</a>
       </li>
       <li{% if view_type == 'returns' %} class="active"{% endif %}>
          <a href="{% url checkout-index 'returns' %}">Returns</a>
