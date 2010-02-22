@@ -67,68 +67,37 @@ def index(request):
 
 @login_required
 def detail(request, slug, view_type='equipmenttypes'):
-	if view_type not in ['equipmenttypes','departments','buildings',]:
+	if view_type not in ['equipmenttypes','departments',]:
 		raise Http404
 	# Get our report from the Database!
-	rp = get_object_or_404(reports.Report, slug=slug)
+	rp = get_object_or_404(reports.Report.objects.select_related(), slug=slug)
 	# Get our checkouts applicable from the database
-	cos = checkout.Checkout.objects.filter(canceled=False)
-	# Set up our dictionaries of doom
-	eqtype_d = {}
+	cos = checkout.Checkout.objects.select_related().filter(
+		canceled=False).filter(
+		completion_date__range=(rp.start_date, rp.end_date)
+	)
+	if view_type == 'departments':
+		ou_l = list(rp.organizationalunits.all())
+	if view_type == 'equipmenttypes':
+		eqt_l = list(rp.equipmenttypes.all())
 	ou_d = {}
-	ou_eq_d = {}
-	bldg_d = {}
-	bldg_eq_d = {}
-	total_d = {}
-	# If various things are specified in the report, those are added to the
-	# queryset filters one at a time
-	if rp.start_date: cos = cos.filter(completion_date__gte=rp.start_date)
-	if rp.end_date: cos = cos.filter(completion_date__lte=rp.end_date)
-	# If there are equipmenttypes in the report, initiate that dictionary
-	eqt_l = []
-	ou_l = []
-	bldg_l = []
-	if rp.equipmenttypes.count():
-		for eqt in rp.equipmenttypes.all():
-			eqt_l.append(eqt)
-	if rp.organizationalunits.count():
-		for ou in rp.organizationalunits.all():
-			ou_l.append(ou)
-	if rp.buildings.count():
-		for bldg in rp.buildings.all():
-			bldg_l.append(bldg)
-	# The master for loop(s)!
+	eqt_d = {}
 	for co in cos:
-		for eq in co.equipment_list.all():
-			if eq.equipment_type in eqt_l:
-				#eqtype_d[eq.equipment_type] += 1
-				incr_item(eqtype_d, eq.equipment_type)
-			#if co.department in ou_l:
-			#	#ou_eq_d[co.department][eq.equipment_type] += 1
-			#	incr_item(ou_eq_d[co.department], eq.equipment_type)
-			#if co.building in bldg_l:
-			#	#bldg_eq_d[co.building][eq.equipment_type] += 1
-			#	incr_item(bldg_eq_d[co.building], eq.equipment_type)
-		if co.building in bldg_l:
-			#bldg_d[co.building] += 1
-			incr_item(bldg_d, co.building)
-		if co.department in ou_l:
-			#ou_d[co.department] += 1
-			incr_item(ou_d, co.department)
-	# Sort the dictionary
-	dataset = {}
-	dataset['equipment_type_counts'] = eqtype_d
-	dataset['organizational_unit_counts'] = ou_d
-	dataset['organizational_unit_equipment_counts'] = ou_eq_d
-	dataset['building_counts'] = bldg_d
-	dataset['building_equipment_counts'] = bldg_eq_d
-	#for a_dict in dataset:
-	#	a_dict = sorted(a_dict.iteritems(), key=itemgetter(0))
+		if view_type == 'departments':
+			if co.department in ou_l:
+				incr_item(ou_d, co.department)
+		if view_type == 'equipmenttypes':
+			for eq in co.equipment_list.all().select_related():
+				if eq.equipment_type in eqt_l:
+					incr_item(eqt_d, eq.equipment_type)
 	context = {
 		'object': rp,
-		'dataset': dataset,
 		'view_type': view_type,
 	}
+	if view_type == 'departments':
+		context['ou_d'] = sorted(ou_d.iteritems(), key=itemgetter(0))
+	if view_type == 'equipmenttypes':
+		context['eqt_d'] = sorted(eqt_d.iteritems(), key=itemgetter(0))
 	return render_to_response(
 		"reports/detail.html",
 		context,

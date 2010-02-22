@@ -25,8 +25,8 @@ def error_mail(request):
 def index(request):
 	# This is some wonky fix for Python 2.5. Doesn't seem to affect Python 2.6,
 	# so I'll be removing this when our server upgrades to Py2.6.
-	if not request.META['REQUEST_URI'].endswith('/'):
-		return HttpResponseRedirect("etcetera%s" % request.path)
+	#if not request.META['REQUEST_URI'].endswith('/'):
+	#	return HttpResponseRedirect("etcetera%s" % request.path)
 	# Get the 5 most recent posts.
 	posts = extras.Post.objects.all()[:5]
 	context = {

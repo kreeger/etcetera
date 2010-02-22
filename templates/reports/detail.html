@@ -19,73 +19,75 @@
       <li{% if view_type == 'departments' %} class="active"{% endif %}>
          <a href="{% url reports-detail object.slug 'departments' %}">Departments</a>
       </li>
-      <li{% if view_type == 'buildings' %} class="active"{% endif %}>
-         <a href="{% url reports-detail object.slug 'buildings' %}">Buildings</a>
-      </li>
    </ul>
 {% endblock %}
 
 {% block content %}
 <div id="detail">
-   <form action="" method="POST">
-      <div id="headers">
-         <h1>
-            {% if object %}
-               {{ object.name }}
-               {% if object.start_date or object.end_date %}
-                  <span class="head">
-                     {% if object.start_date %}
-                        from {{ object.start_date|date }}
-                     {% endif %}
-                     {% if object.end_date %}
-                        to {{ object.end_date|date }}
-                     {% endif %}
-                  </span>
-               {% endif %}
-            {% else %}
-               Creating a new report
+   <div id="headers">
+      <h1>
+         {% if object %}
+            {{ object.name }}
+            {% if object.start_date or object.end_date %}
+               <span class="head">
+                  {% if object.start_date %}
+                     from {{ object.start_date|date }}
+                  {% endif %}
+                  {% if object.end_date %}
+                     to {{ object.end_date|date }}
+                  {% endif %}
+               </span>
             {% endif %}
-         </h1>
-      </div>
-   
-      <div id="actions">
-         <h2>Actions</h2>
-         {% if user.is_authenticated %}
-            <ul>
-               <li><a href="{% url reports-edit object.slug %}">edit</a></li>
-            </ul>
          {% else %}
-            <p>You must be logged in to perform actions on this report.</p>
+            Creating a new report
          {% endif %}
-      </div>
+      </h1>
+   </div>
+
+   <div id="actions">
+      <h2>Actions</h2>
+      {% if user.is_authenticated %}
+         <ul>
+            <li><a href="{% url reports-edit object.slug %}">edit</a></li>
+         </ul>
+      {% else %}
+         <p>You must be logged in to perform actions on this report.</p>
+      {% endif %}
+   </div>
    
-      <div id="brief-information">
-         <h2>Overall equipment usage</h2>
-         <table class="list">
+   {% if view_type == 'equipmenttypes' %}
+   <div id="overall-equipment-usage">
+      <h2>Overall equipment usage</h2>
+      <table class="list">
+         <tr>
+            <td>Equipment type</td>
+            <td>Count</td>
+         </tr>
+         {% for k,v in eqt_d %}
             <tr>
-               <td>Equipment type</td>
-               <td>Count</td>
+               <td>{{ k.name }}</td>
+               <td>{{ v }}</td>
             </tr>
-            {% for k,v in dataset.equipment_type_counts.items %}
-            {% if v != 0 %}
-               <tr>
-                  <td>{{ k }}</td>
-                  <td>{{ v }}</td>
-               </tr>
-            {% endif %}
-            {% endfor %}
-         </table>
-      </div>
-      
-      <div id="related-fields">
-         <h2>Departments</h2>
-         {{ form.organizationalunits }}
-         
-         <h2>Buildings</h2>
-         {{ form.buildings }}
-         
-      </div>
-         
-   </form>
+         {% endfor %}
+      </table>
+   </div>
+   {% endif %}
+   
+   {% if view_type == 'departments' %}
+   <div id="departments">
+      <table class="list">
+         <tr>
+            <td>Department</td>
+            <td>Count</td>
+         </tr>
+         {% for k,v in ou_d %}
+            <tr>
+               <td>{{ k.name }}</td>
+               <td>{{ v }}</td>
+            </tr>
+         {% endfor %}
+      </table>
+   </div>
+   {% endif %}
 </div>
 {% endblock %}

@@ -106,8 +106,12 @@ class Checkout(models.Model):
 	)
 	other_equipment = models.TextField(blank=True)
 	confirmation_sent = models.BooleanField()
-	canceled = models.BooleanField()
-	completion_date = models.DateTimeField(blank=True, null=True)
+	canceled = models.BooleanField(db_index=True)
+	completion_date = models.DateTimeField(
+		blank=True,
+		null=True, 
+		db_index=True,
+	)
 	comments = models.TextField(blank=True)
 	
 	objects = CheckoutManager()

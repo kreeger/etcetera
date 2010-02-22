@@ -24,11 +24,6 @@ class Report(models.Model):
 		related_name='reports',
 		null=True, blank=True,
 	)
-	buildings = models.ManyToManyField(
-		structure.Building,
-		related_name='reports',
-		null=True, blank=True,
-	)
 	equipmenttypes = models.ManyToManyField(
 		equipment.EquipmentType,
 		related_name='reports',

@@ -31,3 +31,12 @@ Contact Information
 | benjaminkreeger [at] missouristate [dot] edu
 
 All inquiries can be directed to me at my university email address.
+
+Version History
+---------------
+
+Version 1.0
+===========
+
+* **Changed**: equipment duplication form submission takes you to the last equipment created.
+
