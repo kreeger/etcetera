@@ -7,6 +7,7 @@ from django.http import HttpResponseRedirect, Http404
 from django.core.urlresolvers import reverse
 from django.core.paginator import Paginator, InvalidPage, EmptyPage
 from django.template import RequestContext
+from django.db.models import Count
 
 from etcetera.reports import models as reports
 from etcetera.reports import forms as rpforms
@@ -69,6 +70,7 @@ def index(request):
 def detail(request, slug, view_type='equipmenttypes'):
 	if view_type not in ['equipmenttypes','departments',]:
 		raise Http404
+	annotated_set = None
 	# Get our report from the Database!
 	rp = get_object_or_404(reports.Report.objects.select_related(), slug=slug)
 	# Get our checkouts applicable from the database
@@ -77,27 +79,16 @@ def detail(request, slug, view_type='equipmenttypes'):
 		completion_date__range=(rp.start_date, rp.end_date)
 	)
 	if view_type == 'departments':
-		ou_l = list(rp.organizationalunits.all())
+		annotated_set = rp.organizationalunits.annotate(
+			checkout_count=Count('checkouts'))
 	if view_type == 'equipmenttypes':
-		eqt_l = list(rp.equipmenttypes.all())
-	ou_d = {}
-	eqt_d = {}
-	for co in cos:
-		if view_type == 'departments':
-			if co.department in ou_l:
-				incr_item(ou_d, co.department)
-		if view_type == 'equipmenttypes':
-			for eq in co.equipment_list.all().select_related():
-				if eq.equipment_type in eqt_l:
-					incr_item(eqt_d, eq.equipment_type)
+		annotated_set = rp.equipmenttypes.annotate(
+			checkout_count=Count('equipment__checkouts'))
 	context = {
 		'object': rp,
 		'view_type': view_type,
+		'annotated_set': annotated_set,
 	}
-	if view_type == 'departments':
-		context['ou_d'] = sorted(ou_d.iteritems(), key=itemgetter(0))
-	if view_type == 'equipmenttypes':
-		context['eqt_d'] = sorted(eqt_d.iteritems(), key=itemgetter(0))
 	return render_to_response(
 		"reports/detail.html",
 		context,

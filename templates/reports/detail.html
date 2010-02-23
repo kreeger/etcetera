@@ -54,40 +54,23 @@
          <p>You must be logged in to perform actions on this report.</p>
       {% endif %}
    </div>
-   
-   {% if view_type == 'equipmenttypes' %}
-   <div id="overall-equipment-usage">
-      <h2>Overall equipment usage</h2>
+
+   <div id="checkout-counts">
       <table class="list">
          <tr>
-            <td>Equipment type</td>
+            <td>
+               {% if view_type == 'departments' %}Department{% endif %}
+               {% if view_type == 'equipmenttypes' %}Equipment Type{% endif %}
+            </td>
             <td>Count</td>
          </tr>
-         {% for k,v in eqt_d %}
+         {% for object in annotated_set %}
             <tr>
-               <td>{{ k.name }}</td>
-               <td>{{ v }}</td>
+               <td>{{ object.name }}</td>
+               <td>{{ object.checkout_count }}</td>
             </tr>
          {% endfor %}
       </table>
    </div>
-   {% endif %}
-   
-   {% if view_type == 'departments' %}
-   <div id="departments">
-      <table class="list">
-         <tr>
-            <td>Department</td>
-            <td>Count</td>
-         </tr>
-         {% for k,v in ou_d %}
-            <tr>
-               <td>{{ k.name }}</td>
-               <td>{{ v }}</td>
-            </tr>
-         {% endfor %}
-      </table>
-   </div>
-   {% endif %}
 </div>
 {% endblock %}

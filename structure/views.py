@@ -84,6 +84,7 @@ def index(request, structure_kind='buildings'):
 	)
 
 def detail(request, abbreviation=None, object_id=None, room=None):
+	# In the future: redo this with annotations.
 	view_type = None
 	stru_obj = None
 	checkout_count = 0
@@ -106,9 +107,6 @@ def detail(request, abbreviation=None, object_id=None, room=None):
 			pk=object_id
 		)
 		view_type = 'departments'
-		if stru_obj.children.all():
-			checkout_count = count_checkouts(stru_obj)
-			workorder_count = count_workorders(stru_obj)
 	stru_obj.checkouts_open = stru_obj.checkouts.filter(completion_date=None)
 	stru_obj.workorders_open = stru_obj.workorders.filter(completion_date=None)
 	if room:

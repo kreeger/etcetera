@@ -14,7 +14,7 @@
    <a href="{% url etcetera-home %}">Home</a> &rsaquo;
    <a href="{% url reports-index %}">Reports</a> &rsaquo;
    {% if object %}
-      <a href="{% url reports-detail object.slug %}">
+      <a href="{% url reports-detail object.slug 'equipmenttypes' %}">
          {{ object.name }}</a> &rsaquo; Edit
       </a>
    {% else %}
@@ -72,9 +72,6 @@
       <div id="related-fields">
          <h2>Departments</h2>
          {{ form.organizationalunits }}
-         
-         <h2>Buildings</h2>
-         {{ form.buildings }}
          
          <h2>Equipment types</h2>
          {{ form.equipmenttypes }}

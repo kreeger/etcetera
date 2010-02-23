@@ -8,6 +8,7 @@
       Departments
    {% endif %}
    &raquo; {{ object.name }}
+   {% if room %}&raquo; {{ room }}{% endif %}
 {% endblock %}
 
 {% block fullscript %}
