@@ -4,6 +4,7 @@ from django.db import models
 from django.contrib.localflavor.us import models as lfus
 from django.contrib.auth import models as auth
 
+from etcetera.service.managers import WorkOrderManager
 from etcetera.structure import models as structure
 from etcetera.equipment import models as equipment
 from etcetera.extras import constants
@@ -48,7 +49,12 @@ class WorkOrder(models.Model):
 	description = models.TextField()
 	actions = models.TextField('Actions taken', blank=True)
 	labor = models.FloatField('Labor hours', null=True, blank=True)
-	technician = models.ForeignKey(auth.User, blank=True, null=True)
+	technician = models.ForeignKey(
+		auth.User,
+		blank=True,
+		null=True,
+		related_name='workorders',
+	)
 	tech_legacy = models.CharField(blank=True, max_length=10)
 	funding_source = models.CharField(
 		blank=True,
@@ -63,6 +69,8 @@ class WorkOrder(models.Model):
 	)
 	budget = models.CharField(blank=True, max_length=25)
 	canceled = models.NullBooleanField()
+	
+	objects = WorkOrderManager()
 	
 	# What fun! We're overriding save. For logging changes.
 	def save(self, force_insert=False, force_update=False):

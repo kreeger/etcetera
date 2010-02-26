@@ -74,6 +74,14 @@ table#list, .list { margin: 0px; padding: 0px; border-spacing: 0px; border: 1px 
 
 #history ul { list-style-type: none; padding: 0; font-size: 12px; }
 
+#profile-detail { border: 1px solid #AAA; -moz-border-radius-bottomleft: 10px; -moz-border-radius-bottomright: 10px; -webkit-border-bottom-left-radius: 10px; -webkit-border-bottom-right-radius: 10px; -moz-border-radius-topleft: 10px; -webkit-border-top-left-radius: 10px; padding: 10px; }
+	#profile-detail ul { border: 1px solid #AAA; margin: 0 0 10px 0; font-size: 12px; padding: 0px; background: url(../images/breadback.png) repeat-x; }
+	#profile-detail ul li.input-form { display: none; }
+	#profile-detail ul li { display: inline-block; border-right: 1px solid #AAA; padding: 3px 8px; }
+	#profile-detail input { display: none; }
+	
+	#profile-headers ul { display: none; }
+
 .profile { width: 100%; margin-top: 5px; }
 	.profile img { width: 200px; -webkit-border-radius: 10px; -moz-border-radius: 10px; border: 1px solid #CCC; }
 	.profile td:last-child { width: 740px; vertical-align: top; text-align: left; }

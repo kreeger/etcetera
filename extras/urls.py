@@ -4,5 +4,4 @@ from etcetera.extras.views import *
 urlpatterns = patterns('',
 	# url(r'^error_mail/$', error_mail),
 	url(r'^change-password/$', change_password, name="change-password"),
-	url(r'^edit-profile/$', edit_profile, name="edit-profile"),
 )

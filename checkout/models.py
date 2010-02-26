@@ -4,6 +4,7 @@ from django.db import models
 from django.contrib.localflavor.us import models as lfus
 from django.contrib.auth import models as auth
 
+from etcetera.checkout.managers import CheckoutManager
 from etcetera.structure import models as structure
 from etcetera.equipment import models as equipment
 from etcetera.extras import constants
@@ -82,12 +83,12 @@ class Checkout(models.Model):
 	handling_user = models.ForeignKey(
 		auth.User,
 		blank=True, null=True,
-		related_name='handled_checkouts',
+		related_name='checkouts_handled',
 	)
 	delivering_user = models.ForeignKey(
 		auth.User,
 		blank=True, null=True,
-		related_name='deliveries',
+		related_name='checkouts_delivered',
 	)
 	returning_person = models.CharField(
 		max_length=100,
@@ -108,6 +109,8 @@ class Checkout(models.Model):
 	canceled = models.BooleanField()
 	completion_date = models.DateTimeField(blank=True, null=True)
 	comments = models.TextField(blank=True)
+	
+	objects = CheckoutManager()
 	
 	# What fun! We're overriding save. For logging changes.
 	def save(self, force_insert=False, force_update=False):

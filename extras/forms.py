@@ -2,6 +2,7 @@ from django import forms
 from django.forms import ModelChoiceField
 
 from etcetera.extras import models as extras
+from etcetera.extras.dateutil import DateField
 
 class UserModelChoiceField(ModelChoiceField):
 	def label_from_instance(self, obj, *args, **kwargs):
@@ -29,3 +30,7 @@ class UserProfileForm(forms.ModelForm):
 	class Meta:
 		model = extras.UserProfile
 		exclude = ('user',)
+		
+class DateSearchForm(forms.Form):
+	start_date = DateField()
+	end_date = DateField()

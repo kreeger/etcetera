@@ -254,7 +254,7 @@
                <tr>
                   <td>Handled by</td>
                   <td>
-                     <a href="{% url etcetera-user object.handling_user.username %}">
+                     <a href="{% url user-detail object.handling_user.username %}">
                         {{ object.handling_user.get_full_name }}
                      </a>
                   </td>
@@ -264,7 +264,7 @@
                <tr>
                   <td>Delivered by</td>
                   <td>
-                     <a href="{% url etcetera-user object.delivering_user.username %}">
+                     <a href="{% url user-detail object.delivering_user.username %}">
                         {{ object.delivering_user.get_full_name }}
                      </a>
                   </td>

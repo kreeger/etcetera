@@ -6,7 +6,7 @@
    <p>
       {% if user.is_authenticated %}
    		Welcome,
-   		<a href="{% url etcetera-user user.username %}">
+   		<a href="{% url user-detail user.username %}">
    		   {% firstof user.first_name user %}</a>.
    		<a href="{% url etcetera-logout %}">Logout?</a>
       {% else %}

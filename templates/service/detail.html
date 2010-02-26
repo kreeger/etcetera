@@ -232,7 +232,7 @@
                <td>Name</td>
                <td>
                   {% if object.technician %}
-                     <a href="{% url etcetera-user object.technician.username %}">
+                     <a href="{% url user-detail object.technician.username %}">
                         {{ object.technician.get_full_name }}
                      </a>
                   {% else %}

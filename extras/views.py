@@ -1,11 +1,13 @@
 import os
+import datetime as dt
 
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, Http404
 from django.shortcuts import render_to_response, get_object_or_404
 from django.template import RequestContext
 from django.core.urlresolvers import reverse
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import models as auth
+from django.db.models import Avg, Sum, Count
 
 from etcetera.settings import SITE_ROOT
 from etcetera.extras.mailer import error_mail
@@ -13,9 +15,6 @@ from etcetera.extras import models as extras
 from etcetera.extras import forms as exforms
 from etcetera.service import models as service
 from etcetera.checkout import models as checkout
-
-# Don't quite know why I'm importing docutils. I should remove this.
-#from docutils.core import publish_parts
 
 def error_mail(request):
 	# This sends an error mail. I'm not sure how this works but since I'm still
@@ -41,10 +40,8 @@ def index(request):
 
 @login_required
 def profile(request, the_user):
-	# If the user profile being asked for isn't the current user,
-	# get the user object of that user
-	if not the_user == request.user:
-		the_user = get_object_or_404(auth.User, username=the_user)
+	# Get the user object of that user
+	the_user = get_object_or_404(auth.User, username=the_user)
 	# Try to get the user's profile object
 	try:
 		the_user.profile = the_user.get_profile()
@@ -52,21 +49,9 @@ def profile(request, the_user):
 	except extras.UserProfile.DoesNotExist:
 		# But only if the user is themselves
 		if the_user == request.user:
-			return HttpResponseRedirect(reverse('edit-profile'))
+			return HttpResponseRedirect(reverse('user-edit'))
 		else:
 			the_user.profile = None
-	# Get work order counts for user.
-	workorders = service.WorkOrder.objects.filter(
-		technician=the_user)
-	the_user.workorders_closed = workorders.exclude(
-		completion_date=None).count()
-	the_user.workorders_open = workorders.filter(
-		completion_date=None).count()
-	# Get ticket counts.
-	the_user.checkouts_handled = checkout.Checkout.objects.filter(
-		handling_user=the_user).count()
-	the_user.checkouts_delivered = checkout.Checkout.objects.filter(
-		delivering_user=the_user).count()
 	context = {
 		'the_user': the_user,
 	}
@@ -148,6 +133,64 @@ def change_password(request):
 	}
 	return render_to_response(
 		"extras/change-password.html",
+		context, 
+		context_instance=RequestContext(request)
+	)
+
+def profile_related(request, the_user, view_type):
+	if view_type not in ['workorders','checkouts',]: raise Http404
+	# Get the user object of that user
+	the_user = get_object_or_404(auth.User, username=the_user)
+	if request.GET:
+		# If form data is sent via GET (i.e., a set of dates coming in)
+		form = exforms.DateSearchForm(request.GET)
+		if form.is_valid():
+			cd = form.cleaned_data
+			if view_type == 'workorders':
+				the_user.object_set = the_user.workorders.closed().filter(
+					completion_date__range=(cd['start_date'], cd['end_date'])
+				).order_by(
+					'completion_date'
+				)
+			if view_type == 'checkouts':
+				the_user.object_set = the_user.checkouts_delivered.filter(
+					action_date__range=(cd['start_date'], cd['end_date'])
+				).order_by(
+					'action_date'
+				)
+	else:
+		# Setup a few dates we'll be using
+		week_ago = dt.datetime.today()+dt.timedelta(weeks=-1)
+		thirty_days_ago = dt.datetime.today()+dt.timedelta(days=-30)
+		form = exforms.DateSearchForm()
+		if view_type == 'workorders':
+			# Get the user's workorders based on time periods
+			the_user.object_set = the_user.workorders.closed().filter(
+				completion_date__gte=week_ago).order_by(
+				'completion_date'
+			)
+		if view_type == 'checkouts':
+			# Get the user's checkouts based on time periodsweek_ago
+			the_user.object_set = the_user.checkouts_delivered.filter(
+				action_date__gte=week_ago).order_by(
+				'action_date'
+			)
+	# Do some totals and analysis
+	if view_type == 'workorders':
+		# Some analytic data on said workorders
+		the_user.aggregates = the_user.object_set.aggregate(
+			labor_sum=Sum('labor')
+		)
+	context = {
+		'the_user': the_user,
+		'view_type': view_type,
+		'form': form,
+	}
+	if request.GET:
+		context['start_date'] = form.cleaned_data['start_date']
+		context['end_date'] = form.cleaned_data['end_date']
+	return render_to_response(
+		"extras/profile_related.html",
 		context, 
 		context_instance=RequestContext(request)
 	)
