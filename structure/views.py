@@ -87,8 +87,6 @@ def detail(request, abbreviation=None, object_id=None, room=None):
 	# In the future: redo this with annotations.
 	view_type = None
 	stru_obj = None
-	checkout_count = 0
-	workorder_count = 0
 	if abbreviation:
 		# Get our building and let the context know it's a building
 		stru_obj = get_object_or_404(
@@ -107,13 +105,11 @@ def detail(request, abbreviation=None, object_id=None, room=None):
 			pk=object_id
 		)
 		view_type = 'departments'
-	stru_obj.checkouts_open = stru_obj.checkouts.filter(completion_date=None)
-	stru_obj.workorders_open = stru_obj.workorders.filter(completion_date=None)
 	if room:
 		stru_obj.room_checkouts = stru_obj.checkouts.filter(room=room)
 		stru_obj.room_workorders = stru_obj.workorders.filter(room=room)
-		stru_obj.checkouts_open = stru_obj.checkouts_open.filter(room=room)
-		stru_obj.workorders_open = stru_obj.workorders_open.filter(room=room)
+		stru_obj.checkouts.active = stru_obj.checkouts_open.filter(room=room)
+		stru_obj.workorders.active = stru_obj.workorders_open.filter(room=room)
 		stru_obj.equipment_installed = stru_obj.equipment_installed.filter(
 			room=room
 		)
@@ -123,8 +119,6 @@ def detail(request, abbreviation=None, object_id=None, room=None):
 		'object': stru_obj,
 		'view_type': view_type,
 		'room': room,
-		'cc': checkout_count,
-		'wc': workorder_count,
 	}
 	return render_to_response(
 		"structure/detail.html",
