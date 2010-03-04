@@ -75,14 +75,18 @@ def detail(request, slug, view_type='equipmenttypes'):
 	rp = get_object_or_404(reports.Report.objects.select_related(), slug=slug)
 	# Get our checkouts applicable from the database
 	cos = checkout.Checkout.objects.select_related().filter(
-		canceled=False).filter(
-		completion_date__range=(rp.start_date, rp.end_date)
-	)
+		canceled=False).filter(completion_date__range=(
+			rp.start_date, rp.end_date)).filter(
+		department__in=rp.organizationalunits.all)
+	# If it's a department page, get annotated set based on above checkouts
 	if view_type == 'departments':
-		annotated_set = rp.organizationalunits.annotate(
+		annotated_set = rp.organizationalunits.filter(
+			checkouts__in=cos).annotate(
 			checkout_count=Count('checkouts'))
+	# If it's an equipmenttypes page, get annotated set based on above checkouts
 	if view_type == 'equipmenttypes':
-		annotated_set = rp.equipmenttypes.annotate(
+		annotated_set = rp.equipmenttypes.filter(
+			equipment__checkouts__in=cos).annotate(
 			checkout_count=Count('equipment__checkouts'))
 	context = {
 		'object': rp,

@@ -56,7 +56,7 @@
    </div>
 
    <div id="checkout-counts">
-      <table class="list">
+      <table id="list">
          <tr>
             <td>
                {% if view_type == 'departments' %}Department{% endif %}
@@ -65,10 +65,30 @@
             <td>Count</td>
          </tr>
          {% for object in annotated_set %}
+            {% if object.checkout_count %}
             <tr>
-               <td>{{ object.name }}</td>
-               <td>{{ object.checkout_count }}</td>
+               <td>
+                  {% if view_type == 'departments' %}
+                     <a href="{% url organizationalunit-detail object.id %}">
+                  {% endif %}
+                  {% if view_type == 'equipmenttypes' %}
+                     <a href="{% url equipmenttype-detail object.slug %}">
+                  {% endif %}
+                     {{ object.name }}
+                  </a>
+               </td>
+               <td>
+                  {% if view_type == 'departments' %}
+                     <a href="{% url organizationalunit-detail object.id %}">
+                  {% endif %}
+                  {% if view_type == 'equipmenttypes' %}
+                     <a href="{% url equipmenttype-detail object.slug %}">
+                  {% endif %}
+                     {{ object.checkout_count }}
+                  </a>
+               </td>
             </tr>
+            {% endif %}
          {% endfor %}
       </table>
    </div>
