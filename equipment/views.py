@@ -6,6 +6,7 @@ from django.http import HttpResponseRedirect, Http404
 from django.core.urlresolvers import reverse
 from django.core.paginator import Paginator, InvalidPage, EmptyPage
 from django.template import RequestContext
+from django.db.models import Count
 
 from etcetera.equipment import models as equipment
 from etcetera.equipment import forms as eqforms
@@ -45,7 +46,7 @@ def index(request, view_type=None):
 			'make__name',
 			'model',
 			'serial',
-		)	
+		).select_related()	
 		count = paged_objects.object_list.count()
 	if view_type == None:	
 		count = paged_objects.count()
@@ -91,13 +92,13 @@ def equipmenttype_index(request):
 				equipmenttype_query = get_query(data['q'], form.get_list())
 				paged_objects = equipment.EquipmentType.objects.filter(
 					equipmenttype_query
-				)
+				).annotate(Count('equipment'))
 				q = data['q']
 	else:
-		paged_objects = equipment.EquipmentType.objects.all()
+		paged_objects = equipment.EquipmentType.objects.all().annotate(
+			eq_count=Count('equipment')
+		)
 	count = paged_objects.count()
-	for eqt in paged_objects:
-		eqt.count = eqt.equipment_set.count()
 	# Repackage everything into paged_objects using Paginator.
 	paginator = Paginator(paged_objects, 20)
 	# Make sure the page request is an int -- if not, then deliver page 1.
@@ -136,6 +137,7 @@ def detail(request, object_id):
 
 @login_required
 def equipmenttype_detail(request, slug):
+	# This view needs HEAVY optimization. My for loop is teh suck.
 	# Get our equipment type, put it in a context and send it out.
 	eqt = get_object_or_404(equipment.EquipmentType, slug=slug)
 	count_dict = {}

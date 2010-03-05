@@ -77,13 +77,17 @@ def detail(request, slug, view_type='equipmenttypes'):
 	cos = checkout.Checkout.objects.select_related().filter(
 		canceled=False).filter(completion_date__range=(
 			rp.start_date, rp.end_date)).filter(
-		department__in=rp.organizationalunits.all)
+		department__in=rp.organizationalunits.all).filter(
+		equipment_list__equipment_type__in=rp.equipmenttypes.all)
 	# If it's a department page, get annotated set based on above checkouts
 	if view_type == 'departments':
 		annotated_set = rp.organizationalunits.filter(
 			checkouts__in=cos).annotate(
 			checkout_count=Count('checkouts'))
-	# If it's an equipmenttypes page, get annotated set based on above checkouts
+			# for ou in rp.organizationlunits:
+			# Not really sure what to do here.
+	# If it's an equipmenttypes page, get annotated set
+	# based on above checkouts
 	if view_type == 'equipmenttypes':
 		annotated_set = rp.equipmenttypes.filter(
 			equipment__checkouts__in=cos).annotate(
