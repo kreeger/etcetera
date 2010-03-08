@@ -44,7 +44,7 @@
          <a href="{% url equipmenttype-index %}">Types</a>
       </li>
       <li{% if view_type == 'makes' %} class="active"{% endif %}>
-         <a href="#">Makes</a>
+         <a href="{% url makes-index %}">Makes</a>
       </li>
    </ul>
 {% endblock %}
@@ -61,7 +61,7 @@
             <a href='{% url equipmenttype-new %}'>add a new equipment type</a>
          {% endif %}
          {% if view_type == 'makes' %}
-            <a href="#">add a new make</a>
+            <a href="{% url makes-new %}">add a new make</a>
          {% endif %}
       </span>
       {% if not view_type %}
@@ -72,6 +72,9 @@
       {% endif %}
       {% if view_type == 'types' %}
          Equipment Types
+      {% endif %}
+      {% if view_type == 'makes' %}
+         Equipment Makes
       {% endif %}
       
       {% if q %}
@@ -207,13 +210,13 @@
             {% endif %}
             {% if view_type == 'makes' %}
                <td>
-                  <a href="#">
+                  <a href="{% url makes-detail object.slug %}">
                      {{ object.name }}
                   </a>
                </td>
                <td>
-                  <a href="#">
-                     {{ object.count }}
+                  <a href="{% url makes-detail object.slug %}">
+                     {{ object.make_count }}
                   </a>
                </td>
             {% endif %}

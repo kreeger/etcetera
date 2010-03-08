@@ -31,5 +31,21 @@ urlpatterns = patterns('',
 		equipmenttype_index,
 		name="equipmenttype-index"
 	),
+	url(r'^makes/new/$',
+		makes_new,
+		name="makes-new"
+	),
+	url(r'^makes/(?P<slug>.+)/edit/$',
+		makes_edit,
+		name="makes-edit"
+	),
+	url(r'^makes/(?P<slug>.+)/$',
+		makes_detail,
+		name="makes-detail"
+	),
+	url(r'^makes/$',
+		makes_index,
+		name="makes-index"
+	),
 	url(r'^(?P<view_type>\w+)/$', index, name="equipment-index"),
 )

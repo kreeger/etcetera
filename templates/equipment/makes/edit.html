@@ -1,0 +1,58 @@
+{% extends "root.html" %}
+{% load etcetera_tags %}
+
+{% block title %}
+   Equipment &raquo; Equipment Makes &raquo;
+   {% if form.initial %}
+      Editing {{ object.name }}
+   {% else %}
+      Creating a new equipment make
+   {% endif %}
+{% endblock %}
+
+{% block breadcrumb %}
+   <a href="{% url etcetera-home %}">Home</a> &rsaquo;
+   <a href="{% url makes-index %}">Equipment Makes</a> &rsaquo;
+   {% if form.initial %}
+      <a href="{% url makes-detail object.slug %}">
+         {{ object.name }}
+      </a>
+      &rsaquo; Edit
+   {% else %}
+      Creating a new equipment make
+   {% endif %}
+{% endblock %}
+
+{% block content %}
+<div id="detail">
+   <form action="" method="POST">
+      <div id="headers">
+         <h1>
+            {% if not object %}
+               Adding a new equipment make
+            {% else %}
+               {{ object.name }}
+            {% endif %}
+         </h1>
+      </div>
+      <div id="actions">
+         <h2>Actions</h2>
+         {{ form_actions|safe }}
+      </div>
+   
+      <div id="brief-information">
+         <h2>Brief information</h2>
+         <table class="detail">
+            <tr{% if form.name.errors %} class="errorlist"{% endif %}>
+               <td>{{ form.name.label }}</td>
+               <td>{{ form.name }}{{ form.name.errors }}</td>
+            </tr>
+            <tr{% if form.website.errors %} class="errorlist"{% endif %}>
+               <td>{{ form.website.label }}</td>
+               <td>{{ form.website }}{{ form.website.errors }}</td>
+            </tr>
+         </table>
+      </div>
+   </form>
+</div>
+{% endblock %}

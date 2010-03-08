@@ -76,13 +76,14 @@ def index(request, view_type=None):
 		context_instance=RequestContext(request)
 	)
 
+@login_required
 def equipmenttype_index(request):
 	paged_objects = None
 	q = None
 	count = None
-	form = eqforms.TypeSearchForm()
+	form = eqforms.OtherSearchForm()
 	if request.GET and request.GET.get('q'):
-		form = eqforms.TypeSearchForm(request.GET)
+		form = eqforms.OtherSearchForm(request.GET)
 		if form.is_valid():
 			data = form.cleaned_data
 			if data['q'] and data['q'].strip() and form.get_list():
@@ -92,7 +93,7 @@ def equipmenttype_index(request):
 				equipmenttype_query = get_query(data['q'], form.get_list())
 				paged_objects = equipment.EquipmentType.objects.filter(
 					equipmenttype_query
-				).annotate(Count('equipment'))
+				).annotate(eq_count=Count('equipment'))
 				q = data['q']
 	else:
 		paged_objects = equipment.EquipmentType.objects.all().annotate(
@@ -116,6 +117,56 @@ def equipmenttype_index(request):
 		'paged_objects': paged_objects,
 		'form': form,
 		'view_type': 'types',
+		'q': q,
+		'count': count,
+	}
+	return render_to_response(
+		"equipment/index.html",
+		context,
+		context_instance=RequestContext(request)
+	)
+
+@login_required
+def makes_index(request):
+	paged_objects = None
+	q = None
+	count = None
+	form = eqforms.OtherSearchForm()
+	if request.GET and request.GET.get('q'):
+		form = eqforms.OtherSearchForm(request.GET)
+		if form.is_valid():
+			data = form.cleaned_data
+			if data['q'] and data['q'].strip() and form.get_list():
+				# This sends a query to search middleware, if such
+				# query exists. It gets a Q object back which is used
+				# in a Django filter to get our queryset.
+				make_query = get_query(data['q'], form.get_list())
+				paged_objects = equipment.Make.objects.filter(
+					make_query
+				).annotate(make_count=Count('equipment'))
+				q = data['q']
+	else:
+		paged_objects = equipment.Make.objects.all().annotate(
+			make_count=Count('equipment')
+		)
+	count = paged_objects.count()
+	# Repackage everything into paged_objects using Paginator.
+	paginator = Paginator(paged_objects, 20)
+	# Make sure the page request is an int -- if not, then deliver page 1.
+	try:
+		page = int(request.GET.get('page','1'))
+	except ValueError:
+		page = 1
+	# If the page request is out of range, deliver the last page of results.
+	try:
+		paged_objects = paginator.page(page)
+	except (EmptyPage, InvalidPage):
+		paged_objects = paginator.page(paginator.num_pages)
+	# Bundle everything into the context and send it out.
+	context = {
+		'paged_objects': paged_objects,
+		'form': form,
+		'view_type': 'makes',
 		'q': q,
 		'count': count,
 	}
@@ -151,6 +202,20 @@ def equipmenttype_detail(request, slug):
 	}
 	return render_to_response(
 		"equipment/types/detail.html",
+		context,
+		context_instance=RequestContext(request)
+	)
+	
+@login_required
+def makes_detail(request, slug):
+	# This view needs HEAVY optimization. My for loop is teh suck.
+	# Get our equipment type, put it in a context and send it out.
+	make = get_object_or_404(equipment.Make, slug=slug)
+	context = {
+		'object': make,
+	}
+	return render_to_response(
+		"equipment/makes/detail.html",
 		context,
 		context_instance=RequestContext(request)
 	)
@@ -200,7 +265,30 @@ def equipmenttype_edit(request, slug):
 		context,
 		context_instance=RequestContext(request)
 	)
-
+	
+@login_required
+def makes_edit(request, slug):	
+	make = get_object_or_404(equipment.Make, slug=slug)
+	if request.method == 'POST':
+		form = eqforms.MakeModelForm(request.POST, instance=make)
+		if form.is_valid():
+			form.save()
+			return HttpResponseRedirect(reverse(
+				'makes-detail',
+				args=(make.slug,),
+			))
+	else:
+		form = eqforms.MakeModelForm(instance=make)
+	context = {
+		'object': make,
+		'form': form,
+	}
+	return render_to_response(
+		"equipment/makes/edit.html",
+		context,
+		context_instance=RequestContext(request)
+	)
+	
 @login_required
 def new(request):
 	if request.method == 'POST':
@@ -239,6 +327,27 @@ def equipmenttype_new(request):
 	}
 	return render_to_response(
 		"equipment/types/edit.html",
+		context,
+		context_instance=RequestContext(request)
+	)
+	
+@login_required
+def makes_new(request):
+	if request.method == 'POST':
+		form = eqforms.MakeModelForm(request.POST)
+		if form.is_valid():
+			make = form.save()
+			return HttpResponseRedirect(reverse(
+				'makes-detail',
+				args=(make.slug,),
+			))
+	else:
+		form = eqforms.MakeModelForm()
+	context = {
+		'form': form,
+	}
+	return render_to_response(
+		"equipment/makes/edit.html",
 		context,
 		context_instance=RequestContext(request)
 	)

@@ -66,7 +66,7 @@ class SearchForm(forms.Form):
 			out_list.append('comments')
 		return out_list
 
-class TypeSearchForm(forms.Form):
+class OtherSearchForm(forms.Form):
 	q = forms.CharField(max_length=50)
 
 	def as_url_args(self):
