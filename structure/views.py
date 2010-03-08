@@ -26,7 +26,7 @@ def count_workorders(ou):
 
 @login_required
 def index(request, structure_kind='buildings'):
-	if not structure_kind in ['buildings','departments']: raise Http404
+	if not structure_kind in ['buildings','departments','campuses',]: raise Http404
 	paged_objects = None
 	q = None
 	form = stforms.SearchForm()
@@ -50,12 +50,18 @@ def index(request, structure_kind='buildings'):
 					paged_objects = structure.OrganizationalUnit.objects.filter(
 						structure_query
 					)
+				if structure_kind == 'campuses':
+					paged_objects = structure.Campus.objects.filter(
+						structure_query
+					)
 				q = data['q']
 	else:
 		if structure_kind == 'buildings':
 			paged_objects = structure.Building.objects.all()
 		if structure_kind == 'departments':
 			paged_objects = structure.OrganizationalUnit.objects.all()
+		if structure_kind == 'campuses':
+			paged_objects = structure.Campus.objects.all()
 	# Repackage everything into paged_objects using Paginator.
 	paginator = Paginator(paged_objects, 20)
 	# Make sure the page request is an int -- if not, then deliver page 1.
@@ -83,7 +89,7 @@ def index(request, structure_kind='buildings'):
 		context_instance=RequestContext(request)
 	)
 
-def detail(request, abbreviation=None, object_id=None, room=None):
+def detail(request, slug=None, abbreviation=None, object_id=None, room=None):
 	# In the future: redo this with annotations.
 	view_type = None
 	stru_obj = None
@@ -105,6 +111,13 @@ def detail(request, abbreviation=None, object_id=None, room=None):
 			pk=object_id
 		)
 		view_type = 'departments'
+	elif slug:
+		# Get our campus and let the context know it's a campus
+		stru_obj = get_object_or_404(
+			structure.Campus,
+			slug=slug
+		)
+		view_type = 'campuses'
 	if room:
 		stru_obj.room_checkouts = stru_obj.checkouts.filter(room=room)
 		stru_obj.room_workorders = stru_obj.workorders.filter(room=room)
@@ -127,7 +140,7 @@ def detail(request, abbreviation=None, object_id=None, room=None):
 	)
 
 @login_required
-def edit(request, abbreviation=None, object_id=None):
+def edit(request, slug=None, abbreviation=None, object_id=None):
 	view_type = None
 	stru_obj = None
 	form = None
@@ -147,11 +160,22 @@ def edit(request, abbreviation=None, object_id=None):
 		)
 		form = stforms.OrganizationalUnitModelForm(instance=stru_obj)
 		view_type = 'departments'
+	elif slug:
+		stru_obj = get_object_or_404(
+			structure.Campus,
+			slug=slug
+		)
+		form = stforms.CampusModelForm(instance=stru_obj)
+		view_type = 'campuses'
 	if request.method == 'POST':
 		if abbreviation:
 			form = stforms.BuildingModelForm(request.POST, instance=stru_obj)
 		elif object_id:
 			form = stforms.OrganizationalUnitModelForm(
+				request.POST, instance=stru_obj
+			)
+		elif slug:
+			form = stforms.CampusModelForm(
 				request.POST, instance=stru_obj
 			)
 		if form.is_valid():
@@ -165,6 +189,11 @@ def edit(request, abbreviation=None, object_id=None):
 				return_reverse = reverse(
 					'organizationalunit-detail',
 					args=(stru_obj.id,),
+				)
+			elif slug:
+				return_reverse = reverse(
+					'campus-detail',
+					args=(stru_obj.slug,),
 				)
 			return HttpResponseRedirect(return_reverse)
 	context = {
@@ -185,13 +214,17 @@ def new(request, structure_kind):
 	return_reverse = None
 	if structure_kind == 'buildings':
 		form = stforms.BuildingModelForm()
-	else:
+	elif structure_kind == 'departments':
 		form = stforms.OrganizationalUnitModelForm()
+	elif structure_kind == 'campus':
+		form = stforms.CampusModelForm()
 	if request.method == 'POST':
 		if structure_kind == 'buildings':
 			form = stforms.BuildingModelForm(request.POST)
-		else:
+		elif structure_kind == 'departments':
 			form = stforms.OrganizationalUnitModelForm(request.POST)
+		elif structure_kind == 'campuses':
+			form = stforms.CampusModelForm(request.POST)
 		if form.is_valid():
 			stru_obj = form.save()
 			if structure_kind == 'buildings':
@@ -199,10 +232,15 @@ def new(request, structure_kind):
 					'building-detail',
 					args=(stru_obj.abbreviation,),
 				)
-			else:
+			elif structure_kind == 'departments':
 				return_reverse = reverse(
 					'organizationalunit-detail',
 					args=(stru_obj.id,),
+				)
+			elif structure_kind == 'campuses':
+				return_reverse = reverse(
+					'campus-detail',
+					args=(stru_obj.slug,),
 				)
 			return HttpResponseRedirect(return_reverse)
 	context = {

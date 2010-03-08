@@ -11,12 +11,13 @@ class SearchForm(forms.Form):
 		# The search list is automatically everything
 		out_list = [
 			'name',
-			'abbreviation',
 		]
 		if structure_kind == 'buildings':
-			out_list.append('campus__name')
+			out_list.extend(['campus__name','abbreviation',])
 		if structure_kind == 'department':
-			out_list.append('parent__name')
+			out_list.extend(['parent__name','abbreviation',])
+		if structure_kind == 'campus':
+			out_list.append('city')
 		return out_list
 	
 	def as_url_args(self):
@@ -29,3 +30,8 @@ class BuildingModelForm(forms.ModelForm):
 class OrganizationalUnitModelForm(forms.ModelForm):
 	class Meta:
 		model = structure.OrganizationalUnit
+
+class CampusModelForm(forms.ModelForm):
+	class Meta:
+		model = structure.Campus
+		exclude = ('slug',)

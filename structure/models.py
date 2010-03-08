@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.localflavor.us import models as lfus
 from django.contrib.auth.models import User
+from django.template.defaultfilters import slugify
 
 # Defines university structure regarding people and places.
 
@@ -29,9 +30,14 @@ class Campus(models.Model):
 	zip_code = models.CharField(max_length=9)
 	country = models.CharField(max_length=50, default='United States')
 	phone = lfus.PhoneNumberField()
+	slug = models.SlugField(unique=True)
 	
 	def __unicode__(self):
 		return u"%s" % self.name
+	
+	def save(self, *args, **kwargs):
+		self.slug = slugify(self.name)
+		super(Campus, self).save(*args, **kwargs)
 	
 	class Meta:
 		ordering = ('name',)
@@ -40,7 +46,7 @@ class Campus(models.Model):
 class Building(models.Model):
 	"""A level-two container for building structure"""
 	name = models.CharField(max_length=100)
-	abbreviation = models.CharField(max_length=4, blank=True, unique=True)
+	abbreviation = models.CharField(max_length=4, unique=True)
 	campus = models.ForeignKey(Campus)
 	
 	class Meta:

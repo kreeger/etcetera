@@ -21,7 +21,8 @@ def money(value):
 # This filter un-pluralizes
 @register.filter
 def unpluralize(value, suffix_length=1):
-	return value[:-suffix_length]
+	if value[-2:] == u'es': return value[:-2]
+	else: return value[:-suffix_length]
 
 # From http://w.holeso.me/2008/08/a-simple-django-truncate-filter/
 @register.filter("truncate_chars")  

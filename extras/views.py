@@ -9,7 +9,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth import models as auth
 from django.db.models import Avg, Sum, Count
 
-from etcetera.settings import SITE_ROOT
+from etcetera.settings import SITE_ROOT, DEBUG
 from etcetera.extras.mailer import error_mail
 from etcetera.extras import models as extras
 from etcetera.extras import forms as exforms
@@ -25,7 +25,7 @@ def error_mail(request):
 def index(request):
 	# This is some wonky fix for Python 2.5. Doesn't seem to affect Python 2.6,
 	# so I'll be removing this when our server upgrades to Py2.6.
-	if not request.META['REQUEST_URI'].endswith('/'):
+	if not DEBUG and not request.META['REQUEST_URI'].endswith('/'):
 		return HttpResponseRedirect("etcetera%s" % request.path)
 	# Get the 5 most recent posts.
 	posts = extras.Post.objects.all()[:5]

@@ -62,19 +62,56 @@
                <td>{{ form.name.label }}</td>
                <td>{{ form.name }}{{ form.name.errors }}</td>
             </tr>
-            <tr{% if form.abbreviation.errors %} class="errorlist"{% endif %}>
-               <td>{{ form.abbreviation.label }}</td>
-               <td>{{ form.abbreviation }}{{ form.abbreviation.errors }}</td>
-            </tr>
             {% if view_type == 'buildings' %}
+               <tr{% if form.abbreviation.errors %} class="errorlist"{% endif %}>
+                  <td>{{ form.abbreviation.label }}</td>
+                  <td>
+                     {{ form.abbreviation }}
+                     {{ form.abbreviation.errors }}
+                  </td>
+               </tr>
                <tr{% if form.campus.errors %} class="errorlist"{% endif %}>
                   <td>{{ form.campus.label }}</td>
                   <td>{{ form.campus }}{{ form.campus.errors }}</td>
                </tr>
-            {% else %}
+            {% endif %}
+            {% if view_type == 'departments' %}
+               <tr{% if form.abbreviation.errors %} class="errorlist"{% endif %}>
+                  <td>{{ form.abbreviation.label }}</td>
+                  <td>
+                     {{ form.abbreviation }}
+                     {{ form.abbreviation.errors }}
+                  </td>
+               </tr>
                <tr{% if form.parent.errors %} class="errorlist"{% endif %}>
                   <td>{{ form.parent.label }}</td>
                   <td>{{ form.parent }} {{ form.parent.errors }}</td>
+               </tr>
+            {% endif %}
+            {% if view_type == 'campuses' %}
+               <tr{% if form.address.errors %} class="errorlist"{% endif %}>
+                  <td>{{ form.address.label }}</td>
+                  <td>{{ form.address }}{{ form.address.errors }}<br />
+               </tr>
+               <tr{% if form.city.errors %} class="errorlist"{% endif %}>
+                  <td>{{ form.city.label }}</td>
+                  <td>{{ form.city }}{{ form.city.errors }}</td>
+               </tr>
+               <tr{% if form.state.errors %} class="errorlist"{% endif %}>
+                  <td>{{ form.state.label }}</td>
+                  <td>{{ form.state }}{{ form.state.errors }}</td>
+               </tr>
+               <tr{% if form.zip_code.errors %} class="errorlist"{% endif %}>
+                  <td>{{ form.zip_code.label }}</td>
+                  <td>{{ form.zip_code }}{{ form.zip_code.errors }}</td>
+               </tr>
+               <tr{% if form.country.errors %} class="errorlist"{% endif %}>
+                  <td>{{ form.country.label }}</td>
+                  <td>{{ form.country }}{{ form.country.errors }}</td>
+               </tr>
+               <tr{% if form.phone.errors %} class="errorlist"{% endif %}>
+                  <td>{{ form.phone.label }}</td>
+                  <td>{{ form.phone }}{{ form.phone.errors }}</td>
                </tr>
             {% endif %}
          </table>

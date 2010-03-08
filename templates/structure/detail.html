@@ -24,8 +24,12 @@
    <a href="{% url etcetera-home %}">Home</a> &rsaquo;
    {% if view_type == 'buildings' %}
       <a href="{% url structure-index 'buildings' %}">Buildings</a>
-   {% else %}
+   {% endif %}
+   {% if view_type == 'departments' %}
       <a href="{% url structure-index 'departments' %}">Departments</a>
+   {% endif %}
+   {% if view_type == 'campuses' %}
+      <a href="{% url structure-index 'campuses' %}">Campuses</a>
    {% endif %}
     &rsaquo; 
     {% if room %}
@@ -45,6 +49,7 @@
                <span class="head">{{ room }}</span>
             {% endif %}
       </h1>
+      {% if not view_type == 'campuses' %}
       <ul>
          <li>
             Checkouts:
@@ -68,6 +73,7 @@
             </li>
          {% endif %}
       </ul>
+      {% endif %}
    </div>
    
    <div id="actions">
@@ -77,15 +83,19 @@
             <li>
                {% if view_type == 'buildings' %}
                   <a href="{% url building-edit object.abbreviation %}">
-               {% else %}
+               {% endif %}
+               {% if view_type == 'departments' %}
                   <a href="{% url organizationalunit-edit object.id %}">
+               {% endif %}
+               {% if view_type == 'campuses' %}
+                  <a href="{% url campus-edit object.slug %}">
                {% endif %}
                   edit
                </a>
             </li>
          </ul>
       {% else %}
-         <p>You must be logged in to perform actions on this building.</p>
+         <p>You must be logged in to perform actions on this item.</p>
       {% endif %}
    </div>
    
@@ -117,7 +127,32 @@
                   </a>
                </td>
             </tr>
-            {% endif %}
+         {% endif %}
+         {% if object.address %}
+            <tr>
+               <td>Address</td>
+               <td>{{ object.address }}<br />
+            </tr>
+         {% endif %}
+         {% if object.city or object.state or object.zip_code %}
+            <tr>
+               <td>City/State/Zip</td>
+               <td>{{ object.city }}, {{ object.state }}
+                  {{ object.zip_code }}<br />
+            </tr>
+         {% endif %}
+         {% if object.country %}
+            <tr>
+               <td>Country</td>
+               <td>{{ object.country }}</td>
+            </tr>
+         {% endif %}
+         {% if object.phone %}
+            <tr>
+               <td>Phone</td>
+               <td>{{ object.phone }}</td>
+            </tr>
+         {% endif %}
       </table>
    </div>
    

@@ -20,6 +20,11 @@
             Departments
          </a>
       </li>
+      <li{% if view_type == 'campuses' %} class="active"{% endif %}>
+         <a href="{% url structure-index 'campuses' %}">
+            Campuses
+         </a>
+      </li>
    </ul>
 {% endblock %}
 
@@ -49,12 +54,17 @@
    {% endif %}
    <table id="list">
       <tr id="headerrow">
-         <td>{{ type|capfirst|unpluralize }}
+         <td>{{ view_type|capfirst|unpluralize }}
          {% if view_type == 'buildings' %}
             <td>Abbreviation</td>
             <td>Campus</td>
-         {% else %}
+         {% endif %}
+         {% if view_type == 'departments' %}
             <td>Parent</td>
+         {% endif %}
+         {% if view_type == 'campuses' %}
+            <td>City</td>
+            <td>State</td>
          {% endif %}
       </tr>
       {% for object in object_list %}
@@ -62,8 +72,12 @@
             <td>
                {% if view_type == 'buildings' %}
                   <a href="{% url building-detail object.abbreviation %}">
-               {% else %}
+               {% endif %}
+               {% if view_type == 'departments' %}
                   <a href="{% url organizationalunit-detail object.id %}">
+               {% endif %}
+               {% if view_type == 'campuses' %}
+                  <a href="{% url campus-detail object.slug %}">
                {% endif %}
                   {{ object.name }}
                </a>
@@ -79,10 +93,23 @@
                      {{ object.campus }}
                   </a>
                </td>
-            {% else %}
+            {% endif %}
+            {% if view_type == 'departments' %}
                <td>
                   <a href="{% url organizationalunit-detail object.id %}">
                      {{ object.parent.name }}
+                  </a>
+               </td>
+            {% endif %}
+            {% if view_type == 'campuses' %}
+               <td>
+                  <a href="{% url campus-detail object.slug %}">
+                     {{ object.city }}
+                  </a>
+               </td>
+               <td>
+                  <a href="{% url campus-detail object.slug %}">
+                     {{ object.state }}
                   </a>
                </td>
             {% endif %}

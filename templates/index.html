@@ -32,5 +32,8 @@
          	</div>
       	</div>
       {% endfor %}
+      {% if not object_list %}
+         <p>Welcome to Etcetera! There are no updates from the developer at this time.</p>
+      {% endif %}
 	</div>
 {% endblock %}
