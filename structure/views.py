@@ -121,8 +121,12 @@ def detail(request, slug=None, abbreviation=None, object_id=None, room=None):
 	if room:
 		stru_obj.room_checkouts = stru_obj.checkouts.filter(room=room)
 		stru_obj.room_workorders = stru_obj.workorders.filter(room=room)
-		stru_obj.checkouts.active = stru_obj.checkouts_open.filter(room=room)
-		stru_obj.workorders.active = stru_obj.workorders_open.filter(room=room)
+		stru_obj.checkouts.active = stru_obj.checkouts.active().filter(
+			room=room
+		)
+		stru_obj.workorders.active = stru_obj.workorders.active().filter(
+			room=room
+		)
 		stru_obj.equipment_installed = stru_obj.equipment_installed.filter(
 			room=room
 		)

@@ -84,7 +84,7 @@ def edit_profile(request):
 				a_user.save()
 			# Redirect to that user's page
 			return HttpResponseRedirect(reverse(
-				'etcetera-user',
+				'user-detail',
 				kwargs={'the_user': request.user},
 			))
 	# If there's not uploaded data, a new form should be drawn up
