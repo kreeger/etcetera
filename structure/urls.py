@@ -9,11 +9,11 @@ urlpatterns = patterns('',
 
 # Campuses
 urlpatterns += patterns('',
-	url(r'^campuses/(?P<slug>\w+)/$',
+	url(r'^campuses/(?P<slug>.+)/$',
 		detail,
 		name="campus-detail"
 	),
-	url(r'^campuses/(?P<slug>\w+)/edit/$',
+	url(r'^campuses/(?P<slug>.+)/edit/$',
 		edit,
 		name="campus-edit"
 	),

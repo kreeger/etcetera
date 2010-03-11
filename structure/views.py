@@ -212,14 +212,14 @@ def edit(request, slug=None, abbreviation=None, object_id=None):
 
 @login_required
 def new(request, structure_kind):	
-	if structure_kind not in ['buildings','departments']: raise Http404
+	if structure_kind not in ['buildings','departments','campuses',]: raise Http404
 	form = None
 	return_reverse = None
 	if structure_kind == 'buildings':
 		form = stforms.BuildingModelForm()
 	elif structure_kind == 'departments':
 		form = stforms.OrganizationalUnitModelForm()
-	elif structure_kind == 'campus':
+	elif structure_kind == 'campuses':
 		form = stforms.CampusModelForm()
 	if request.method == 'POST':
 		if structure_kind == 'buildings':

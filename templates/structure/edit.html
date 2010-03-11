@@ -4,8 +4,12 @@
 {% block title %}
    {% if view_type == 'buildings' %}
       Buildings
-   {% else %}
+   {% endif %}
+   {% if view_type == 'departments' %}
       Departments
+   {% endif %}
+   {% if view_type == 'campuses' %}
+      Campuses
    {% endif %} &raquo;
    {% if object %}
       Editing {{ object.name }}
@@ -18,14 +22,22 @@
    <a href="{% url etcetera-home %}">Home</a> &rsaquo;
    {% if view_type == 'buildings' %}
       <a href="{% url structure-index 'buildings' %}">Buildings</a>
-   {% else %}
+   {% endif %}
+   {% if view_type == 'departments' %}
       <a href="{% url structure-index 'departments' %}">Departments</a>
+   {% endif %}
+   {% if view_type == 'campuses' %}
+      <a href="{% url structure-index 'campuses' %}">Campuses</a>
    {% endif %} &rsaquo;
    {% if object %}
       {% if view_type == 'buildings' %}
          <a href="{% url building-detail object.abbreviation %}">
-      {% else %}
+      {% endif %}
+      {% if view_type == 'departments' %}
          <a href="{% url organizationalunit-detail object.id %}">
+      {% endif %}
+      {% if view_type == 'campuses' %}
+         <a href="{% url campus-detail object.id %}">
       {% endif %}
       {{ object.name }}</a> &rsaquo; Edit
       </a>
