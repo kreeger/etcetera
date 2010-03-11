@@ -10,7 +10,6 @@ from django.template import RequestContext
 from etcetera.extras.search import get_query
 from etcetera.structure import forms as stforms
 from etcetera.structure import models as structure
-from etcetera.equipment import graphs as eqgraphs
 
 def count_checkouts(ou):
 	checkout_count = ou.checkouts.count()
