@@ -13,85 +13,85 @@
 
 {% block subnav %}
    <ul>
-      <li{% if view_type == 'equipmenttypes' %} class="active"{% endif %}>
-         <a href="{% url reports-detail object.slug 'equipmenttypes' %}">Equipment</a>
-      </li>
-      <li{% if view_type == 'departments' %} class="active"{% endif %}>
-         <a href="{% url reports-detail object.slug 'departments' %}">Departments</a>
-      </li>
+	  <li{% if view_type == 'equipmenttypes' %} class="active"{% endif %}>
+		 <a href="{% url reports-detail object.slug 'equipmenttypes' %}">Equipment</a>
+	  </li>
+	  <li{% if view_type == 'departments' %} class="active"{% endif %}>
+		 <a href="{% url reports-detail object.slug 'departments' %}">Departments</a>
+	  </li>
    </ul>
 {% endblock %}
 
 {% block content %}
 <div id="detail">
    <div id="headers">
-      <h1>
-         {% if object %}
-            {{ object.name }}
-            {% if object.start_date or object.end_date %}
-               <span class="head">
-                  {% if object.start_date %}
-                     from {{ object.start_date|date }}
-                  {% endif %}
-                  {% if object.end_date %}
-                     to {{ object.end_date|date }}
-                  {% endif %}
-               </span>
-            {% endif %}
-         {% else %}
-            Creating a new report
-         {% endif %}
-      </h1>
+	  <h1>
+		 {% if object %}
+			{{ object.name }}
+			{% if object.start_date or object.end_date %}
+			   <span class="head">
+				  {% if object.start_date %}
+					 from {{ object.start_date|date }}
+				  {% endif %}
+				  {% if object.end_date %}
+					 to {{ object.end_date|date }}
+				  {% endif %}
+			   </span>
+			{% endif %}
+		 {% else %}
+			Creating a new report
+		 {% endif %}
+	  </h1>
    </div>
 
    <div id="actions">
-      <h2>Actions</h2>
-      {% if user.is_authenticated %}
-         <ul>
-            <li><a href="{% url reports-edit object.slug %}">edit</a></li>
-         </ul>
-      {% else %}
-         <p>You must be logged in to perform actions on this report.</p>
-      {% endif %}
+	  <h2>Actions</h2>
+	  {% if user.is_authenticated %}
+		 <ul>
+			<li><a href="{% url reports-edit object.slug %}">edit</a></li>
+		 </ul>
+	  {% else %}
+		 <p>You must be logged in to perform actions on this report.</p>
+	  {% endif %}
    </div>
 
    <div id="checkout-counts">
-      <h2>{{ view_type|capfirst }}</h2>
-      <table id="list">
-         <tr>
-            <td>
-               {% if view_type == 'departments' %}Department{% endif %}
-               {% if view_type == 'equipmenttypes' %}Equipment Type{% endif %}
-            </td>
-            <td>Count</td>
-         </tr>
-         {% for object in annotated_set %}
-            {% if object.checkout_count %}
-            <tr>
-               <td>
-                  {% if view_type == 'departments' %}
-                     <a href="{% url organizationalunit-detail object.id %}">
-                  {% endif %}
-                  {% if view_type == 'equipmenttypes' %}
-                     <a href="{% url equipmenttype-detail object.slug %}">
-                  {% endif %}
-                     {{ object.name }}
-                  </a>
-               </td>
-               <td>
-                  {% if view_type == 'departments' %}
-                     <a href="{% url organizationalunit-detail object.id %}">
-                  {% endif %}
-                  {% if view_type == 'equipmenttypes' %}
-                     <a href="{% url equipmenttype-detail object.slug %}">
-                  {% endif %}
-                     {{ object.checkout_count }}
-                  </a>
-               </td>
-            </tr>
-            {% endif %}
-         {% endfor %}
-      </table>
+	  <h2>{{ view_type|capfirst }}</h2>
+	  <table id="list">
+		 <tr>
+			<td>
+			   {% if view_type == 'departments' %}Department{% endif %}
+			   {% if view_type == 'equipmenttypes' %}Equipment Type{% endif %}
+			</td>
+			<td>Count</td>
+		 </tr>
+		 {% for object in annotated_set %}
+			{% if object.checkout_count %}
+			<tr>
+			   <td>
+				  {% if view_type == 'departments' %}
+					 <a href="{% url organizationalunit-detail object.id %}">
+				  {% endif %}
+				  {% if view_type == 'equipmenttypes' %}
+					 <a href="{% url equipmenttype-detail object.slug %}">
+				  {% endif %}
+					 {{ object.name }}
+				  </a>
+			   </td>
+			   <td>
+				  {% if view_type == 'departments' %}
+					 <a href="{% url organizationalunit-detail object.id %}">
+				  {% endif %}
+				  {% if view_type == 'equipmenttypes' %}
+					 <a href="{% url equipmenttype-detail object.slug %}">
+				  {% endif %}
+					 {{ object.checkout_count }}
+				  </a>
+			   </td>
+			</tr>
+			{% endif %}
+		 {% endfor %}
+	  </table>
    </div>
 </div>
 {% endblock %}

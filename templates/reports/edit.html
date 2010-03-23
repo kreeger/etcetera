@@ -4,9 +4,9 @@
 {% block title %}
    Reports &raquo;
    {% if object %}
-      Editing {{ object.name }}
+	  Editing {{ object.name }}
    {% else %}
-      Creating a new report
+	  Creating a new report
    {% endif %}
 {% endblock %}
 
@@ -14,70 +14,70 @@
    <a href="{% url etcetera-home %}">Home</a> &rsaquo;
    <a href="{% url reports-index %}">Reports</a> &rsaquo;
    {% if object %}
-      <a href="{% url reports-detail object.slug 'equipmenttypes' %}">
-         {{ object.name }}</a> &rsaquo; Edit
-      </a>
+	  <a href="{% url reports-detail object.slug 'equipmenttypes' %}">
+		 {{ object.name }}</a> &rsaquo; Edit
+	  </a>
    {% else %}
-      Creating a new report
+	  Creating a new report
    {% endif %}
 {% endblock %}
 
 {% block content %}
 <div id="detail">
    <form action="" method="POST">
-      <div id="headers">
-         <h1>
-            {% if object %}
-               Editing {{ object.name }}
-               {% if object.start_date or object.end_date %}
-                  <span class="head">
-                     {% if object.start_date %}
-                        from {{ object.start_date|date }}
-                     {% endif %}
-                     {% if object.end_date %}
-                        to {{ object.end_date|date }}
-                     {% endif %}
-                  </span>
-               {% endif %}
-            {% else %}
-               Creating a new report
-            {% endif %}
-         </h1>
-      </div>
+	  <div id="headers">
+		 <h1>
+			{% if object %}
+			   Editing {{ object.name }}
+			   {% if object.start_date or object.end_date %}
+				  <span class="head">
+					 {% if object.start_date %}
+						from {{ object.start_date|date }}
+					 {% endif %}
+					 {% if object.end_date %}
+						to {{ object.end_date|date }}
+					 {% endif %}
+				  </span>
+			   {% endif %}
+			{% else %}
+			   Creating a new report
+			{% endif %}
+		 </h1>
+	  </div>
    
-      <div id="actions">
-         <h2>Actions</h2>
-         {{ form_actions|safe }}
-      </div>
+	  <div id="actions">
+		 <h2>Actions</h2>
+		 {{ form_actions|safe }}
+	  </div>
    
-      <div id="brief-information">
-      {% for error in form.errors %}{{ error }} {% endfor %}
-         <h2>Brief information</h2>
-         <table class="detail">
-            <tr{% if form.name.errors %} class="errorlist"{% endif %}>
-               <td>{{ form.name.label }}</td>
-               <td>{{ form.name }}{{ form.name.errors }}</td>
-            </tr>
-            <tr{% if form.start_date.errors %} class="errorlist"{% endif %}>
-               <td>{{ form.start_date.label }}</td>
-               <td>{{ form.start_date }}{{ form.start_date.errors }}</td>
-            </tr>
-            <tr{% if form.end_date.errors %} class="errorlist"{% endif %}>
-               <td>{{ form.end_date.label }}</td>
-               <td>{{ form.end_date }}{{ form.end_date.errors }}</td>
-            </tr>
-         </table>
-      </div>
-      
-      <div id="related-fields">
-         <h2>Departments</h2>
-         {{ form.organizationalunits }}
-         
-         <h2>Equipment types</h2>
-         {{ form.equipmenttypes }}
-         
-      </div>
-         
+	  <div id="brief-information">
+	  {% for error in form.errors %}{{ error }} {% endfor %}
+		 <h2>Brief information</h2>
+		 <table class="detail">
+			<tr{% if form.name.errors %} class="errorlist"{% endif %}>
+			   <td>{{ form.name.label }}</td>
+			   <td>{{ form.name }}{{ form.name.errors }}</td>
+			</tr>
+			<tr{% if form.start_date.errors %} class="errorlist"{% endif %}>
+			   <td>{{ form.start_date.label }}</td>
+			   <td>{{ form.start_date }}{{ form.start_date.errors }}</td>
+			</tr>
+			<tr{% if form.end_date.errors %} class="errorlist"{% endif %}>
+			   <td>{{ form.end_date.label }}</td>
+			   <td>{{ form.end_date }}{{ form.end_date.errors }}</td>
+			</tr>
+		 </table>
+	  </div>
+	  
+	  <div id="related-fields">
+		 <h2>Departments</h2>
+		 {{ form.organizationalunits }}
+		 
+		 <h2>Equipment types</h2>
+		 {{ form.equipmenttypes }}
+		 
+	  </div>
+		 
    </form>
 </div>
 {% endblock %}

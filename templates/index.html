@@ -7,33 +7,33 @@
 
 {% block content %}
    <div id="blog">
-      
-      <h1>Updates from the Developer</h1>
-      
-      {% if commit_history %}
-      <h2>Latest three commit messages</h2>
-         {% for commit in commit_history %}
-         <div id="git" class="banner">
-            Commit <strong>{{ commit.id|truncate_chars:7 }}</strong> by {{ commit.author.name }}: <em>{{ commit.message|safe }}</em>
-         </div>
-         {% endfor %}
-      {% endif %}
-         
-      {% for post in object_list %}
-         <div id="post-{{ post.id }}">
-         	<h2>
-         	   {{ post.title }}
-         	   <span class="head">
-         	      {{ post.pub_date|date:'n/j/Y g:iA' }}
-         	   </span>
-         	</h2>
-         	<div class="post">
-         	   {{ post.content|safe }}
-         	</div>
-      	</div>
-      {% endfor %}
-      {% if not object_list %}
-         <p>Welcome to Etcetera! There are no updates from the developer at this time.</p>
-      {% endif %}
+	  
+	  <h1>Updates from the Developer</h1>
+	  
+	  {% if commit_history %}
+	  <h2>Latest three commit messages</h2>
+		 {% for commit in commit_history %}
+		 <div id="git" class="banner">
+			Commit <strong>{{ commit.id|truncate_chars:7 }}</strong> by {{ commit.author.name }}: <em>{{ commit.message|safe }}</em>
+		 </div>
+		 {% endfor %}
+	  {% endif %}
+		 
+	  {% for post in object_list %}
+		 <div id="post-{{ post.id }}">
+		 	<h2>
+		 	   {{ post.title }}
+		 	   <span class="head">
+		 		  {{ post.pub_date|date:'n/j/Y g:iA' }}
+		 	   </span>
+		 	</h2>
+		 	<div class="post">
+		 	   {{ post.content|safe }}
+		 	</div>
+	  	</div>
+	  {% endfor %}
+	  {% if not object_list %}
+		 <p>Welcome to Etcetera! There are no updates from the developer at this time.</p>
+	  {% endif %}
 	</div>
 {% endblock %}

@@ -16,7 +16,7 @@
    <a href="{% url etcetera-home %}">Home</a> &rsaquo;
    <a href="{% url checkout-index %}">Checkout</a> &rsaquo;
    <a href="{% url checkout-detail object.id %}">
-      Checkout #{{ object.id }}
+	  Checkout #{{ object.id }}
    </a> &rsaquo;
    Duplicate
 {% endblock %}
@@ -25,41 +25,41 @@
 <div id="detail">
 
    {% if msg %}
-      <div id="notify" class="banner">
-         {{ msg }}
-      </div>
+	  <div id="notify" class="banner">
+		 {{ msg }}
+	  </div>
    {% endif %}
 
    <form action="" method="POST">
    <h1>
-      <span class="right">
-         <a href="{% url checkout-detail object.id %}">
-            return to checkout #{{ object.id }}
-         </a>
-      </span>
-      Duplicating Checkout #{{ object.id }}
+	  <span class="right">
+		 <a href="{% url checkout-detail object.id %}">
+			return to checkout #{{ object.id }}
+		 </a>
+	  </span>
+	  Duplicating Checkout #{{ object.id }}
    </h1>
    
    <p>
-      Enter new delivery/pickup dates and return dates for each duplicate of this checkout.
+	  Enter new delivery/pickup dates and return dates for each duplicate of this checkout.
    </p>
    <p>
-      When you're done, you may <a href="{% url checkout-detail object.id %}">return to the checkout from which you came</a>.
+	  When you're done, you may <a href="{% url checkout-detail object.id %}">return to the checkout from which you came</a>.
    </p>
-      <form action="" method="POST">
-         <table>
-            <tr{% if form.out_date.errors %} class="errorlist"{% endif %}>
-               <td class="tablehead">{{ form.out_date.label }}</td>
-               <td>{{ form.out_date }}</td>
-               <td>{{ form.out_date.errors }}</td>
-            </tr>
-            <tr{% if form.return_date.errors %} class="errorlist"{% endif %}>
-               <td class="tablehead">{{ form.return_date.label }}</td>
-               <td>{{ form.return_date }}</td>
-               <td>{{ form.return_date.errors }}</td>
-            </tr>
-         </table>
-         <input type="submit" name="submit" value="Add a new item" id="submit" />
+	  <form action="" method="POST">
+		 <table>
+			<tr{% if form.out_date.errors %} class="errorlist"{% endif %}>
+			   <td class="tablehead">{{ form.out_date.label }}</td>
+			   <td>{{ form.out_date }}</td>
+			   <td>{{ form.out_date.errors }}</td>
+			</tr>
+			<tr{% if form.return_date.errors %} class="errorlist"{% endif %}>
+			   <td class="tablehead">{{ form.return_date.label }}</td>
+			   <td>{{ form.return_date }}</td>
+			   <td>{{ form.return_date.errors }}</td>
+			</tr>
+		 </table>
+		 <input type="submit" name="submit" value="Add a new item" id="submit" />
    </form>
 </div>
 {% endblock %}

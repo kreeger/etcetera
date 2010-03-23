@@ -3,23 +3,23 @@
 
 {% block title %}
    {% if object %}Service &raquo; Editing work order #{{ object.id }}
-      {% else %}New work order
+	  {% else %}New work order
    {% endif %}
 {% endblock %}
 
 {% block breadcrumb %}
    <a href="{% url etcetera-home %}">Home</a> &rsaquo; 
    {% if object.completion_date %}
-      <a href="{% url service-index 'completed' %}">Service (Completed)</a>
+	  <a href="{% url service-index 'completed' %}">Service (Completed)</a>
    {% else %}
-      <a href="{% url service-index %}">Service</a>
+	  <a href="{% url service-index %}">Service</a>
    {% endif %} &rsaquo;
    {% if object %}
-      <a href="{% url service-detail object.id %}">
-         Work Order #{{ object.id }}
-      </a> &rsaquo; Edit
+	  <a href="{% url service-detail object.id %}">
+		 Work Order #{{ object.id }}
+	  </a> &rsaquo; Edit
    {% else %}
-      New
+	  New
    {% endif %}
 {% endblock %}
 
@@ -27,132 +27,132 @@
 <div id="detail">
    <form action="" method="POST">
    <div id="headers">
-      <h1>
-         {% if object %}
-            Work Order #{{ object.id }}: <span class="head">edit mode</span>
-         {% else %}
-            New work order <span class="head">creation mode</span>
-         {% endif %}
-      </h1>
+	  <h1>
+		 {% if object %}
+			Work Order #{{ object.id }}: <span class="head">edit mode</span>
+		 {% else %}
+			New work order <span class="head">creation mode</span>
+		 {% endif %}
+	  </h1>
 
-      <ul>
-         {% if object %}
-            <li class="created">
-               <span class="head">Created</span>
-               {{ object.creation_date|date:'n/j/Y g:iA' }}
-            </li>
-            <li class="closed">
-               <span class="head">{{ form.canceled.label }}?</span> 
-                  {{ form.canceled }}{{ form.canceled.errors }}
-            </li>
-         {% endif %}
-         <li>Priority: {{ form.priority }}
-         {{ form.priority.errors }}</li>
-         <li>Work type: {{ form.work_type }}{{ form.work_type.errors }}</li>
-      </ul>
+	  <ul>
+		 {% if object %}
+			<li class="created">
+			   <span class="head">Created</span>
+			   {{ object.creation_date|date:'n/j/Y g:iA' }}
+			</li>
+			<li class="closed">
+			   <span class="head">{{ form.canceled.label }}?</span> 
+				  {{ form.canceled }}{{ form.canceled.errors }}
+			</li>
+		 {% endif %}
+		 <li>Priority: {{ form.priority }}
+		 {{ form.priority.errors }}</li>
+		 <li>Work type: {{ form.work_type }}{{ form.work_type.errors }}</li>
+	  </ul>
    </div>
    
    <div id="actions">
-      <h2>Actions</h2>
-      {{ form_actions|safe }}
+	  <h2>Actions</h2>
+	  {{ form_actions|safe }}
    </div>
    
    <div id="brief-information">
-      <h2>Brief information</h2>
-      <table class="detail">
-         <tr{% if form.first_name.errors %} class="errorlist"{% endif %}>
-            <td>{{ form.first_name.label }}</td>
-            <td>{{ form.first_name }}{{ form.first_name.errors }}</td>
-         </tr>
-         <tr{% if form.last_name.errors %} class="errorlist"{% endif %}>
-            <td class="tablehead">{{ form.last_name.label }}</td>
-            <td>{{ form.last_name }}{{ form.last_name.errors }}</td>
-         </tr>
-         <tr{% if form.department.errors %} class="errorlist"{% endif %}>
-            <td>{{ form.department.label }}</td>
-            <td>{{ form.department }}{{ form.department.errors }}</td>
-         </tr>
-         {% if object %}
-            <tr>
-               <td>Department (user)</td>
-               <td>{{ object.department_text }}</td>
-            </tr>
-         {% endif %}
-         <tr{% if form.phone.errors %} class="errorlist"{% endif %}>
-            <td>{{ form.phone.label }}</td>
-            <td>{{ form.phone }}{{ form.phone.errors }}</td>
-         </tr>
-         <tr{% if form.email.errors %} class="errorlist"{% endif %}>
-            <td>{{ form.email.label }}</td>
-            <td>{{ form.email }}{{ form.email.errors }}</td>
-         </tr>
-         <tr{% if form.equipment_text.errors %} class="errorlist"{% endif %}>
-            <td>Equipment description</td>
-            <td>{{ form.equipment_text }}{{ form.equipment_text.errors }}</td>
-         </tr>
-         <tr{% if form.barcode.errors %} class="errorlist"{% endif %}>
-            <td>{{ form.barcode.label }}</td>
-            <td>{{ form.barcode }}{{ form.barcode.errors }}</td>
-         </tr>
-         <tr{% if form.building.errors %} class="errorlist"{% endif %}>
-            <td>{{ form.building.label }}</td>
-            <td>{{ form.building }}{{ form.building.errors }}</td>
-         </tr>
-         <tr{% if form.room.errors %} class="errorlist"{% endif %}>
-            <td>{{ form.room.label }}</td>
-            <td>{{ form.room }}{{ form.room.errors }}</td>
-         </tr>
-         <tr{% if form.location_text.errors %} class="errorlist"{% endif %}>
-            <td>Other location</td>
-            <td>{{ form.location_text }}{{ form.location_text.errors }}</td>
-         </tr>
-      </table>
+	  <h2>Brief information</h2>
+	  <table class="detail">
+		 <tr{% if form.first_name.errors %} class="errorlist"{% endif %}>
+			<td>{{ form.first_name.label }}</td>
+			<td>{{ form.first_name }}{{ form.first_name.errors }}</td>
+		 </tr>
+		 <tr{% if form.last_name.errors %} class="errorlist"{% endif %}>
+			<td class="tablehead">{{ form.last_name.label }}</td>
+			<td>{{ form.last_name }}{{ form.last_name.errors }}</td>
+		 </tr>
+		 <tr{% if form.department.errors %} class="errorlist"{% endif %}>
+			<td>{{ form.department.label }}</td>
+			<td>{{ form.department }}{{ form.department.errors }}</td>
+		 </tr>
+		 {% if object %}
+			<tr>
+			   <td>Department (user)</td>
+			   <td>{{ object.department_text }}</td>
+			</tr>
+		 {% endif %}
+		 <tr{% if form.phone.errors %} class="errorlist"{% endif %}>
+			<td>{{ form.phone.label }}</td>
+			<td>{{ form.phone }}{{ form.phone.errors }}</td>
+		 </tr>
+		 <tr{% if form.email.errors %} class="errorlist"{% endif %}>
+			<td>{{ form.email.label }}</td>
+			<td>{{ form.email }}{{ form.email.errors }}</td>
+		 </tr>
+		 <tr{% if form.equipment_text.errors %} class="errorlist"{% endif %}>
+			<td>Equipment description</td>
+			<td>{{ form.equipment_text }}{{ form.equipment_text.errors }}</td>
+		 </tr>
+		 <tr{% if form.barcode.errors %} class="errorlist"{% endif %}>
+			<td>{{ form.barcode.label }}</td>
+			<td>{{ form.barcode }}{{ form.barcode.errors }}</td>
+		 </tr>
+		 <tr{% if form.building.errors %} class="errorlist"{% endif %}>
+			<td>{{ form.building.label }}</td>
+			<td>{{ form.building }}{{ form.building.errors }}</td>
+		 </tr>
+		 <tr{% if form.room.errors %} class="errorlist"{% endif %}>
+			<td>{{ form.room.label }}</td>
+			<td>{{ form.room }}{{ form.room.errors }}</td>
+		 </tr>
+		 <tr{% if form.location_text.errors %} class="errorlist"{% endif %}>
+			<td>Other location</td>
+			<td>{{ form.location_text }}{{ form.location_text.errors }}</td>
+		 </tr>
+	  </table>
    </div>
    
    <div id="financial-information">
-      <h2>Financial information</h2>
-      <table class="detail">
-         <tr{% if form.labor.errors %} class="errorlist"{% endif %}>
-            <td>{{ form.labor.label }}</td>
-            <td>{{ form.labor }}{{ form.labor.errors }}</td>
-         </tr>
-         <tr{% if form.material_costs.errors %} class="errorlist"{% endif %}>
-            <td>{{ form.material_costs.label }}</td>
-            <td>{{ form.material_costs }}{{ form.material_costs.errors }}</td>
-         </tr>
-         <tr{% if form.funding_source.errors %} class="errorlist"{% endif %}>
-            <td>{{ form.funding_source.label }}</td>
-            <td>{{ form.funding_source }}{{ form.funding_source.errors }}</td>
-         </tr>
-         <tr{% if form.budget.errors %} class="errorlist"{% endif %}>
-            <td>{{ form.budget.label }}</td>
-            <td>{{ form.budget }}{{ form.budget.errors }}</td>
-         </tr>
-      </table>
+	  <h2>Financial information</h2>
+	  <table class="detail">
+		 <tr{% if form.labor.errors %} class="errorlist"{% endif %}>
+			<td>{{ form.labor.label }}</td>
+			<td>{{ form.labor }}{{ form.labor.errors }}</td>
+		 </tr>
+		 <tr{% if form.material_costs.errors %} class="errorlist"{% endif %}>
+			<td>{{ form.material_costs.label }}</td>
+			<td>{{ form.material_costs }}{{ form.material_costs.errors }}</td>
+		 </tr>
+		 <tr{% if form.funding_source.errors %} class="errorlist"{% endif %}>
+			<td>{{ form.funding_source.label }}</td>
+			<td>{{ form.funding_source }}{{ form.funding_source.errors }}</td>
+		 </tr>
+		 <tr{% if form.budget.errors %} class="errorlist"{% endif %}>
+			<td>{{ form.budget.label }}</td>
+			<td>{{ form.budget }}{{ form.budget.errors }}</td>
+		 </tr>
+	  </table>
    </div>
    
    <div id="description">
-      <h2>{{ form.description.label }}</h2>
-      <p{% if form.description.errors %} class="errorlist"{% endif %}>
-         {{ form.description }}{{ form.description.errors }}
-      </p>
+	  <h2>{{ form.description.label }}</h2>
+	  <p{% if form.description.errors %} class="errorlist"{% endif %}>
+		 {{ form.description }}{{ form.description.errors }}
+	  </p>
    </div>
    
    <div id="technician-information">
-      <h2>Technician information</h2>
-      <table class="detail">
-         <tr{% if form.technician.errors %} class="errorlist"{% endif %}>
-            <td class="tablehead">{{ form.technician.label }}</td>
-            <td>{{ form.technician }}{{ form.technician.errors }}</td>
-         </tr>
-      </table>
+	  <h2>Technician information</h2>
+	  <table class="detail">
+		 <tr{% if form.technician.errors %} class="errorlist"{% endif %}>
+			<td class="tablehead">{{ form.technician.label }}</td>
+			<td>{{ form.technician }}{{ form.technician.errors }}</td>
+		 </tr>
+	  </table>
    </div>
    
    <div id="actions-taken">
-      <h2>{{ form.actions.label }}</h2>
-      <p{% if form.actions.errors %} class="errorlist"{% endif %}>
-         {{ form.actions }}{{ form.actions.errors }}
-      </p>
+	  <h2>{{ form.actions.label }}</h2>
+	  <p{% if form.actions.errors %} class="errorlist"{% endif %}>
+		 {{ form.actions }}{{ form.actions.errors }}
+	  </p>
    </div>
    </form>
 </div>

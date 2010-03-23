@@ -9,88 +9,88 @@
 
 {% block content %}
    <div id="detail">
-      <div id="profile-headers">
-         <h1>
-            {% if the_user == user %}
-               <span class="right">
-                  <a href="{% url user-edit %}">edit profile</a>
-                  &bull; <a href="{% url change-password %}">change password</a>
-               </span>
-            {% endif %}
-            {{ the_user.get_full_name }}
-            {% if the_user == user %}
-               <span class="head">this is you</span>
-            {% endif %}
-         </h1>
+	  <div id="profile-headers">
+		 <h1>
+			{% if the_user == user %}
+			   <span class="right">
+				  <a href="{% url user-edit %}">edit profile</a>
+				  &bull; <a href="{% url change-password %}">change password</a>
+			   </span>
+			{% endif %}
+			{{ the_user.get_full_name }}
+			{% if the_user == user %}
+			   <span class="head">this is you</span>
+			{% endif %}
+		 </h1>
 
-         <ul>
-            <li>
-               <a href="{% url user-detail the_user.username %}"{% if not view_type %} class="active"{% endif %}>
-                  Profile
-               </a>
-            </li>
-            <li>
-               <a href="{% url user-related the_user.username 'workorders' %}"{% if view_type == 'workorders' %} class="active"{% endif %}>
-                  Work Orders
-               </a>
-            </li>
-            <li>
-               <a href="{% url user-related the_user.username 'checkouts' %}"{% if view_type == 'checkouts' %} class="active"{% endif %}>
-                  Checkouts
-               </a>
-            </li>
-         </ul>
-      </div>
-      
-      <div id="profile-detail">
-         {% block profile_detail %}
-            <table class="profile">
-                <tr>
-                   <td>
-                      <img src="{% if the_user.profile.image %}{{ the_user.profile.image.url }}{% else %}/_media/images/profile-placeholder.png{% endif %}" alt="{{ user }}" />
-                  </td>
-                  <td>
-                     <table class="detail">
-                        {% if the_user.profile.title %}
-                           <tr>
-                              <td>title</td>
-                              <td>{{ the_user.profile.title }}</td>
-                           </tr>
-                        {% endif %}
-                        <tr>
-                           <td>email</td>
-                           <td>
-                              <a href="mailto:{{ user.email }}">
-                                 {{ the_user.email }}
-                              </a>
-                           </td>
-                        </tr>
-                        {% if the_user.profile.phone %}
-                           <tr>
-                              <td>phone</td>
-                              <td>{{ the_user.profile.phone }}</td>
-                           </tr>
-                        {% endif %}
-                        {% if the_user.profile.office_building %}
-                           <tr>
-                              <td>location</td>
-                              <td>
-                                 {{ the_user.profile.office_building.abbreviation }}
-                                 {{ the_user.profile.office_room }}
-                              </td>
-                           </tr>
-                        {% endif %}
-                        {% if the_user.workorders.active.exists %}
-                           <tr>
-                              <td>open workorders</td>
-                              <td>{{ the_user.workorders.active.count }}</td>
-                           </tr>
-                        {% endif %}
-                     </table>
-                  </td>
-               </tr>
-            </table>
-         {% endblock %}
-      </div>
+		 <ul>
+			<li>
+			   <a href="{% url user-detail the_user.username %}"{% if not view_type %} class="active"{% endif %}>
+				  Profile
+			   </a>
+			</li>
+			<li>
+			   <a href="{% url user-related the_user.username 'workorders' %}"{% if view_type == 'workorders' %} class="active"{% endif %}>
+				  Work Orders
+			   </a>
+			</li>
+			<li>
+			   <a href="{% url user-related the_user.username 'checkouts' %}"{% if view_type == 'checkouts' %} class="active"{% endif %}>
+				  Checkouts
+			   </a>
+			</li>
+		 </ul>
+	  </div>
+	  
+	  <div id="profile-detail">
+		 {% block profile_detail %}
+			<table class="profile">
+				<tr>
+				   <td>
+					  <img src="{% if the_user.profile.image %}{{ the_user.profile.image.url }}{% else %}/_media/images/profile-placeholder.png{% endif %}" alt="{{ user }}" />
+				  </td>
+				  <td>
+					 <table class="detail">
+						{% if the_user.profile.title %}
+						   <tr>
+							  <td>title</td>
+							  <td>{{ the_user.profile.title }}</td>
+						   </tr>
+						{% endif %}
+						<tr>
+						   <td>email</td>
+						   <td>
+							  <a href="mailto:{{ user.email }}">
+								 {{ the_user.email }}
+							  </a>
+						   </td>
+						</tr>
+						{% if the_user.profile.phone %}
+						   <tr>
+							  <td>phone</td>
+							  <td>{{ the_user.profile.phone }}</td>
+						   </tr>
+						{% endif %}
+						{% if the_user.profile.office_building %}
+						   <tr>
+							  <td>location</td>
+							  <td>
+								 {{ the_user.profile.office_building.abbreviation }}
+								 {{ the_user.profile.office_room }}
+							  </td>
+						   </tr>
+						{% endif %}
+						{% if the_user.workorders.active.exists %}
+						   <tr>
+							  <td>open workorders</td>
+							  <td>{{ the_user.workorders.active.count }}</td>
+						   </tr>
+						{% endif %}
+					 </table>
+				  </td>
+			   </tr>
+			</table>
+		 {% endblock %}
+	  </div>
 	</div>
 {% endblock %}

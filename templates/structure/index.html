@@ -10,119 +10,119 @@
 
 {% block subnav %}
    <ul>
-      <li{% if view_type == 'buildings' %} class="active"{% endif %}>
-         <a href="{% url structure-index 'buildings' %}">
-            Buildings
-         </a>
-      </li>
-      <li{% if view_type == 'departments' %} class="active"{% endif %}>
-         <a href="{% url structure-index 'departments' %}">
-            Departments
-         </a>
-      </li>
-      <li{% if view_type == 'campuses' %} class="active"{% endif %}>
-         <a href="{% url structure-index 'campuses' %}">
-            Campuses
-         </a>
-      </li>
+	  <li{% if view_type == 'buildings' %} class="active"{% endif %}>
+		 <a href="{% url structure-index 'buildings' %}">
+			Buildings
+		 </a>
+	  </li>
+	  <li{% if view_type == 'departments' %} class="active"{% endif %}>
+		 <a href="{% url structure-index 'departments' %}">
+			Departments
+		 </a>
+	  </li>
+	  <li{% if view_type == 'campuses' %} class="active"{% endif %}>
+		 <a href="{% url structure-index 'campuses' %}">
+			Campuses
+		 </a>
+	  </li>
    </ul>
 {% endblock %}
 
 {% block content %}
 <div id="list">
    <h1>
-      <span class="right">
-         <a href="{% url structure-new view_type %}">add a new {{ view_type|unpluralize }}</a>
-      </span>
-      
-      {{ view_type|capfirst }}
-      
-      {% if q %}
-         <span class="head">searching for: "{{ q }}"</span>
-         <span class="small">(<a href=".">click here to reset</a>)</span>
-      {% endif %}
+	  <span class="right">
+		 <a href="{% url structure-new view_type %}">add a new {{ view_type|unpluralize }}</a>
+	  </span>
+	  
+	  {{ view_type|capfirst }}
+	  
+	  {% if q %}
+		 <span class="head">searching for: "{{ q }}"</span>
+		 <span class="small">(<a href=".">click here to reset</a>)</span>
+	  {% endif %}
    </h1>
    
    {% if form %}
    <div id="searchform">
-      <form action="">
-         {{ form.q }}
-         <input type="submit" name="submit" value="Search" id="submit" />
-      </form>
-      {% if q %} {% endif %}
+	  <form action="">
+		 {{ form.q }}
+		 <input type="submit" name="submit" value="Search" id="submit" />
+	  </form>
+	  {% if q %} {% endif %}
    </div>
    {% endif %}
    <table id="list">
-      <tr id="headerrow">
-         <td>{{ view_type|capfirst|unpluralize }}
-         {% if view_type == 'buildings' %}
-            <td>Abbreviation</td>
-            <td>Campus</td>
-         {% endif %}
-         {% if view_type == 'departments' %}
-            <td>Parent</td>
-         {% endif %}
-         {% if view_type == 'campuses' %}
-            <td>City</td>
-            <td>State</td>
-         {% endif %}
-      </tr>
-      {% for object in object_list %}
-         <tr class="datarow">
-            <td>
-               {% if view_type == 'buildings' %}
-                  <a href="{% url building-detail object.abbreviation %}">
-               {% endif %}
-               {% if view_type == 'departments' %}
-                  <a href="{% url organizationalunit-detail object.id %}">
-               {% endif %}
-               {% if view_type == 'campuses' %}
-                  <a href="{% url campus-detail object.slug %}">
-               {% endif %}
-                  {{ object.name }}
-               </a>
-            </td>
-            {% if view_type == 'buildings' %}
-               <td>
-                  <a href="{% url building-detail object.abbreviation %}">
-                     {{ object.abbreviation }}
-                  </a>
-               </td>         
-               <td>
-                  <a href="{% url building-detail object.abbreviation %}">
-                     {{ object.campus }}
-                  </a>
-               </td>
-            {% endif %}
-            {% if view_type == 'departments' %}
-               <td>
-                  <a href="{% url organizationalunit-detail object.id %}">
-                     {{ object.parent.name }}
-                  </a>
-               </td>
-            {% endif %}
-            {% if view_type == 'campuses' %}
-               <td>
-                  <a href="{% url campus-detail object.slug %}">
-                     {{ object.city }}
-                  </a>
-               </td>
-               <td>
-                  <a href="{% url campus-detail object.slug %}">
-                     {{ object.state }}
-                  </a>
-               </td>
-            {% endif %}
-         </tr>
-      {% endfor %}
+	  <tr id="headerrow">
+		 <td>{{ view_type|capfirst|unpluralize }}
+		 {% if view_type == 'buildings' %}
+			<td>Abbreviation</td>
+			<td>Campus</td>
+		 {% endif %}
+		 {% if view_type == 'departments' %}
+			<td>Parent</td>
+		 {% endif %}
+		 {% if view_type == 'campuses' %}
+			<td>City</td>
+			<td>State</td>
+		 {% endif %}
+	  </tr>
+	  {% for object in object_list %}
+		 <tr class="datarow">
+			<td>
+			   {% if view_type == 'buildings' %}
+				  <a href="{% url building-detail object.abbreviation %}">
+			   {% endif %}
+			   {% if view_type == 'departments' %}
+				  <a href="{% url organizationalunit-detail object.id %}">
+			   {% endif %}
+			   {% if view_type == 'campuses' %}
+				  <a href="{% url campus-detail object.slug %}">
+			   {% endif %}
+				  {{ object.name }}
+			   </a>
+			</td>
+			{% if view_type == 'buildings' %}
+			   <td>
+				  <a href="{% url building-detail object.abbreviation %}">
+					 {{ object.abbreviation }}
+				  </a>
+			   </td>		 
+			   <td>
+				  <a href="{% url building-detail object.abbreviation %}">
+					 {{ object.campus }}
+				  </a>
+			   </td>
+			{% endif %}
+			{% if view_type == 'departments' %}
+			   <td>
+				  <a href="{% url organizationalunit-detail object.id %}">
+					 {{ object.parent.name }}
+				  </a>
+			   </td>
+			{% endif %}
+			{% if view_type == 'campuses' %}
+			   <td>
+				  <a href="{% url campus-detail object.slug %}">
+					 {{ object.city }}
+				  </a>
+			   </td>
+			   <td>
+				  <a href="{% url campus-detail object.slug %}">
+					 {{ object.state }}
+				  </a>
+			   </td>
+			{% endif %}
+		 </tr>
+	  {% endfor %}
    </table>
    
    {% if paged_objects %}
-      {% if form.as_url_args %}
-         {% paginate form.as_url_args %}
-      {% else %}
-         {% paginate %}
-      {% endif %}
+	  {% if form.as_url_args %}
+		 {% paginate form.as_url_args %}
+	  {% else %}
+		 {% paginate %}
+	  {% endif %}
    {% endif %}
 </div>
 {% endblock %}

@@ -9,7 +9,7 @@
    <a href="{% url etcetera-home %}">Home</a> &rsaquo;
    <a href="{% url checkout-index %}">Checkout List</a> &rsaquo;
    <a href="{% url checkout-detail object.id %}">
-      Checkout #{{ object.id }}
+	  Checkout #{{ object.id }}
    </a> &rsaquo;
    Adding equipment
 {% endblock %}
@@ -19,96 +19,96 @@
    <h1>Adding equipment to Checkout #{{ object.id }}</h1>
    <p>{{ form.barcodes.help_text }}</p>
    <p>Note that if you're checking out a TV/DVD cart with a Video Unit
-      number, just add the barcode on the cart, and the rest of the equipment
-      will be added automatically.</p> 
+	  number, just add the barcode on the cart, and the rest of the equipment
+	  will be added automatically.</p> 
    {% if notfound.barcodes or notfound.video_unit or notfound.cc_unit or notfound.for_checkout %}
-      <div id="error" class="banner">
-         {% if notfound.barcodes %}
-            The following barcodes were not found:
-               {% for barcode in notfound.barcodes %}
-                  {{ barcode }}
-               {% endfor %}
-         {% endif %}
-         {% if notfound.video_unit %}
-            Video unit {{ notfound.video_unit }} was not found.
-         {% endif %}
-         {% if notfound.cc_unit %}
-            Computer cart unit {{ notfound.cc_unit }} was not found.
-         {% endif %}
-         {% if notfound.for_checkout %}
-            The following barcodes are not available for checkout:
-            {% for barcode in notfound.for_checkout %}
-               {{ barcode }}
-            {% endfor %}
-         {% endif %}
-      </div>
+	  <div id="error" class="banner">
+		 {% if notfound.barcodes %}
+			The following barcodes were not found:
+			   {% for barcode in notfound.barcodes %}
+				  {{ barcode }}
+			   {% endfor %}
+		 {% endif %}
+		 {% if notfound.video_unit %}
+			Video unit {{ notfound.video_unit }} was not found.
+		 {% endif %}
+		 {% if notfound.cc_unit %}
+			Computer cart unit {{ notfound.cc_unit }} was not found.
+		 {% endif %}
+		 {% if notfound.for_checkout %}
+			The following barcodes are not available for checkout:
+			{% for barcode in notfound.for_checkout %}
+			   {{ barcode }}
+			{% endfor %}
+		 {% endif %}
+	  </div>
    {% endif %}
    <form action="" method="POST" accept-charset="utf-8">
-      <table id="equip-add">
-         <tr>
-            <td class="tablehead">{{ form.barcodes.label }}</td>
-            <td>{{ form.barcodes }}</td>
-            <td class="note">{{ form.barcodes.help_text }}</td>
-         </tr>
-         <tr>
-            <td class="tablehead">{{ form.video_unit.label }}</td>
-            <td>{{ form.video_unit }}</td>
-            <td class="note">{{ form.video_unit.help_text }}</td>
-         </tr>
-         <tr>
-            <td class="tablehead">{{ form.cc_unit.label }}</td>
-            <td>{{ form.cc_unit }}</td>
-            <td class="note">{{ form.cc_unit.help_text }}</td>
-         </tr>
-      </table>
-      <div id="equip-submit">
-         <input type="submit" name="submit" value="Add equipment" id="submit" />
-      </div>
+	  <table id="equip-add">
+		 <tr>
+			<td class="tablehead">{{ form.barcodes.label }}</td>
+			<td>{{ form.barcodes }}</td>
+			<td class="note">{{ form.barcodes.help_text }}</td>
+		 </tr>
+		 <tr>
+			<td class="tablehead">{{ form.video_unit.label }}</td>
+			<td>{{ form.video_unit }}</td>
+			<td class="note">{{ form.video_unit.help_text }}</td>
+		 </tr>
+		 <tr>
+			<td class="tablehead">{{ form.cc_unit.label }}</td>
+			<td>{{ form.cc_unit }}</td>
+			<td class="note">{{ form.cc_unit.help_text }}</td>
+		 </tr>
+	  </table>
+	  <div id="equip-submit">
+		 <input type="submit" name="submit" value="Add equipment" id="submit" />
+	  </div>
    </form>
    <h2>Equipment list</h2>
    {% if object.equipment_list.all %}
    <p>To remove an item, click the minus (&mdash;)
-         in the <em>remove</em> column.</p>
-      <table id="list">
-         <tr id="headerrow">
-            <td>Barcode</td>
-            <td>Type</td>
-            <td>Make/Model</td>
-            <td>Serial</td>
-            <td>Remove?</td>
-         </tr>
-         {% for item in object.equipment_list.all %}
-            <tr class="datarow">
-               <td>
-                  <a href="{% url equipment-detail item.id %}">
-                     {{ item.barcode }}
-                  </a>
-               </td>
-               <td>
-                  <a href="{% url equipment-detail item.id %}">
-                     {{ item.equipment_type.name }}
-                  </a>
-               </td>
-               <td>
-                  <a href="{% url equipment-detail item.id %}">
-                     {{ item.make.name }} {{ item.model }}
-                  </a>
-               </td>
-               <td>
-                  <a href="{% url equipment-detail item.id %}">
-                     {{ item.serial }}
-                  </a>
-               </td>
-               <td>
-                  <a href="{% url checkout-eqrem object.id item.id %}">
-                     &mdash;
-                  </a>
-               </td>
-            </tr>
-         {% endfor %}
-      </table>
+		 in the <em>remove</em> column.</p>
+	  <table id="list">
+		 <tr id="headerrow">
+			<td>Barcode</td>
+			<td>Type</td>
+			<td>Make/Model</td>
+			<td>Serial</td>
+			<td>Remove?</td>
+		 </tr>
+		 {% for item in object.equipment_list.all %}
+			<tr class="datarow">
+			   <td>
+				  <a href="{% url equipment-detail item.id %}">
+					 {{ item.barcode }}
+				  </a>
+			   </td>
+			   <td>
+				  <a href="{% url equipment-detail item.id %}">
+					 {{ item.equipment_type.name }}
+				  </a>
+			   </td>
+			   <td>
+				  <a href="{% url equipment-detail item.id %}">
+					 {{ item.make.name }} {{ item.model }}
+				  </a>
+			   </td>
+			   <td>
+				  <a href="{% url equipment-detail item.id %}">
+					 {{ item.serial }}
+				  </a>
+			   </td>
+			   <td>
+				  <a href="{% url checkout-eqrem object.id item.id %}">
+					 &mdash;
+				  </a>
+			   </td>
+			</tr>
+		 {% endfor %}
+	  </table>
    {% else %}
-      <p>No specific equipment is attached to this checkout.</p>
+	  <p>No specific equipment is attached to this checkout.</p>
    {% endif %}
    <p><a href="../">Click here to return to the previous page.</a></p>
 </div>

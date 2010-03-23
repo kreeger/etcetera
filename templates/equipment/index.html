@@ -3,233 +3,233 @@
 
 {% block title %}
    {% if not view_type %}
-      Equipment
+	  Equipment
    {% endif %}
    {% if view_type == 'weekly' %}
-      Weekly Equipment Checklist
+	  Weekly Equipment Checklist
    {% endif %}
    {% if view_type == 'types' %}
-      Equipment Types
+	  Equipment Types
    {% endif %}
    {% if view_type == 'makes' %}
-      Equipment Makes
+	  Equipment Makes
    {% endif %}
 {% endblock %}
 
 {% block breadcrumb %}
    <a href="{% url etcetera-home %}">Home</a> &rsaquo;
    {% if not view_type %}
-      Equipment
+	  Equipment
    {% endif %}
    {% if view_type == 'weekly' %}
-      Weekly Equipment Checklist
+	  Weekly Equipment Checklist
    {% endif %}
    {% if view_type == 'types' %}
-      Equipment Types
+	  Equipment Types
    {% endif %}
    {% if view_type == 'makes' %}
-      Equipment Makes
+	  Equipment Makes
    {% endif %}
 {% endblock %}
 
 {% block subnav %}
    <ul>
-      <li{% if not view_type %} class="active"{% endif %}>
-         <a href="{% url equipment-index %}">Inventory</a>
-      </li>
-      <li{% if view_type == 'weekly' %} class="active"{% endif %}>
-         <a href="{% url equipment-index 'weekly' %}">Checklist</a>
-      </li>
-      <li{% if view_type == 'types' %} class="active"{% endif %}>
-         <a href="{% url equipmenttype-index %}">Types</a>
-      </li>
-      <li{% if view_type == 'makes' %} class="active"{% endif %}>
-         <a href="{% url makes-index %}">Makes</a>
-      </li>
+	  <li{% if not view_type %} class="active"{% endif %}>
+		 <a href="{% url equipment-index %}">Inventory</a>
+	  </li>
+	  <li{% if view_type == 'weekly' %} class="active"{% endif %}>
+		 <a href="{% url equipment-index 'weekly' %}">Checklist</a>
+	  </li>
+	  <li{% if view_type == 'types' %} class="active"{% endif %}>
+		 <a href="{% url equipmenttype-index %}">Types</a>
+	  </li>
+	  <li{% if view_type == 'makes' %} class="active"{% endif %}>
+		 <a href="{% url makes-index %}">Makes</a>
+	  </li>
    </ul>
 {% endblock %}
 
 {% block content %}
 <div id="list">
    <h1>
-      <span class="right">
-         total: {{ count }} &bull;
-         {% if not view_type %}
-            <a href="{% url equipment-new %}">add a new equipment item</a>
-         {% endif %}
-         {% if view_type == 'types' %}
-            <a href='{% url equipmenttype-new %}'>add a new equipment type</a>
-         {% endif %}
-         {% if view_type == 'makes' %}
-            <a href="{% url makes-new %}">add a new make</a>
-         {% endif %}
-      </span>
-      {% if not view_type %}
-         Equipment Inventory
-      {% endif %}
-      {% if view_type == 'weekly' %}
-         Weekly Equipment Checklist
-      {% endif %}
-      {% if view_type == 'types' %}
-         Equipment Types
-      {% endif %}
-      {% if view_type == 'makes' %}
-         Equipment Makes
-      {% endif %}
-      
-      {% if q %}
-         <span class="head">searching for: "{{ q }}"</span>
-         <span class="small">(<a href=".">click here to reset</a>)</span>
-      {% endif %}
+	  <span class="right">
+		 total: {{ count }} &bull;
+		 {% if not view_type %}
+			<a href="{% url equipment-new %}">add a new equipment item</a>
+		 {% endif %}
+		 {% if view_type == 'types' %}
+			<a href='{% url equipmenttype-new %}'>add a new equipment type</a>
+		 {% endif %}
+		 {% if view_type == 'makes' %}
+			<a href="{% url makes-new %}">add a new make</a>
+		 {% endif %}
+	  </span>
+	  {% if not view_type %}
+		 Equipment Inventory
+	  {% endif %}
+	  {% if view_type == 'weekly' %}
+		 Weekly Equipment Checklist
+	  {% endif %}
+	  {% if view_type == 'types' %}
+		 Equipment Types
+	  {% endif %}
+	  {% if view_type == 'makes' %}
+		 Equipment Makes
+	  {% endif %}
+	  
+	  {% if q %}
+		 <span class="head">searching for: "{{ q }}"</span>
+		 <span class="small">(<a href=".">click here to reset</a>)</span>
+	  {% endif %}
    </h1>
    
    {% if form %}
    <div id="searchform">
-      <form action="">
-         {{ form.q }}
-         {% if view_type == None %}
-            Search in:
-            {{ form.equipment_type }} {{ form.equipment_type.label }}
-            {{ form.barcode }} {{ form.barcode.label }}
-            {{ form.location }} {{ form.location.label }}
-            {{ form.serial }} {{ form.serial.label }}
-            {{ form.smsu_id }} {{ form.smsu_id.label }}
-            {{ form.comments }} {{ form.comments.label }}
-         {% endif %}
-         <input type="submit" name="submit" value="Search" id="submit" />
-      </form>
-      {% if q %} {% endif %}
+	  <form action="">
+		 {{ form.q }}
+		 {% if view_type == None %}
+			Search in:
+			{{ form.equipment_type }} {{ form.equipment_type.label }}
+			{{ form.barcode }} {{ form.barcode.label }}
+			{{ form.location }} {{ form.location.label }}
+			{{ form.serial }} {{ form.serial.label }}
+			{{ form.smsu_id }} {{ form.smsu_id.label }}
+			{{ form.comments }} {{ form.comments.label }}
+		 {% endif %}
+		 <input type="submit" name="submit" value="Search" id="submit" />
+	  </form>
+	  {% if q %} {% endif %}
    </div>
    {% endif %}
    <table id="list">
-      <tr>
-         {% if view_type == 'weekly' or view_type == None %}
-            {% if view_type == 'weekly' %}
-               <td>&radic;</td>
-            {% endif %}
-            <td>Barcode</td>
-            {% if view_type == 'weekly' %}
-               <td>SMS #</td>
-            {% endif %}
-            <td>Type</td>
-            <td>Make &amp; Model</td>
-            <td>Status</td>
-            <td>Location</td>
-            {% if view_type == 'weekly' %}
-               <td>Serial #</td>
-               <td>Vid Unit</td>
-               <td>Comp Unit</td>
-               <td>Comments</td>
-            {% endif %}
-         {% endif %}
-         {% if view_type == 'types' %}
-            <td>Equipment Type</td>
-            <td>Total</td>
-         {% endif %}
-         {% if view_type == 'makes' %}
-            <td>Make</td>
-            <td>Total</td>
-         {% endif %}
-      </tr>
-      {% for object in paged_objects.object_list %}
-         <tr>
-            {% if view_type == 'weekly' or view_type == None %}
-               {% if view_type == 'weekly' %}
-                  <td>
-                     <a href="{% url equipment-detail object.id %}">
-                        &nbsp;
-                     </a>
-                  </td>
-               {% endif %}
-               <td>
-                  <a href="{% url equipment-detail object.id %}">
-                     {{ object.barcode }}
-                  </a>
-               </td>
-               {% if view_type == 'weekly' %}
-                  <td>
-                     <a href="{% url equipment-detail object.id %}">
-                        {{ object.smsu_id }}
-                     </a>
-                  </td>
-               {% endif %}
-               <td>
-                  <a href="{% url equipment-detail object.id %}">
-                     {{ object.equipment_type.name }}
-                  </a>
-               </td>
-               <td>
-                  <a href="{% url equipment-detail object.id %}">
-                     {{ object.make.name }} {{ object.model }}
-                  </a>
-               </td>
-               <td>
-                  <a href="{% url equipment-detail object.id %}">
-                     {{ object.get_status_display }}
-                  </a>
-               </td>
-               <td>
-                  <a href="{% url equipment-detail object.id %}">
-                     {{ object.building.abbreviation }} {{ object.room }}
-                  </a>
-               </td>
-               {% if view_type == 'weekly' %}
-                  <td>
-                     <a href="{% url equipment-detail object.id %}">
-                        {{ object.serial }}
-                     </a>
-                  </td>
-                  <td>
-                     <a href="{% url equipment-detail object.id %}">
-                        {{ object.video_unit|default:"" }}
-                     </a>
-                  </td>
-                  <td>
-                     <a href="{% url equipment-detail object.id %}">
-                        {{ object.cc_unit|default:"" }}
-                     </a>
-                  </td>
-                  <td>
-                     <a href="{% url equipment-detail object.id %}">
-                        {{ object.comments }}
-                     </a>
-                  </td>
-               {% endif %}
-            {% endif %}
-            {% if view_type == 'types' %}
-               <td>
-                  <a href="{% url equipmenttype-detail object.slug %}">
-                     {{ object.name }}
-                  </a>
-               </td>
-               <td>
-                  <a href="{% url equipmenttype-detail object.slug %}">
-                     {{ object.eq_count }}
-                  </a>
-               </td>
-            {% endif %}
-            {% if view_type == 'makes' %}
-               <td>
-                  <a href="{% url makes-detail object.slug %}">
-                     {{ object.name }}
-                  </a>
-               </td>
-               <td>
-                  <a href="{% url makes-detail object.slug %}">
-                     {{ object.make_count }}
-                  </a>
-               </td>
-            {% endif %}
-         </tr>
-      {% endfor %}
+	  <tr>
+		 {% if view_type == 'weekly' or view_type == None %}
+			{% if view_type == 'weekly' %}
+			   <td>&radic;</td>
+			{% endif %}
+			<td>Barcode</td>
+			{% if view_type == 'weekly' %}
+			   <td>SMS #</td>
+			{% endif %}
+			<td>Type</td>
+			<td>Make &amp; Model</td>
+			<td>Status</td>
+			<td>Location</td>
+			{% if view_type == 'weekly' %}
+			   <td>Serial #</td>
+			   <td>Vid Unit</td>
+			   <td>Comp Unit</td>
+			   <td>Comments</td>
+			{% endif %}
+		 {% endif %}
+		 {% if view_type == 'types' %}
+			<td>Equipment Type</td>
+			<td>Total</td>
+		 {% endif %}
+		 {% if view_type == 'makes' %}
+			<td>Make</td>
+			<td>Total</td>
+		 {% endif %}
+	  </tr>
+	  {% for object in paged_objects.object_list %}
+		 <tr>
+			{% if view_type == 'weekly' or view_type == None %}
+			   {% if view_type == 'weekly' %}
+				  <td>
+					 <a href="{% url equipment-detail object.id %}">
+						&nbsp;
+					 </a>
+				  </td>
+			   {% endif %}
+			   <td>
+				  <a href="{% url equipment-detail object.id %}">
+					 {{ object.barcode }}
+				  </a>
+			   </td>
+			   {% if view_type == 'weekly' %}
+				  <td>
+					 <a href="{% url equipment-detail object.id %}">
+						{{ object.smsu_id }}
+					 </a>
+				  </td>
+			   {% endif %}
+			   <td>
+				  <a href="{% url equipment-detail object.id %}">
+					 {{ object.equipment_type.name }}
+				  </a>
+			   </td>
+			   <td>
+				  <a href="{% url equipment-detail object.id %}">
+					 {{ object.make.name }} {{ object.model }}
+				  </a>
+			   </td>
+			   <td>
+				  <a href="{% url equipment-detail object.id %}">
+					 {{ object.get_status_display }}
+				  </a>
+			   </td>
+			   <td>
+				  <a href="{% url equipment-detail object.id %}">
+					 {{ object.building.abbreviation }} {{ object.room }}
+				  </a>
+			   </td>
+			   {% if view_type == 'weekly' %}
+				  <td>
+					 <a href="{% url equipment-detail object.id %}">
+						{{ object.serial }}
+					 </a>
+				  </td>
+				  <td>
+					 <a href="{% url equipment-detail object.id %}">
+						{{ object.video_unit|default:"" }}
+					 </a>
+				  </td>
+				  <td>
+					 <a href="{% url equipment-detail object.id %}">
+						{{ object.cc_unit|default:"" }}
+					 </a>
+				  </td>
+				  <td>
+					 <a href="{% url equipment-detail object.id %}">
+						{{ object.comments }}
+					 </a>
+				  </td>
+			   {% endif %}
+			{% endif %}
+			{% if view_type == 'types' %}
+			   <td>
+				  <a href="{% url equipmenttype-detail object.slug %}">
+					 {{ object.name }}
+				  </a>
+			   </td>
+			   <td>
+				  <a href="{% url equipmenttype-detail object.slug %}">
+					 {{ object.eq_count }}
+				  </a>
+			   </td>
+			{% endif %}
+			{% if view_type == 'makes' %}
+			   <td>
+				  <a href="{% url makes-detail object.slug %}">
+					 {{ object.name }}
+				  </a>
+			   </td>
+			   <td>
+				  <a href="{% url makes-detail object.slug %}">
+					 {{ object.make_count }}
+				  </a>
+			   </td>
+			{% endif %}
+		 </tr>
+	  {% endfor %}
    </table>
    
    {% if paged_objects %}
-      {% if form.as_url_args %}
-         {% paginate form.as_url_args %}
-      {% else %}
-         {% paginate %}
-      {% endif %}
+	  {% if form.as_url_args %}
+		 {% paginate form.as_url_args %}
+	  {% else %}
+		 {% paginate %}
+	  {% endif %}
    {% endif %}
 </div>
 {% endblock %}

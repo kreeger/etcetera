@@ -1,16 +1,16 @@
 <h1><img src="/_media/images/logo-v2-i.png" alt="" /></h1>
 <div class="greeting">
    <p>
-      Version 1.0.
+	  Version 1.0.
    </p>
    <p>
-      {% if user.is_authenticated %}
+	  {% if user.is_authenticated %}
    		Welcome,
    		<a href="{% url user-detail user.username %}">
    		   {% firstof user.first_name user %}</a>.
    		<a href="{% url etcetera-logout %}">Logout?</a>
-      {% else %}
-      	Welcome. <a href="{% url etcetera-login %}">Login</a>?
-      {% endif %}
+	  {% else %}
+	  	Welcome. <a href="{% url etcetera-login %}">Login</a>?
+	  {% endif %}
    </p>
 </div>

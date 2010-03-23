@@ -7,11 +7,11 @@
 
 {% block fullscript %}
    <script type="text/javascript" charset="utf-8">
-      $(function() {
-         $('#cancel').click(function() {
-            window.location = '{% url checkout-detail object.id %}';
-         });
-      });
+	  $(function() {
+		 $('#cancel').click(function() {
+			window.location = '{% url checkout-detail object.id %}';
+		 });
+	  });
    </script>
 {% endblock %}
 
@@ -19,7 +19,7 @@
    <a href="{% url etcetera-home %}">Home</a> &rsaquo;
    <a href="{% url checkout-index %}">Checkout</a> &rsaquo;
    <a href="{% url checkout-detail object.id %}">
-      Checkout #{{ object.id }}
+	  Checkout #{{ object.id }}
    </a> &rsaquo;
    Cancel
 {% endblock %}

@@ -19,8 +19,8 @@
 		{% endif %}
 		<table>
 		   <tr{% if form.work_type.errors %} class="errorlist"{% endif %}>
-		      <th>{{ form.work_type.label }}</th>
-		      <td>{{ form.work_type }}</td>
+			  <th>{{ form.work_type.label }}</th>
+			  <td>{{ form.work_type }}</td>
 				<td{% if form.work_type.errors %}>{{ form.work_type.errors }}
 				   {% else %} class="note">{{ form.work_type.help_text }}
    				{% endif %}
@@ -35,89 +35,89 @@
 				</td>
 			</tr>
    	   <tr{% if form.department.errors %} class="errorlist"{% endif %}>
-   	      <th>{{ form.department.label }}</th>
-   	      <td>{{ form.department }}</td>
+   		  <th>{{ form.department.label }}</th>
+   		  <td>{{ form.department }}</td>
    			<td{% if form.department.errors %}>{{ form.department.errors }}
    			   {% else %} class="note">{{ form.department.help_text }}
    			   {% endif %}
    			</td>
    		</tr>	
-	      <tr{% if form.phone.errors %} class="errorlist"{% endif %}>
-	         <th>{{ form.phone.label }}</th>
-	         <td>{{ form.phone }}</td>
+		  <tr{% if form.phone.errors %} class="errorlist"{% endif %}>
+			 <th>{{ form.phone.label }}</th>
+			 <td>{{ form.phone }}</td>
 				<td{% if form.phone.errors %}>{{ form.phone.errors }}
 				   {% else %} class="note">{{ form.phone.help_text }}
 				   {% endif %}
 				</td>
 			</tr>	
    	   <tr{% if form.email.errors %} class="errorlist"{% endif %}>
-   	      <th>{{ form.email.label }}</th>
-   	      <td>{{ form.email }}</td>
+   		  <th>{{ form.email.label }}</th>
+   		  <td>{{ form.email }}</td>
    			<td{% if form.email.errors %}>{{ form.email.errors }}
    			   {% else %} class="note">{{ form.email.help_text }}
    			   {% endif %}
    			</td>
    		</tr>
    	   <tr{% if form.building.errors %} class="errorlist"{% endif %}>
-   	      <th>{{ form.building.label }}</th>
-   	      <td>{{ form.building }}</td>
+   		  <th>{{ form.building.label }}</th>
+   		  <td>{{ form.building }}</td>
    			<td{% if form.building.errors %}>{{ form.building.errors }}
    			   {% else %} class="note">{{ form.building.help_text }}
    			   {% endif %}
    		   </td>
    		</tr>
    	   <tr{% if form.room.errors %} class="errorlist"{% endif %}>
-   	      <th>{{ form.room.label }}</th>
-   	      <td>{{ form.room }}</td>
-      		<td{% if form.room.errors %}>{{ form.room.errors }}
-      		   {% else %} class="note">{{ form.room.help_text }}
-      		   {% endif %}
-      		</td>
-      	</tr>
+   		  <th>{{ form.room.label }}</th>
+   		  <td>{{ form.room }}</td>
+	  		<td{% if form.room.errors %}>{{ form.room.errors }}
+	  		   {% else %} class="note">{{ form.room.help_text }}
+	  		   {% endif %}
+	  		</td>
+	  	</tr>
 			<tr id="coordinator_row"{% if form.coordinator_check.errors %} class="errorlist"{% endif %}>
 			   <th colspan="2">
-			      {{ form.coordinator_check.label }} {{ form.coordinator_check }}
+				  {{ form.coordinator_check.label }} {{ form.coordinator_check }}
 			   </th>
-      		<td{% if form.coordinator_check.errors %}>
-      		      {{ form.coordinator_check.errors }}
-   		      {% else %} class="note">
-   		         {{ form.coordinator_check.help_text }}
-   		      {% endif %}
+	  		<td{% if form.coordinator_check.errors %}>
+	  			  {{ form.coordinator_check.errors }}
+   			  {% else %} class="note">
+   				 {{ form.coordinator_check.help_text }}
+   			  {% endif %}
    		   </td>
    		</tr>		
 			<tr id="equipment_row"{% if form.equipment_text.errors %} class="errorlist"{% endif %}>
 			   <th>{{ form.equipment_text.label }}</th>
 			   <td>{{ form.equipment_text }}</td>
-      		<td{% if form.equipment_text.errors %}>
-      		      {{ form.equipment_text.errors }}
-      		   {% else %} class="note">
-      		      {{ form.equipment_text.help_text }}
-      		   {% endif %}
-      		</td>
-      	</tr>
+	  		<td{% if form.equipment_text.errors %}>
+	  			  {{ form.equipment_text.errors }}
+	  		   {% else %} class="note">
+	  			  {{ form.equipment_text.help_text }}
+	  		   {% endif %}
+	  		</td>
+	  	</tr>
 			<tr id="barcode_row"{% if form.barcode.errors %} class="errorlist"{% endif %}>
 			   <th>{{ form.barcode.label }}</th>
 			   <td>{{ form.barcode }}</td>
-      		<td{% if form.barcode.errors %}>{{ form.barcode.errors }}
-      		   {% else %} class="note">{{ form.barcode.help_text }}
-      		   {% endif %}
-      		</td>
-      	</tr>
+	  		<td{% if form.barcode.errors %}>{{ form.barcode.errors }}
+	  		   {% else %} class="note">{{ form.barcode.help_text }}
+	  		   {% endif %}
+	  		</td>
+	  	</tr>
 			<tr id="description_row"{% if form.description.errors %} class="errorlist"{% endif %}>
 			   <th>{{ form.description.label }}</th>
 			   <td>{{ form.description }}</td>
-      		<td{% if form.description.errors %}>{{ form.description.errors }}
-      		   {% else %} class="note">{{ form.description.help_text }}
-      		   {% endif %}
-      		</td>
-      	</tr>
+	  		<td{% if form.description.errors %}>{{ form.description.errors }}
+	  		   {% else %} class="note">{{ form.description.help_text }}
+	  		   {% endif %}
+	  		</td>
+	  	</tr>
 			<tr>
 			   <th>&nbsp;</th>
 			   <td>
-			      <p><small>Please click the Submit button only once. A few seconds will pass as we process your information.</small></p>
-			      <input type="submit" value="Submit &rarr;" id="submit" />
-		      </td>
-		      <td>&nbsp;</td>
+				  <p><small>Please click the Submit button only once. A few seconds will pass as we process your information.</small></p>
+				  <input type="submit" value="Submit &rarr;" id="submit" />
+			  </td>
+			  <td>&nbsp;</td>
 		   </tr>
 		</table>
 	</form>

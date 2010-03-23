@@ -14,74 +14,74 @@
 {% block content %}
 <div id="list">
    <div id="headers">
-      <h1>
-         {{ object.name }}
-      </h1>
+	  <h1>
+		 {{ object.name }}
+	  </h1>
    </div>
    
    <div id="actions">
-      <h2>Actions</h2>
-      {% if user.is_authenticated %}
-         <ul>
-            <li>
-               <a href="{% url makes-edit object.slug %}">edit</a>
-            </li>
-         </ul>
-      {% else %}
-         <p>You must be logged in to perform actions on this make.</p>
-      {% endif %}
+	  <h2>Actions</h2>
+	  {% if user.is_authenticated %}
+		 <ul>
+			<li>
+			   <a href="{% url makes-edit object.slug %}">edit</a>
+			</li>
+		 </ul>
+	  {% else %}
+		 <p>You must be logged in to perform actions on this make.</p>
+	  {% endif %}
    </div>
 
    <div id="brief-information">
-      <h2>Brief information</h2>
-      {% if object.website %}
-      <table class="detail">
-         {% if object.website %}
-            <tr>
-               <td>Website</td>
-               <td><a href="{{ object.website }}">{{ object.website }}</a></td>
-            </tr>
-         {% endif %}
-      </table>
-      {% else %}
-         <p>Basic information hasn't been entered yet for this item.</p>
-      {% endif %}
+	  <h2>Brief information</h2>
+	  {% if object.website %}
+	  <table class="detail">
+		 {% if object.website %}
+			<tr>
+			   <td>Website</td>
+			   <td><a href="{{ object.website }}">{{ object.website }}</a></td>
+			</tr>
+		 {% endif %}
+	  </table>
+	  {% else %}
+		 <p>Basic information hasn't been entered yet for this item.</p>
+	  {% endif %}
    </div>
    
    <div id="equipment-listing">
-      <h2>Equipment listing</h2>
-      <table id="list">
-         <tr>
-            <td>Barcode</td>
-            <td>Make &amp; Model</td>
-            <td>Status</td>
-            <td>Location</td>
-         </tr>
-         {% for object in object.equipment_set.all %}
-            <tr>
-               <td>
-                  <a href="{% url equipment-detail object.id %}">
-                     {{ object.barcode }}
-                  </a>
-               </td>
-               <td>
-                  <a href="{% url equipment-detail object.id %}">
-                     {{ object.make.name }} {{ object.model }}
-                  </a>
-               </td>
-               <td>
-                  <a href="{% url equipment-detail object.id %}">
-                     {{ object.get_status_display }}
-                  </a>
-               </td>
-               <td>
-                  <a href="{% url equipment-detail object.id %}">
-                     {{ object.building.abbreviation }} {{ object.room }}
-                  </a>
-               </td>
-            </tr>
-         {% endfor %}
-      </table>
+	  <h2>Equipment listing</h2>
+	  <table id="list">
+		 <tr>
+			<td>Barcode</td>
+			<td>Make &amp; Model</td>
+			<td>Status</td>
+			<td>Location</td>
+		 </tr>
+		 {% for object in object.equipment_set.all %}
+			<tr>
+			   <td>
+				  <a href="{% url equipment-detail object.id %}">
+					 {{ object.barcode }}
+				  </a>
+			   </td>
+			   <td>
+				  <a href="{% url equipment-detail object.id %}">
+					 {{ object.make.name }} {{ object.model }}
+				  </a>
+			   </td>
+			   <td>
+				  <a href="{% url equipment-detail object.id %}">
+					 {{ object.get_status_display }}
+				  </a>
+			   </td>
+			   <td>
+				  <a href="{% url equipment-detail object.id %}">
+					 {{ object.building.abbreviation }} {{ object.room }}
+				  </a>
+			   </td>
+			</tr>
+		 {% endfor %}
+	  </table>
    </div>
    
 </div>

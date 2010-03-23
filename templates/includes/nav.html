@@ -4,7 +4,7 @@
 	</li>
 	{% if user.is_authenticated %}
 	   <li{% if path_info == 'equipment' %} class="active"{% endif %}>
-	      <a href="{% url equipment-index %}">Equipment</a>
+		  <a href="{% url equipment-index %}">Equipment</a>
 	   </li>
    	<li{% if path_info == 'checkout' %} class="active"{% endif %}>
    	   <a href="{% url checkout-index %}">Checkout</a>
@@ -23,7 +23,7 @@
    	</li>
 	   {% if user.is_staff %}
    	   <li{% if path_info == 'admin' %} class="active"{% endif %}>
-   	      <a href="{% url admin:index %}" id="admin">Admin</a>
+   		  <a href="{% url admin:index %}" id="admin">Admin</a>
    	   </li>
    	{% endif %}
 	{% endif %}

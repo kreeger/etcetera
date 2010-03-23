@@ -2,9 +2,9 @@
 
 {% block title %}
    {% if not form.initial %}
-      Creating
+	  Creating
    {% else %}
-      Editing
+	  Editing
    {% endif %}
    {{ the_user.first_name }}'s Profile
 {% endblock %}
@@ -12,59 +12,59 @@
 {% block content %}
 <div id="detail">
    <form enctype="multipart/form-data" action="" method="POST">
-      
+	  
    <h1>
-      <span class="right">
-         <input type="submit" name="save" value="save" id="save" />
-      </span>
-      {{ the_user.first_name }} {{ the_user.last_name }}
-      <span class="head">
-         profile
-         {% if not form.initial %}
-            creation
-         {% else %}
-            edit
-         {% endif %}
-      </span>
+	  <span class="right">
+		 <input type="submit" name="save" value="save" id="save" />
+	  </span>
+	  {{ the_user.first_name }} {{ the_user.last_name }}
+	  <span class="head">
+		 profile
+		 {% if not form.initial %}
+			creation
+		 {% else %}
+			edit
+		 {% endif %}
+	  </span>
    </h1>
    
-    <table class="profile">
-       <tr>
-          <td>{{ form.image.label }}<br />
-             {{ form.image }}<br />
-             {{ form.image.errors }}
-         </td>
-         <td>
-            <table>
-               <tr{% if form.title.errors %} class="errorlist"{% endif %}>
-                  <td class="tablehead">{{ form.title.label }}</td>
-                  <td>{{ form.title }} {{ form.title.errors }}</td>
-               </tr>
-               <tr{% if form.phone.errors %} class="errorlist"{% endif %}>
-                  <td class="tablehead">phone</td>
-                  <td>{{ form.phone }} {{ form.phone.errors }}</td>
-               </tr>
-               <tr{% if form.office_building.errors %} class="errorlist"{% endif %}>
-                  <td class="tablehead">
-                     {{ form.office_building.label }}
-                  </td>
-                  <td>
-                     {{ form.office_building }}
-                     {{ form.office_building.errors }}
-                  </td>
-               </tr>
-               <tr{% if form.office_room.errors %} class="errorlist"{% endif %}>
-                  <td class="tablehead">
-                     {{ form.office_room.label }}
-                  </td>
-                  <td>
-                     {{ form.office_room }}
-                     {{ form.office_room.errors }}
-                  </td>
-               </tr>
-            </table>
-         </td>
-      </tr>
+	<table class="profile">
+	   <tr>
+		  <td>{{ form.image.label }}<br />
+			 {{ form.image }}<br />
+			 {{ form.image.errors }}
+		 </td>
+		 <td>
+			<table>
+			   <tr{% if form.title.errors %} class="errorlist"{% endif %}>
+				  <td class="tablehead">{{ form.title.label }}</td>
+				  <td>{{ form.title }} {{ form.title.errors }}</td>
+			   </tr>
+			   <tr{% if form.phone.errors %} class="errorlist"{% endif %}>
+				  <td class="tablehead">phone</td>
+				  <td>{{ form.phone }} {{ form.phone.errors }}</td>
+			   </tr>
+			   <tr{% if form.office_building.errors %} class="errorlist"{% endif %}>
+				  <td class="tablehead">
+					 {{ form.office_building.label }}
+				  </td>
+				  <td>
+					 {{ form.office_building }}
+					 {{ form.office_building.errors }}
+				  </td>
+			   </tr>
+			   <tr{% if form.office_room.errors %} class="errorlist"{% endif %}>
+				  <td class="tablehead">
+					 {{ form.office_room.label }}
+				  </td>
+				  <td>
+					 {{ form.office_room }}
+					 {{ form.office_room.errors }}
+				  </td>
+			   </tr>
+			</table>
+		 </td>
+	  </tr>
    </table>
    </form>
 </div>
