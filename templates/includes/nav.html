@@ -18,9 +18,6 @@
    	<li{% if path_info == 'reports' %} class="active"{% endif %}>
    	   <a href="{% url reports-index %}">Reports</a>
    	</li>
-   	<li{% if path_info == 'mlab' %} class="active"{% endif %}>
-   	   <a href="{% url mlab-index %}">mLab</a>
-   	</li>
 	   {% if user.is_staff %}
    	   <li{% if path_info == 'admin' %} class="active"{% endif %}>
    		  <a href="{% url admin:index %}" id="admin">Admin</a>
