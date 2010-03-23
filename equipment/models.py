@@ -75,7 +75,7 @@ class Equipment(models.Model):
     make = models.ForeignKey(Make, null=True, blank=True)
     model = models.CharField(blank=True, max_length=100)
     received_from = models.CharField(blank=True, max_length=100)
-    received_date = models.DateField(default=dt.datetime.today,
+    received_date = models.DateField(default=dt.datetime.today(),
         blank=True, null=True)
     value = models.DecimalField(max_digits=7, decimal_places=2, null=True)
     dof = models.CharField(blank=True, max_length=50)

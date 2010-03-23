@@ -4,14 +4,17 @@ from django import forms
 from django.contrib.auth import models as auth
 
 from etcetera.equipment import models as equipment
-from etcetera.extras.dateutil import formfield_callback, DateTimeField
+from etcetera.extras.dateutil import DateTimeField, DateField
 
 class EquipmentModelForm(forms.ModelForm):
-    formfield_callback = formfield_callback
-    
+    #formfield_callback = formfield_callback
     class Meta:
         model = equipment.Equipment
         exclude = ('custname','last_inventoried',)
+    
+    # This field is declared here because formfield_callback isn't working with
+    # dateutil.py
+    date_received = DateField(required=False)
 
 class EquipmentTypeModelForm(forms.ModelForm):
     class Meta:

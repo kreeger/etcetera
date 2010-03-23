@@ -7,10 +7,10 @@ But changed to:
     * Subclass the default fields, which means:
         - Standard EMPTY_VALUES handling.
         - Standard localized validation error messages.
-      It also means we are still let the parent class try the default
-      input formats before falling back to the dateutil parser. You
-      can change that by passing anempty ``input_formats`` list to
-      ``__init__``.
+    It also means we are still let the parent class try the default
+    input formats before falling back to the dateutil parser. You
+    can change that by passing anempty ``input_formats`` list to
+    ``__init__``.
 
     * Added support for ``SplitDateTimeWidget``.
 
@@ -39,19 +39,19 @@ class DateUtilMixin(object):
     ``parse_kwargs`` are additional arguments that will be passed
     to python-dateutil's ``parse`` function.
     """
-
+    
     def __init__(self, *args, **kwargs):
         self.parserinfo = kwargs.pop('parserinfo', None)
         self.parse_kwargs = kwargs.pop('parse_kwargs', {})
         super(DateUtilMixin, self).__init__(*args, **kwargs)
-
+    
     def parse(self, value):
         # Call dateutil.parser with the configured values.
         kw = self.parse_kwargs.copy()
         if self.parserinfo:
             kw.update({'parserinfo': self.parserinfo})
         return parser.parse(value, **kw)
-
+    
 
 class DateTimeField(DateUtilMixin, forms.DateTimeField):
     """DateTime field that accepts natural-language input.
