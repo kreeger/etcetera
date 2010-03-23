@@ -122,13 +122,14 @@ def delivery_assignment_mail(checkout, delivering_user):
 		fail_silently=False
 	)
 
-def canceled_mail(checkout):
+def canceled_mail(checkout, reason):
 	subject = "Your ETC equipment checkout (#%i) has been canceled" % (
 		checkout.id,
 	)
-	body = "%s,\nYour equipment checkout (#%i) has been canceled.\n\nIf, at any time, you'd like to view your canceled checkout, it is available here: http://etc.missouristate.edu/etcetera/checkout/%i.\n\n-------------\nPlease do not reply to this message, as nobody will receive it. If your checkout has been canceled in error, please contact Rebecca Grant at rebeccagrant@missouristate.edu.\n\nRegards,\nEducational Technology Center\nMissouri State University" % (
+	body = """%s,\nYour equipment checkout (#%i) has been canceled. The reason for cancellation is stated below:\n\n"%s"\n\nIf, at any time, you'd like to view your canceled checkout, it is available here: http://etc.missouristate.edu/etcetera/checkout/%i.\n\n-------------\nPlease do not reply to this message, as nobody will receive it. If your checkout has been canceled in error, please contact Rebecca Grant at rebeccagrant@missouristate.edu.\n\nRegards,\nEducational Technology Center\nMissouri State University""" % (
 		checkout.first_name,
 		checkout.id,
+		reason,
 		checkout.id
 	)
 	send_mail(

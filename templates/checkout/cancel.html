@@ -27,19 +27,22 @@
 {% block content %}
 <div id="detail">
 
-   <form action="" method="POST">
-   <h1>
-      Canceling Checkout #{{ object.id }}
-   </h1>
+	<h1>
+		Canceling Checkout #{{ object.id }}
+	</h1>
    
-   <p>
-      Are you sure you want to cancel checkout #{{ object.id }} for {{ object.first_name }} {{ object.last_name }}?
-   </p>
-      <form action="" method="POST">
-         <p>
-            <input type="submit" name="submit" value="Yeah, do it!" id="submit" />
-            <input type="button" name="cancel" value="No, don't! Go back!" id="cancel" />
-         </p>
-   </form>
+	<p>
+		Are you sure you want to cancel checkout #{{ object.id }} for {{ object.first_name }} {{ object.last_name }}?
+	</p>
+	
+	<form action="" method="POST">
+		<p>Please state the reason for cancellation below.</p>
+		{{ form.reason }} {{ form.reason.errors }}
+		<p>
+			<input type="submit" name="submit" value="Yeah, do it!" id="submit" />
+			<input type="button" name="cancel" value="No, don't! Go back!" id="cancel" />
+		</p>
+	</form>
+	
 </div>
 {% endblock %}

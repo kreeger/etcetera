@@ -121,3 +121,8 @@ class CheckoutEquipmentForm(forms.Form):
 class DupeForm(forms.Form):
 	out_date = DateTimeField()
 	return_date = DateTimeField()
+
+class CancelForm(forms.Form):
+    reason = forms.CharField(
+        widget=forms.Textarea
+    )
