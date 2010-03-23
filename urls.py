@@ -36,11 +36,6 @@ urlpatterns += patterns('',
     url(r'^service/', include('etcetera.service.urls')),
 )
 
-# For mLab resource management.
-urlpatterns += patterns('',
-    url(r'^mlab/', include('etcetera.mlab.urls')),
-)
-
 # For report generation.
 urlpatterns += patterns('',
     url(r'^reports/', include('etcetera.reports.urls')),
