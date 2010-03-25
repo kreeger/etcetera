@@ -2,51 +2,55 @@
 {% load etcetera_tags %}
 
 {% block title %}
-   {% if view_type == 'buildings' %}
+	{% if view_type == 'buildings' %}
 	  Buildings
-   {% else %}
+	{% endif %}
+	{% if view_type == 'departments' %}
 	  Departments
-   {% endif %}
-   &raquo; {{ object.name }}
-   {% if room %}&raquo; {{ room }}{% endif %}
+	{% endif %}
+	{% if view_type == 'campuses' %}
+	  Campuses
+	{% endif %}
+	&raquo; {{ object.name }}
+	{% if room %}&raquo; {{ room }}{% endif %}
 {% endblock %}
 
 {% block fullscript %}
-   <noscript>
+	<noscript>
 	  <style type="text/css"><!--
 	  .collapse-content { display: block; }
 	  //--></style>
-   </noscript>
-   <script src="/_media/js/collapse.js"></script>
+	</noscript>
+	<script src="/_media/js/collapse.js"></script>
 {% endblock %}
 
 {% block breadcrumb %}
-   <a href="{% url etcetera-home %}">Home</a> &rsaquo;
-   {% if view_type == 'buildings' %}
+	<a href="{% url etcetera-home %}">Home</a> &rsaquo;
+	{% if view_type == 'buildings' %}
 	  <a href="{% url structure-index 'buildings' %}">Buildings</a>
-   {% endif %}
-   {% if view_type == 'departments' %}
+	{% endif %}
+	{% if view_type == 'departments' %}
 	  <a href="{% url structure-index 'departments' %}">Departments</a>
-   {% endif %}
-   {% if view_type == 'campuses' %}
+	{% endif %}
+	{% if view_type == 'campuses' %}
 	  <a href="{% url structure-index 'campuses' %}">Campuses</a>
-   {% endif %}
+	{% endif %}
 	&rsaquo; 
 	{% if room %}
 	  <a href="{% url building-detail object.abbreviation %}">
 		 {{ object.name }}</a> &rsaquo; {{ room }}
-   {% else %}
+	{% else %}
 	  {{ object.name }}
-   {% endif %}
+	{% endif %}
 {% endblock %}
 
 {% block content %}
 <div id="detail">
-   <div id="headers">
+	<div id="headers">
 	  <h1>
 		 {{ object.name }}
 			{% if room %}
-			   <span class="head">{{ room }}</span>
+				<span class="head">{{ room }}</span>
 			{% endif %}
 	  </h1>
 	  {% if not view_type == 'campuses' %}
@@ -54,52 +58,52 @@
 		 <li>
 			Checkouts:
 			{% if object.room_checkouts.count %}
-			   {{ object.room_checkouts.count }}
+				{{ object.room_checkouts.count }}
 			{% else %}
-			   {% firstof object.checkouts.count '0' %}
+				{% firstof object.checkouts.count '0' %}
 			{% endif %}
 		 </li>
 		 <li>
 			Work orders:
 			{% if object.room_workorders.count %}
-			   {{ object.room_workorders.count }}
+				{{ object.room_workorders.count }}
 			{% else %}
-			   {% firstof object.workorders.count '0' %}
+				{% firstof object.workorders.count '0' %}
 			{% endif %}
 		 </li>
 		 {% if object.equipment_installed.exists %}
 			<li>
-			   Equipment installed: {{ object.equipment_installed.count }}
+				Equipment installed: {{ object.equipment_installed.count }}
 			</li>
 		 {% endif %}
 	  </ul>
 	  {% endif %}
-   </div>
-   
-   <div id="actions">
+	</div>
+	
+	<div id="actions">
 	  <h2>Actions</h2>
 	  {% if user.is_authenticated %}
 		 <ul>
 			<li>
-			   {% if view_type == 'buildings' %}
+				{% if view_type == 'buildings' %}
 				  <a href="{% url building-edit object.abbreviation %}">
-			   {% endif %}
-			   {% if view_type == 'departments' %}
+				{% endif %}
+				{% if view_type == 'departments' %}
 				  <a href="{% url organizationalunit-edit object.id %}">
-			   {% endif %}
-			   {% if view_type == 'campuses' %}
+				{% endif %}
+				{% if view_type == 'campuses' %}
 				  <a href="{% url campus-edit object.slug %}">
-			   {% endif %}
+				{% endif %}
 				  edit
-			   </a>
+				</a>
 			</li>
 		 </ul>
 	  {% else %}
 		 <p>You must be logged in to perform actions on this item.</p>
 	  {% endif %}
-   </div>
-   
-   <div id="brief-information">
+	</div>
+	
+	<div id="brief-information">
 	  <h2>Brief information</h2>
 	  <table class="detail">
 		 <tr>
@@ -108,64 +112,64 @@
 		 </li>
 		 {% if object.abbreviation %}
 			<tr>
-			   <td>Abbreviation</td>
-			   <td>{{ object.abbreviation }}</td>
+				<td>Abbreviation</td>
+				<td>{{ object.abbreviation }}</td>
 			</tr>
 		 {% endif %}
 		 {% if object.campus %}
 			<tr>
-			   <td>Campus</td>
-			   <td>{{ object.campus }}</td>
+				<td>Campus</td>
+				<td>{{ object.campus }}</td>
 			</tr>
 		 {% endif %}
 		 {% if object.parent %}
 			<tr>
-			   <td>Parent department</td>
-			   <td>
+				<td>Parent department</td>
+				<td>
 				  <a href="{% url organizationalunit-detail object.parent.id %}">
 					 {{ object.parent.name }}
 				  </a>
-			   </td>
+				</td>
 			</tr>
 		 {% endif %}
 		 {% if object.address %}
 			<tr>
-			   <td>Address</td>
-			   <td>{{ object.address }}<br />
+				<td>Address</td>
+				<td>{{ object.address }}<br />
 			</tr>
 		 {% endif %}
 		 {% if object.city or object.state or object.zip_code %}
 			<tr>
-			   <td>City/State/Zip</td>
-			   <td>{{ object.city }}, {{ object.state }}
+				<td>City/State/Zip</td>
+				<td>{{ object.city }}, {{ object.state }}
 				  {{ object.zip_code }}<br />
 			</tr>
 		 {% endif %}
 		 {% if object.country %}
 			<tr>
-			   <td>Country</td>
-			   <td>{{ object.country }}</td>
+				<td>Country</td>
+				<td>{{ object.country }}</td>
 			</tr>
 		 {% endif %}
 		 {% if object.phone %}
 			<tr>
-			   <td>Phone</td>
-			   <td>{{ object.phone }}</td>
+				<td>Phone</td>
+				<td>{{ object.phone }}</td>
 			</tr>
 		 {% endif %}
 	  </table>
-   </div>
-   
-   {% if object.children.all %}
+	</div>
+	
+	{% if object.children.all %}
 	  <div id="children">
 		 <h2>Sub-departments</h2>
 		 <table id="list">
 			<tr>
-			   <td>Name</td>
-			   <td>Abbreviation</td>
+				<td>Name</td>
+				<td>Abbreviation</td>
 			</tr>
 			{% for kid in object.children.all %}
-			   <tr>
+				<tr>
 				  <td>
 					 <a href="{% url organizationalunit-detail kid.id %}">
 						{{ kid.name }}
@@ -176,13 +180,13 @@
 						{{ kid.abbreviation }}
 					 </a>
 				  </td>
-			   </tr>
+				</tr>
 			{% endfor %}
 		 </table>
 	  </div>
-   {% endif %}
-   
-   {% if object.checkouts.active %}
+	{% endif %}
+	
+	{% if object.checkouts.active %}
 	  <div id="open-checkouts">
 	  <h2>
 		 <a href="#" class="collapse-link">
@@ -191,24 +195,24 @@
 	  </h2>
 		 <table id="list" class="collapse-content">
 			<tr>
-			   <td>Name</td>
-			   {% if not view_type == 'departments' %}
+				<td>Name</td>
+				{% if not view_type == 'departments' %}
 				  <td>Department</td>
-			   {% endif %}
-			   <td>Equipment</td>
-			   <td>Location</td>
-			   <td>Out date</td>
-			   <td>Type</td>
+				{% endif %}
+				<td>Equipment</td>
+				<td>Location</td>
+				<td>Out date</td>
+				<td>Type</td>
 			</tr>
 			{% for item in object.checkouts.active %}
 			<tr>
-			   <td>
+				<td>
 				  <a href="{% url checkout-detail item.id %}">
 					 {{ item.first_name }} {{ item.last_name }}
 				  </a>
-			   </td>
-			   {% if not view_type == 'departments' %}
-			   <td>
+				</td>
+				{% if not view_type == 'departments' %}
+				<td>
 				  <a href="{% url checkout-detail item.id %}">
 					 {% if item.department %}
 						{{ item.department|truncatewords:3 }}
@@ -216,35 +220,35 @@
 						{{ item.department_text }}
 					 {% endif %}
 				  </a>
-			   </td>
-			   {% endif %}
-			   <td>
+				</td>
+				{% endif %}
+				<td>
 				  <a href="{% url checkout-detail item.id %}">
 					 {{ item.equipment_needed|truncatewords:6 }}
 				  </a>
-			   </td>
-			   <td>
+				</td>
+				<td>
 				  <a href="{% url checkout-detail item.id %}">
 					 {{ item.building.abbreviation }} {{ item.room }}
 				  </a>
-			   </td>
-			   <td>
+				</td>
+				<td>
 				  <a href="{% url checkout-detail item.id %}">
 					 {{ item.out_date|date:'n/j/Y g:iA' }}
 				  </a>
-			   </td>
-			   <td>
+				</td>
+				<td>
 				  <a href="{% url checkout-detail item.id %}">
 					 {{ item.get_checkout_type_display }}
 				  </a>
-			   </td>
+				</td>
 			</tr>
 			{% endfor %}
 		 </table>
-	  </div>   
-   {% endif %}
-   
-   {% if object.checkouts.closed %}
+	  </div>	
+	{% endif %}
+	
+	{% if object.checkouts.closed %}
 	  <div id="closed-checkouts">
 	  <h2>
 		 <a href="#" class="collapse-link">
@@ -253,24 +257,24 @@
 	  </h2>
 		 <table id="list" class="collapse-content">
 			<tr>
-			   <td>Name</td>
-			   {% if not view_type == 'departments' %}
+				<td>Name</td>
+				{% if not view_type == 'departments' %}
 				  <td>Department</td>
-			   {% endif %}
-			   <td>Equipment</td>
-			   <td>Location</td>
-			   <td>Out date</td>
-			   <td>Type</td>
+				{% endif %}
+				<td>Equipment</td>
+				<td>Location</td>
+				<td>Out date</td>
+				<td>Type</td>
 			</tr>
 			{% for item in object.checkouts.closed %}
 			<tr>
-			   <td>
+				<td>
 				  <a href="{% url checkout-detail item.id %}">
 					 {{ item.first_name }} {{ item.last_name }}
 				  </a>
-			   </td>
-			   {% if not view_type == 'departments' %}
-			   <td>
+				</td>
+				{% if not view_type == 'departments' %}
+				<td>
 				  <a href="{% url checkout-detail item.id %}">
 					 {% if item.department %}
 						{{ item.department|truncatewords:3 }}
@@ -278,35 +282,35 @@
 						{{ item.department_text }}
 					 {% endif %}
 				  </a>
-			   </td>
-			   {% endif %}
-			   <td>
+				</td>
+				{% endif %}
+				<td>
 				  <a href="{% url checkout-detail item.id %}">
 					 {{ item.equipment_needed|truncatewords:6 }}
 				  </a>
-			   </td>
-			   <td>
+				</td>
+				<td>
 				  <a href="{% url checkout-detail item.id %}">
 					 {{ item.building.abbreviation }} {{ item.room }}
 				  </a>
-			   </td>
-			   <td>
+				</td>
+				<td>
 				  <a href="{% url checkout-detail item.id %}">
 					 {{ item.out_date|date:'n/j/Y g:iA' }}
 				  </a>
-			   </td>
-			   <td>
+				</td>
+				<td>
 				  <a href="{% url checkout-detail item.id %}">
 					 {{ item.get_checkout_type_display }}
 				  </a>
-			   </td>
+				</td>
 			</tr>
 			{% endfor %}
 		 </table>
-	  </div>   
-   {% endif %}
-   
-   {% if object.workorders.active %}
+	  </div>	
+	{% endif %}
+	
+	{% if object.workorders.active %}
 	  <div id="open-workorders">
 	  <h2>
 		 <a href="#" class="collapse-link">
@@ -315,31 +319,31 @@
 	  </h2>
 		 <table id="list" class="collapse-content">
 			<tr>
-			   <td>Submitted by</td>
-			   {% if not view_type == 'departments' %}
+				<td>Submitted by</td>
+				{% if not view_type == 'departments' %}
 				  <td>Department</td>
-			   {% endif %}
-			   <td>Equipment</td>
-			   <td>Location</td>
-			   <td>Priority</td>
-			   <td>Work type</td>
-			   <td>Creation date</td>
+				{% endif %}
+				<td>Equipment</td>
+				<td>Location</td>
+				<td>Priority</td>
+				<td>Work type</td>
+				<td>Creation date</td>
 			</tr>
 			{% for item in object.workorders.active %}
 			<tr class="priority{{ item.priority }}">
-			   <td>
+				<td>
 				  <a href="{% url service-detail item.id %}">
 					 {{ item.first_name }} {{ item.last_name }}
 				  </a>
-			   </td>
-			   {% if not view_type == 'departments' %}
+				</td>
+				{% if not view_type == 'departments' %}
 				  <td>
 					 <a href="{% url service-detail item.id %}">
 						{{ item.department }}
 					 </a>
 				  </td>
-			   {% endif %}
-			   <td>
+				{% endif %}
+				<td>
 				  <a href="{% url service-detail item.id %}">
 					 {% if item.equipment %}
 						{{ item.equipment.make.name }}
@@ -348,34 +352,34 @@
 						{{ item.equipment_text|truncatewords:5 }}
 					 {% endif %}
 				  </a>
-			   </td>
-			   <td>
+				</td>
+				<td>
 				  <a href="{% url service-detail item.id %}">
 					 {{ item.building.abbreviation }} {{ item.room }}
 				  </a>
-			   </td>
-			   <td>
+				</td>
+				<td>
 				  <a href="{% url service-detail item.id %}" class="priority{{ item.priority }}">
 					 {{ item.get_priority_display }}
 				  </a>
-			   </td>
-			   <td>
+				</td>
+				<td>
 				  <a href="{% url service-detail item.id %}">
 					 {{ item.get_work_type_display }}
 				  </a>
-			   </td>
-			   <td>
+				</td>
+				<td>
 				  <a href="{% url service-detail item.id %}">
 					 {{ item.creation_date|date:'n/j/Y g:iA' }}
 				  </a>
-			   </td>
+				</td>
 			</tr>
 			{% endfor %}
 		 </table>
-	  </div>   
-   {% endif %}
-   
-   {% if object.workorders.closed %}
+	  </div>	
+	{% endif %}
+	
+	{% if object.workorders.closed %}
 	  <div id="closed-workorders">
 	  <h2>
 		 <a href="#" class="collapse-link">
@@ -384,18 +388,18 @@
 	  </h2>
 		 <table id="list" class="collapse-content">
 			<tr>
-			   <td>Submitted by</td>
-			   {% if not view_type == 'departments' %}
+				<td>Submitted by</td>
+				{% if not view_type == 'departments' %}
 				  <td>Department</td>
-			   {% endif %}
-			   <td>Equipment</td>
-			   <td>Location</td>
-			   <td>Priority</td>
-			   <td>Work type</td>
-			   <td>Creation date</td>
+				{% endif %}
+				<td>Equipment</td>
+				<td>Location</td>
+				<td>Priority</td>
+				<td>Work type</td>
+				<td>Creation date</td>
 			</tr>
 			{% for item in object.workorders.closed %}
-			   <tr class="priority{{ item.priority }}">
+				<tr class="priority{{ item.priority }}">
 				  <td>
 					 <a href="{% url service-detail item.id %}">
 						{{ item.first_name }} {{ item.last_name }}
@@ -404,17 +408,17 @@
 				  {% if not view_type == 'departments' %}
 					 <td>
 						<a href="{% url service-detail item.id %}">
-						   {{ item.department }}
+							{{ item.department }}
 						</a>
 					 </td>
 				  {% endif %}
 				  <td>
 					 <a href="{% url service-detail item.id %}">
 						{% if item.equipment %}
-						   {{ item.equipment.make.name }}
-						   {{ item.equipment.model }}
+							{{ item.equipment.make.name }}
+							{{ item.equipment.model }}
 						{% else %}
-						   {{ item.equipment_text|truncatewords:5 }}
+							{{ item.equipment_text|truncatewords:5 }}
 						{% endif %}
 					 </a>
 				  </td>
@@ -438,53 +442,53 @@
 						{{ item.creation_date|date:'n/j/Y g:iA' }}
 					 </a>
 				  </td>
-			   </tr>
+				</tr>
 			{% endfor %}
 		 </table>
-	  </div>   
-   {% endif %}
-   
-   {% if object.equipment_installed.all %}
+	  </div>	
+	{% endif %}
+	
+	{% if object.equipment_installed.all %}
 	  <div id="equipment-installed">
 		 <h2>
 			<a href="#" class="collapse-link">
-			   <span class="collapse-mono">+</span> Equipment installed
+				<span class="collapse-mono">+</span> Equipment installed
 			</a>
 		 </h2>
 		 <table id="list" class="collapse-content">
 			<tr>
-			   <td>Barcode</td>
-			   <td>Type</td>
-			   <td>Make &amp; Model</td>
-			   <td>Status</td>
+				<td>Barcode</td>
+				<td>Type</td>
+				<td>Make &amp; Model</td>
+				<td>Status</td>
 			</tr>
 			{% for item in object.equipment_installed.all %}
 			<tr>
-			   <td>
+				<td>
 				  <a href="{% url equipment-detail item.id %}">
 					 {{ item.barcode }}
 				  </a>
-			   </td>
-			   <td>
+				</td>
+				<td>
 				  <a href="{% url equipment-detail item.id %}">
 					 {{ item.equipment_type.name }}
 				  </a>
-			   </td>
-			   <td>
+				</td>
+				<td>
 				  <a href="{% url equipment-detail item.id %}">
 					 {{ item.make.name }} {{ item.model }}
 				  </a>
-			   </td>
-			   <td>
+				</td>
+				<td>
 				  <a href="{% url equipment-detail item.id %}">
 					 {{ item.get_status_display }}
 				  </a>
-			   </td>
+				</td>
 			</tr>
 			{% endfor %}
 		 </table>
-	  </div>   
-   {% endif %}
-   
+	  </div>	
+	{% endif %}
+	
 </div>
 {% endblock %}

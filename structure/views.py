@@ -129,7 +129,7 @@ def detail(request, slug=None, abbreviation=None, object_id=None, room=None):
         stru_obj.equipment_installed = stru_obj.equipment_installed.filter(
             room=room
         )
-    # Call a custom function that gives us back a graph URL in a string
+    # Call a custom function that gives us back a graph URL in a string; soon.
     
     context = {
         'object': stru_obj,
