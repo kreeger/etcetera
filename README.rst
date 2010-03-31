@@ -32,6 +32,11 @@ Contact Information
 
 All inquiries can be directed to me at my university email address.
 
+License
+-------
+
+See LICENSE.rst for more information. Etcetera is released under the BSD license.
+
 Version History
 ---------------
 
