@@ -125,6 +125,7 @@ def index(request, view_type=None):
         context_instance=RequestContext(request)
     )
 
+@login_required
 def detail(request, object_id):
     # Get the ticket from the URL, bundle it in a context, and send it out.
     wo = get_object_or_404(service.WorkOrder, id=object_id)

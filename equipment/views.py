@@ -176,6 +176,7 @@ def makes_index(request):
         context_instance=RequestContext(request)
     )
 
+@login_required
 def detail(request, object_id):
     # Get the ticket from the URL, bundle it in a context, and send it out.
     eq = get_object_or_404(equipment.Equipment, id=object_id)

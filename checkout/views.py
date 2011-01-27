@@ -152,6 +152,7 @@ def index(request, view_type=None, date_range=None):
         context_instance=RequestContext(request)
     )
 
+@login_required
 def detail(request, object_id):
     # Get the ticket from the URL, bundle it in a context, and send it out.
     co = get_object_or_404(checkout.Checkout, id=object_id)
